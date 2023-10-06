@@ -1,0 +1,117 @@
+---
+title: "Schedule"
+listing:
+  - id: day1
+    contents:
+      - sessions/day1/*.qmd
+    type: table
+    fields: [subtitle, title]
+    field-display-names:
+      subtitle: "Time"
+      title: "Session"
+    table-hover: true
+    sort: [filename]
+    sort-ui: false
+    filter-ui: false
+    image-height: 75px
+  - id: day2
+    contents:
+      - sessions/day2/*.qmd
+    type: table
+    fields: [subtitle, title]
+    field-display-names:
+      subtitle: "Time"
+      title: "Session"
+    table-hover: true
+    sort: [filename]
+    sort-ui: false
+    filter-ui: false
+    image-height: 75px
+  - id: day3
+    contents:
+      - sessions/day3/*.qmd
+    type: table
+    fields: [subtitle, title]
+    field-display-names:
+      subtitle: "Time"
+      title: "Session"
+    table-hover: true
+    sort: [filename]
+    sort-ui: false
+    filter-ui: false
+    image-height: 75px
+  - id: day4
+    contents:
+      - sessions/day4/*.qmd
+    type: table
+    fields: [subtitle, title]
+    field-display-names:
+      subtitle: "Time"
+      title: "Session"
+    table-hover: true
+    sort: [filename]
+    sort-ui: false
+    filter-ui: false
+    image-height: 75px
+  - id: day5
+    contents:
+      - sessions/day5/*.qmd
+    type: table
+    fields: [subtitle, title]
+    field-display-names:
+      subtitle: "Time"
+      title: "Session"
+    table-hover: true
+    sort: [filename]
+    sort-ui: false
+    filter-ui: false
+    image-height: 75px
+tbl-colwidths: [5,20,50,25]
+editor: source
+---
+
+<!-- 11-12th July 2023 -->
+<!-- Columbia University -->
+
+
+## Day 1
+
+::: {#day1}
+:::
+
+## Day 2
+
+::: {#day2}
+:::
+
+## Day 3
+
+::: {#day3}
+:::
+
+## Day 4
+
+::: {#day4}
+:::
+
+## Day 5
+
+::: {#day5}
+:::
+
+
+<!-- Day 1: The basics of time series -->
+<!-- Session 1. Basics of time series and data structures -->
+<!-- Session 2. Time series patterns and basic graphics -->
+<!-- Day 2: Time series exploration -->
+<!-- Session 1. Recap day 1, transforming / adjusting time series -->
+<!-- Session 2. Computing and visualizing features (features) -->
+<!-- Day 3: The basics of forecasting -->
+<!-- Session 1. Basic modeling / forecasting -->
+<!-- Session 2. Forecasting with regression, how to represent temporal structure with regressors -->
+<!-- Day 4: Forecasting temporal patterns -->
+<!-- Session 1. ETS, building on recap of temporal regressors. -->
+<!-- Session 2. ARIMA -->
+<!-- Day 5: Evaluating model performance -->
+<!-- Session 1. Recap forecasting methods, basic training and test accuracy -->
+<!-- Session 2. Advanced performance evaluation: residual diagnostics and cross validation -->

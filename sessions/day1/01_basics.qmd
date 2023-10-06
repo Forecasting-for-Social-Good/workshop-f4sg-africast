@@ -1,0 +1,13 @@
+---
+title: "Basics of time series and data structures"
+subtitle: "<span class='code'>08:00-09:30</span>"
+date: "2023-10-23"
+---
+
+<!-- Materials will be distributed sooner to the event. -->
+
+<!-- ```{=html} -->
+<!-- <embed src="../../materials/basics.pdf" type="application/pdf" width="750px" height="420px"> -->
+<!-- ``` -->
+
+<!-- [View slides in full screen](../../materials/basics.pdf) -->

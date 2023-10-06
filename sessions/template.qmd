@@ -1,0 +1,15 @@
+---
+title: "{{title}}"
+subtitle: "<span class='code'>13:00-13:45</span>"
+date: "{{date}}"
+---
+
+<!-- Materials will be distributed sooner to the event. -->
+
+```{=html}
+<embed src="../../materials/{{slug}}.pdf" type="application/pdf" width="750px" height="420px">
+```
+
+[View slides in full screen](../../materials/{{slug}}.pdf)
+
+## Lab sessions

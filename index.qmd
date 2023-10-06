@@ -1,0 +1,77 @@
+---
+title: "Tidy time series & forecasting in R"
+---
+
+![](images/fable.svg){style="float:right;padding: 0 0 0 10px;" fig-alt="Fable Hex Logo" width="175"}
+
+## Course Overview
+
+Forecasting is a valuable tool that allows organizations to make informed decisions about the future. Time series forecasting, in particular, uses historical data to predict future trends over time. This technique has extensive applications across a wide range of fields, including finance and economics, health and humanitarian operations, supply chain management, and more. By analyzing trends and patterns in data, time series forecasting can help decision-makers identify potential challenges and opportunities, and plan accordingly.
+
+It is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyze data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.
+
+This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, and will run online from the 23rd-27th October 2023.
+
+## Learning objectives
+
+During the training, participants will gain knowledge and skills in:
+
+1. Preparing time series data for analysis and exploration.
+2. Extracting and computing useful features from time series data and effectively visualizing it.
+3. Identifying appropriate forecasting algorithms for time series and selecting the best approach for the data at hand.
+
+# Educators
+
+## Instructor
+
+![](images/mitch.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Mitchell O'Hara-Wild" width="200"}
+[**Mitchell O'Hara-Wild**](https://mitchelloharawild.com/) (he/him) is a PhD student at [Monash University](https://www.monash.edu), creating new techniques and tools for forecasting large collections of time series with Rob Hyndman and George Athanasopoulos. He is the lead developer of the tidy time-series forecasting tools fable and feasts, and has co-developed the widely used forecast package since 2015. Mitchell also operates a data consultancy, and has worked on many forecasting projects that have supported decision making and planning for businesses and governments. He is an award-winning educator, and has taught applied forecasting at Monash University and various forecasting workshops around the world.
+
+
+<div align="center">
+<a href="https://www.mitchelloharawild.com"><img border="0" alt="Blog" src="https://assets.dryicons.com/uploads/icon/svg/4926/home.svg" width="35" height="35"></a>&ensp;
+<a href="https://github.com/mitchelloharawild"><img border="0" alt="Github" src="https://assets.dryicons.com/uploads/icon/svg/8312/cc33248a-e56e-4e7f-93f4-0e16350e5768.svg" width="35" height="35"></a>&ensp; 
+<a href="https://twitter.com/mitchoharawild"><img border="0" alt="Twitter" src="https://assets.dryicons.com/uploads/icon/svg/8385/c23f7ffc-ca8d-4246-8978-ce9f6d5bcc99.svg" width="35" height="35"></a>&ensp; 
+<a href="https://www.linkedin.com/in/mitchelloharawild/"><img border="0" alt="LinkedIn" src="https://assets.dryicons.com/uploads/icon/svg/8337/a347cd89-1662-4421-be90-58e5e8004eae.svg" width="35" height="35"></a>&ensp;&emsp;
+</div>
+
+## Instructor
+
+![](images/bahman.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Dr. Bahman Rostami-Tabar" width="200"}
+
+TBC
+
+<div align="center">
+<a href="http://www.bahmanrt.com/"><img border="0" alt="Website" src="https://assets.dryicons.com/uploads/icon/svg/4926/home.svg" width="35" height="35"></a>&ensp;
+<a href="https://github.com/bahmanrostamitabar/"><img border="0" alt="Github" src="https://assets.dryicons.com/uploads/icon/svg/8312/cc33248a-e56e-4e7f-93f4-0e16350e5768.svg" width="35" height="35"></a>&ensp; 
+<a href="https://twitter.com/Bahman_R_T/"><img border="0" alt="Twitter" src="https://assets.dryicons.com/uploads/icon/svg/8385/c23f7ffc-ca8d-4246-8978-ce9f6d5bcc99.svg" width="35" height="35"></a>&ensp; 
+</div>
+
+# Preparation
+
+The workshop will provide a quick-start overview of exploring time series data and producing forecasts. There is no need for prior experience in time series to get the most out of this workshop.
+
+It is expected that you are comfortable with writing R cod and using tidyverse packages including dplyr and ggplot2. If you are unfamiliar with writing R code or using the tidyverse, consider working through the learnr materials here: <https://learnr.numbat.space/>.
+
+Some familiarity with statistical concepts such as the mean, variance, quantiles, normal distribution, and regression would be helpful to better understand the forecasts, although this is not strictly necessary.
+
+## Required equipment
+
+Please have your own laptop capable of running R.
+
+## Required software
+
+To be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.
+
+-   **Time series packages and extensions**
+    -   fpp3, sugrrants
+-   **tidyverse packages and friends**
+    -   tidyverse, fpp3
+
+The following code will install the main packages needed for the workshop.
+
+```r
+install.packages(c("tidyverse","fpp3", "GGally", "sugrrants"))
+```
+
+Please have the required software installed and pre-work completed before attending the workshop.

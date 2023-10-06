@@ -1,0 +1,15 @@
+---
+title: "Tidy time series & forecasting in R"
+format:
+  html:
+    include-after-body: survey.html
+---
+
+![](images/fable.svg){style="float:right;padding: 0 0 0 10px;" fig-alt="Fable Hex Logo" width="175"}
+
+## Feedback
+
+<!-- Place this wherever you want to embed your form -->
+<div id="jY85-wrapper" class="ipt" style="height: 520px; width: 100%;">
+</div>
+

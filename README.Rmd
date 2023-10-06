@@ -1,0 +1,37 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(tibble)
+```
+
+# Tidy time series & forecasting in R
+
+This five day workshop provides the basics of time series analysis and forecasting in R. This workshop is part of the the IIF's forecasting for social good (F4SG) initiative, and will run online for a select group of students from Africa between the 23-27th October 2023.
+
+## Learning objectives
+
+Attendees will learn:
+
+1. Preparing time series data for analysis and exploration.
+2. Extracting and computing useful features from time series data and effectively visualizing it.
+3. Identifying appropriate forecasting algorithms for time series and selecting the best approach for the data at hand.
+
+# Preparation
+
+People who don’t use R regularly, or don’t know the tidyverse packages, are recommended to do the tutorials at https://posit.cloud/learn/primers beforehand.
+
+Please bring your own laptop with a recent version of R and RStudio installed. The following code will install the main packages needed for the workshop.
+
+```{r}
+install.packages(c("tidyverse", "fpp3", "lubridate", "GGally", "sugrrants", "astsa"))
+```
+
+Please have the required software installed and pre-work completed before attending the workshop.

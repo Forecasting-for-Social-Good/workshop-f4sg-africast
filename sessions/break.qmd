@@ -1,0 +1,12 @@
+---
+title: "Coffee Break"
+subtitle: "<span class='code'>10:30-11:00</span>"
+date: "2023-07-11"
+image: "../images/tea.jpg"
+image-alt: "Tea"
+tbl-colwidths: [5,20,75]
+---
+
+Time for a coffee break! 
+
+Feel free to ask me some questions, or simply enjoy the break.

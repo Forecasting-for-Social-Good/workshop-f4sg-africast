@@ -1,0 +1,5 @@
+---
+title: "Exercises"
+subtitle: "<span class='code'>16:30-18:00</span>"
+date: "2023-10-25"
+---

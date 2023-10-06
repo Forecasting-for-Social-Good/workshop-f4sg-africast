@@ -1,0 +1,84 @@
+project:
+  type: website
+  resources:
+    - "images/twitter-card.png"
+    - "materials/*.pdf"
+  render:
+    - "*.qmd"
+    - "!materials"
+    - "!README.Rmd"
+  pre-render: zip.R
+
+website:
+  page-navigation: true
+  title: "F4SG: time series & forecasting in R"
+  description: "Homepage for forecasting for social good time series workshop"
+  site-url: "https://workshop.mitchelloharawild.com/f4sg-africa"
+  
+  repo-url: https://github.com/mitchelloharawild/workshop-f4sg-africa
+  repo-actions: [edit, issue]
+
+  # opengraph: true
+  twitter-card:
+    creator: "@mitchoharawild"
+    image: "/images/twitter-card.png"
+
+  favicon: "/images/fable.svg"
+
+  page-footer:
+    left: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
+    right: "&copy; Copyright 2023, Mitchell O'Hara-Wild"
+    background: "#426D98"
+
+  navbar:
+    background: "#426D98"
+    pinned: true
+    align: center
+    right:
+      - icon: download
+        text: Downloads
+        menu: 
+          - text: Everything
+            href: 'https://github.com/mitchelloharawild/workshop-f4sg-africa/archive/refs/heads/main.zip'
+          - text: Slides
+            href: 'slides.zip'
+          # - text: Lab sessions
+          #   href: 'labs.zip'
+      - icon: file-certificate
+        href: license.qmd
+      - icon: github
+        href: https://github.com/mitchelloharawild/workshop-f4sg-africa
+    left:
+      - text: Sessions
+        menu: 
+          - text: Basics of time series and data structures
+            href: sessions/day1/basics.qmd
+          - text: Time series patterns and basic graphics
+            href: sessions/day1/graphics.qmd
+          - text: Recap day 1, transforming / adjusting time series
+            href: sessions/day2/adjustments.qmd
+          - text: Computing and visualizing features (features)
+            href: sessions/day2/features.qmd
+          - text: Basic modeling / forecasting
+            href: sessions/day3/forecasting.qmd
+          - text: Forecasting with regression, how to represent temporal structure with regressors
+            href: sessions/day3/regressors.qmd
+          - text: ETS, building on recap of temporal regressors.
+            href: sessions/day4/ets.qmd
+          - text: ARIMA
+            href: sessions/day4/arima.qmd
+          - text: Recap forecasting methods, basic training and test accuracy
+            href: sessions/day5/accuracy.qmd
+          - text: "Advanced performance evaluation: residual diagnostics and cross validation"
+            href: sessions/day5/diagnostics.qmd
+      - href: schedule.qmd
+
+format:
+  html:
+    theme:
+      light: [cosmo, theme.scss]
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    mainfont: "Open Sans"
+    include-after-body: plausible.html

@@ -1,0 +1,13 @@
+---
+title: "ETS"
+subtitle: "<span class='code'>09:45-11:15</span>"
+date: "2023-10-26"
+---
+
+<!-- Materials will be distributed sooner to the event. -->
+
+<!-- ```{=html} -->
+<!-- <embed src="../../materials/00_intro.pdf" type="application/pdf" width="750px" height="420px"> -->
+<!-- ``` -->
+
+<!-- [View slides in full screen](../../materials/00_intro.pdf) -->

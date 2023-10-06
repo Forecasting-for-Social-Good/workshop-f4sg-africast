@@ -1,0 +1,13 @@
+---
+title: "Time series patterns and basic graphics"
+subtitle: "<span class='code'>09:45-11:15</span>"
+date: "2023-10-23"
+---
+
+<!-- Materials will be distributed sooner to the event. -->
+
+<!-- ```{=html} -->
+<!-- <embed src="../../materials/01_tsibble.pdf" type="application/pdf" width="750px" height="420px"> -->
+<!-- ``` -->
+
+<!-- [View slides in full screen](../../materials/01_tsibble.pdf) -->
