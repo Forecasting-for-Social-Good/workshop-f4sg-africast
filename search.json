@@ -1,0 +1,114 @@
+[
+  {
+    "objectID": "feedback.html#feedback",
+    "href": "feedback.html#feedback",
+    "title": "Tidy time series & forecasting in R",
+    "section": "Feedback",
+    "text": "Feedback"
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "Tidy time series & forecasting in R",
+    "section": "Course Overview",
+    "text": "Course Overview\nForecasting is a valuable tool that allows organizations to make informed decisions about the future. Time series forecasting, in particular, uses historical data to predict future trends over time. This technique has extensive applications across a wide range of fields, including finance and economics, health and humanitarian operations, supply chain management, and more. By analyzing trends and patterns in data, time series forecasting can help decision-makers identify potential challenges and opportunities, and plan accordingly.\nIt is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyze data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.\nThis workshop is part of the Forecasting for Social Good (F4SG) initiative, and will run online from the 23rd-27th October 2023."
+  },
+  {
+    "objectID": "index.html#learning-objectives",
+    "href": "index.html#learning-objectives",
+    "title": "Tidy time series & forecasting in R",
+    "section": "Learning objectives",
+    "text": "Learning objectives\nDuring the training, participants will gain knowledge and skills in:\n\nPreparing time series data for analysis and exploration.\nExtracting and computing useful features from time series data and effectively visualizing it.\nIdentifying appropriate forecasting algorithms for time series and selecting the best approach for the data at hand."
+  },
+  {
+    "objectID": "index.html#instructor",
+    "href": "index.html#instructor",
+    "title": "Tidy time series & forecasting in R",
+    "section": "Instructor",
+    "text": "Instructor\n Mitchell O’Hara-Wild (he/him) is a PhD student at Monash University, creating new techniques and tools for forecasting large collections of time series with Rob Hyndman and George Athanasopoulos. He is the lead developer of the tidy time-series forecasting tools fable and feasts, and has co-developed the widely used forecast package since 2015. Mitchell also operates a data consultancy, and has worked on many forecasting projects that have supported decision making and planning for businesses and governments. He is an award-winning educator, and has taught applied forecasting at Monash University and various forecasting workshops around the world."
+  },
+  {
+    "objectID": "index.html#instructor-1",
+    "href": "index.html#instructor-1",
+    "title": "Tidy time series & forecasting in R",
+    "section": "Instructor",
+    "text": "Instructor\n\nTBC"
+  },
+  {
+    "objectID": "index.html#required-equipment",
+    "href": "index.html#required-equipment",
+    "title": "Tidy time series & forecasting in R",
+    "section": "Required equipment",
+    "text": "Required equipment\nPlease have your own laptop capable of running R."
+  },
+  {
+    "objectID": "index.html#required-software",
+    "href": "index.html#required-software",
+    "title": "Tidy time series & forecasting in R",
+    "section": "Required software",
+    "text": "Required software\nTo be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.\n\nTime series packages and extensions\n\nfpp3, sugrrants\n\ntidyverse packages and friends\n\ntidyverse, fpp3\n\n\nThe following code will install the main packages needed for the workshop.\ninstall.packages(c(\"tidyverse\",\"fpp3\", \"GGally\", \"sugrrants\"))\nPlease have the required software installed and pre-work completed before attending the workshop."
+  },
+  {
+    "objectID": "license.html",
+    "href": "license.html",
+    "title": "License",
+    "section": "",
+    "text": "This work is licensed under a Creative Commons Attribution 4.0 International License."
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "Time\n\n\nSession\n\n\n\n\n\n\n08:00-09:30\n\n\nBasics of time series and data structures\n\n\n\n\n09:45-11:15\n\n\nTime series patterns and basic graphics\n\n\n\n\n16:30-18:00\n\n\nExercises\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "schedule.html#day-2",
+    "href": "schedule.html#day-2",
+    "title": "Schedule",
+    "section": "Day 2",
+    "text": "Day 2\n\n\n\n\n\n\nTime\n\n\nSession\n\n\n\n\n\n\n08:00-09:30\n\n\nTransforming / adjusting time series\n\n\n\n\n09:45-11:15\n\n\nComputing and visualizing features\n\n\n\n\n16:30-18:00\n\n\nExercises\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "schedule.html#day-3",
+    "href": "schedule.html#day-3",
+    "title": "Schedule",
+    "section": "Day 3",
+    "text": "Day 3\n\n\n\n\n\n\nTime\n\n\nSession\n\n\n\n\n\n\n08:00-09:30\n\n\nBasic modeling / forecasting\n\n\n\n\n09:45-11:15\n\n\nForecasting with regression, how to represent temporal structure with regressors\n\n\n\n\n16:30-18:00\n\n\nExercises\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "schedule.html#day-4",
+    "href": "schedule.html#day-4",
+    "title": "Schedule",
+    "section": "Day 4",
+    "text": "Day 4\n\n\n\n\n\n\nTime\n\n\nSession\n\n\n\n\n\n\n08:00-09:30\n\n\nARIMA\n\n\n\n\n09:45-11:15\n\n\nETS\n\n\n\n\n16:30-18:00\n\n\nExercises\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "schedule.html#day-5",
+    "href": "schedule.html#day-5",
+    "title": "Schedule",
+    "section": "Day 5",
+    "text": "Day 5\n\n\n\n\n\n\nTime\n\n\nSession\n\n\n\n\n\n\n08:00-09:30\n\n\nBasic training and test accuracy\n\n\n\n\n09:45-11:15\n\n\nResidual diagnostics and cross validation\n\n\n\n\n16:30-18:00\n\n\nExercises\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "sessions/break.html",
+    "href": "sessions/break.html",
+    "title": "Coffee Break",
+    "section": "",
+    "text": "Time for a coffee break!\nFeel free to ask me some questions, or simply enjoy the break."
+  },
+  {
+    "objectID": "sessions/template.html",
+    "href": "sessions/template.html",
+    "title": "{{title}}",
+    "section": "",
+    "text": "View slides in full screen"
+  },
+  {
+    "objectID": "sessions/template.html#lab-sessions",
+    "href": "sessions/template.html#lab-sessions",
+    "title": "{{title}}",
+    "section": "Lab sessions",
+    "text": "Lab sessions"
+  }
+]
