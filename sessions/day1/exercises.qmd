@@ -2,6 +2,7 @@
 title: "Exercises"
 subtitle: "<span class='code'>16:30-18:00</span>"
 date: "2023-10-23"
+order: 3
 ---
 
 ```{r}
@@ -16,7 +17,6 @@ library(fable)
 library(ggplot2)
 
 knitr::opts_knit$set(root.dir = "../../exercises")
-setwd("../../exercises")
 ```
 
 

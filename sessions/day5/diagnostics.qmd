@@ -1,7 +1,8 @@
 ---
-title: "Time series patterns and basic graphics"
+title: "Residual diagnostics and cross validation"
 subtitle: "<span class='code'>09:45-11:15</span>"
-date: "2023-10-23"
+date: "2023-10-27"
+order: 2
 ---
 
 <!-- Materials will be distributed sooner to the event. -->
@@ -11,3 +12,4 @@ date: "2023-10-23"
 <!-- ``` -->
 
 <!-- [View slides in full screen](../../materials/01_tsibble.pdf) -->
+

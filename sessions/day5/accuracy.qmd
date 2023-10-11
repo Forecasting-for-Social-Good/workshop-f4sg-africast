@@ -2,6 +2,7 @@
 title: "Basic training and test accuracy"
 subtitle: "<span class='code'>08:00-09:30</span>"
 date: "2023-10-27"
+order: 1
 ---
 
 <!-- Materials will be distributed sooner to the event. -->

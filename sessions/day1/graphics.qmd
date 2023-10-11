@@ -1,7 +1,8 @@
 ---
-title: "Computing and visualizing features"
+title: "Time series patterns and basic graphics"
 subtitle: "<span class='code'>09:45-11:15</span>"
-date: "2023-10-24"
+date: "2023-10-23"
+order: 2
 ---
 
 <!-- Materials will be distributed sooner to the event. -->

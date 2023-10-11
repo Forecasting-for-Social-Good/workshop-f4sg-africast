@@ -1,7 +1,8 @@
 ---
-title: "Residual diagnostics and cross validation"
+title: "Computing and visualizing features"
 subtitle: "<span class='code'>09:45-11:15</span>"
-date: "2023-10-27"
+date: "2023-10-24"
+order: 2
 ---
 
 <!-- Materials will be distributed sooner to the event. -->
@@ -11,4 +12,3 @@ date: "2023-10-27"
 <!-- ``` -->
 
 <!-- [View slides in full screen](../../materials/01_tsibble.pdf) -->
-

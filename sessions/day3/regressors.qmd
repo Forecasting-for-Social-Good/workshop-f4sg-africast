@@ -2,6 +2,7 @@
 title: "Forecasting with regression, how to represent temporal structure with regressors"
 subtitle: "<span class='code'>09:45-11:15</span>"
 date: "2023-10-25"
+order: 2
 ---
 
 <!-- Materials will be distributed sooner to the event. -->

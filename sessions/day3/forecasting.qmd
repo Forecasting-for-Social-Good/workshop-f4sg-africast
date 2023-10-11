@@ -1,7 +1,8 @@
 ---
-title: "Transforming / adjusting time series"
+title: "Basic modeling / forecasting"
 subtitle: "<span class='code'>08:00-09:30</span>"
-date: "2023-10-24"
+date: "2023-10-25"
+order: 1
 ---
 
 <!-- Materials will be distributed sooner to the event. -->
