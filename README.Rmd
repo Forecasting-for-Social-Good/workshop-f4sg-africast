@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 library(tibble)
 ```
 
-# Tidy time series & forecasting in R
+# Africast: tidy time series & forecasting in R
 
 This five day workshop provides the basics of time series analysis and forecasting in R. This workshop is part of the the IIF's forecasting for social good (F4SG) initiative, and will run online for a select group of students from Africa between the 23-27th October 2023.
 
@@ -30,7 +30,7 @@ People who don’t use R regularly, or don’t know the tidyverse packages, are 
 
 Please bring your own laptop with a recent version of R and RStudio installed. The following code will install the main packages needed for the workshop.
 
-```{r}
+```{r, eval = FALSE}
 install.packages(c("tidyverse", "fpp3", "lubridate", "GGally", "sugrrants", "astsa"))
 ```
 
