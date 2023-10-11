@@ -3,3 +3,11 @@ title: "Exercises"
 subtitle: "<span class='code'>16:30-18:00</span>"
 date: "2023-10-25"
 ---
+
+# Learn
+
+Mitch's section to learn the concepts on various datasets
+
+# Apply
+
+Bahman's section to apply the concepts to health data
