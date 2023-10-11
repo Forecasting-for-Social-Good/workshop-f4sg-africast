@@ -2,21 +2,21 @@
   {
     "listing": "/schedule.html",
     "items": [
-      "/sessions/day1/01_basics.html",
-      "/sessions/day1/02_graphics.html",
-      "/sessions/day1/03_exercises.html",
-      "/sessions/day2/01_adjustments.html",
-      "/sessions/day2/02_features.html",
-      "/sessions/day2/03_exercises.html",
-      "/sessions/day3/01_forecasting.html",
-      "/sessions/day3/02_regressors.html",
-      "/sessions/day3/03_exercises.html",
-      "/sessions/day4/01_arima.html",
-      "/sessions/day4/02_ets.html",
-      "/sessions/day4/03_exercises.html",
-      "/sessions/day5/01_accuracy.html",
-      "/sessions/day5/02_diagnostics.html",
-      "/sessions/day5/03_exercises.html"
+      "/sessions/day1/basics.html",
+      "/sessions/day1/graphics.html",
+      "/sessions/day1/exercises.html",
+      "/sessions/day2/adjustments.html",
+      "/sessions/day2/features.html",
+      "/sessions/day2/exercises.html",
+      "/sessions/day3/forecasting.html",
+      "/sessions/day3/regressors.html",
+      "/sessions/day3/exercises.html",
+      "/sessions/day4/arima.html",
+      "/sessions/day4/ets.html",
+      "/sessions/day4/exercises.html",
+      "/sessions/day5/accuracy.html",
+      "/sessions/day5/diagnostics.html",
+      "/sessions/day5/exercises.html"
     ]
   }
 ]
