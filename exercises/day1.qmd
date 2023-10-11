@@ -1,0 +1,85 @@
+---
+title: "Lab exercise: day 1"
+editor: visual
+---
+
+# Learn
+
+Complete the code to read in the tourism dataset from `data/tourism.csv` and convert it to a `tsibble`. It should look like `tsibble::tourism` when you're done.
+
+```{r}
+library(readr)
+library(tsibble)
+library(dplyr)
+library(lubridate)
+tourism <- read_csv("data/tourism.csv") |> 
+  ???(Quarter = ???(Quarter)) |> 
+  as_tsibble(index = ???, key = c(???))
+  
+```
+
+Create an **annual** time series of the `Purpose` of travel for visitors to Australia (summing over `State` and `Region`).
+
+```{r}
+tourism |> 
+  group_by(???) |> 
+  index_by(???) |> 
+  summarise(???)
+```
+
+Which `Purpose` of travel is most common in each state? What can you conclude about tourism in Australia?
+
+```{r}
+tourism |> 
+  as_???() |> 
+  group_by(???) |> 
+  summarise(Trips = ???(Trips)) |> 
+  # The code below will find the Purpose matching the most trips for each State
+  group_by(State) |> 
+  summarise(Purpose[which.max(Trips)])
+```
+
+Produce several time plots of the data. Which patterns can you observe?
+
+```{r}
+tourism |> 
+  filter(Region == "Melbourne") |> 
+  autoplot(???)
+
+tourism |> 
+  filter(Region == "Melbourne", Purpose == ???) |> 
+  autoplot(???)
+
+tourism |> 
+  group_by(Purpose) |> 
+  summarise(???) |> 
+  autoplot(???)
+
+tourism |> 
+  filter(State == ???) |> 
+  group_by(???) |> 
+  summarise(???) |> 
+  autoplot(???)
+```
+
+Create a seasonal plot for the total holiday travel to Australia over time. In which quarter is holiday travel highest and lowest?
+
+```{r}
+tourism |> 
+  ???(Purpose == ???) |> 
+  ???(Trips = sum(Trips)) |> 
+  gg_???(Trips)
+```
+
+Create a seasonal subseries plot for the total business travel to Victoria over time. Does the seasonal pattern change over time?
+
+```{r}
+tourism |> 
+  ???(Purpose == ???) |> 
+  ???(Trips = sum(Trips)) |> 
+  gg_???(Trips)
+```
+
+# Apply
+
+Bahman's starter code for the medical example here.

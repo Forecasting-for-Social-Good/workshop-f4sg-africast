@@ -5,6 +5,7 @@ project:
     - "materials/*.pdf"
   render:
     - "*.qmd"
+    - "!exercises"
     - "!materials"
     - "!README.Rmd"
   pre-render: zip.R
@@ -73,6 +74,7 @@ website:
             href: sessions/day5/diagnostics.qmd
       - href: schedule.qmd
 
+from: markdown+emoji
 format:
   html:
     theme:
