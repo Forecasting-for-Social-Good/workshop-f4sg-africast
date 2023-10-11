@@ -19,6 +19,15 @@ library(ggplot2)
 knitr::opts_knit$set(root.dir = "../../exercises")
 ```
 
+# Set-up
+
+We've prepared an exercises project with some starter code for each of the sessions. You can download and open this project using:
+
+```{r}
+#| eval: false
+usethis::use_course("https://workshop.mitchelloharawild.com/f4sg-africa/exercises.zip")
+```
+
 
 # Learn
 

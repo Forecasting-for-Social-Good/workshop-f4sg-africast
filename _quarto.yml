@@ -3,6 +3,7 @@ project:
   resources:
     - "images/twitter-card.png"
     - "materials/*.pdf"
+    - "exercises.zip"
   render:
     - "*.qmd"
     - "!exercises"
