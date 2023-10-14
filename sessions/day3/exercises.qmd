@@ -11,4 +11,12 @@ Mitch's section to learn the concepts on various datasets
 
 # Apply
 
-Bahman's section to apply the concepts to health data
+In this exercise, we specify and train models on past administered vaccine doses. Following that, we produce forecasts of future administered vaccine doses, for the next 12 months, beyond the latest data point.
+
+:::{.callout-caution}
+1. Specify and train three simple models including total average, naive and seasonal naive on administered vaccine doses
+2. Produce forecasts for 12 months ahead including both point forecast and forecast distribution
+3. Visualize the point forecasts alongside past values, as well as prediction interval for $90%$ coverage
+3. Extract prediction intervals for $90%$ coverage
+4. Produce probabilistic forecast using bootstrapping instead of assuming normal distribution. Generate 1000 possible future
+:::

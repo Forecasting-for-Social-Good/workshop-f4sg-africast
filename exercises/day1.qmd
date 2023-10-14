@@ -92,11 +92,12 @@ vaccine_administrated <- ---("data/vaccine_adminstrated.csv")
 vaccine_administrated
 ```
 
-After importing your data, it's important to double-check the structure of the data and the data types of the variables. The structure of the data you import into R must be a `tibble`. 
+After importing your data, it's important to double-check the structure of the data and the data types of the variables. The structure of the data you import into R must be a `tibble`.
 
 :::{.callout-note}
 ## Question
-Verify the data type of each variable in `vaccine_administered`. We may need to modify the data type of `month`, `strike`, `flooding_events`. Could you explain why? 
+
+Verify the data type of each variable in `vaccine_administered`. We may need to modify the data type of `month`, `strike`, `flooding_events`. Could you explain why?
 :::
 
 ```{r}
@@ -108,7 +109,7 @@ vaccine_administrated <- vaccine_administrated |>
   mutate(month = ym(month), strike = as_factor(strike), flooding_events = as_factor(flooding_events))
 ```
 
-## Prepare your data 
+## Prepare your data
 
 Preparing your temporal data for time series analysis and forecasting may involve several steps, such as addressing data quality issues, handling missing values, fixing duplications, creating a tsibble, and checking/filling temporal gaps.
 
@@ -121,12 +122,10 @@ anyNA(vaccine_administrated)
 ```
 
 :::{.callout-caution}
-The dataet you use may contain missing values (`NA` in R) and other data quality issues. While checking and fixing data quality issues are crucial for any project, addressing such issues goes beyond the scope of this training. For further information, you may refer to additional resources [Link].
+The dataet you use may contain missing values (`NA` in R) and other data quality issues. While checking and fixing data quality issues are crucial for any project, addressing such issues goes beyond the scope of this training. For further information, you may refer to additional resources \[Link\].
 :::
 
-
 ### Check duplications and fix it
-
 
 :::{.callout-important}
 Before you move forward, it's important to consistently examine your data for any duplicated observations. If such duplications are identified, address them before moving forward.
@@ -140,13 +139,15 @@ Write a r code to check for duplicate observations in the data.
 
 :::{.callout-note}
 ## Question
-Have you identified any duplicate observations? 
+
+Have you identified any duplicate observations?
 :::
 
-If your data contains no duplicates, you may proceed with creating a tsibble. Otherwise, you need to fix it. 
+If your data contains no duplicates, you may proceed with creating a tsibble. Otherwise, you need to fix it.
 
 :::{.callout-note}
 ## Question
+
 How do you fix duplicated observations?
 :::
 
@@ -188,8 +189,6 @@ At times, you may come across a dataset with temporal gaps, signifying intervals
 ## Manipulating time series
 
 Depending on the decision your forecast will inform, you may need to manipulate your tsibble. For instance, if you're forecasting the total dose administered in the country, or if you need to forecast quarterly doses administered for each region or for the entire country, you need to manipulate your time series frist.
-
-
 
 :::{.callout-tip}
 Remember, you can use `index_by()`, `group_by()` or `group_by_key()`, and `summarise()` to create different temporal granularity.
@@ -276,7 +275,7 @@ Dp you observe any pattern that has not been obvious with time plot and season p
 
 ### ACF plots
 
-In forecasting, we would be interested in understanding how similar a time series is to the lags of itself. We often measure this similarity by calculating the correlation (i.e. the linear asscociation) between a time series and its lags and then plot it. 
+In forecasting, we would be interested in understanding how similar a time series is to the lags of itself. We often measure this similarity by calculating the correlation (i.e. the linear association) between a time series and its lags and then plot it.
 
 ```{r}
 vaccine_administrated_tsb |> 
@@ -294,5 +293,3 @@ vaccine_administrated_tsb |>
 ```
 
 What can you say about the correlation between dose administrated in each month?
-
-

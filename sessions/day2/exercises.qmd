@@ -11,4 +11,29 @@ Mitch's section to learn the concepts on various datasets
 
 # Apply
 
-Bahman's section to apply the concepts to health data
+In this exercise, you will apply what you have learned so far on a dataset containing doses of administered vaccine in an African country.
+
+::: {.callout-caution}
+## Your turn!
+1. Transformation
+
+    - Add later
+    
+2. Computing features
+
+    - Computer average, standard deviation and coefficient of variation (cv) for the monthly time series 
+    - Compute all features for 9 monthly time series corresponding to vaccine doses adminstrated in 9 regions
+    - Examine the following features and provide an interpretation based on their values:
+      - spectral entropy
+      - trend
+      - seasonality
+      - acf1
+      - season_acf1
+  
+3. Visualizing features
+
+    - Create a scatter plot that shows the strength of trend versus strength of seasonality. What information does this plot convey?
+    - Which feature indicates how difficult/easy a time series is to forecast? Use that feature to create a distribution usign a boxplot or density plot, how such distribution could be informative?
+:::
+
+Using a feature that shows how difficult/easy is to forecast a time series and create a histogram to see the distribution of forecastability

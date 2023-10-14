@@ -1,0 +1,53 @@
+---
+title: "Lab exercise: day 2"
+editor: visual
+---
+
+# Learn
+
+# Apply
+
+## Transformation
+
+## Computing features
+
+We start by calculating some simple features including average (mean) and standard deviation (sd). You also need to know how to calculate the coefficient of variation. Complete the following code to do that:
+
+```{r}
+vaccine_administrated_tsb |>
+  ---(---, list(average = ---, standard_deviation = ---, coefficient_of_variation = ---/---))
+```
+
+You can also use *feasts* package to include about 48 different features providing various numerical summaries of time series. Complete the following code to compute those features for the monthly vaccine dose adminstrated:
+
+```{r}
+vaccine_administrated_features <- vaccine_administrated_tsb |>
+  ---(---,---(pkgs = ---))
+vaccine_administrated_features
+```
+
+::: callout-caution
+The dataset of administered vaccine doses currently comprises only nine time series. Nevertheless, there are cases where datasets may includes hundreds or even thousands of time series. The method applied here can be replicated with datasets of varying sizes, including those with thousands of time series.
+:::
+
+## Visualizing features
+
+1.  create a scatterplot to show the strength of trend and seasonality features:
+
+```{r}
+ggplot(data = vaccine_administrated_features, 
+       mapping = aes(x = ---, y = ---))+
+  geom_point()
+```
+
+Using a feature indicating the level of forecast difficulty or ease for a given time series, generate a histogram to visualize the distribution of forecastability within the dataset.
+
+```{r}
+ggplot(data = vaccine_administrated_features, 
+       mapping = aes(---))+
+  geom_density()
+```
+
+::: callout-caution
+This distribution would make more sense when you deal with a dataset containing hundreds or thousands of time series.
+:::

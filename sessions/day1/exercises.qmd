@@ -463,6 +463,7 @@ In this exercise, we use a dataset containing dose of BCG (Cacille Calmette-Gué
 
 In addition to the administered dose, it also includes data on the population of children under one year old, whether a strike occurred in a specific month and region, and whether a region is affected by flooding events.
 
+In this exercise, you will apply what you have learned so far on a dataset containing doses of administered vaccine in an African country.
 
 :::{.callout-caution}
 ## Your turn!

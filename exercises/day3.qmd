@@ -1,0 +1,148 @@
+---
+title: "Lab exercise: day 3"
+editor: visual
+---
+
+# Learn
+
+# Apply
+
+We proceed now by specifying and training models on administered vaccine doses. These models are then used to produce forecasts for the next 12 months beyond the latest data point.
+
+## Specify models and train models 
+
+We start with simple benchmark method: average, naive, snaive
+
+:::{.callout-tip}
+We specify models using the function corresponding to the name of the forecasting model. We use a formula (response ~ terms) to specify models and train models (i.e. estimate parameters) using `model(response ~ terms)` function. If there is no term for the method, we ignore the `~` and terms, (e.g. `MEAN(dose_adminstrated)`):
+:::
+
+Now, complete the following R chunk to specify and train there models: i) total average, ii) naive, iii) snaive
+
+```{r}
+vaccine_fit <- vaccine_administrated_tsb |>
+  ---(
+    --- = ---(---),
+    --- = ---(---),
+    --- = ---(---),
+  )
+vaccine_fit
+```
+
+:::{.callout-note}
+## Question
+Begin by examining the `vaccine_fit` object. What type of data structure is it? How many rows and columns are present, and what do they represent?
+:::
+
+
+## Extract information from `mable`
+
+You can extract fitted values and residuals for each model. Complete the following code to extract those values for all models
+
+```{r}
+vaccine_fit |> augment() 
+```
+
+You can use `filter()` to extract these values for a specific model. Complete the following code to see only results for naive model:
+
+```{r}
+vaccine_fit |> augment() |> filter(.model=="---")
+```
+
+use `select()` to get fitted values or residuals. Complete the R code to see residulas for the naive method:
+
+```{r}
+vaccine_fit |> augment() |> filter(.model=="---") |> select(---)
+```
+
+:::{.callout-warning}
+We can look into more details of the trained models (`mable`) using `tidy()`, `report()`, `glance()` and extract information related to trained models. These function would be more useful with models like Regression, exponential smoothing (ETS) and ARIMA and we use them later once these models are introduced.
+:::
+
+## Produce forecast
+
+In order to produce forecasts, we pass the `mable` object, `demand_fit`, to a function and specify the forecast horizon required. This will generate both point forecast and a distribution of forecasts based on Normal distribution. 
+
+Complete the following r code to produce forecasts of dose adminstrated for 12 months ahead:
+
+```{r}
+forecast_horizon = 12
+vaccine_forecast <- --- |> ---(h=---)
+vaccine_forecast
+```
+
+:::{.callout-note}
+## Question
+Observe the `vaccine_forecast` object. What type of data structure is it? How many rows and columns are present, and what do they represent?
+:::
+
+
+## Visualise foreacsts
+
+We can also plot generated forecasts using `autoplot()`, 
+
+```{r}
+#| label: plot-forecast
+vaccine_forecast |> 
+  ---(---)
+```
+
+While presenting the forecast alone might not be as informative, it is generally useful to plot it in conjunction with past data. Complete the following R code to incorporate past administered dose data along with its forecast for the next 12 months:
+
+```{r}
+#| label: plot-forecast
+--- |> 
+  ---(---,level=NULL)
+```
+
+:::{.callout-note}
+## Question
+What the argument `level=NULL` does? and what happends if you remove it?
+:::
+
+It might be hard to see the forecast lines in the above plot. To make forecasts more visible, we can plot a part of the time series data towards the end of the time series. You can use`filter_index()` or `tail()` for that. Complete the following code to see past data from 2020 until the end and its forecasts:
+
+```{r }
+--- |> autoplot(filter_index(---,"2020"~.), level=NULL)
+```
+
+
+# Extract prediction intervals
+
+You may want to extract prediction intervals for any coverage probability you are interested in. To be able to see values for lower bound and upper bound in separate columns, you also need to unpack the prediction intervals extracted. Complete the R code to acheive that:
+
+```{r}
+vaccine_forecast_interval <- vaccine_forecast |> 
+  ---(level = ---) |> ---(---)
+vaccine_forecast_interval
+
+
+```
+
+You may want to extract forecast you generated into Excel, it is easy to do it using `write_csv()` or 
+
+
+## Produce probabilistic forecast using bootstrapping
+
+Most time series models produce normally distributed forecasts — that is, we assume that the distribution of possible future values follows a normal distribution. 
+
+When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance. 
+you can also use `forecast()` directly to generate futures:
+
+```{r}
+#| label: bootstrap-forecast
+fc_bootstrap <- --- |>
+  ---(h = forecast_horizon, bootstrap = TRUE, times = ---)
+```
+
+
+You can use `generate()` function to generate futures using bootstrapping:
+
+
+```{r}
+#| label: bootstrap-generate
+fit <- --- |>
+  model(naive=NAIVE(---))
+sim_bootstrap <- fit |> ---(h = ---, times = ---, bootstrap = TRUE)
+sim_bootstrap
+```
