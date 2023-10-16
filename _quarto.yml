@@ -15,9 +15,9 @@ website:
   page-navigation: true
   title: "F4SG: Africast"
   description: "Homepage for forecasting for social good time series AFRICAST workshop"
-  site-url: "https://workshop.mitchelloharawild.com/f4sg-africa"
+  site-url: "https://workshop.f4sg.org/africast"
   
-  repo-url: https://github.com/mitchelloharawild/workshop-f4sg-africa
+  repo-url: https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa
   repo-actions: [edit, issue]
 
   # opengraph: true
@@ -41,15 +41,15 @@ website:
         text: Downloads
         menu: 
           - text: Everything
-            href: 'https://github.com/mitchelloharawild/workshop-f4sg-africa/archive/refs/heads/main.zip'
+            href: 'https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/archive/refs/heads/master.zip'
           - text: Slides
             href: 'slides.zip'
-          # - text: Lab sessions
-          #   href: 'labs.zip'
+          - text: Lab sessions
+            href: 'exercises.zip'
       - icon: file-certificate
         href: license.qmd
       - icon: github
-        href: https://github.com/mitchelloharawild/workshop-f4sg-africa
+        href: https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa
     left:
       - text: Sessions
         menu: 
@@ -84,4 +84,3 @@ format:
     code-copy: true
     code-overflow: wrap
     mainfont: "Open Sans"
-    include-after-body: plausible.html
