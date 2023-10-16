@@ -11,4 +11,77 @@ Mitch's section to learn the concepts on various datasets
 
 # Apply
 
-Bahman's section to apply the concepts to health data
+
+In this part, we evaluate the forecast accuracy of all models we have covered so far using a simple train/test split and time series cross validation.
+
+:::{.callout-caution}
+## Basic of train/test forecast accuracy
+1. Split the data into train and test ensuring the number of months in the test set equals the forecast horizon
+
+2. Specify and train the following models on the train data:
+
+    - Average
+    - Naive
+    - Seasonal Naive
+    - ETS
+    - ARIMA
+    - Regression with trensd and seasonality
+    - Regression with trensd, seasonality, and population_under1
+    - Regression with trensd, seasonality, population_under1, and strike
+    - Combination of ETS and ARIMA
+
+3. Produce forecasts
+
+    - Replace the values of population in the test set with its estimation
+    - Produce forecasts for dose adminstrated
+
+4. Compute forecast accuracy including point forecast accuracy, prediction interval and probabilistic forecasts
+
+5. Visualise the forecasts
+:::
+
+:::{.callout-caution}
+## Advanced performance evaluation
+
+### Time series cross validation
+
+1. Split the data into test and train
+
+    - the size of test set equals the $20% (30%)$ of the length of the time series
+    - the size of test set equals the $80% (70%)$ of the length of the time series
+
+2. Apply time series cross-validation technique to create different time series rolling origins for both the train and test set
+
+3. Replace the values of population in the cross-validated test set with its estimations
+
+4. Specify and train the following models on the cross-validated train dataset:
+
+    - Average
+    - Naive
+    - Seasonal Naive
+    - ETS
+    - ARIMA
+    - Regression with trensd and seasonality
+    - Regression with trensd, seasonality, and population_under1
+    - Regression with trensd, seasonality, population_under1, and strike
+    - Combination of ETS and ARIMA
+
+5. Produce forecasts
+
+6. Compute forecast accuracy including point forecast accuracy, prediction interval and probabilistic forecasts
+
+    - Compute total average forecast accuracy across all orinigs and horizons
+    - Compute and visualise forecast accuracy across all horizons for each origin
+    - Compute average forecast accuracy across all orinigs for each horizon
+
+7. Specify, train and forecast using the most accurate model and visualise forecast
+
+### Residual diagnostics
+1. Extract residuals from the model table from the most accurate model
+
+2. Produce the time plot of residuals from the most accurate model
+
+3. Create the histogram of residuals from the most accurate model
+
+4. Produce the ACF plot of of residuals from the most accurate model
+:::

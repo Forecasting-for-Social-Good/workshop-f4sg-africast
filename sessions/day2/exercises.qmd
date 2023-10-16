@@ -11,9 +11,8 @@ Mitch's section to learn the concepts on various datasets
 
 # Apply
 
-In this exercise, you will apply what you have learned so far on a dataset containing doses of administered vaccine in an African country.
 
-::: {.callout-caution}
+:::{.callout-caution}
 ## Your turn!
 1. Transformation
 
@@ -33,7 +32,5 @@ In this exercise, you will apply what you have learned so far on a dataset conta
 3. Visualizing features
 
     - Create a scatter plot that shows the strength of trend versus strength of seasonality. What information does this plot convey?
-    - Which feature indicates how difficult/easy a time series is to forecast? Use that feature to create a distribution usign a boxplot or density plot, how such distribution could be informative?
+    - Which feature indicates how difficult/easy a time series is to forecast? Use that feature to create a distribution of forecastability of time series usign a boxplot or density plot. How such distribution could be informative?
 :::
-
-Using a feature that shows how difficult/easy is to forecast a time series and create a histogram to see the distribution of forecastability

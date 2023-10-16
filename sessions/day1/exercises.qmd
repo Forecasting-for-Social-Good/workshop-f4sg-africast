@@ -465,6 +465,14 @@ In addition to the administered dose, it also includes data on the population of
 
 In this exercise, you will apply what you have learned so far on a dataset containing doses of administered vaccine in an African country.
 
+## About the dataset
+
+In this exercise, we use a dataset containing dose of BCG (Cacille Calmette-Guérin), vaccine administrated in 9 regions of an African country from January 2013 untill December 2021. BCG is a widely administered vaccine primarily used to protect against tuberculosis (TB), a serious infection that primarily affects the lungs but can also affect other parts of the body. BCG vaccination is recommended for newborn babies at risk of tuberculosis (TB) and is typically administered shortly after birth, usually within the first 28 days of life.
+
+In addition to the administered dose, it also includes data on the population of children under one year old, whether a strike occurred in a specific month and region, and whether a region is affected by flooding events.
+
+In this exercise, you will apply what you have learned so far on a dataset containing doses of administered vaccine in an African country. 
+
 :::{.callout-caution}
 ## Your turn!
 1. Import `vaccine_adminstrated.csv` data into R

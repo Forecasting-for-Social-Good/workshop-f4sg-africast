@@ -11,12 +11,49 @@ Mitch's section to learn the concepts on various datasets
 
 # Apply
 
-In this exercise, we specify and train models on past administered vaccine doses. Following that, we produce forecasts of future administered vaccine doses, for the next 12 months, beyond the latest data point.
+In this exercise, we first use simple models to produce forecasts of future administered vaccine doses for the next 12 months. Following that, we use regression models to produce such a forecast.
 
 :::{.callout-caution}
-1. Specify and train three simple models including total average, naive and seasonal naive on administered vaccine doses
-2. Produce forecasts for 12 months ahead including both point forecast and forecast distribution
-3. Visualize the point forecasts alongside past values, as well as prediction interval for $90%$ coverage
-3. Extract prediction intervals for $90%$ coverage
-4. Produce probabilistic forecast using bootstrapping instead of assuming normal distribution. Generate 1000 possible future
+## Basic of modelling/forecating
+1. Specify and train three simple models including total average, naive and seasonal naive on administered vaccine doses.
+
+2. Examine the model table (`mable`) object and describe what each column and row represent.
+
+3. Use `report()`, `tidy()`, `glance()` and `augment()` to explore the trained model's output.
+
+4. Produce forecasts for 12 months ahead including both point forecast and forecast distribution.
+
+5. Examine the forecast table (`fable`) object and explain what each column and row represent.
+
+6. Visualize the point forecasts alongside past values, as well as prediction interval for $90%$ coverage.
+
+7. Extract prediction intervals for $90%$ coverage.
+
+8. Produce probabilistic forecast using bootstrapping instead of assuming normal distribution. Generate 1000 possible future.
+:::
+
+
+:::{.callout-caution}
+## Forecating using regression
+1. Examine the association between `dose_adminstrated` and predictors
+
+    - Assess the association between `dose_adminstrated` and `population_under1`
+    - Assess the association between `dose_adminstrated` and `strike`
+    - Examine the association between leading predictors of `population_under1` and `dose_adminstrated`
+
+2. Specify and train the four different regression models with the following terms:
+
+    - trensd and seasonality
+    - trensd, seasonality, and population_under1
+    - trensd, seasonality, population_under1, and strike
+
+3. Examine trained model output using `report()`, `tidy()`, and `glance()` and `augment()`
+
+4. Produce forecast
+
+    - Use `new_data()` to generate future months corresponding to forecast horizon
+    - Add future values for the strike
+    - Add future values for the population_under1 
+    - Generate forecasts for future periods
+5. Visualize forecasts
 :::

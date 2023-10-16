@@ -94,7 +94,7 @@ vaccine_administrated
 
 After importing your data, it's important to double-check the structure of the data and the data types of the variables. The structure of the data you import into R must be a `tibble`.
 
-:::{.callout-note}
+::: callout-note
 ## Question
 
 Verify the data type of each variable in `vaccine_administered`. We may need to modify the data type of `month`, `strike`, `flooding_events`. Could you explain why?
@@ -121,13 +121,13 @@ It's essential to always check for any missing values and address them before cr
 anyNA(vaccine_administrated)
 ```
 
-:::{.callout-caution}
+::: callout-caution
 The dataet you use may contain missing values (`NA` in R) and other data quality issues. While checking and fixing data quality issues are crucial for any project, addressing such issues goes beyond the scope of this training. For further information, you may refer to additional resources \[Link\].
 :::
 
 ### Check duplications and fix it
 
-:::{.callout-important}
+::: callout-important
 Before you move forward, it's important to consistently examine your data for any duplicated observations. If such duplications are identified, address them before moving forward.
 :::
 
@@ -137,7 +137,7 @@ Write a r code to check for duplicate observations in the data.
 
 ```
 
-:::{.callout-note}
+::: callout-note
 ## Question
 
 Have you identified any duplicate observations?
@@ -145,7 +145,7 @@ Have you identified any duplicate observations?
 
 If your data contains no duplicates, you may proceed with creating a tsibble. Otherwise, you need to fix it.
 
-:::{.callout-note}
+::: callout-note
 ## Question
 
 How do you fix duplicated observations?
@@ -167,7 +167,7 @@ ambulance_demand_tsb
 
 After creating a tsibble, it's important to check for any temporal gaps. If gaps are found, you could scan and count them. In this case, it's crucial to fill them before proceeding. However, if you're fortunate enough not to have any temporal gaps, no action is needed.
 
-Which functions do you use to check for temporal gaps? complete the following R chunk:
+Complete the following R chunk to check if there is any temporal gap in the data:
 
 ```{r}
 ---(vaccine_administrated_tsb)#check gaps
@@ -175,9 +175,13 @@ Which functions do you use to check for temporal gaps? complete the following R 
 ##---(vaccine_administrated_tsb)# count gaps
 ```
 
-Is there any temporal gap in the data?
+::: callout-note
+## Question
 
-:::{.callout-tip}
+Is there any temporal gap in the data?
+:::
+
+::: callout-tip
 At times, you may come across a dataset with temporal gaps, signifying intervals where no records exist in the temporal data. Prior to do any analysis, it's important to identify and fill those gaps. You can use the below R code if such temporal gaps are present in the dataset.
 :::
 
@@ -190,20 +194,19 @@ At times, you may come across a dataset with temporal gaps, signifying intervals
 
 Depending on the decision your forecast will inform, you may need to manipulate your tsibble. For instance, if you're forecasting the total dose administered in the country, or if you need to forecast quarterly doses administered for each region or for the entire country, you need to manipulate your time series frist.
 
-:::{.callout-tip}
+::: callout-tip
 Remember, you can use `index_by()`, `group_by()` or `group_by_key()`, and `summarise()` to create different temporal granularity.
 :::
 
 Complete the following code to create total dose administrated in the country.
 
 ```{r}
-#| label: monthly-total
 vaccine_administrated_total <- vaccine_administrated_tsb |> 
   ---(---) |>
   summarise(dose_adminstrated = ---(---))
 ```
 
-How would you create quarterly time series of dose administrated in each region?
+Depending on the forecasting task on hand, you may need to work with other time granularities such as quarterly time series.
 
 Complete the following code to create total dose administrated in the country.
 
@@ -214,7 +217,7 @@ quarterly_vaccine_administrated <- vaccine_administrated_tsb |>
   summarise(dose_adminstrated = ---(---))
 ```
 
-What if you need to create quarterly dose administrated in the country, Write the R to achieve that.
+What if you need to create quarterly dose administrated in each region, write the R to achieve that.
 
 ```{r}
 
@@ -240,7 +243,11 @@ vaccine_administrated_tsb |>
   ---(---)
 ```
 
+::: callout-note
+### Question
+
 Do you observe any systematic pattern in time series plots?
+:::
 
 ### Seasonal plots
 
@@ -259,7 +266,11 @@ vaccine_administrated_tsb |>
   ---(---)
 ```
 
+::: callout-note
+### Question
+
 Do you observe any consistent pattern? How different the pattern is across region?
+:::
 
 ### Seasonal subseries plot
 
@@ -271,7 +282,11 @@ vaccine_administrated_tsb |>
   ---(---)
 ```
 
-Dp you observe any pattern that has not been obvious with time plot and season plot?
+::: callout-note
+### Question
+
+Do you see any pattern that has not been obvious with time plot and seasonal plot?
+:::
 
 ### ACF plots
 
@@ -292,4 +307,8 @@ vaccine_administrated_tsb |>
   autoplot()
 ```
 
-What can you say about the correlation between dose administrated in each month?
+::: callout-note
+### Question
+
+What can you say about the correlation between dose administrated with its lags?
+:::

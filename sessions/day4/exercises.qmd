@@ -11,4 +11,37 @@ Mitch's section to learn the concepts on various datasets
 
 # Apply
 
-Bahman's section to apply the concepts to health data
+
+In this exercise, you use exponetial smoothing and ARIMA models to produce forecasts of future administered vaccine doses for the next 12 months.
+:::{.callout-caution}
+## ETS
+1. Specify and train automatic Exponential Smoothing model
+
+2. Observe the model table and explain what each row and column represent
+
+3. Extract ETS model's output using `report()`, `tidy()`, `glance()`
+
+4. Extract the components of the selected ETS model
+
+5. Generate forecasts using ETS and observe the forecast table
+
+6. Visualize forecasts
+
+7. Use the specific functions to determine manually the components and parameters of ETS models
+
+:::
+
+:::{.callout-caution}
+## ARIMA
+1. Specify and train automatic ARIMA model
+
+2. Observe the model table and explain what each row and column represent
+
+3. Extract ARIMA model's output using `report()`, `tidy()`, `glance()`
+
+4. Generate forecasts using ARIMA
+
+5. Visualize forecasts
+
+6. Determine model components manually
+:::

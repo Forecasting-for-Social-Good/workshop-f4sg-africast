@@ -11,7 +11,7 @@ editor: visual
 
 ## Computing features
 
-We start by calculating some simple features including average (mean) and standard deviation (sd). You also need to know how to calculate the coefficient of variation. Complete the following code to do that:
+You can start by calculating some simple features including average (mean) and standard deviation (sd). You also need to know how to calculate the coefficient of variation. Complete the following code to do that:
 
 ```{r}
 vaccine_administrated_tsb |>
@@ -26,13 +26,13 @@ vaccine_administrated_features <- vaccine_administrated_tsb |>
 vaccine_administrated_features
 ```
 
-::: callout-caution
+:::{.callout-caution}
 The dataset of administered vaccine doses currently comprises only nine time series. Nevertheless, there are cases where datasets may includes hundreds or even thousands of time series. The method applied here can be replicated with datasets of varying sizes, including those with thousands of time series.
 :::
 
 ## Visualizing features
 
-1.  create a scatterplot to show the strength of trend and seasonality features:
+Create a scatterplot to show the strength of trend and seasonality features:
 
 ```{r}
 ggplot(data = vaccine_administrated_features, 
@@ -48,6 +48,6 @@ ggplot(data = vaccine_administrated_features,
   geom_density()
 ```
 
-::: callout-caution
+:::{.callout-caution}
 This distribution would make more sense when you deal with a dataset containing hundreds or thousands of time series.
 :::
