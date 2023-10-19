@@ -34,7 +34,7 @@ fit <- train |> model(
 #### Values of population and strike in the test set
 
 ```{r}
-fcs_ets_population <- train |> model(ets=ETS(---)) |> forecast(h=forecast_horizon)
+fcs_ets_population <- train |> model(ets=ETS(???)) |> forecast(h=forecast_horizon)
 
 population_forecast <- fcs_ets_population |> as_tibble() |> select(.mean)
 
@@ -46,29 +46,28 @@ test_future <- bind_cols(test,population_forecast) |>
 
 #### Produce forecasts for dose adminstrated
 
-
 ```{r}
-forecast_vaccine <- --- |> 
-  ---(--- = ---)
+forecast_vaccine <- ??? |> 
+  ???(??? = ???)
 ```
 
 you can visualise your forecast and see how the forecast looks like visually for the 42 days we predicted:
 
 ```{r visualise}
 forecast_vaccine |> 
-  autoplot(filter_index(---, "2020" ~ .), level=NULL)
+  autoplot(filter_index(???, "2020" ~ .), level=NULL)
 ```
 
-### Compute forecast accuracy 
+### Compute forecast accuracy
 
 Calculating the forecast accuracy is similar to other models:
 
 ```{r}
---- |> 
-  ---(---,
-           measures = list(---,
-                           ---,
-                           ---
+??? |> 
+  ???(???,
+           measures = list(???,
+                           ???,
+                           ???
 ))
 ```
 
@@ -80,7 +79,7 @@ This is also called rolling forecast or rolling origin: You can also reflect on 
 
 let's see how we do it in R:
 
-####  split data
+#### split data
 
 We initially split the data into test and train, the size of test set equals the forecast horizon, we use this for the purpose of visualisating the forecasts, not deciding which model is the best (more accurate)
 
@@ -112,8 +111,8 @@ test_tscv <- test |>
 It is important to replace average_daily_temperature values in the test_tr with its estimation, otherwise we use perfect forecast for the temperature in the regression model which can mislead us in choosing the most accurate model. I don't have access to the forecast, so here I forecast them using ETS:
 
 ```{r}
-fcs_ets_population_tscv <- --- |> 
-  model(ets=ETS(---)) |> 
+fcs_ets_population_tscv <- ??? |> 
+  model(ets=ETS(???)) |> 
   forecast(h=forecast_horizon)
 
 population_forecast_tscv <- fcs_ets_population_tscv |> as_tibble() |> select(.mean)
@@ -128,7 +127,7 @@ test_future_tscv <- bind_cols(test_tscv,population_forecast_tscv) |>
 We can train time series cross validation time series with regression models and any other models:
 
 ```{r fsct-regression}
-fit_tscv <- --- |> 
+fit_tscv <- ??? |> 
   model(
     #wrire your code here
   )
@@ -140,8 +139,8 @@ fit_tscv
 We can forecast using trained models:
 
 ```{r forecast-regression, options}
-fcst_tscv <- --- |> 
-  forecast(--- = ---)
+fcst_tscv <- ??? |> 
+  forecast(??? = ???)
 fcst_tscv
 ```
 
@@ -150,11 +149,11 @@ fcst_tscv
 Let's compare the forecast accuracy of all models:
 
 ```{r}
-fcst_accuracy <- --- |> 
-  ---(---,
-           --- = ---(---,
-                     ---,
-                     ---
+fcst_accuracy <- ??? |> 
+  ???(???,
+           ??? = ???(???,
+                     ???,
+                     ???
 )) 
 
 fcst_accuracy |> select(.model, RMSE,MAE,winkler) |> arrange(RMSE,MAE,winkler)
@@ -165,7 +164,6 @@ fcst_accuracy |> select(.model, RMSE,MAE,winkler) |> arrange(RMSE,MAE,winkler)
 ```
 
 The best forecasting method from the pool of methods we selected is regression with holidays(well, this could also be improved by including more variables or removing the holidays that are not significant).
-
 
 You calculate the point forecast accuracy using `accuracy()` function. `accuracy()` needs both the forecast object(fable) and actual data.
 
@@ -182,15 +180,15 @@ This will provide a summary of multiple accuracy measures. The result is summari
 Now let's see how we can get the accuracy measure for each .id separately instead of averaging across all of them. To do this, you need to use an additional argument in accuracy(by=):
 
 ```{r label, options}
-fc_accuracy_by_id <- --- |> 
-  accuracy(---, by = c(---, ---))
+fc_accuracy_by_id <- ??? |> 
+  accuracy(???, by = c(???, ???))
 #accuracy(ambulance_demand_total, by = c(".model", ".id"))
 ```
 
 We can now create some insightful visualisations:
 
 ```{r label, options}
---- |> 
+??? |> 
   select(.id,.model,MASE) |> 
   ggplot(aes(MASE))+
     geom_density(aes(fill=factor(.model)), alpha=.5)
@@ -198,7 +196,7 @@ We can now create some insightful visualisations:
 ```
 
 ```{r label, options}
---- |> 
+??? |> 
   select(.id,.model,MASE) |> 
 ggplot(aes(y= fct_reorder(.model,MASE), x=MASE))+
     geom_boxplot()
@@ -228,13 +226,13 @@ Now check rows from 42 to 50 to see the difference.
 To calculate the accuracy measures for each horizon and model, follow this:
 
 ```{r accuracu_h}
-fc_accuracy <- --- |> 
+fc_accuracy <- ??? |> 
   as_fable(response = "dose_adminstrated", distribution = "dose_adminstrated") |> 
-accuracy(---, 
+accuracy(???, 
            measures = list(point_accuracy_measures, 
                            interval_accuracy_measures, 
                            distribution_accuracy_measures),
-           by = c("---","--"))
+           by = c("???","--"))
 
 ```
 
@@ -248,7 +246,6 @@ ggplot(data = fc_accuracy,
   ggthemes::scale_color_colorblind()+
 ggthemes::theme_clean()
 ```
-
 
 ### Forecast using best model for the future and visualise it
 
@@ -270,7 +267,7 @@ future_month_strike <- future_month |>
 Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:
 
 ```{r}
-forecast_population <- vaccine_administrated_tsb |> model(regression_population=TSLM(---)) |> forecast(h=---)
+forecast_population <- vaccine_administrated_tsb |> model(regression_population=TSLM(???)) |> forecast(h=???)
 
 population_point_forecast <- forecast_population |> as_tibble() |> select(.mean)
 ```
@@ -283,46 +280,44 @@ test_future <- bind_cols(future_month_strike, population_point_forecast) |>
 Forecast using regression with holidays for the future:
 
 ```{r forecast-regression, options}
-fcst <- --- |> 
+fcst <- ??? |> 
   model() |> 
   forecast(new_data = test_future)
 ```
 
 ```{r visualise}
-fcst |> autoplot(filter_index(---, "2020" ~ .))# visualise it
+fcst |> autoplot(filter_index(???, "2020" ~ .))# visualise it
 ```
 
 ### Residual diagnostics
 
-
 ```{r }
 fit <- vaccine_administrated_tsb |>
-  model(--- = ---(---)) |>
+  model(??? = ???(???)) |>
   augment()
 ```
 
 ```{r label, options}
-autoplot(fit, ---) +
+autoplot(fit, ???) +
   labs(title = "Residuals from the from the most accurate model")
 ```
 
 ```{r label, options}
---- |>
-  ggplot(aes(x = ---)) +
-  ---() +
+??? |>
+  ggplot(aes(x = ???)) +
+  ???() +
   labs(title = "Histogram of residuals from the most accurate model")
 ```
 
 ```{r label, options}
---- |>
-  ---(---) |>
+??? |>
+  ???(???) |>
   autoplot() +
   labs(title = "Residuals from the most accurate model")
 ```
 
-
 ```{r label, options}
 vaccine_administrated_tsb |>
-  model(--- = ---(---)) |>
-  ---()
+  model(??? = ???(???)) |>
+  ???()
 ```
