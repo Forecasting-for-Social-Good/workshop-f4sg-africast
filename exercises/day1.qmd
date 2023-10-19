@@ -1,7 +1,7 @@
----
+???
 title: "Lab exercise: day 1"
 editor: visual
----
+???
 
 # Learn
 
@@ -84,15 +84,15 @@ tourism |>
 
 ## Import `vaccine_adminstrated.csv` data into R
 
-Let's first read and observe the dataset. This dataset is located in`data` directory inside the project:
+Let's first import data and observe it. This dataset is located in`data` directory in the working directory:
 
 ```{r}
 #| label: vaccine
-vaccine_administrated <- ---("data/vaccine_adminstrated.csv")
+vaccine_administrated <- read_csv("data/vaccine_adminstrated.csv")
 vaccine_administrated
 ```
 
-After importing your data, it's important to double-check the structure of the data and the data types of the variables. The structure of the data you import into R must be a `tibble`.
+After importing your data, it's important to double-check the structure of the data and the data types of the variables. The structure of the data you import into R must be a tibble/data frame.
 
 ::: callout-note
 ## Question
@@ -103,10 +103,7 @@ Verify the data type of each variable in `vaccine_administered`. We may need to 
 ```{r}
 library(lubridate)
 vaccine_administrated <- vaccine_administrated |> 
-  mutate(month = ---(month), strike = ---(strike), flooding_events = ---(flooding_events))
-
-vaccine_administrated <- vaccine_administrated |> 
-  mutate(month = ym(month), strike = as_factor(strike), flooding_events = as_factor(flooding_events))
+  mutate(month = ???(month), strike = ???(strike))
 ```
 
 ## Prepare your data
@@ -159,7 +156,7 @@ Complete the following R chunk to create a tsibble.
 
 ```{r}
 vaccine_administrated_tsb <- vaccine_administrated |> 
-  ---(index = ---, key=---)
+  ???(index = ???, key=???)
 ambulance_demand_tsb
 ```
 
@@ -170,9 +167,9 @@ After creating a tsibble, it's important to check for any temporal gaps. If gaps
 Complete the following R chunk to check if there is any temporal gap in the data:
 
 ```{r}
----(vaccine_administrated_tsb)#check gaps
-##---(vaccine_administrated_tsb)# show me gaps
-##---(vaccine_administrated_tsb)# count gaps
+???(vaccine_administrated_tsb)#check gaps
+##???(vaccine_administrated_tsb)# show me gaps
+##???(vaccine_administrated_tsb)# count gaps
 ```
 
 ::: callout-note
@@ -187,7 +184,7 @@ At times, you may come across a dataset with temporal gaps, signifying intervals
 
 ```{r}
 #If there is any gap, then fill it using fill_gaps.
-#vaccine_administrated_tsb <- vaccine_administrated_tsb |> fill_gaps(---)
+#vaccine_administrated_tsb <- vaccine_administrated_tsb |> fill_gaps(???)
 ```
 
 ## Manipulating time series
@@ -202,8 +199,8 @@ Complete the following code to create total dose administrated in the country.
 
 ```{r}
 vaccine_administrated_total <- vaccine_administrated_tsb |> 
-  ---(---) |>
-  summarise(dose_adminstrated = ---(---))
+  ???(???) |>
+  summarise(dose_adminstrated = ???(???))
 ```
 
 Depending on the forecasting task on hand, you may need to work with other time granularities such as quarterly time series.
@@ -213,8 +210,8 @@ Complete the following code to create total dose administrated in the country.
 ```{r}
 #| label: quarterly
 quarterly_vaccine_administrated <- vaccine_administrated_tsb |>
-  ---(quarter = ---(---)) |>
-  summarise(dose_adminstrated = ---(---))
+  ???(quarter = ???(???)) |>
+  summarise(dose_adminstrated = ???(???))
 ```
 
 What if you need to create quarterly dose administrated in each region, write the R to achieve that.
@@ -232,15 +229,15 @@ To understand your data, you can start by producing time plot of dose administra
 
 ```{r}
 vaccine_administrated_tsb |> 
-  ---(---)
+  ???(???)
 ```
 
 You can also focus on any region by filtering the region:
 
 ```{r}
 vaccine_administrated_tsb |> 
-  filter(region == "---") |> 
-  ---(---)
+  filter(region == "???") |> 
+  ???(???)
 ```
 
 ::: callout-note
@@ -255,15 +252,15 @@ In time series analysis, we are looking for consistent pattern. Complete the fol
 
 ```{r}
 vaccine_administrated_tsb |> 
-  ---(---)
+  ???(???)
 ```
 
 It might not be easy to see the systematic pattern when you plot many time series together,instead you can first filter the time series of interest and then plot it:
 
 ```{r}
 vaccine_administrated_tsb |> 
-  filter(--- == "---") |> 
-  ---(---)
+  filter(??? == "???") |> 
+  ???(???)
 ```
 
 ::: callout-note
@@ -278,8 +275,8 @@ You might be also interested in observing how doses administrated within each mo
 
 ```{r}
 vaccine_administrated_tsb |> 
-  filter(--- == "---") |> 
-  ---(---)
+  filter(??? == "???") |> 
+  ???(???)
 ```
 
 ::: callout-note
@@ -294,16 +291,16 @@ In forecasting, we would be interested in understanding how similar a time serie
 
 ```{r}
 vaccine_administrated_tsb |> 
-  ACF(---, lag_max = ---) |> 
-  ---()
+  ACF(???, lag_max = ???) |> 
+  ???()
 ```
 
 You can also focus on any time series of interest by filtering the region:
 
 ```{r}
 vaccine_administrated_tsb |> 
-  filter(--- == "---") |> 
-  ACF(---, lag_max = ---) |> 
+  filter(??? == "???") |> 
+  ACF(???, lag_max = ???) |> 
   autoplot()
 ```
 

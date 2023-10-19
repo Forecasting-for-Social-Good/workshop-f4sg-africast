@@ -1,0 +1,358 @@
+---
+title: "Time Series Analysis & Forecasting Using R"
+subtitle: "6. Introduction to forecasting"
+---
+
+## Outline
+
+\vspace*{0.7cm}\tableofcontents
+
+
+```{r}
+#| label: setup
+#| include: false
+#| cache: false
+source("setup.R")
+h02 <- tsibbledata::PBS |>
+  filter(ATC2 == "H02") |>
+  summarise(Cost = sum(Cost))
+melsyd <- tsibbledata::ansett |>
+  filter(Airports == "MEL-SYD")
+```
+
+
+# Time series cross-validation
+
+## Issue with traditional train/test split 
+
+```{r t_evl, echo=FALSE, out.width='90%'}
+knitr::include_graphics("figs/f_test.jpg")
+```
+
+## Time series cross-validation {-}
+
+```{r split_cv, echo=FALSE}
+knitr::include_graphics("figs/f_future.jpg")
+```
+
+## Time series cross-validation {-}
+
+**Time series cross-validation**
+
+```{r cv1, cache=TRUE, echo=FALSE, fig.height=4}
+par(mar=c(0,0,0,0))
+plot(0,0,xlim=c(0,28),ylim=c(0,1),
+       xaxt="n",yaxt="n",bty="n",xlab="",ylab="",type="n")
+i <- 1
+for(j in 1:10)
+{
+  test <- (16+j):26
+  train <- 1:(15+j)
+  arrows(0,1-j/20,27,1-j/20,0.05)
+  points(train,rep(1-j/20,length(train)),pch=19,col="blue")
+  if(length(test) >= i)
+    points(test[i], 1-j/20, pch=19, col="red")
+  if(length(test) >= i)
+    points(test[-i], rep(1-j/20,length(test)-1), pch=19, col="gray")
+  else
+    points(test, rep(1-j/20,length(test)), pch=19, col="gray")
+}
+text(28,.95,"time")
+```
+
+\pause
+
+ * Forecast accuracy averaged over test sets.
+ * Also known as "evaluation on a rolling forecasting origin"
+
+ \vspace*{10cm}
+
+## Creating the rolling training sets 
+
+\fontsize{13}{14}\sf
+
+There are three main rolling types which can be used.
+
+* Stretch: extends a growing length window with new data.
+* Slide: shifts a fixed length window through the data.
+* Tile: moves a fixed length window without overlap.
+
+Three functions to roll a tsibble: `stretch_tsibble()`, `slide_tsibble()`,
+and `tile_tsibble()`.
+
+For time series cross-validation, stretching windows are most commonly used.
+
+## Creating the rolling training sets 
+
+```{r animate, echo = FALSE, warning = FALSE, message = FALSE, fig.show='animate', interval=1/10, fig.height=4, fig.width=8, aniopts='controls,buttonsize=0.3cm,width=11.5cm'}
+library(tidyverse)
+library(gganimate)
+tourism_melb <- tourism %>% 
+  filter(Region == "Melbourne", Purpose == "Holiday")
+types <- forcats::fct_inorder(c("Slide", "Tile", "Stretch"))
+slide_window <- slider(tourism_melb$Quarter, .size = 4) %>%
+  map_dfr(function(x) tibble(xmin = min(x), xmax = max(x))) %>%
+  mutate(ymin = -Inf, ymax = Inf, group = row_number(), type = types[1])
+
+tile_window <- tiler(tourism_melb$Quarter, .size = 4) %>%
+  map_dfr(function(x) tibble(xmin = min(x), xmax = max(x))) %>%
+  mutate(ymin = -Inf, ymax = Inf, type = types[2])
+tile_window <- tile_window[c(rep(1:20, each = 4)), ] %>% 
+  mutate(group = row_number())
+
+stretch_window <- stretcher(tourism_melb$Quarter, .init = 4) %>%
+  map_dfr(function(x) tibble(xmin = min(x), xmax = max(x))) %>%
+  mutate(ymin = -Inf, ymax = Inf, group = row_number(), type = types[3])
+
+window <- bind_rows(slide_window, tile_window, stretch_window)
+
+ggplot() +
+  geom_line(aes(x = Quarter, y = Trips), data = tourism_melb, colour = "grey", size = 1.2) +
+  geom_rect(aes(
+    xmin = xmin, xmax = xmax,
+    ymin = ymin, ymax = ymax,
+    group = group
+  ), data = window, 
+  fill = "#9ecae1", colour = "#9ecae1", size = 1.5, alpha = 0.6) +
+  xlab("Quarter") +
+  ylab("Trips") +
+  facet_wrap(~ type, ncol = 1) +
+  theme_bw() +
+  transition_manual(group)
+```
+
+## Time series cross-validation {-}
+
+\fontsize{12}{13}\sf
+
+Stretch with a minimum length of 24, growing by 1 each step.
+
+```{r google-stretch, cache=TRUE, dependson="split_in_r"}
+forecast_horizon <- 12
+test <- antidiabetic_drug_sale %>% 
+  slice((n()-forecast_horizon+1):n())
+train <- antidiabetic_drug_sale %>%
+  slice(1:(n()-forecast_horizon))
+drug_sale_tcsv <-  train %>% slice(1:(n()-forecast_horizon)) %>% 
+  stretch_tsibble(.init = 24, .step = 1)
+```
+
+\fontsize{10}{11}\sf
+```{r stretch-print, echo = FALSE}
+drug_sale_tcsv %>% print(n = 4)
+```
+
+## Time series cross-validation {-}
+
+\small
+
+Estimate RW w/ drift models for each window.
+
+```{r google-fit, cache = TRUE}
+drug_fit_tr <- drug_sale_tcsv %>% 
+  model(snaive=SNAIVE(Cost))
+```
+
+\fontsize{10}{11}\sf
+```{r google-fit-print, echo = FALSE}
+print(drug_fit_tr, n = 4)
+```
+
+## Time series cross-validation {-}
+
+\small
+
+Produce 8 step ahead forecasts from all models.
+
+```{r google-fc, cache = TRUE}
+drug_fc_tr <- drug_fit_tr %>% 
+  forecast(h=forecast_horizon) %>% 
+  group_by(.id) %>% 
+  mutate(h=row_number()) %>% 
+  ungroup()
+```
+
+\fontsize{10}{11}\sf
+```{r google-fc-print, echo = FALSE}
+drug_fc_tr %>% print(n = 4)
+```
+
+## Time series cross-validation {-}
+
+\small
+
+```{r google-accuracy, cache = TRUE, results = 'hide', eval = FALSE}
+# Cross-validated
+drug_fc_tr %>% accuracy(antidiabetic_drug_sale)
+```
+
+
+# Residual diagnostics
+
+## Forecasting residuals
+
+\begin{block}{}
+\textbf{Residuals in forecasting:} difference between observed value and its fitted value: $e_t = y_t-\hat{y}_{t|t-1}$.
+\end{block}
+\pause\fontsize{13}{15}\sf
+
+\alert{Assumptions}
+
+  1. $\{e_t\}$ uncorrelated. If they aren't, then information left in  residuals that should be used in computing forecasts.
+  2. $\{e_t\}$ have mean zero. If they don't, then forecasts are biased.
+
+\pause
+
+\alert{Useful properties} (for prediction intervals)
+
+  3. $\{e_t\}$ have constant variance.
+  4. $\{e_t\}$ are normally distributed.
+
+## Facebook closing stock price
+\fontsize{9}{10}\sf
+
+```{r fbf}
+fb_stock <- gafa_stock |>
+  filter(Symbol == "FB")
+fb_stock |> autoplot(Close)
+```
+
+## Facebook closing stock price
+\fontsize{10}{10}\sf
+
+```{r augment}
+fb_stock <- fb_stock |>
+  mutate(trading_day = row_number()) |>
+  update_tsibble(index = trading_day, regular = TRUE)
+fit <- fb_stock |> model(NAIVE(Close))
+augment(fit)
+```
+
+## Facebook closing stock price
+\fontsize{10}{10}\sf
+
+```{r dj4, echo=TRUE, warning=FALSE, fig.height=3.4, dependson="augment"}
+augment(fit) |>
+  ggplot(aes(x = trading_day)) +
+  geom_line(aes(y = Close, colour = "Data")) +
+  geom_line(aes(y = .fitted, colour = "Fitted"))
+```
+
+## Facebook closing stock price
+\fontsize{10}{10}\sf
+
+```{r dj4a, echo=TRUE, warning=FALSE, fig.height=3.4, dependson="augment"}
+augment(fit) |>
+  filter(trading_day > 1100) |>
+  ggplot(aes(x = trading_day)) +
+  geom_line(aes(y = Close, colour = "Data")) +
+  geom_line(aes(y = .fitted, colour = "Fitted"))
+```
+
+## Facebook closing stock price
+\fontsize{10}{10}\sf
+
+```{r dj5, echo=TRUE, warning = FALSE, dependson="augment"}
+augment(fit) |>
+  autoplot(.resid) +
+  labs(x = "Day", y = "", title = "Residuals from naïve method")
+```
+
+## Facebook closing stock price
+\fontsize{11}{11}\sf
+
+```{r dj6, warning=FALSE, fig.height=3.4, dependson="augment"}
+augment(fit) |>
+  ggplot(aes(x = .resid)) +
+  geom_histogram(bins = 150) +
+  labs(title = "Histogram of residuals")
+```
+
+## Facebook closing stock price
+\fontsize{11}{11}\sf
+
+```{r dj7, dependson="augment"}
+augment(fit) |>
+  ACF(.resid) |>
+  autoplot() + labs(title = "ACF of residuals")
+```
+
+## ACF of residuals
+
+  * We assume that the residuals are white noise (uncorrelated, mean zero, constant variance). If they aren't, then there is information left in  the residuals that should be used in computing forecasts.
+
+  * So a standard residual diagnostic is to check the ACF of the residuals of a forecasting method.
+
+  * We *expect* these to look like white noise.
+
+## Combined diagnostic graph
+\fontsize{11}{11}\sf
+
+```{r dj8, dependson="augment"}
+fit |> gg_tsresiduals()
+```
+
+## Ljung-Box test
+\fontsize{12}{13}\sf
+
+Test whether *whole set* of $r_{k}$ values is significantly different from zero set.
+
+\begin{block}{}
+\centerline{$\displaystyle
+ Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$\qquad
+where $\ell=$ max lag and $T=$ \# observations}
+\end{block}
+
+  * If each $r_k$ close to zero, $Q$ will be **small**.
+  * If some $r_k$ values large ($+$ or $-$), $Q$ will be **large**.
+  * My preferences: $h=10$ for non-seasonal data, $h=2m$ for seasonal data.
+  * If data are WN and $T$ large, $Q \sim \chi^2$ with $\ell$ degrees of freedom.
+
+## Ljung-Box test
+\fontsize{12}{13}\sf
+
+\begin{block}{}
+\centerline{$\displaystyle
+ Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$\qquad
+where $\ell=$ max lag and $T=$ \# observations.}
+\end{block}
+
+\fontsize{11}{11}\sf
+
+```{r dj9extra, echo=FALSE, fig.height=1.65}
+augment(fit) |>
+  ACF(.resid, lag_max = 10) |>
+  autoplot() + labs(title = "ACF of residuals")
+```
+
+\vspace*{-0.3cm}
+
+```{r dj9, echo=TRUE, dependson="augment"}
+# lag = h
+augment(fit) |> features(.resid, ljung_box, lag = 10)
+```
+
+
+
+# Recap
+## Recap
+
+\fontsize{12}{12}\sf
+
+1. First, import your data and prepare them using `tsibble` function. 
+2. Visualise and see wether your series contains key features
+3. Determine how much of your data you want to allocate to training, and how much to testing; the sets should not overlap.
+4. Subset the data to create a training set, which you will use as an argument in your forecasting function(s). Optionally, you can also create a test set to use later.
+5. Compute forecasts of the training set using whichever forecasting function(s) you choose, and set h equal to the number of values you want to forecast.
+
+## Recap
+
+\fontsize{12}{12}\sf
+
+6. Use residual diagnostic based on residuals in the training set to see wether all informations is captured by models.
+7. Create different windows to evaluate forecast accuracy using time series cross validation
+8. Train model to each window
+5. To view the results of accuracy, use the accuracy() function with the `fable` as the first argument and original data  as the second.
+6. Pick a measure in the output to evaluate the forecast(s); a smaller error indicates higher accuracy.
+7. Forecast using all data for test set and visualise forecasts against actual values
+8. Finally, produce forecast using the selected approach for future.

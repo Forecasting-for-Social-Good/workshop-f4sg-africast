@@ -1,0 +1,216 @@
+---
+title: "Time Series Analysis & Forecasting Using R"
+subtitle: "6. Introduction to forecasting"
+---
+
+## Outline
+
+\vspace*{0.7cm}\tableofcontents
+
+
+```{r}
+#| label: setup
+#| include: false
+#| cache: false
+source("setup.R")
+h02 <- tsibbledata::PBS |>
+  filter(ATC2 == "H02") |>
+  summarise(Cost = sum(Cost))
+melsyd <- tsibbledata::ansett |>
+  filter(Airports == "MEL-SYD")
+```
+
+
+# Forecast accuracy measures
+
+## Evaluating the accuracy
+
+* In order to evaluate a forecasting model, we calculate its forecast  accuracy.
+* Forecast accuracy is compared by measuring errors based on the test set.
+* Ideally it should allow comparing benefits from improved accuracy with the cost of obtaining the improvement.
+
+## Evaluating the accuracy
+
+* We should be choosing forecast models to lead to the maximum benefits on the bottom line.
+    - least staffing costs, least inventory, fastest response, least change in planing,  for example.
+* However, this is not always easy to obtain, therefore we might simply use methods that provide the most accurate forecast.
+
+## Evaluate forecast accuracy
+
+* Residual diagnostic is not a reliable indication of forecast accuracy
+* A model which fits the training data well will not necessarily forecast well
+* A perfect fit can always be obtained by using a model with enough parameters
+* Over-fitting a model to data is just as bad as failing to identify a systematic pattern in the data
+
+## Forecast accuracy evaluation using test sets
+
+* We mimic the real life situation
+* We pretend we don't know some part of data(new data)
+* It must not be used for *any* aspect of model training
+* Forecast accuracy is based only on the test set
+
+## Training and test sets
+
+```{r traintest, fig.height=1, echo=FALSE}
+train <- 1:18
+test <- 19:24
+par(mar = c(0, 0, 0, 0))
+plot(0, 0, xlim = c(0, 26), ylim = c(0, 2), xaxt = "n", yaxt = "n", bty = "n", xlab = "", ylab = "", type = "n")
+arrows(0, 0.5, 25, 0.5, 0.05)
+points(train, train * 0 + 0.5, pch = 19, col = "blue")
+points(test, test * 0 + 0.5, pch = 19, col = "red")
+text(26, 0.5, "time")
+text(10, 1, "Training data", col = "blue")
+text(21, 1, "Test data", col = "red")
+```
+
+## Point forecast accuracy
+
+### Forecast errors
+
+Forecast "error": the difference between an observed value and its forecast.
+$$
+  e_{T+h} = y_{T+h} - \hat{y}_{T+h|T},
+$$
+where the training data is given by $\{y_1,\dots,y_T\}$
+
+### Measures of forecast accuracy
+\fontsize{11}{12}\sf
+
+```r
+beer_fit <- aus_production |>
+  filter(between(year(Quarter), 1992, 2007)) |>
+  model(
+    snaive = SNAIVE(Beer),
+    mean = MEAN(Beer)
+  )
+beer_fit |>
+  forecast(h = "3 years") |>
+  autoplot(aus_production, level = NULL) +
+  labs(title ="Forecasts for quarterly beer production",
+       x ="Year", y ="Megalitres") +
+  guides(colour = guide_legend(title = "Forecast"))
+```
+
+### Measures of forecast accuracy
+
+```{r beer-fc-1, echo=FALSE, fig.height=4}
+beer_fit <- aus_production |>
+  filter(between(year(Quarter), 1992, 2007)) |>
+  model(
+    snaive = SNAIVE(Beer),
+    mean = MEAN(Beer)
+  )
+beer_fit |>
+  forecast(h = "3 years") |>
+  autoplot(aus_production, level = NULL) +
+  labs(
+    title = "Forecasts for quarterly beer production",
+    x = "Year", y = "Megalitres"
+  ) +
+  guides(colour = guide_legend(title = "Forecast"))
+```
+
+### Measures of forecast accuracy
+
+\begin{tabular}{rl}
+$y_{T+h}=$ & $(T+h)$th observation, $h=1,\dots,H$ \\
+$\pred{y}{T+h}{T}=$ & its forecast based on data up to time $T$. \\
+$e_{T+h} =$  & $y_{T+h} - \pred{y}{T+h}{T}$
+\end{tabular}
+
+\begin{block}{}\vspace*{-0.7cm}
+\begin{align*}
+\text{MAE} &= \text{mean}(|e_{T+h}|) \\[-0.2cm]
+\text{MSE} &= \text{mean}(e_{T+h}^2) \qquad
+&&\text{RMSE} &= \sqrt{\text{mean}(e_{T+h}^2)} \\[-0.1cm]
+\text{MAPE} &= 100\text{mean}(|e_{T+h}|/ |y_{T+h}|)
+\end{align*}\vspace*{-0.9cm}
+\end{block}
+\pause
+
+  * MAE, MSE, RMSE are all scale dependent.
+  * MAPE is scale independent but is only sensible if $y_t\gg 0$ for all $t$, and $y$ has a natural zero.
+
+## Measures of forecast accuracy
+\fontsize{13}{15}\sf
+
+\begin{block}{Mean Absolute Scaled Error}
+$$
+  \text{MASE} = \text{mean}(|e_{T+h}|/Q)
+$$
+\end{block} \pause
+
+- For non-seasonal series, scale uses naïve forecasts:
+
+\centerline{$Q = \frac{1}{T-1}\displaystyle\sum_{t=2}^T |y_{t}-y_{t-1}|$}
+
+- For seasonal series, scale uses seasonal naïve forecasts:
+
+\centerline{$Q = \frac{1}{T-m}\displaystyle\sum_{t=m+1}^T |y_{t}-y_{t-m}|$}
+\rightline{where $m$ is the seasonal frequency}\pause
+
+Proposed by Hyndman and Koehler (IJF, 2006).
+
+### Measures of forecast accuracy
+\fontsize{13}{15}\sf
+
+\begin{block}{Root Mean Squared Scaled Error}
+$$
+  \text{RMSSE} = \sqrt{\text{mean}(e^2_{T+h}/Q)}
+$$
+\end{block}
+
+- For non-seasonal series, scale uses naïve forecasts:
+
+\centerline{$Q = \frac{1}{T-1}\displaystyle\sum_{t=2}^T (y_{t}-y_{t-1})^2$}
+
+- For seasonal series, scale uses seasonal naïve forecasts:
+
+\centerline{$Q = \frac{1}{T-m}\displaystyle\sum_{t=m+1}^T (y_{t}-y_{t-m})^2$}
+\rightline{where $m$ is the seasonal frequencyq}
+
+Proposed by Hyndman and Koehler (IJF, 2006).
+
+### Measures of forecast accuracy
+
+\fontsize{9.8}{10}\sf
+
+```{r beer-test-accuracy, dependson='beer-fc-1'}
+beer_fc <- forecast(beer_fit, h = "3 years")
+accuracy(beer_fc, aus_production)
+```
+
+### Prediction interval accuracy
+## Winkler score
+
+Winkler proposed a scoring method to enable comparisons between prediction intervals:
+
+- it takes account of both coverage and width of the intervals.
+
+\begin{block}{Winkler score}
+\begin{align*}
+  W(l_t,u_t,y_t) =
+    \begin{cases}
+      u_t-l_t & \text{if $l_t < y_t <u_t$}\\
+      (u_t-l_t)+ \frac{2}{\alpha}(l_t-y_t) & \text{if $y_t < l_t$}\\
+      (u_t-l_t) + \frac{2}{\alpha}(y_t-u_t) & \text{if $y_t > u_t$}
+    \end{cases}       
+\end{align*}
+\end{block}
+
+## Prediction interval accuracy
+
+\fontsize{11}{12}\sf
+```{r winker-accuracy, options}
+  # Compute interval accuracy
+ drug_fc_tr %>% 
+  accuracy(antidiabetic_drug_sale, 
+   measures = interval_accuracy_measures) %>% 
+   mutate(Method = paste(.model, "method")) %>%
+  select(Method, winkler) %>%
+  gt::gt() %>%
+  gt::as_latex()
+```
+
+## Probabilistic forecast accuracy

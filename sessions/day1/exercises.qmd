@@ -467,11 +467,11 @@ In this exercise, you will apply what you have learned so far on a dataset conta
 
 ## About the dataset
 
-In this exercise, we use a dataset containing dose of BCG (Cacille Calmette-Guérin), vaccine administrated in 9 regions of an African country from January 2013 untill December 2021. BCG is a widely administered vaccine primarily used to protect against tuberculosis (TB), a serious infection that primarily affects the lungs but can also affect other parts of the body. BCG vaccination is recommended for newborn babies at risk of tuberculosis (TB) and is typically administered shortly after birth, usually within the first 28 days of life.
+In this exercise, we use a dataset containing dose of BCG (Cacille Calmette-Guérin), vaccine administrated in 9 regions of an African country from January 2013 until December 2021. BCG is a widely administered vaccine primarily used to protect against tuberculosis (TB), a serious infection that primarily affects the lungs but can also affect other parts of the body. BCG vaccination is recommended for newborn babies at risk of tuberculosis (TB) and is typically administered shortly after birth, usually within the first 28 days of life.
 
-In addition to the administered dose, it also includes data on the population of children under one year old, whether a strike occurred in a specific month and region, and whether a region is affected by flooding events.
+In addition to the administered dose, it also includes data on the population of children under one year old, and whether a strike occurred in a specific month and region.
 
-In this exercise, you will apply what you have learned so far on a dataset containing doses of administered vaccine in an African country. 
+In this exercise, you will apply what you have learned about different steps in the forecasting workflow on this dataset. 
 
 :::{.callout-caution}
 ## Your turn!

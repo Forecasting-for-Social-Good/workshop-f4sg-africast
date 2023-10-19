@@ -1,6 +1,6 @@
 ---
-title: "Tidy Time Series & Forecasting Using R"
-author: "Rob J Hyndman"
+title: "Africast-Tidy Time Series & Forecasting Using R"
+author: ""
 ---
 
 ```{r}
@@ -14,11 +14,10 @@ source("setup.R")
 
 \placefig{0.6}{1.5}{width=3.5cm}{Rob}
 \begin{textblock}{8.2}(5.6,1.3)
-\begin{alertblock}{Rob J Hyndman}
-\href{https://robjhyndman.com}{\faIcon{home} robjhyndman.com}\\
-\href{https://aus.social/@robjhyndman}{\faIcon{mastodon} @robjhyndman@aus.social}\\
-\href{https://github.com/robjhyndman}{\faIcon{github}  @robjhyndman}\\
-\href{mailto:rob.hyndman@monash.edu}{\faIcon{envelope}  rob.hyndman@monash.edu}
+\begin{alertblock}{Bahman Rostami-Tabar}
+\href{https://www.bahmanrt.com/}{\faIcon{home} bahmanrt.com}\\
+\href{https://github.com/bahmanrostamitabar}{\faIcon{github}  @bahmanrostamitabar}\\
+\href{mailto:Rostami-TabarB@cardiff.ac.uk}{\faIcon{envelope}  Rostami-TabarB@cardiff.ac.uk}
 \end{alertblock}
 \end{textblock}
 
@@ -54,18 +53,33 @@ source("setup.R")
   * Free and online
   * Data sets in associated R package
   * R code for examples
+  
+## Reference - Recommended
 
-## Poll: How experienced are you in forecasting
+\large
 
-  1. Guru: I wrote the book, done it for decades, now I do the conference circuit.
-  2. Expert: It has been my full time job for more than a decade.
-  3. Skilled: I have been doing it for years.
-  1. Comfortable: I understand it and have done it.
-  1. Learner: I am still learning.
-  1. Beginner: I have heard of it and would like to learn more.
-  1. Unknown: What is forecasting? Is that what the weather people do?
+\begin{block}{}\bf
+\hangafter=1\hangindent=.3cm
+ {Kolassa S., Rostami-Tabar B., \& Siemsen, E. (2023) \emph{https://dfep.netlify.app/}, 1st ed.}
+\end{block}\pause
+\begin{alertblock}{}\Large
+\centerline{\bf https://dfep.netlify.app/}
+\end{alertblock}
 
-## Poll: How proficient are you in using R?
+\pause
+
+  * Free and online
+  * Not an in-depth technical book
+  * Mindset behind forecasting
+  * Overview of the most common forecasting methods
+
+## International Institute of Forecasters
+
+- a nonprofit organization founded in 1982, is dedicated to developing and furthering the generation, distribution, and use of knowledge on forecasting
+
+- [Forecasting for Social Good](https://forecasters.org/programs/communities/forecasting-for-social-good-f4sg/)
+
+## Poll: [How proficient are you in using R?](https://www.menti.com/alfmobtvo9wb)
 
 \fontsize{14}{15}\sf
 
@@ -77,6 +91,16 @@ source("setup.R")
   1. Learner: I have used it a few times.
   1. Beginner: I've managed to download and install it.
   1. Unknown: Why are you speaking like a pirate?
+  
+## Poll: [How experienced are you in forecasting](https://www.menti.com/alfmobtvo9wb)
+
+  1. Guru: I wrote the book, done it for decades, now I do the conference circuit.
+  2. Expert: It has been my full time job for more than a decade.
+  3. Skilled: I have been doing it for years.
+  1. Comfortable: I understand it and have done it.
+  1. Learner: I am still learning.
+  1. Beginner: I have heard of it and would like to learn more.
+  1. Unknown: What is forecasting? Is that what the weather people do?
 
 ## Install required packages
 
@@ -91,19 +115,18 @@ install.packages(c(
 ## Approximate outline
 \vspace*{-0.1cm}\centering\fontsize{12}{12}\sf
 \begin{tabular}{rp{6.6cm}l}
-  \bf Day & \bf Topic                   & \bf Chapter \\
+  \bf Session & \bf Topic                   & \bf Chapter \\
   \midrule
-  1       & 1. Introduction to tsibbles    & 2 \\
-  1       & 2. Time series graphics        & 2 \\
-  1       & 3. Transformations             & 3 \\
-  1       & 4. Seasonality and trends      & 7 \\
-  1       & 5. Time series features        & -- \\
-  \midrule
-  2       & 6. Introduction to forecasting & 1,3 \\
-  2       & 7. Exponential smoothing       & 8 \\
-  2       & 8. ARIMA models                & 9 \\
-  2       & 9. Dynamic regression          & 10 \\
-  2      & 10. Hierarchical forecasting    & 11 \\
+  1       & 1. Basics of time series and data structures    & 2 \\
+  1       & 2. Time series patterns and basic graphics      & 2 \\
+  2       & 3. Transforming / adjusting time series         & 3 \\
+  2       & 4. Computing and visualizing features     & 4 \\
+  3       & 5. Basic modeling / forecasting & 1,3,5 \\
+  3       & 6. Forecasting with regression, how to represent temporal structure with regressors          & 7,10 \\
+  4       & 7. Exponential smoothing       & 8 \\
+  4       & 8. ARIMA models                & 9 \\
+  5       & 9. Basic training and test accuracy       & 5 \\
+  5       & 10. Residual diagnostics and cross validation                & 5 \\
   \bottomrule
 \end{tabular}
 
