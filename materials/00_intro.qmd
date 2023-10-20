@@ -77,7 +77,7 @@ source("setup.R")
 
 - a nonprofit organization founded in 1982, is dedicated to developing and furthering the generation, distribution, and use of knowledge on forecasting
 
-- [Forecasting for Social Good](https://forecasters.org/programs/communities/forecasting-for-social-good-f4sg/)
+- [Forecasting for Social Good](https://www.f4sg.org/)
 
 ## Poll: [How proficient are you in using R?](https://www.menti.com/alfmobtvo9wb)
 
@@ -132,3 +132,8 @@ install.packages(c(
 
 \vspace*{.0cm}\begin{alertblock}{}{\centerline{\Large\textbf{bit.ly/fable2023}}}
 \end{alertblock}
+
+## Access materials 
+
+* AFRICAST workshop website
+* Slack for mentorship and Q/A
