@@ -1,6 +1,6 @@
 ---
-title: "Time Series Analysis & Forecasting Using R"
-subtitle: "6. Introduction to forecasting"
+title: "Africast-Time Series Analysis & Forecasting Using R"
+subtitle: "10. Residual diagnostics and cross validation "
 ---
 
 ## Outline

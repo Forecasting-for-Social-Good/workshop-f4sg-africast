@@ -1,5 +1,5 @@
 ---
-title: "Time Series Analysis & Forecasting Using R"
+title: "Africast-Time Series Analysis & Forecasting Using R"
 subtitle: "1. Basics of time series and data structures"
 ---
 
@@ -21,13 +21,6 @@ source("setup.R")
 \fontsize{10}{11.2}\sf
 Forecasting  is estimating how the sequence of observations will continue into the future based on all of the information available at the time when we generate the forecast:
 
-1. Past/historical time series data on the variable we intend to forecast
-2. Past and future data about deterministic predictors
-3. Past and future data about stochastic predictors
-4. Expertise of individuals in an organization and any contextual information that may affect the forecast variable
-    + New information
-
-
 ```{r forecasting, out.width="70%", fig.align='center'}
 ausbeer %>% model(ETS(Production)) %>% forecast(h=20) %>% autoplot(tail(ausbeer, 60), level=NULL, alpha=.01)+
   geom_vline(xintercept = as.numeric(as.Date("2010-04-01")),col="red", linetype = "longdash")+
@@ -35,11 +28,21 @@ ausbeer %>% model(ETS(Production)) %>% forecast(h=20) %>% autoplot(tail(ausbeer,
 ```
 
 
+## Data requires for forecasting
+
+\fontsize{10}{11.2}\sf
+Forecasting is estimating how the sequence of observations will continue into the future based on all of the information available at the time when we generate the forecast:
+
+1. Past/historical time series data on the variable we intend to forecast
+2. Past and future data about deterministic predictors/regressors
+3. Past and future data about stochastic predictors/regressors
+4. Expertise of individuals in an organization and any contextual information that may affect the forecast variable
+    + New information
+
+
 ## Why does an organisation need forecast?
 
-## Why does an organisation need forecasting?
-
-Why do you need forecast?
+Why do you use forecast?
 
 \pause
 
@@ -48,8 +51,8 @@ Why do you need forecast?
 | Forecasting required in many situation                | Forecast  |
 | ----------------------------------------------------- |:---------:|
 | Whether to build a new hospital in next 10 years?     |      ?    |
-| How many staff does an A&E need next week?            |      ?    |
-| How many units of bandages is reqired next month?     |      ?    |
+| How many staff does a call center need next week?     |      ?    |
+| How many dose of vaccine is required next month?      |      ?    |
 
 - An important aid to planning and decision making
   * To inform decisions
@@ -57,7 +60,7 @@ Why do you need forecast?
   
 ## Forecasting workflow
 
-```{r forecasting_process1, fig.align='center'}
+```{r forecastingworkflow, fig.align='center'}
 knitr::include_graphics("figs/forecasting_workflow.png")
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: "Time Series Analysis & Forecasting Using R"
+title: "Africast-Time Series Analysis & Forecasting Using R"
 subtitle: "7. Exponential smoothing"
 ---
 

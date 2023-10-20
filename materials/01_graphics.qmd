@@ -1,5 +1,5 @@
 ---
-title: "Time Series Analysis & Forecasting Using R"
+title: "Africast-Time Series Analysis & Forecasting Using R"
 subtitle: "2. Time series patterns and basic graphics"
 ---
 
@@ -13,6 +13,136 @@ subtitle: "2. Time series patterns and basic graphics"
 #| cache: false
 source("setup.R")
 ```
+
+# Time series Patterns
+
+## Key patterns of time series
+
+- Level
+- Underlying trend
+- Seasonal/cycle
+- Autocorrelation
+- Unpredictable patterns/Noise
+
+- Different types of events and driving factors (i.e. predictors) may affect the time series 
+
+## Time series patterns
+
+Level:
+  The *level* of a time series describes the center of the series.
+  
+Trend
+  : A *trend* describes predictable increases or decreases in the level of a series.
+
+Seasonal
+  : *Seasonality* is a consistent pattern that repeats over a fixed cycle. pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
+
+Cyclic
+  : pattern exists when data exhibit rises and falls that are \emph{not of fixed period} (duration usually of at least 2 years).
+
+## Level
+
+```{r level, fig.align='center', echo=FALSE, out.width="100%"}
+set.seed(2)
+demand_level <- list(ts(rep(100,4*7),frequency=4,start=c(2016,1)),
+                ts(rpois(4*7,100),frequency=4,start=c(2016,1)))
+ 
+opar <- par(mfrow=c(1,2),mai=c(.9,.9,.1,.2))
+                for ( ii in 1:2 ) {
+                                plot(demand_level[[ii]],xlab="Quarter",ylab=NA,las=1,pch=19,type="o")
+                                abline(h=100,lty=3)
+                                if ( ii == 1 ) legend("bottomleft",bty = "n",lty=c(1,3),pch=c(19,NA),lwd=1,legend=c("Demand","Level"))
+                }
+par(opar)
+
+```
+
+## Trend
+
+```{r trend, fig.align='center', echo=FALSE,out.width="100%"}
+set.seed(2)
+demand_trend <- list(ts(rep(100,7*4)+c(1:7*4)+round(rnorm(28,0,5)), frequency=4,start=c(2016,1)),
+                ts(rep(100,7*4)+c(1:(7*4)), frequency=4,start=c(2016,1)),
+                ts(rep(100,7*4)-c(1:(7*4))+round(rnorm(28,0,5)), frequency=4,start=c(2016,1)),
+                ts(rep(100,7*4)-c(1:(7*4)), frequency=4,start=c(2016,1)))
+
+opar <- par(mfrow=c(1,2),mai=c(.9,.9,.1,.2))
+plot(demand_trend[[1]],xlab="Quarter",ylab="Demand",las=1,pch=19,type="o")
+lines(demand_trend[[2]],lty=3)
+plot(demand_trend[[3]],xlab="Quarter",ylab=NULL,las=1,pch=19,type="o")
+legend("bottom",lty=c(1,3),pch=c(19,NA),lwd=1,legend=c("Demand","Trend"), bty = "n")
+lines(demand_trend[[4]],lty=3)
+par(opar)
+
+```
+
+## Seasonality
+
+```{r additive-seasonality, echo=FALSE, fig.align='center',out.width="100%"}
+set.seed(2)
+demand_additive_seasonality <- list(ts(rep(100,7*4)+rep(c(10,15,-20,-5),7), frequency=4,start=c(2016,1)),
+                ts(rep(100,7*4), frequency=4,start=c(2016,1)))
+plot(demand_additive_seasonality[[1]],xlab="Quarter",ylab="Demand",las=1,pch=19,type="o", ylim=c(60,130))
+lines(demand_additive_seasonality[[2]],lty=3)
+legend("bottom",lty=c(1,3),pch=c(19,NA),lwd=1,legend=c("Demand","Level"), bty = "n")
+```
+
+## Additive versus multiplicative seasonality
+
+```{r trend-both-seasonality, echo=FALSE, out.width="100%", fig.align='center'}
+set.seed(2)
+demand_trend_additive_seasonality <- list(ts(rep(100,7*4)+c(1:28)+rep(c(10,15,-20,-5),7), frequency=4,start=c(2016,1)),
+                ts(rep(100,7*4)+c(1:28), frequency=4,start=c(2016,1)))
+
+demand_trend_multiplicative_seasonality <- list(ts((rep(10,7*4)+c(0,5*(1:(4*7-1))))*rep(c(.4,1.6,1.2, .8),7)+round(rnorm(7*4,0,5)), frequency=4,start=c(2016,1)),
+                ts((rep(10,7*4)+c(0,5*(1:(4*7-1)))), frequency=4,start=c(2016,1)))
+
+opar <- par(mfrow=c(1,2),mai=c(.9,.9,.1,.2))
+plot(demand_trend_additive_seasonality[[1]],xlab="Quarter",ylab="Demand",las=1,pch=19,type="o")
+lines(demand_trend_additive_seasonality[[2]],lty=3)
+legend("topleft",lty=c(1,3),pch=c(19,NA),lwd=1,legend=c("Demand","Trend"), bty = "n")
+plot(demand_trend_multiplicative_seasonality[[1]],xlab="Quarter",ylab='',las=1,pch=19,type="o")
+lines(demand_trend_multiplicative_seasonality[[2]],lty=3)
+legend("topleft",lty=c(1,3),pch=c(19,NA),lwd=1,legend=c("Demand","Trend"), bty = "n")
+
+par(opar)
+
+```
+
+## Cycles
+
+```{r cement, echo=FALSE, fig.align='center',out.width="100%", message=FALSE, warning=FALSE}
+ts_cement <- fpp2::qcement
+plot(window(ts_cement, 1980), ylab="Cement Production ")
+abline(v=1983, lty=3)
+abline(v=1991, lty=3)
+abline(v=2001, lty=3)
+abline(v=2009, lty=3)
+```
+
+# Time plots
+
+## Time plots
+
+\small
+
+```{r, echo=TRUE, fig.height=3}
+ansett %>%
+  filter(Airports=="MEL-SYD", Class=="Economy") %>%
+  autoplot(Passengers)
+```
+
+## Time plots
+
+\small
+
+```{r a10-plot, echo=TRUE, dependson="a10", fig.height=2.5}
+PBS %>% filter(ATC2 == "A10") %>%
+  summarise(Cost = sum(Cost)/1e6) %>% autoplot(Cost) +
+  ylab("$ million") + xlab("Year") +
+  ggtitle("Antidiabetic drug sales")
+```
+
 
 # Seasonal plots
 

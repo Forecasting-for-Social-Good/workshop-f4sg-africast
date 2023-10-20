@@ -71,7 +71,7 @@ source("setup.R")
   * Free and online
   * Not an in-depth technical book
   * Mindset behind forecasting
-  * Overview of the most common forecasting methods
+  * Overview of the most common forecasting methods and processes
 
 ## International Institute of Forecasters
 
@@ -122,7 +122,7 @@ install.packages(c(
   2       & 3. Transforming / adjusting time series         & 3 \\
   2       & 4. Computing and visualizing features     & 4 \\
   3       & 5. Basic modeling / forecasting & 1,3,5 \\
-  3       & 6. Forecasting with regression, how to represent temporal structure with regressors          & 7,10 \\
+  3       & 6. Forecasting with regression         & 7,10 \\
   4       & 7. Exponential smoothing       & 8 \\
   4       & 8. ARIMA models                & 9 \\
   5       & 9. Basic training and test accuracy       & 5 \\

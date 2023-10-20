@@ -1,6 +1,6 @@
 ---
-title: "Time Series Analysis & Forecasting Using R"
-subtitle: "9. Forecasting with regression, how to represent temporal structure with regressors"
+title: "Africast-Time Series Analysis & Forecasting Using R"
+subtitle: "6. Forecasting with regression, how to represent temporal structure with regressors"
 ---
 
 ## Outline
