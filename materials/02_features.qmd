@@ -98,12 +98,6 @@ tourism |>
   geom_line() + facet_grid(vars(State, Region, Purpose))
 ```
 
-# Lab Session 9
-
-## Lab Session 9
-
- * Use ``GGally::ggpairs()`` to look at the relationships between the STL-based features. You might wish to change `seasonal_peak_year` and `seasonal_trough_year` to factors.
- * Which is the peak quarter for holidays in each state?
 
 ## Feature extraction and statistics
 
@@ -269,10 +263,3 @@ outliers |>
   labs(title = "Outlying time series in PC space")
 ```
 
-# Lab Session 10
-
-## Lab Session 10
-
-* Use a feature-based approach to look for outlying series in `PBS`.
-
-* What is unusual about the series you identify as outliers?

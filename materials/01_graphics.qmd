@@ -138,21 +138,6 @@ prettify(p1,
 ```{r sugrrants2, ref.label="sugrrants", echo=FALSE, out.height="90%", fig.height=5.4, fig.width=9}
 ```
 
-# Lab Session 3
-## Lab Session 3
-
-1. Look at the quarterly tourism data for the Snowy Mountains
-
-    ```r
-    snowy <- tourism |>
-      filter(Region == "Snowy Mountains")
-    ```
-
-    - Use `autoplot()`, `gg_season()` and `gg_subseries()` to explore the data.
-    - What do you learn?
-
-2. Produce a calendar plot for the `pedestrian` data from one location and one year.
-
 # Seasonal or cyclic?
 
 ## Time series patterns
@@ -363,12 +348,6 @@ google_2015 |>
   autoplot()
 ```
 
-# Lab Session 4
-
-## Lab Session 4
-
-We have introduced the following functions: `gg_lag` and `ACF`. Use these functions to explore the four time series: `Bricks` from `aus_production`, `Lynx` from `pelt`, `Close` price of Amazon from `gafa_stock`, `Demand` from `vic_elec`. Can you spot any seasonality, cyclicity and trend? What do you learn about the series?
-
 ## Which is which?
 
 ```{r, fig.height=6, fig.width=12, echo=FALSE, warning=FALSE, out.width="100%"}
@@ -484,19 +463,3 @@ in the state of Victoria, Australia, from January 2014 through December 2018
 
 These show the series is **not a white noise series**.
 
-# Lab Session 5
-## Lab Session 5
-
-You can compute the daily changes in the Google stock price in 2018 using
-
-\fontsize{10.5}{13}\sf
-
-```{r, eval = FALSE}
-dgoog <- gafa_stock |>
-  filter(Symbol == "GOOG", year(Date) >= 2018) |>
-  mutate(diff = difference(Close))
-```
-
-\fontsize{14}{16}\sf
-
-Does `diff` look like white noise?
