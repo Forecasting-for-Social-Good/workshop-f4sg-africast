@@ -311,7 +311,7 @@ fcst_regression <- ??? |>
 
 ## Visualize forecasts by regression
 
-Complete the following code to see past data and its forecasts:
+Complete the following code to see the time series of dose adminstrated and its forecasts:
 
 ```{r}
 ??? |> autoplot(???, level=NULL)

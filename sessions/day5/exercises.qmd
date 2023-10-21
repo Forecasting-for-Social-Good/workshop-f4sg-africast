@@ -28,7 +28,7 @@ In this part, we evaluate the forecast accuracy of all models we have covered so
     - Regression with trensd and seasonality
     - Regression with trensd, seasonality, and population_under1
     - Regression with trensd, seasonality, population_under1, and strike
-    - Combination of ETS and ARIMA
+    - Combination of ETS and ARIMA and regression with population and strike
 
 3. Produce forecasts
 

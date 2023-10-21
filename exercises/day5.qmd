@@ -21,19 +21,19 @@ vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
 
 ### Split data
 
-We tart by splitting data into two sets to describe the modeling process. We leave out 42 periods (equal to forecast horizon) as test set, and we pretend this is the future we want to forecast.
+We tart by splitting data into two sets to describe the modeling process. We leave out 12 periods (equal to forecast horizon) as test set, and we pretend this is the future we want to forecast.
 
 ```{r}
-forecast_horizon <- 42# forecast horizon
+forecast_horizon <- 12# forecast horizon
 test <- vaccine_administrated_tsb |> filter(month >= (max(month)-forecast_horizon+1))
 train <- vaccine_administrated_tsb |> filter(month < (max(month)-forecast_horizon+1))
 ```
 
 ### Specify and train models
 
-We specify four models with different components and train them on the train part:
+Please specify models and train them on the train part:
 
-```{r train}
+```{r}
 fit <- train |> model(
   # write your code here
 )
@@ -41,7 +41,7 @@ fit <- train |> model(
 
 ### Produce forecasts
 
-Here we need to generate the forecast for the test part:
+Here we need to first prepare the future values of predictors corresponding to the test set:
 
 #### Values of population and strike in the test set
 
@@ -58,12 +58,14 @@ test_future <- bind_cols(test,population_forecast) |>
 
 #### Produce forecasts for dose adminstrated
 
+Complete the following code to generate forecast for the test set:
+
 ```{r}
 forecast_vaccine <- ??? |> 
   ???(??? = ???)
 ```
 
-You can visualise your forecast and see how the forecast looks like visually for the 42 days we predicted:
+You can visualise your forecast and see how the forecast looks like visually for the 12 months we predicted:
 
 ```{r}
 forecast_vaccine |> 
@@ -72,7 +74,7 @@ forecast_vaccine |>
 
 ### Compute forecast accuracy
 
-Calculating the forecast accuracy is similar to other models:
+Let's compare the forecast accuracy of all models. Complete the R code to compute the point forecast accuracy, prediction interval accuracy and probabilistic distribution accuracy measures:
 
 ```{r}
 ??? |> 
@@ -82,6 +84,8 @@ Calculating the forecast accuracy is similar to other models:
                            ???
 ))
 ```
+
+Which error metric do you use to evaluate the performance of models? Which model has the lowest error for each region? discuss your observation.
 
 ## Advanced performance evaluation
 
@@ -105,7 +109,7 @@ let's see how we do it in R:
 We initially split the data into test and train. We defined a new variable, `percentage_test`. This will determine the percentage of the time series we use to evaluate the forecast accuracy using TSCV. As a general rule, we use 20%-30% of the length of time series as the test set. For instance, if we have 120 months of data, and use 20% as test set, that means we will have 24 months (120\*0.2) in the test set:
 
 ```{r}
-forecast_horizon <- 42# forecast horizon
+forecast_horizon <- 12# forecast horizon
 percentage_test <- 0.2 #20% of time series for test set
 
 test <- vaccine_administrated_tsb |> 
@@ -185,7 +189,7 @@ What type of data structure is it? How many rows and columns are present, and wh
 
 #### forecast accuracy
 
-Let's compare the forecast accuracy of all models. Complete the R code to see to produce pint forecast accuracy, prediction interval accuracy and probabilistic distribution accuracy:
+Let's compare the forecast accuracy of all models. Complete the R code to compute the point forecast accuracy, prediction interval accuracy and probabilistic distribution accuracy measures:
 
 ```{r}
 fcst_accuracy <- ??? |> 
@@ -202,13 +206,13 @@ Observe the `fcst_accuracy` object.
 
 What type of data structure is it? How many rows and columns are present, and what do they represent?
 
-You may want to select any measure you focus on:
+You may want to select measures you focus on:
 
 ```{r}
 fcst_accuracy |> select(RMSE,MAE,MASE, winkler, CRPS)
 ```
 
-This will provide a summary of multiple accuracy measures across all origins and forecast horizon. The result is summarised automatically across all origins (.id) and horizon using a simple average.
+This will provide an overall summary (i.e an average) of multiple accuracy measures across all origins and forecast horizon. The result is summarised automatically across all origins (.id) and horizon using a simple average.
 
 Which method is the best method (i.e. lowest error metric)?
 
@@ -217,7 +221,7 @@ Which method is the best method (i.e. lowest error metric)?
 Now let's see how we can get the accuracy measure for each origin (i.e. .id) separately instead of averaging across all of them. To do this, you need to use an additional argument in accuracy(by=):
 
 ```{r}
-fc_accuracy_by_id <- ??? |> 
+fc_accuracy_by_id <-  |> 
   accuracy(???, by = c(???, ???))
 
 ```
