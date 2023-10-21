@@ -31,7 +31,7 @@ fit_ets <- vaccine_administrated_tsb |>
 
 ## Observe model table and extract model's output
 
-let's now observe the model table `fit_ets`. :::{.callout-note} \### Question What type of data structure is `fit_ets`? How many rows and columns are present, and what do they represent? :::
+let's now observe the model table `fit_ets`. What type of data structure is `fit_ets`? How many rows and columns are present, and what do they represent? 
 
 Complete the below R codes and run to understand model's outputs:
 
@@ -41,7 +41,7 @@ Use `report()`:
 fit_ets |> ???()
 ```
 
-Which model is returned, what are its components and parameter values?
+Which model is returned in, what are its components and parameter values?
 
 Use `tidy()`:
 
@@ -55,7 +55,7 @@ Use `glance()`:
 fit_ets |> ???()
 ```
 
-You can also observe the values corresponding to level, trend, seasonal components in ETS framework. Each column corresponds to one components.
+You can also observe the values corresponding to level, trend,and seasonal components in ETS framework. Each column corresponds to one components.
 
 Complete the R code and run to observe the selected model components:
 
@@ -113,7 +113,9 @@ vaccine_ets |> augment() |> filter_index("2020" ~ .) |>
 
 ## Specify and train ARIMA model
 
-If you want this function automatically determines the order of autoregressive and moving average orders and their parameters, then you don't need to provide arguments inside ARIMA(). The function will examine different models (combinations of p=0,1,2,.. and q =0,1,2,.., P=0,1,2,.. and Q =0,1,2,..) and return the one with lowest AICc.
+>If you want this function automatically determines the order of autoregressive and moving average orders and their parameters, then you don't need to provide arguments inside ARIMA(). The function will examine different models (combinations of p=0,1,2,.. and q =0,1,2,.., P=0,1,2,.. and Q =0,1,2,..) and return the one with lowest AICc.
+
+Complete the following code to train an automatic ARIMA model on the data:
 
 ```{r}
 fit_arima <- vaccine_administrated_tsb |>
@@ -124,12 +126,10 @@ fit_arima <- vaccine_administrated_tsb |>
 
 > If we don't provide terms inside ARIMA(), then it is an automatic model! It will examine different models and return the one with lowest AICc.
 
-let's now observe the fitted model
+let's now observe the fitted model, `fit_arima`:
 
 ```{r}
-fit_arima |> 
-  filter() |> 
-  ???()
+fit_arima
 ```
 
 What type of data structure is it? What each row and column represent?
@@ -163,9 +163,17 @@ Now, we can forecast with the fitted ARIMA model:
 vaccine_fcst_arima <- ??? |> ???(h = ???)  
 ```
 
+Let's now observe the forecast table, `vaccine_fcst_arima`:
+
+```{r}
+vaccine_fcst_arima
+```
+
+What type of data structure is it? What each row and column represent?
+
 ## Visualize forecasts
 
-you can visualize your forecast:
+You can visualize your forecast:
 
 ```{r}
 vaccine_fcst_arima |> 

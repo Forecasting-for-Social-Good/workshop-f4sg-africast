@@ -86,14 +86,13 @@ tourism |>
 Let's first import data and observe it. This dataset is located in`data` directory in the working directory:
 
 ```{r}
-#| label: vaccine
 vaccine_administrated <- read_csv("data/vaccine_adminstrated.csv")
 vaccine_administrated
 ```
 
 After importing your data, it's important to double-check the structure of the data and the data types of the variables. The structure of the data you import into R must be a tibble/data frame.
 
-Verify the data type of each variable in `vaccine_administered`. We may need to modify the data type of `month`, `strike`, `flooding_events`. Could you explain why?
+Verify the data type of each variable in `vaccine_administered`. We may need to modify the data type of `month`, and `strike`. Could you explain why?
 
 ```{r}
 library(lubridate)
@@ -113,7 +112,7 @@ It's essential to always check for any missing values and address them before cr
 anyNA(vaccine_administrated)
 ```
 
-The dataset you use may contain missing values (`NA` in R) and other data quality issues. While checking and fixing data quality issues are crucial for any project, addressing such issues goes beyond the scope of this training. For further information, you may refer to additional resources \[Link\].
+The dataset you use may contain missing values (`NA` in R) and other data quality issues. While checking and fixing data quality issues are crucial for any project, addressing such issues goes beyond the scope of this training. For further information, you may read more about data quality issues [here](https://bookdown.org/martin_shepperd/ModernDataBook/Chap5DataCleaning.html)
 
 ### Check duplications and fix it
 
@@ -125,8 +124,7 @@ Write R code to check for duplicate observations in the data.
 
 ```
 
-Have you identified any duplicate observations?
-If your data contains no duplicates, you may proceed with creating a tsibble. Otherwise, you need to fix it.
+Have you identified any duplicate observations? If your data contains no duplicates, you may proceed with creating a tsibble. Otherwise, you need to fix it.
 
 How do you fix duplicated observations?
 

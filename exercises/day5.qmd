@@ -11,7 +11,7 @@ editor: visual
 
 ### Split data
 
-we tart by splitting data into two sets to describe the modeling process. We leave out 42 periods (equal to forecast horizon) as test set, and we pretend this is the future we want to forecast.
+We tart by splitting data into two sets to describe the modeling process. We leave out 42 periods (equal to forecast horizon) as test set, and we pretend this is the future we want to forecast.
 
 ```{r}
 forecast_horizon <- 42# forecast horizon
@@ -21,7 +21,7 @@ train <- vaccine_administrated_tsb |> filter(month < (max(month)-forecast_horizo
 
 ### Specify and train models
 
-We specify four models with different components and train them on the dataset:
+We specify four models with different components and train them on the train part:
 
 ```{r train}
 fit <- train |> model(
@@ -30,6 +30,8 @@ fit <- train |> model(
 ```
 
 ### Produce forecasts
+
+Here we need to generate the forecast for the test part:
 
 #### Values of population and strike in the test set
 
@@ -51,9 +53,9 @@ forecast_vaccine <- ??? |>
   ???(??? = ???)
 ```
 
-you can visualise your forecast and see how the forecast looks like visually for the 42 days we predicted:
+You can visualise your forecast and see how the forecast looks like visually for the 42 days we predicted:
 
-```{r visualise}
+```{r}
 forecast_vaccine |> 
   autoplot(filter_index(???, "2020" ~ .), level=NULL)
 ```
@@ -75,15 +77,24 @@ Calculating the forecast accuracy is similar to other models:
 
 ### Time series cross validation
 
-This is also called rolling forecast or rolling origin: You can also reflect on the following questions: - Why do we use TSCV? you can read more here: https://otexts.com/fpp3/tscv.html - How do we do TSCV in R? Which steps to follow? 1. split data using `filter_index()` 2. create different time series (different origins) 2. model each time series, 3. forecast for each series
+This is also called rolling forecast or rolling origin: You can also reflect on the following questions: 
+
+- Why do we use TSCV? you can read more [her](https://otexts.com/fpp3/tscv.html)
+
+- How do we do TSCV in R? Which steps to follow? 
+
+    1. split data using `filter_index()` or other functions 
+    2. create different time series origins 
+    3. model each origin, 
+    4. forecast each origin
 
 let's see how we do it in R:
 
 #### split data
 
-We initially split the data into test and train, the size of test set equals the forecast horizon, we use this for the purpose of visualisating the forecasts, not deciding which model is the best (more accurate)
+We initially split the data into test and train. We defined a new variable, `percentage_test`. This will determine the percentage of the time series we use to evaluate the forecast accuracy using TSCV. As a general rule, we use 20\%-30\% of the length of time series as the test set. For instance, if we have 120 months of data, and use 20\% as test set, that means we will have 24 months (120*0.2) in the test set:
 
-```{r split}
+```{r}
 forecast_horizon <- 42# forecast horizon
 percentage_test <- 0.2 #20% of time series for test set
 
@@ -94,21 +105,30 @@ train <- vaccine_administrated_tsb |>
   filter_index(. ~ as.character(max(vaccine_administrated_tsb$month)-(round(percentage_test*length(unique(vaccine_administrated_tsb$month))))))
 ```
 
-#### Cross validation
+#### Time series cross validation
+
+Before fitting the models, we need to create the time series origins in both train and test sets.
+We first apply time series cross validation on the train data. We start with an initial training, the length of the first origin (.init = ) and then increase the length of the previous origin by adding new observation (.step=), we continue creating these timeseries until the number of observation left at the end of timeseries equals to the forecast horizon, we stop there.
+
+Next, we apply time series cross validation on the test data. We create slides in the test set that corresponds to each origin created using train data, equal to the length of the forecast horizon. 
 
 ```{r}
 train_tscv <- vaccine_administrated_tsb |> 
   filter_index(. ~ as.character(max(vaccine_administrated_tsb$month)-(forecast_horizon))) |>
-  stretch_tsibble(.init = length(unique(train$month)), .step = 7) # split data into different time series (i.e. origin or id) with increasing size
+  ---(.init = length(unique(train$month)), .step = 1) # split data into different time series (i.e. origin or id) with increasing size
 
 # you need also to get future values that correspond to each .id, because you need them in the forecast model:
 test_tscv <- test |> 
-  slide_tsibble(.size = forecast_horizon, .step = 7, .id = ".id") |> select(-dose_adminstrated)
+  ---(.size = ---, .step = 1, .id = ".id") |> select(-dose_adminstrated)
 ```
+
+>`.init` is the size of first origin, `.step` is the increment step, this can correspond to the forecasting frequency, i.e. how often you generate the forecast. If .step = 1 in a monthly time series, it means we generate forecasts very month for the given forecast horizon.
 
 #### Values of population and strike in the test set
 
-It is important to replace average_daily_temperature values in the test_tr with its estimation, otherwise we use perfect forecast for the temperature in the regression model which can mislead us in choosing the most accurate model. I don't have access to the forecast, so here I forecast them using ETS:
+>It is important to replace `population_under1` values in the test_tscv with its estimation, otherwise we use perfect forecast for the population_under1 in the models using those predictors which can mislead us in choosing the most accurate model. 
+
+We don't have access to these forecast, so here we forecast them using ETS. Complete the R code to produce the estimation of population_under1 abd replace it with actual values in `test_tscv`:
 
 ```{r}
 fcs_ets_population_tscv <- ??? |> 
@@ -124,9 +144,11 @@ test_future_tscv <- bind_cols(test_tscv,population_forecast_tscv) |>
 
 #### specify and train models
 
-We can train time series cross validation time series with regression models and any other models:
+We can train time series cross validation time series with regression models and any other models, this is exactly like what we have done before.
 
-```{r fsct-regression}
+Complete the R code to train all models on the TSCV data:
+
+```{r}
 fit_tscv <- ??? |> 
   model(
     #wrire your code here
@@ -134,19 +156,27 @@ fit_tscv <- ??? |>
 fit_tscv
 ```
 
+Observe the `fit_tscv` object.
+
+What type of data structure is it? How many rows and columns are present, and what do they represent?
+
 #### produce forecasts
 
-We can forecast using trained models:
+We can forecast using trained models above. Complete the R code to produce forecasts for the TSCV:
 
-```{r forecast-regression, options}
+```{r}
 fcst_tscv <- ??? |> 
   forecast(??? = ???)
 fcst_tscv
 ```
 
+Observe the `fcst_tscv` object.
+
+What type of data structure is it? How many rows and columns are present, and what do they represent?
+
 #### forecast accuracy
 
-Let's compare the forecast accuracy of all models:
+Let's compare the forecast accuracy of all models. Complete the R code to see to produce pint forecast accuracy, prediction interval accuracy and probabilistic distribution accuracy:
 
 ```{r}
 fcst_accuracy <- ??? |> 
@@ -156,100 +186,106 @@ fcst_accuracy <- ??? |>
                      ???
 )) 
 
-fcst_accuracy |> select(.model, RMSE,MAE,winkler) |> arrange(RMSE,MAE,winkler)
+fcst_accuracy
 ```
+
+Observe the `fcst_accuracy` object.
+
+What type of data structure is it? How many rows and columns are present, and what do they represent?
+
+You may want to select any measure you focus on:
 
 ```{r}
-fcst_accuracy |> select(.model, RMSE,MAE,winkler) |> arrange(RMSE,MAE,winkler)
+fcst_accuracy |> select(RMSE,MAE,MASE, winkler, CRPS)
 ```
 
-The best forecasting method from the pool of methods we selected is regression with holidays(well, this could also be improved by including more variables or removing the holidays that are not significant).
+This will provide a summary of multiple accuracy measures across all origins and forecast horizon. The result is summarised automatically across all origins (.id) and horizon using a simple average.
 
-You calculate the point forecast accuracy using `accuracy()` function. `accuracy()` needs both the forecast object(fable) and actual data.
+Which method is the best method (i.e. lowest error metric)?
 
-```{r label, options}
-fc_accuracy <- fcst_tscv |> accuracy(ambulance_demand_total)
-
-fc_accuracy |> select(.model, RMSE, MAE, MASE, RMSSE)
-```
-
-This will provide a summary of multiple accuracy measures. The result is summarised automatically across all series (.id) using a simple average.
 
 #### accuracy per id
 
-Now let's see how we can get the accuracy measure for each .id separately instead of averaging across all of them. To do this, you need to use an additional argument in accuracy(by=):
+Now let's see how we can get the accuracy measure for each origin (i.e. .id) separately instead of averaging across all of them. To do this, you need to use an additional argument in accuracy(by=):
 
-```{r label, options}
+```{r}
 fc_accuracy_by_id <- ??? |> 
   accuracy(???, by = c(???, ???))
-#accuracy(ambulance_demand_total, by = c(".model", ".id"))
+
 ```
 
-We can now create some insightful visualisations:
+We can now create some insightful visualisations. Complete the following code to generate a density plot and a box plot that highlights the distribution of the error metrics. You can choose any error metric:
 
-```{r label, options}
+
+```{r}
+# Density plot
 ??? |> 
-  select(.id,.model,MASE) |> 
-  ggplot(aes(MASE))+
+  select(.id,.model,???) |> 
+  ggplot(aes(???))+
     geom_density(aes(fill=factor(.model)), alpha=.5)
-
 ```
 
-```{r label, options}
+
+```{r}
+#Boxplot
 ??? |> 
-  select(.id,.model,MASE) |> 
-ggplot(aes(y= fct_reorder(.model,MASE), x=MASE))+
+  select(.id,.model,???) |> 
+ggplot(aes(y= fct_reorder(.model,???), x=???))+
     geom_boxplot()
 ```
 
+What insights do these plots provide?
+
 #### accuracy across horizon
 
-What if you want to get the accuracy measure for each model and each horizon (h=1, 2,...,42)?
+What if you want to show the accuracy measure for each model and each horizon (h=1, 2,...,12)?
 
-In fable we don't get automatically a column that corresponds to forecast horizon(h=1,2,3,..., 42). If this is something you are interested in, you can do it yourself, let's first observe the first 50 observations to see the difference later:
+In fable we don't get automatically a column that corresponds to forecast horizon (h=1,2,3,..., 12). If this is something you are interested in, you can do it yourself, let's first observe the first 24 observations to see the difference later:
 
-```{r view_h}
-View(fcst_tscv[1:50,])
+```{r}
+View(fcst_tscv[1:24,])
 ```
 
-We first need to group by `id` and `.model` and then create a new variable called `h` and assign row_number() to it( you can type ?row_number in your Console to see what this function does, it simply returns the number of row)
+We first need to group by `id` and `.model` and then create a new variable called `h` and assign `row_number()` to it (you can type ?row_number in your Console to see what this function does, it simply returns the number of row):
 
-```{r label, options}
+```{r}
 fc_h <- fcst_tscv |> 
   group_by(.id,.model) |> 
   mutate(h=row_number()) |> ungroup()
-View(fc_h[1:50,])# view the first 43 rows of ae_fc observe h
+View(fc_h[1:24,])# view the first 24 rows of ae_fc and observe h
 ```
 
-Now check rows from 42 to 50 to see the difference.
+Now check rows from 12 to 24 to see the difference.
 
-To calculate the accuracy measures for each horizon and model, follow this:
+To calculate the accuracy measures for each horizon and model, complete the following code :
 
-```{r accuracu_h}
-fc_accuracy <- ??? |> 
+```{r}
+fc_accuracy_h <- fc_h |> 
   as_fable(response = "dose_adminstrated", distribution = "dose_adminstrated") |> 
 accuracy(???, 
            measures = list(point_accuracy_measures, 
                            interval_accuracy_measures, 
                            distribution_accuracy_measures),
-           by = c("???","--"))
+           by = c("???","???"))
 
 ```
 
-you can select any accuracy measure you want using `select()`, alternatively you can calculate them
+You can now create a line chart to show how forecast accuracy may change over the forecast horizon. Please complete the R code for a metric of your preference. You can replicate this process by changing the chosen metric:
 
-```{r accuracy-h, options}
-ggplot(data = fc_accuracy, 
-       mapping = aes(x = h, y = MASE, color = .model))+
+```{r}
+ggplot(data = fc_accuracy_h, 
+       mapping = aes(x = ???, y = ???, color = .model))+
          geom_point()+
   geom_line()+
   ggthemes::scale_color_colorblind()+
 ggthemes::theme_clean()
 ```
 
+What insights do these plots provide?
+
 ### Forecast using best model for the future and visualise it
 
-Now, we need to generate forecast. In order to generate forecast, we need to get the values of predictors in the future corresponding to the forecast horizon, we first need to use `new_data()` followed by some data manipulation to get the new data required for forecasting:
+Now, we need to generate forecast for the future of the time series using the best model identified above. In order to do that, we need to get the values of predictors in the future corresponding to the forecast horizon, we first need to use `new_data()` followed by some data manipulation to get the new data required for forecasting:
 
 You first need to produce the future months. Complete the following code todo that:
 
@@ -267,7 +303,7 @@ future_month_strike <- future_month |>
 Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:
 
 ```{r}
-forecast_population <- vaccine_administrated_tsb |> model(regression_population=TSLM(???)) |> forecast(h=???)
+forecast_population <- vaccine_administrated_tsb |> model(regression_population=ETS(???)) |> forecast(h=???)
 
 population_point_forecast <- forecast_population |> as_tibble() |> select(.mean)
 ```
@@ -279,45 +315,60 @@ test_future <- bind_cols(future_month_strike, population_point_forecast) |>
 
 Forecast using regression with holidays for the future:
 
-```{r forecast-regression, options}
-fcst <- ??? |> 
+```{r}
+fcst_future <- ??? |> 
   model() |> 
   forecast(new_data = test_future)
 ```
 
-```{r visualise}
-fcst |> autoplot(filter_index(???, "2020" ~ .))# visualise it
+```{r}
+fcst_future |> autoplot(filter_index(???, "2020" ~ .))# visualise it
 ```
 
 ### Residual diagnostics
 
+Now, let's perform the residual diagnostic for the most accurate forecasts identified above though time series cross validation.
+
+We first need to fit that model to the data and then extract residuals. Complete the R code to do that:
+
 ```{r }
 fit <- vaccine_administrated_tsb |>
   model(??? = ???(???)) |>
-  augment()
+  ???()
 ```
 
-```{r label, options}
+Plot the residuals:
+
+```{r}
 autoplot(fit, ???) +
   labs(title = "Residuals from the from the most accurate model")
 ```
 
-```{r label, options}
+
+Create the histogram of residuals:
+
+```{r}
 ??? |>
   ggplot(aes(x = ???)) +
   ???() +
   labs(title = "Histogram of residuals from the most accurate model")
 ```
 
-```{r label, options}
+Create the ACF plot of residuals:
+
+```{r}
 ??? |>
   ???(???) |>
   autoplot() +
   labs(title = "Residuals from the most accurate model")
 ```
 
-```{r label, options}
+Instead, you could use a function that provides all three plots together:
+
+```{r}
 vaccine_administrated_tsb |>
   model(??? = ???(???)) |>
   ???()
 ```
+
+What does the analysis of residuals reveal about the best model? Are there any systematic patterns left in the residuals?

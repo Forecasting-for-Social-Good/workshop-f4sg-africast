@@ -253,8 +253,8 @@ We need to use the estimated values of predictors instead of actual that we have
 Given that we use strike and population under a year in the model and we produce forecast for the next 12 month, we need to know the future values of these predictors. Strike is considered as a deterministic predictor, so as they are planned in advance. However, population is a stochastic predictor, as its future values are unknown and we need its estimation.
 
 > This might be different if you use leading predictors. Depending on how you include them in the model, you may not require to use their forecasts.
-> 
-> It is important to know the difference between to Ex-ante and Ex-post. [Include a link to read more]()
+>
+> It is important to know the difference between to Ex-ante and Ex-post. Ex-ante forecasts are those that are made using  only the information that is available in advance, which means the estimated values of predictors are used. Ex-post forecasts are those that are made using actual values of the predictors. Ex-post forecasts can show you how much error in the forecast could be related to the error of the estimation of predictors.
 
 Let's forecast the population using regression as we don't have the estimation from officials.
 
@@ -264,11 +264,11 @@ You first need to produce the future months. Complete the following code todo th
 future_month <- new_data(vaccine_administrated_tsb, n=forecast_horizon)
 ```
 
-We assume that we know that in March the country will face strikes. Add a new column, *strike* by completing the R code:
+Given that we forecast for the next 12 months, we assume that the country will experience strikes in March next year. Add a new column, *strike* by completing the R code:
 
 ```{r}
 future_month_strike <- future_month |> 
-  mutate(strike = if_else )
+  mutate(strike = if_else())
 ```
 
 Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:
@@ -284,7 +284,7 @@ test_future <- bind_cols(future_month_strike, population_point_forecast) |>
   mutate(population_under1=.mean) |> select(-.mean,-dose_adminstrated)
 ```
 
-Now we can forecast using trained models. If you have predictors (e.g. population, strike, holiday, etc) you need to pass the future data instead of the `h=` using the `new_data =` argument: :
+Now, we can forecast using trained models. If you have predictors (e.g. population, strike, holiday, etc) you need to pass the future data instead of the `h=` using the `new_data =` argument: :
 
 ```{r forecast-regression, options}
 fcst_regression <- ??? |> 
