@@ -25,9 +25,9 @@ In this part, we evaluate the forecast accuracy of all models we have covered so
     - Seasonal Naive
     - ETS
     - ARIMA
-    - Regression with trensd and seasonality
-    - Regression with trensd, seasonality, and population_under1
-    - Regression with trensd, seasonality, population_under1, and strike
+    - Regression with trend and seasonality
+    - Regression with trend, seasonality, and population_under1
+    - Regression with trend, seasonality, population_under1, and strike
     - Combination of ETS and ARIMA and regression with population and strike
 
 3. Produce forecasts
@@ -61,10 +61,10 @@ In this part, we evaluate the forecast accuracy of all models we have covered so
     - Seasonal Naive
     - ETS
     - ARIMA
-    - Regression with trensd and seasonality
-    - Regression with trensd, seasonality, and population_under1
-    - Regression with trensd, seasonality, population_under1, and strike
-    - Combination of ETS and ARIMA
+    - Regression with trend and seasonality
+    - Regression with trend, seasonality, and population_under1
+    - Regression with trend, seasonality, population_under1, and strike
+    - Combination of ETS and ARIMA and regression with population and strike
 
 5. Produce forecasts
 

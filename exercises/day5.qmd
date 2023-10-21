@@ -91,6 +91,8 @@ Which error metric do you use to evaluate the performance of models? Which model
 
 ### Time series cross validation
 
+>Attention: Depending on the number of time series, the computation time might be substantial and could potentially lead to computational delays.]
+
 This is also called rolling forecast or rolling origin: You can also reflect on the following questions:
 
 -   Why do we use TSCV? you can read more [her](https://otexts.com/fpp3/tscv.html)
@@ -212,6 +214,12 @@ You may want to select measures you focus on:
 fcst_accuracy |> select(RMSE,MAE,MASE, winkler, CRPS)
 ```
 
+You can calculate the overall accuracy (using any error measure) across all regions:
+
+```{r}
+fcst_accuracy |> group_by(.model) |> summarise(MASE=mean(MASE), winkler=mean(winkler), CRPS=mean(CRPS)) |> arrange(MASE)
+```
+
 This will provide an overall summary (i.e an average) of multiple accuracy measures across all origins and forecast horizon. The result is summarised automatically across all origins (.id) and horizon using a simple average.
 
 Which method is the best method (i.e. lowest error metric)?
@@ -222,7 +230,7 @@ Now let's see how we can get the accuracy measure for each origin (i.e. .id) sep
 
 ```{r}
 fc_accuracy_by_id <-  |> 
-  accuracy(???, by = c(???, ???))
+  accuracy(???, by = c("???","???","???"))
 
 ```
 
@@ -260,7 +268,7 @@ We first need to group by `id` and `.model` and then create a new variable calle
 
 ```{r}
 fc_h <- fcst_tscv |> 
-  group_by(.id,.model) |> 
+  group_by(.id,.model,region) |> 
   mutate(h=row_number()) |> ungroup()
 View(fc_h[1:24,])# view the first 24 rows of ae_fc and observe h
 ```
@@ -276,7 +284,7 @@ accuracy(???,
            measures = list(point_accuracy_measures, 
                            interval_accuracy_measures, 
                            distribution_accuracy_measures),
-           by = c("???","???"))
+           by = c("???","???","???"))
 
 ```
 
@@ -316,20 +324,28 @@ Add a new column, `population_under1`, to include the estimated population under
 forecast_population <- vaccine_administrated_tsb |> model(regression_population=ETS(???)) |> forecast(h=???)
 
 population_point_forecast <- forecast_population |> as_tibble() |> select(.mean)
-```
 
-```{r}
 test_future <- bind_cols(future_month_strike, population_point_forecast) |>
   mutate(population_under1=.mean) |> select(-.mean,-dose_adminstrated)
+
 ```
 
-Forecast using regression with holidays for the future:
+Train the combination approach on the entire time series data:
+
+```{r}
+fit_future <- vaccine_administrated_tsb |> 
+  model(???) |> 
+  mutate(combination = (automatic_ets+automatic_arima+regression_population_strike)/3
+) 
+```
+
+Forecast using the combination approach for the future:
 
 ```{r}
 fcst_future <- ??? |> 
-  model() |> 
   forecast(new_data = test_future)
 ```
+
 
 ```{r}
 fcst_future |> autoplot(filter_index(???, "2020" ~ .))# visualise it
@@ -339,25 +355,18 @@ fcst_future |> autoplot(filter_index(???, "2020" ~ .))# visualise it
 
 Now, let's perform the residual diagnostic for the most accurate forecasts identified above though time series cross validation.
 
-We first need to fit that model to the data and then extract residuals. Complete the R code to do that:
-
-```{r }
-fit <- vaccine_administrated_tsb |>
-  model(??? = ???(???)) |>
-  ???()
-```
-
 Plot the residuals:
 
 ```{r}
-autoplot(fit, ???) +
+fit_future |> ???() |> filter(region == "") |> 
+autoplot(???) +
   labs(title = "Residuals from the from the most accurate model")
 ```
 
 Create the histogram of residuals:
 
 ```{r}
-??? |>
+fit_future |> ???() |> filter(region == "") |> 
   ggplot(aes(x = ???)) +
   ???() +
   labs(title = "Histogram of residuals from the most accurate model")
@@ -366,7 +375,7 @@ Create the histogram of residuals:
 Create the ACF plot of residuals:
 
 ```{r}
-??? |>
+fit_future |> ???() |> filter(region == "") |> 
   ???(???) |>
   autoplot() +
   labs(title = "Residuals from the most accurate model")
@@ -375,8 +384,7 @@ Create the ACF plot of residuals:
 Instead, you could use a function that provides all three plots together:
 
 ```{r}
-vaccine_administrated_tsb |>
-  model(??? = ???(???)) |>
+fit_future |> filter(region == "") |> 
   ???()
 ```
 
