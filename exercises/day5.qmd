@@ -7,6 +7,16 @@ editor: visual
 
 # Apply
 
+```{r}
+library(tsibble)
+library(fable)
+library(feasts)
+library(fabletools)
+library(tidyverse)
+
+vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+```
+
 ## Basic of train/test forecast accuracy
 
 ### Split data
@@ -77,22 +87,22 @@ Calculating the forecast accuracy is similar to other models:
 
 ### Time series cross validation
 
-This is also called rolling forecast or rolling origin: You can also reflect on the following questions: 
+This is also called rolling forecast or rolling origin: You can also reflect on the following questions:
 
-- Why do we use TSCV? you can read more [her](https://otexts.com/fpp3/tscv.html)
+-   Why do we use TSCV? you can read more [her](https://otexts.com/fpp3/tscv.html)
 
-- How do we do TSCV in R? Which steps to follow? 
+-   How do we do TSCV in R? Which steps to follow?
 
-    1. split data using `filter_index()` or other functions 
-    2. create different time series origins 
-    3. model each origin, 
-    4. forecast each origin
+    1.  split data using `filter_index()` or other functions
+    2.  create different time series origins
+    3.  model each origin,
+    4.  forecast each origin
 
 let's see how we do it in R:
 
 #### split data
 
-We initially split the data into test and train. We defined a new variable, `percentage_test`. This will determine the percentage of the time series we use to evaluate the forecast accuracy using TSCV. As a general rule, we use 20\%-30\% of the length of time series as the test set. For instance, if we have 120 months of data, and use 20\% as test set, that means we will have 24 months (120*0.2) in the test set:
+We initially split the data into test and train. We defined a new variable, `percentage_test`. This will determine the percentage of the time series we use to evaluate the forecast accuracy using TSCV. As a general rule, we use 20%-30% of the length of time series as the test set. For instance, if we have 120 months of data, and use 20% as test set, that means we will have 24 months (120\*0.2) in the test set:
 
 ```{r}
 forecast_horizon <- 42# forecast horizon
@@ -107,10 +117,9 @@ train <- vaccine_administrated_tsb |>
 
 #### Time series cross validation
 
-Before fitting the models, we need to create the time series origins in both train and test sets.
-We first apply time series cross validation on the train data. We start with an initial training, the length of the first origin (.init = ) and then increase the length of the previous origin by adding new observation (.step=), we continue creating these timeseries until the number of observation left at the end of timeseries equals to the forecast horizon, we stop there.
+Before fitting the models, we need to create the time series origins in both train and test sets. We first apply time series cross validation on the train data. We start with an initial training, the length of the first origin (.init = ) and then increase the length of the previous origin by adding new observation (.step=), we continue creating these timeseries until the number of observation left at the end of timeseries equals to the forecast horizon, we stop there.
 
-Next, we apply time series cross validation on the test data. We create slides in the test set that corresponds to each origin created using train data, equal to the length of the forecast horizon. 
+Next, we apply time series cross validation on the test data. We create slides in the test set that corresponds to each origin created using train data, equal to the length of the forecast horizon.
 
 ```{r}
 train_tscv <- vaccine_administrated_tsb |> 
@@ -122,11 +131,11 @@ test_tscv <- test |>
   ---(.size = ---, .step = 1, .id = ".id") |> select(-dose_adminstrated)
 ```
 
->`.init` is the size of first origin, `.step` is the increment step, this can correspond to the forecasting frequency, i.e. how often you generate the forecast. If .step = 1 in a monthly time series, it means we generate forecasts very month for the given forecast horizon.
+> `.init` is the size of first origin, `.step` is the increment step, this can correspond to the forecasting frequency, i.e. how often you generate the forecast. If .step = 1 in a monthly time series, it means we generate forecasts very month for the given forecast horizon.
 
 #### Values of population and strike in the test set
 
->It is important to replace `population_under1` values in the test_tscv with its estimation, otherwise we use perfect forecast for the population_under1 in the models using those predictors which can mislead us in choosing the most accurate model. 
+> It is important to replace `population_under1` values in the test_tscv with its estimation, otherwise we use perfect forecast for the population_under1 in the models using those predictors which can mislead us in choosing the most accurate model.
 
 We don't have access to these forecast, so here we forecast them using ETS. Complete the R code to produce the estimation of population_under1 abd replace it with actual values in `test_tscv`:
 
@@ -203,7 +212,6 @@ This will provide a summary of multiple accuracy measures across all origins and
 
 Which method is the best method (i.e. lowest error metric)?
 
-
 #### accuracy per id
 
 Now let's see how we can get the accuracy measure for each origin (i.e. .id) separately instead of averaging across all of them. To do this, you need to use an additional argument in accuracy(by=):
@@ -216,7 +224,6 @@ fc_accuracy_by_id <- ??? |>
 
 We can now create some insightful visualisations. Complete the following code to generate a density plot and a box plot that highlights the distribution of the error metrics. You can choose any error metric:
 
-
 ```{r}
 # Density plot
 ??? |> 
@@ -224,7 +231,6 @@ We can now create some insightful visualisations. Complete the following code to
   ggplot(aes(???))+
     geom_density(aes(fill=factor(.model)), alpha=.5)
 ```
-
 
 ```{r}
 #Boxplot
@@ -343,7 +349,6 @@ Plot the residuals:
 autoplot(fit, ???) +
   labs(title = "Residuals from the from the most accurate model")
 ```
-
 
 Create the histogram of residuals:
 

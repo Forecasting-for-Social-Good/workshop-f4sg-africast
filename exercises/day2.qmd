@@ -7,7 +7,54 @@ editor: visual
 
 # Apply
 
-## Transformation
+```{r}
+library(tsibble)
+library(feasts)
+library(tidyverse)
+library(fable)
+vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+```
+
+## Decomposition
+
+Complete the following code to decompose `dose_adminstrated` into its components:
+
+```{r}
+stl_decom <- vaccine_administrated_tsb |>
+  filter(region == "") |> 
+  ---(
+    ---(--- ~ ---(window = ---) +
+                   ---(window = ---)))
+stl_decom
+```
+
+Complete the code below ot the components produced by STL:
+
+```{r}
+stl_decom |> 
+  ---() |>
+  autoplot()
+```
+
+Describe the result of the decomposition from the above plot.
+
+Now, you can extract seasonal adjusted data and plot them with the data and trend components, complete the R code to produce the plot:
+
+```{r}
+stl_decom |>
+    ---() |>
+  ggplot(aes(x = month)) +
+  geom_line(aes(y = ???, colour = "Data")) +
+  geom_line(aes(y = ???,
+                colour = "Seasonally Adjusted")) +
+  geom_line(aes(y = ???, colour = "Trend")) +
+  labs(y = "Month",
+       title = "Vaccine dose adminstrated") +
+  scale_colour_manual(
+    values = c("gray", "#0072B2", "#D55E00"),
+    breaks = c("Data", "Seasonally Adjusted", "Trend")
+  )
+```
 
 ## Computing features
 
@@ -15,7 +62,8 @@ You can start by calculating some simple features including average (`mean`) and
 
 ```{r}
 vaccine_administrated_tsb |>
-  ???(???, list(average = ???, standard_deviation = ???, coefficient_of_variation = ???/???))
+  ???(???, list(average = ???, standard_deviation = ???)) |> 
+  mutate(coefficient_of_variation = ???/???)
 ```
 
 You can also use *feasts* package to include about 48 different features providing various numerical summaries of time series. Complete the following code to compute those features for the monthly vaccine dose adminstrated:

@@ -7,6 +7,16 @@ editor: visual
 
 # Apply
 
+```{r}
+library(tsibble)
+library(fable)
+library(feasts)
+library(fabletools)
+library(tidyverse)
+library(astsa)
+vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+```
+
 Now, we proceed by specifying and training models on administered vaccine doses. These models are then used to produce forecasts for the next 12 months beyond the latest data point.
 
 ## Basic of modelling/forecasting
@@ -49,7 +59,7 @@ Complete the following code to see only results for naive model:
 vaccine_fit |> ???() |> filter(.model=="???")
 ```
 
-You can use `select()` to get fitted values or residuals. Complete the R code to see residulas for the naive method:
+You can use `select()` to get fitted values or residuals. Complete the R code to see residuals for the naive method:
 
 ```{r}
 vaccine_fit |> ???() |> filter(.model=="???") |> select(???)
@@ -125,14 +135,16 @@ You may want to extract forecast you generated into Excel, it is easy to do it u
 
 Most time series models produce normally distributed forecasts ??? that is, we assume that the distribution of possible future values follows a normal distribution.
 
-When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance. You can also use `forecast()` directly to generate futures:
+When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance. You can also use `forecast()` directly to generate futures.
+
+>Attention: Producing forecasts using bootstrapping may take time!! so, running time might be an issue if you have many time series.
 
 ```{r}
 fc_bootstrap <- ??? |>
   ???(h = forecast_horizon, bootstrap = TRUE, times = ???)
 ```
 
-You can use `generate()` function to generate futures using bootstrapping:
+You can use `generate()` function to generate futures using bootstrapping. Here we do it for one model only:
 
 ```{r}
 fit <- ??? |>
@@ -140,6 +152,9 @@ fit <- ??? |>
 sim_bootstrap <- fit |> ???(h = ???, times = ???, bootstrap = TRUE)
 sim_bootstrap
 ```
+
+Could you describe what columns and rows represent in `sim_bootstrap`?
+
 
 ## Regression
 
@@ -157,19 +172,19 @@ Complete the following code to create a scatter plot showing a possible associat
 
 ```{r}
 ggplot(vaccine_administrated_tsb, 
-       aes(x= ???, y=???, colour = ???))+
+       aes(x= ???, y=???))+
   geom_point()+
   geom_smooth()
 ```
 
-Do you see any linear association between dose_adminstrated and population unde 1?
+Do you see any linear association between dose_adminstrated and population under 1?
 
 Complete the following code to see if there are differences in dose_administered based on whether the months are associated with strike days or not.
 
 ```{r}
 ggplot(vaccine_administrated_tsb, 
-       aes(x= ???, y=???))+
-  geom_smooth()
+       aes(x= ---, y=---))+
+  geom_???()
 ```
 
 Do you see any linear association between dose_adminstrated and strike?
@@ -181,7 +196,6 @@ You may think that a predictor impacts the response variable, but with a delay. 
 Complete the following code to check the association between population in various lags and dose administrated:
 
 ```{r}
-library(astsa)
 #lag2.plot from astsa package can be used to visualize leading predictors
 lag2.plot(???, ???, max.lag = 12)
 ```
@@ -208,7 +222,10 @@ fit_regression <- vaccine_administrated_tsb |>
   ??? = ???(??? ~ ??? + ??? + ???),
   ??? = ???(??? ~ ??? ~ ??? + ??? + ??? + ???)
 )
+fit_regression
 ```
+
+How many rows and columns are present, and what do they represent?
 
 ### Check training model's output
 
@@ -221,7 +238,7 @@ fit_regression  |> ???()
 you can select any model of interest and filter any region of focus if you like:
 
 ```{r}
-fit_regression  |> ???(???) |> ???()
+fit_regression  |> ???(region == "") |> ???(regression_population_strike) |> report()
 ```
 
 Get a summary of estimated parameters and corresponding statistics using `tidy()` and `glance()`. You can try these functions by completing the following code.
@@ -254,13 +271,14 @@ Given that we use strike and population under a year in the model and we produce
 
 > This might be different if you use leading predictors. Depending on how you include them in the model, you may not require to use their forecasts.
 >
-> It is important to know the difference between to Ex-ante and Ex-post. Ex-ante forecasts are those that are made using  only the information that is available in advance, which means the estimated values of predictors are used. Ex-post forecasts are those that are made using actual values of the predictors. Ex-post forecasts can show you how much error in the forecast could be related to the error of the estimation of predictors.
+> It is important to know the difference between to Ex-ante and Ex-post. Ex-ante forecasts are those that are made using only the information that is available in advance, which means the estimated values of predictors are used. Ex-post forecasts are those that are made using actual values of the predictors. Ex-post forecasts can show you how much error in the forecast could be related to the error of the estimation of predictors.
 
 Let's forecast the population using regression as we don't have the estimation from officials.
 
 You first need to produce the future months. Complete the following code todo that:
 
 ```{r}
+forecast_horizon <- 12
 future_month <- new_data(vaccine_administrated_tsb, n=forecast_horizon)
 ```
 
@@ -268,7 +286,7 @@ Given that we forecast for the next 12 months, we assume that the country will e
 
 ```{r}
 future_month_strike <- future_month |> 
-  mutate(strike = if_else())
+  mutate(strike = if_else(lubridate::month(month, label = TRUE) == "Mar", 1,0))
 ```
 
 Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:
@@ -281,20 +299,20 @@ population_point_forecast <- forecast_population |> as_tibble() |> select(.mean)
 
 ```{r}
 test_future <- bind_cols(future_month_strike, population_point_forecast) |>
-  mutate(population_under1=.mean) |> select(-.mean,-dose_adminstrated)
+  mutate(population_under1=.mean) |> select(-.mean)
 ```
 
 Now, we can forecast using trained models. If you have predictors (e.g. population, strike, holiday, etc) you need to pass the future data instead of the `h=` using the `new_data =` argument: :
 
-```{r forecast-regression, options}
+```{r}
 fcst_regression <- ??? |> 
   forecast(new_data = ???)
 ```
 
 ## Visualize forecasts by regression
 
-Complete the following code to see past data from 2020 until the end and its forecasts:
+Complete the following code to see past data and its forecasts:
 
-```{r }
-??? |> autoplot(filter_index(???,"2020"~.), level=NULL)
+```{r}
+??? |> autoplot(???, level=NULL)
 ```

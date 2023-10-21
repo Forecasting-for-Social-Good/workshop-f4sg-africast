@@ -86,6 +86,9 @@ tourism |>
 Let's first import data and observe it. This dataset is located in`data` directory in the working directory:
 
 ```{r}
+library(tidyverse)
+library(tsibble)
+library(lubridate)
 vaccine_administrated <- read_csv("data/vaccine_adminstrated.csv")
 vaccine_administrated
 ```
@@ -95,9 +98,9 @@ After importing your data, it's important to double-check the structure of the d
 Verify the data type of each variable in `vaccine_administered`. We may need to modify the data type of `month`, and `strike`. Could you explain why?
 
 ```{r}
-library(lubridate)
 vaccine_administrated <- vaccine_administrated |> 
   mutate(month = ???(month), strike = ???(strike))
+vaccine_administrated
 ```
 
 ## Prepare your data
@@ -137,7 +140,7 @@ Complete the following R chunk to create a tsibble.
 ```{r}
 vaccine_administrated_tsb <- vaccine_administrated |> 
   ???(index = ???, key=???)
-ambulance_demand_tsb
+vaccine_administrated_tsb
 ```
 
 ### Check for temporal gaps in time and fill gaps
@@ -173,6 +176,7 @@ Complete the following code to create total dose administrated in the country.
 vaccine_administrated_total <- vaccine_administrated_tsb |> 
   ???(???) |>
   summarise(dose_adminstrated = ???(???))
+vaccine_administrated_total
 ```
 
 Depending on the forecasting task on hand, you may need to work with other time granularities such as quarterly time series.
@@ -184,6 +188,7 @@ Complete the following code to create total dose administrated in the country.
 quarterly_vaccine_administrated <- vaccine_administrated_tsb |>
   ???(quarter = ???(???)) |>
   summarise(dose_adminstrated = ???(???))
+quarterly_vaccine_administrated
 ```
 
 What if you need to create quarterly dose administrated in each region, write the R to achieve that.

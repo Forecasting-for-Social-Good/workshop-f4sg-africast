@@ -14,9 +14,12 @@ Mitch's section to learn the concepts on various datasets
 
 :::{.callout-caution}
 ## Your turn!
-1. Transformation
+1. Decomposition
 
-    - Add later
+    - Do an STL decomposition of `dose_adminstrated` for a region of your choice. You will need to choose a trend and seasonal window to allow for the changing shape of these components. How do values of parameters in trend and season changes the decomposition?
+    - Plot the components from the STL decomposition.
+    - Could you describe the result of the decomposition.
+    - Could you produce a seasonally adjusted series and plot them with the dose admonstarted and the trend?
     
 2. Computing features
 
