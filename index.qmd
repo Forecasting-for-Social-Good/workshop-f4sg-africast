@@ -71,7 +71,7 @@ To be able to complete the exercises of this workshop, please install a suitable
 The following code will install the main packages needed for the workshop.
 
 ```r
-install.packages(c("tidyverse","fpp3", "GGally", "sugrrants"))
+install.packages(c("tidyverse","fpp3", "GGally", "sugrrants", "astsa"))
 ```
 
 Please have the required software installed and pre-work completed before attending the workshop.

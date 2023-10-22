@@ -68,16 +68,23 @@ source("setup.R")
 
 \pause
 \fontsize{11}{11}\sf
+  
   * Free and online
   * Not an in-depth technical book
   * Mindset behind forecasting
   * Overview of forecasting methods and processes
 
-## International Institute of Forecasters
+## International Institute of Forecasters (IIF)
+
+- Certificate will be provided by IIF. You need to attend all lectures and exercise sessions to get the certificate.
 
 - a nonprofit organization founded in 1982, is dedicated to developing and furthering the generation, distribution, and use of knowledge on forecasting
 
-- [Forecasting for Social Good](https://www.f4sg.org/)
+## [Forecasting for Social Good committee](https://www.f4sg.org/)
+
+- [Follow us on Linkedin](https://www.linkedin.com/company/f4sg/)
+- [Follow us on Twitter](https://twitter.com/FSG_forecast)
+- Use #AFRICAST, #F4SG if you post on social media about the workshop
 
 ## Poll: [How proficient are you in using R?](https://www.menti.com/alfmobtvo9wb)
 
@@ -108,7 +115,9 @@ source("setup.R")
 install.packages(c(
   "tidyverse",
   "fpp3",
-  "GGally"
+  "GGally",
+  "sugrrants",
+  "astsa"
 ))
 ```
 
@@ -133,7 +142,17 @@ install.packages(c(
 \vspace*{.0cm}\begin{alertblock}{}{\centerline{\Large\textbf{https://workshop.f4sg.org/africast/}}}
 \end{alertblock}
 
+## Schedule for each session (UK time zone)
+
+- Start at 08:00 a.m. 
+- Lecture 1: 08:00 - 09:30
+- Break: 09:30 - 09:45
+- Lecture 2:  09:45 - 11:15
+- Check your group on Slack for mentorship sessions
+
 ## Access materials 
 
 * AFRICAST workshop website
-* Slack for mentorship and Q/A
+* Mentorship sessions and Q/A
+* Slack
+

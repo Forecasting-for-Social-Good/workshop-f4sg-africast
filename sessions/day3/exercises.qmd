@@ -1,6 +1,6 @@
 ---
 title: "Exercises"
-subtitle: "<span class='code'>11:30-13:00 OR 16:30-18:00</span>"
+subtitle: "<span class='code'>Check with your mentor on Slack</span>"
 date: "2023-10-25"
 order: 3
 ---

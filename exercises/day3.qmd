@@ -137,7 +137,7 @@ Most time series models produce normally distributed forecasts ??? that is, we a
 
 When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance. You can also use `forecast()` directly to generate futures.
 
->Attention: Producing forecasts using bootstrapping may take time!! so, running time might be an issue if you have many time series.
+> Attention: Producing forecasts using bootstrapping may take time!! so, running time might be an issue if you have many time series.
 
 ```{r}
 fc_bootstrap <- ??? |>
@@ -154,7 +154,6 @@ sim_bootstrap
 ```
 
 Could you describe what columns and rows represent in `sim_bootstrap`?
-
 
 ## Regression
 
