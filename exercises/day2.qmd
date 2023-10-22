@@ -5,6 +5,82 @@ editor: visual
 
 # Learn
 
+Select a country of your choice from `global_economy`, then calculate and visualise the the GDP per capita over time (that is, the GDP scaled by the population).
+
+```{r}
+global_economy |> 
+  filter(???) |> 
+  autoplot(GDP / ???)
+```
+
+Calculate the monthly total Australian retail turnover from `aus_retail` and visualise the seasonal pattern. Then scale by the number of days in each month to calculate the daily average turnover and comparse the seasonal patterns.
+
+```{r}
+aus_retail_total <- aus_retail |> 
+  summarise(???)
+
+aus_retail_total |> 
+  gg_subseries(Turnover)
+
+??? |> 
+  gg_subseries(???)
+```
+
+Find a suitable box-cox transformation for the monthly total Australian retail turnover, then compare your choice with the automatically selected parameter from the `guerrero()` feature.
+
+```{r}
+aus_retail_total |> 
+  autoplot(???(Turnover))
+
+aus_retail_total |> 
+  autoplot(???(Turnover, lambda = ???))
+
+aus_retail_total |> 
+  ???(Turnover, features = ???)
+
+
+aus_retail_total |> 
+  autoplot(???(Turnover, lambda = ???(Turnover)))
+```
+
+Find a suitable STL decomposition for the total Australian retail turnover, then produce and visualise the seasonally adjusted time series. Hint: don't forget to use the suitable transformation found previously!
+
+```{r}
+fit <- aus_retail_total |> 
+  model(STL(??? ~ trend(???) + season(???)))
+
+fit |> 
+  components() |> 
+  autoplot()
+
+fit |> 
+  components(???) |> 
+  autoplot()
+```
+
+Produce a seasonal plot of the seasonal component from your STL decomposition on Australian retail turnover.
+
+```{r}
+fit |> 
+  components() |> 
+  ???(???)
+```
+
+Calculate the STL features for the time series in the `tourism` dataset. Try colouring the points in the scatterplot by the purpose of travel, are some reasons more trended or seasonal than others?
+
+```{r}
+tourism_features <- tourism |> 
+  ???(Trips, ???) 
+  
+tourism_features |> 
+  ggplot(aes(x = ???, y = ???)) + 
+  geom_point()
+
+tourism_features |> 
+  ggplot(aes(x = ???, y = ???)) + 
+  geom_point(aes(colour = ???))
+```
+
 # Apply
 
 ```{r}
