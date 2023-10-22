@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,9 +18,72 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -56,15 +119,15 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <meta name="twitter:title" content="F4SG: Africast - Exercises">
-<meta name="twitter:description" content="11:30-13:00 OR 16:30-18:00">
-<meta name="twitter:image" content="https://workshop.mitchelloharawild.com/f4sg-africa/images/twitter-card.png">
+<meta name="twitter:description" content="<span class='code'>Check with your mentor on Slack</span>">
+<meta name="twitter:image" content="https://workshop.f4sg.org/africast/images/twitter-card.png">
 <meta name="twitter:creator" content="@mitchoharawild">
 <meta name="twitter:image-height" content="654">
 <meta name="twitter:image-width" content="1250">
@@ -82,95 +145,97 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">F4SG: Africast</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sessions" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sessions" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Sessions</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-sessions">    
         <li>
-    <a class="dropdown-item" href="../../sessions/day1/basics.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day1/basics.html">
  <span class="dropdown-text">Basics of time series and data structures</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day1/graphics.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day1/graphics.html">
  <span class="dropdown-text">Time series patterns and basic graphics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day2/adjustments.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day2/adjustments.html">
  <span class="dropdown-text">Recap day 1, transforming / adjusting time series</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day2/features.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day2/features.html">
  <span class="dropdown-text">Computing and visualizing features (features)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day3/forecasting.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day3/forecasting.html">
  <span class="dropdown-text">Basic modeling / forecasting</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day3/regressors.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day3/regressors.html">
  <span class="dropdown-text">Forecasting with regression, how to represent temporal structure with regressors</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day4/ets.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day4/ets.html">
  <span class="dropdown-text">ETS, building on recap of temporal regressors.</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day4/arima.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day4/arima.html">
  <span class="dropdown-text">ARIMA</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day5/accuracy.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day5/accuracy.html">
  <span class="dropdown-text">Recap forecasting methods, basic training and test accuracy</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day5/diagnostics.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day5/diagnostics.html">
  <span class="dropdown-text">Advanced performance evaluation: residual diagnostics and cross validation</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../schedule.html" rel="" target="">
+    <a class="nav-link" href="../../schedule.html">
  <span class="menu-text">Schedule</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-downloads" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-downloads" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-download" role="img">
 </i> 
  <span class="menu-text">Downloads</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-downloads">    
         <li>
-    <a class="dropdown-item" href="https://github.com/mitchelloharawild/workshop-f4sg-africa/archive/refs/heads/main.zip" rel="" target="">
+    <a class="dropdown-item" href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/archive/refs/heads/master.zip">
  <span class="dropdown-text">Everything</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../slides.zip" rel="" target="">
+    <a class="dropdown-item" href="../../slides.zip">
  <span class="dropdown-text">Slides</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../exercises.zip">
+ <span class="dropdown-text">Lab sessions</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../license.html" rel="" target=""><i class="bi bi-file-certificate" role="img">
+    <a class="nav-link" href="../../license.html"><i class="bi bi-file-certificate" role="img">
 </i> 
  <span class="menu-text">License</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/mitchelloharawild/workshop-f4sg-africa" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa"><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
+              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -184,10 +249,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learn" id="toc-learn" class="nav-link active" data-scroll-target="#learn">Learn</a></li>
+  <li><a href="#learn" id="toc-learn" class="nav-link active" data-scroll-target="#learn">Learn</a>
+  <ul class="collapse">
+  <li><a href="#transformations" id="toc-transformations" class="nav-link" data-scroll-target="#transformations">Transformations</a></li>
+  <li><a href="#decomposition" id="toc-decomposition" class="nav-link" data-scroll-target="#decomposition">Decomposition</a></li>
+  <li><a href="#features" id="toc-features" class="nav-link" data-scroll-target="#features">Features</a></li>
+  </ul></li>
   <li><a href="#apply" id="toc-apply" class="nav-link" data-scroll-target="#apply">Apply</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mitchelloharawild/workshop-f4sg-africa/edit/main/sessions/day2/exercises.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mitchelloharawild/workshop-f4sg-africa/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/edit/main/sessions/day2/exercises.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -195,7 +265,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Exercises</h1>
-<p class="subtitle lead"><span class="code">11:30-13:00 OR 16:30-18:00</span></p>
+<p class="subtitle lead"><span class="code">Check with your mentor on Slack</span></p>
 </div>
 
 
@@ -218,25 +288,457 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="learn" class="level1">
 <h1>Learn</h1>
-<p>Mitch’s section to learn the concepts on various datasets</p>
-</section>
-<section id="apply" class="level1">
-<h1>Apply</h1>
-<p>In this exercise, you will apply what you have learned so far on a dataset containing doses of administered vaccine in an African country.</p>
-<div class="callout callout-style-default callout-caution callout-titled">
+<section id="transformations" class="level2">
+<h2 class="anchored" data-anchor-id="transformations">Transformations</h2>
+<p>Transformations provide useful simplifications of the patterns in a time series. Simplifying the patterns makes them easier to model, and so transforming the data is a common preliminary step in producing forecasts. Some transformations standardise values to be comparable between countries or other series in the dataset, while others can regularise the variation in the data.</p>
+<p>Let’s look at the turnover of print media in Australia.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibbledata)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: fabletools</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Industry <span class="sc">==</span> <span class="st">"Newspaper and book retailing"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Turnover =</span> <span class="fu">sum</span>(Turnover))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Turnover has increased until the end of 2010, after which it has steadily declined. When looking at monetary value it is common to consider price indices to ensure that turnover is comparable over time. This allows you to identify patterns and changes such as turning points in real monetary terms.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
+Data for transformations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It can be useful to use other datasets that contain information for the transformation. To do this we can merge the datasets in time using <code>join</code> operations.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lubridate'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>aus_economy <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Australia"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">year</span>(Month)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(aus_economy, <span class="at">by =</span> <span class="st">"Year"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover<span class="sc">/</span>CPI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 12 rows containing missing values (`geom_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>After taking into account CPI, the real monetary Turnover of the print media industry in Australia has been gradually declining since 1990-2000.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Select a country of your choice from <code>global_economy</code>, then calculate and visualise the the GDP per capita over time (that is, the GDP scaled by the population).</p>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tricky to forecast
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While transformations help to make the patterns simpler to forecast, if additional information like <code>CPI</code> or <code>Population</code> are used then they will also need to be forecasted. While population is generally easy to forecast, CPI could be more complicated to forecast than the thing you’re originally forecasting!</p>
+</div>
+</div>
+<p>Another useful transformation is calendar adjustments. This adjusts the observations in the time series to represent an equivalent time period, and can simplify seasonal patterns which result from these different lengths. This is particularly useful for monthly data, since the number of days in each month varies substantially.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover <span class="sc">/</span> <span class="fu">days_in_month</span>(Month))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_subseries</span>(Turnover <span class="sc">/</span> <span class="fu">days_in_month</span>(Month))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate the monthly total Australian retail turnover from <code>aus_retail</code> and visualise the seasonal pattern. Then scale by the number of days in each month to calculate the daily average turnover and comparse the seasonal patterns.</p>
+</div>
+</div>
+<p>Mathematical transformations are useful since they don’t require providing any future values to produce the forecasts. Log and power transformations (<span class="math inline">\(y^k\)</span>, for example square root, square, and inverse) are particularly helpful for regularising variation proportional to the level of the series.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>, Industry <span class="sc">==</span> <span class="st">"Cafes, restaurants and catering services"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This proportional variance is common in time series, in Victoria’s cafe and restaurant turnover you can see small changes when turnover is low (before 2000), and is much larger after 2010 when turnover is much larger.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>, Industry <span class="sc">==</span> <span class="st">"Cafes, restaurants and catering services"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Log transforming the data changes this variation to be more consistent, where the variation before 2000 is now more similar to after 2010.</p>
+<p>The box-cox transformation family parameterises the range of power transformations for more precise adjustments. The transformation parameter <span class="math inline">\(\lambda\)</span> controls the strength of the transformation, with <span class="math inline">\(\lambda=1\)</span> being no change in shape, <span class="math inline">\(\lambda = 0\)</span> being a log transformation and others being equivalent in shape to <span class="math inline">\(y^\lambda\)</span>.</p>
+<p>The log transformation above was a bit strong, so let’s try something slightly close to <span class="math inline">\(\lambda=1\)</span> - perhaps <span class="math inline">\(\lambda = 0.1\)</span>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>, Industry <span class="sc">==</span> <span class="st">"Cafes, restaurants and catering services"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">box_cox</span>(Turnover, <span class="at">lambda =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The variation is now consistent for the entire series, and the trend is linear.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Automatic box-cox transformations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <span class="math inline">\(\lambda\)</span> parameter can be automatically computed using the <code>guerrero()</code> function.</p>
+</div>
+</div>
+<p>We can calculate the optimal box-cox parameter using <code>features()</code> and <code>guerrero()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>, Industry <span class="sc">==</span> <span class="st">"Cafes, restaurants and catering services"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(Turnover, <span class="at">features =</span> guerrero)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  State    Industry                                 lambda_guerrero
+  &lt;chr&gt;    &lt;chr&gt;                                              &lt;dbl&gt;
+1 Victoria Cafes, restaurants and catering services           0.173</code></pre>
+</div>
+</div>
+<p>Looks like we were pretty close with <span class="math inline">\(\lambda = 0.1\)</span>, let’s try using this more precise estimate:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>, Industry <span class="sc">==</span> <span class="st">"Cafes, restaurants and catering services"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">box_cox</span>(Turnover, <span class="at">lambda =</span> <span class="fu">guerrero</span>(Turnover)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The optimised box-cox transformation is very similar to <span class="math inline">\(\lambda = 0.1\)</span> - fortunately for us we don’t have to be precise since this transformation isn’t sensitive to your choice of parameter. So long as you are within <span class="math inline">\(\pm 0.1\)</span> the transformation should be okay. Additionally, if <span class="math inline">\(\lambda \approx 0\)</span> then it is common to instead use the simpler <code>log()</code> transformation.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find a suitable box-cox transformation for the monthly total Australian retail turnover, then compare your choice with the automatically selected parameter from the <code>guerrero()</code> feature.</p>
+</div>
+</div>
+</section>
+<section id="decomposition" class="level2">
+<h2 class="anchored" data-anchor-id="decomposition">Decomposition</h2>
+<p>Another commonly used transformation/adjustment requires a model to decompose the time series into its components. Seasonally adjusted time series are often used by analysts and policy makers to evaluate the underlying long term trends without the added complexity of seasonality. The STL decomposition is useful model which can isolate the seasonal pattern from the trend and remainder for many types of time series.</p>
+<p>The STL decomposition separates time series into the form <span class="math inline">\(Y = \text{trend} + \text{seasonality} + \text{remainder}\)</span>. Since this is an additive decomposition, we must first simplify any multiplicative patterns into additive ones using a suitable power transformation. Let’s try to remove the annual seasonality from Australia’s print media turnover.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The seasonality is more varied when turnover increases, so we must transform the data before estimating the STL model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The log transformation (<span class="math inline">\(\lambda = 0\)</span>) does a great job at producing a consistent variation throughout the series. You could try to find a better transformation using the box-cox transformation family, however there is no need for it here.</p>
+<p>We can estimate the STL model using <code>STL()</code> as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(<span class="fu">log</span>(Turnover)))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A mable: 1 x 1
+  `STL(log(Turnover))`
+               &lt;model&gt;
+1                &lt;STL&gt;</code></pre>
+</div>
+</div>
+<p>The decomposition can be obtained from the model using <code>components()</code>, and then all of the components can be plotted with <code>autoplot()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A dable: 441 x 7 [1M]
+# Key:     .model [1]
+# :        log(Turnover) = trend + season_year + remainder
+   .model        Month `log(Turnover)` trend season_year remainder season_adjust
+   &lt;chr&gt;         &lt;mth&gt;           &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+ 1 STL(log(T… 1982 Apr            4.90  4.92     -0.0723   0.0528           4.97
+ 2 STL(log(T… 1982 May            4.89  4.92     -0.0128  -0.0151           4.91
+ 3 STL(log(T… 1982 Jun            4.84  4.93     -0.0942   0.00869          4.94
+ 4 STL(log(T… 1982 Jul            4.86  4.93     -0.0480  -0.0303           4.90
+ 5 STL(log(T… 1982 Aug            4.88  4.94     -0.0155  -0.0458           4.89
+ 6 STL(log(T… 1982 Sep            4.90  4.94     -0.0453  -0.00317          4.94
+ 7 STL(log(T… 1982 Oct            4.93  4.95     -0.0167   0.00114          4.95
+ 8 STL(log(T… 1982 Nov            4.97  4.95      0.0181  -0.00245          4.95
+ 9 STL(log(T… 1982 Dec            5.26  4.96      0.258    0.0398           5.00
+10 STL(log(T… 1983 Jan            4.92  4.97     -0.0180  -0.0249           4.94
+# ℹ 431 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The components are obtained using rolling estimation windows, which are the main way the decomposition is changed. A large window produces smooth components, and a small window produces flexible and quickly changing components.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(<span class="fu">log</span>(Turnover) <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">window =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="at">window =</span> <span class="cn">Inf</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The infinite window for the seasonality results in a seasonal pattern that doesn’t change over time, while the small trend window allows the trend to change very quickly. The best choice of estimation window should produce components that match the patterns in the original data while being as smooth as possible.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(<span class="fu">log</span>(Turnover) <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">window =</span> <span class="dv">25</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="at">window =</span> <span class="cn">Inf</span>))) </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A trend window of 25 for this dataset produces a mostly smooth trend component which can still react to brief decreases in turnover. The constant seasonal pattern (infinite window) is reasonable for this dataset since the seasonality doesn’t change much over time.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Seasonal adjustment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can find the de-seasonalised data in the <code>season_adjust</code> column of the <code>components()</code> output.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(season_adjust)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find a suitable STL decomposition for the total Australian retail turnover, then produce and visualise the seasonally adjusted time series.</p>
+<p>Hint: don’t forget to use the suitable transformation found previously!</p>
+</div>
+</div>
+<p>Seasonal decomposition also makes it easier to take a look at the seasonality - we can use a combination of seasonal plots and decomposition to more easily see seasonal patterns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_season</span>(season_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>If the seasonal window allows the seasonal component to change over time, the <code>gg_subseries()</code> plot is especially useful for seeing how the pattern changes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(<span class="fu">log</span>(Turnover) <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">window =</span> <span class="dv">25</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="at">window =</span> <span class="dv">9</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_subseries</span>(season_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>January and December seem to increase over time, while April, May and June are decreasing.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Produce appropriate seasonal plots of the seasonal component from your STL decomposition on Australian retail turnover.</p>
+</div>
+</div>
+</section>
+<section id="features" class="level2">
+<h2 class="anchored" data-anchor-id="features">Features</h2>
+<p>A useful technique for visualising large collections of time series is to produce summaries of their patterns known as features. Visualising many time series simultaneously is difficult since the scale and shape of patterns can vary substantially. The <code>features()</code> function will compute single value summaries over time such as the strength of trend or seasonality. There are many features available, but the features from STL decompositions are particularly interesting.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(Turnover, feat_stl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 152 × 11
+   State       Industry trend_strength seasonal_strength_year seasonal_peak_year
+   &lt;chr&gt;       &lt;chr&gt;             &lt;dbl&gt;                  &lt;dbl&gt;              &lt;dbl&gt;
+ 1 Australian… Cafes, …          0.989                  0.562                  0
+ 2 Australian… Cafes, …          0.993                  0.629                  0
+ 3 Australian… Clothin…          0.991                  0.923                  9
+ 4 Australian… Clothin…          0.993                  0.957                  9
+ 5 Australian… Departm…          0.977                  0.980                  9
+ 6 Australian… Electri…          0.992                  0.933                  9
+ 7 Australian… Food re…          0.999                  0.890                  9
+ 8 Australian… Footwea…          0.982                  0.944                  9
+ 9 Australian… Furnitu…          0.981                  0.687                  9
+10 Australian… Hardwar…          0.992                  0.900                  9
+# ℹ 142 more rows
+# ℹ 6 more variables: seasonal_trough_year &lt;dbl&gt;, spikiness &lt;dbl&gt;,
+#   linearity &lt;dbl&gt;, curvature &lt;dbl&gt;, stl_e_acf1 &lt;dbl&gt;, stl_e_acf10 &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>In particular, features from STL decompositions allow you to compare the strength of trend and seasonality between many time series.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(Turnover, feat_stl) <span class="sc">|&gt;</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trend_strength, <span class="at">y =</span> seasonal_strength_year)) <span class="sc">+</span> </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From this we can see that almost all time series have a strong trend, while the strength of seasonality is more varied - some series have strong seasonality while others have less seasonality.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate the STL features for the time series in the <code>tourism</code> dataset. Try colouring the points in the scatterplot by the purpose of travel, are some reasons more trended or seasonal than others?</p>
+</div>
+</div>
+<p>There are many other features that you can use - check out the documentation for <code>?features_by_pkg</code>. You can produce a feature set of similar features using the <code>feature_set()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(Turnover, <span class="fu">feature_set</span>(<span class="at">tags =</span> <span class="st">"autocorrelation"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 152 × 13
+   State      Industry  acf1 acf10 diff1_acf1 diff1_acf10 diff2_acf1 diff2_acf10
+   &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Australia… Cafes, … 0.973  8.59     -0.348       0.239     -0.572       0.502
+ 2 Australia… Cafes, … 0.977  8.65     -0.327       0.259     -0.552       0.531
+ 3 Australia… Clothin… 0.885  7.01     -0.276       0.251     -0.507       0.339
+ 4 Australia… Clothin… 0.846  6.33     -0.303       0.201     -0.532       0.321
+ 5 Australia… Departm… 0.500  1.60     -0.310       0.202     -0.540       0.315
+ 6 Australia… Electri… 0.902  7.29     -0.247       0.324     -0.506       0.455
+ 7 Australia… Food re… 0.984  9.13     -0.394       0.585     -0.611       1.12 
+ 8 Australia… Footwea… 0.760  4.64     -0.325       0.155     -0.566       0.333
+ 9 Australia… Furnitu… 0.952  7.67     -0.190       0.163     -0.530       0.394
+10 Australia… Hardwar… 0.957  7.67     -0.104       0.101     -0.497       0.311
+# ℹ 142 more rows
+# ℹ 5 more variables: season_acf1 &lt;dbl&gt;, pacf5 &lt;dbl&gt;, diff1_pacf5 &lt;dbl&gt;,
+#   diff2_pacf5 &lt;dbl&gt;, season_pacf &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="apply" class="level1">
+<h1>Apply</h1>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
 Your turn!
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><p>Transformation</p>
+<li><p>Decomposition</p>
 <ul>
-<li>Add later</li>
+<li>Do an STL decomposition of <code>dose_adminstrated</code> for a region of your choice. You will need to choose a trend and seasonal window to allow for the changing shape of these components. How do values of parameters in trend and season changes the decomposition?</li>
+<li>Plot the components from the STL decomposition.</li>
+<li>Could you describe the result of the decomposition.</li>
+<li>Could you produce a seasonally adjusted series and plot them with the dose admonstarted and the trend?</li>
 </ul></li>
 <li><p>Computing features</p>
 <ul>
@@ -254,19 +756,16 @@ Your turn!
 <li><p>Visualizing features</p>
 <ul>
 <li>Create a scatter plot that shows the strength of trend versus strength of seasonality. What information does this plot convey?</li>
-<li>Which feature indicates how difficult/easy a time series is to forecast? Use that feature to create a distribution usign a boxplot or density plot, how such distribution could be informative?</li>
+<li>Which feature indicates how difficult/easy a time series is to forecast? Use that feature to create a distribution of forecastability of time series usign a boxplot or density plot. How such distribution could be informative?</li>
 </ul></li>
 </ol>
 </div>
 </div>
-<p>Using a feature that shows how difficult/easy is to forecast a time series and create a histogram to see the distribution of forecastability</p>
 
 
 </section>
 
 </main> <!-- /main -->
-<!-- plausible --> 
-<script defer="" data-domain="workshop.mitchelloharawild.com" src="https://track.mitchelloharawild.com/js/plausible.js"></script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -294,23 +793,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -375,92 +860,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -504,9 +903,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
     <div class="nav-footer-right">© Copyright 2023, <a href="https://www.f4sg.org/">F4SG</a></div>
   </div>
 </footer>

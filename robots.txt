@@ -1,1 +1,1 @@
-Sitemap: https://workshop.mitchelloharawild.com/f4sg-africa/sitemap.xml
+Sitemap: https://workshop.f4sg.org/africast/sitemap.xml
