@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.326">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>F4SG: Africast - Lab exercise: day 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="..//images/fable.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<meta name="twitter:title" content="F4SG: Africast - Lab exercise: day 3">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://workshop.f4sg.org/africast/images/twitter-card.png">
+<meta name="twitter:creator" content="@mitchoharawild">
+<meta name="twitter:image-height" content="654">
+<meta name="twitter:image-width" content="1250">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">F4SG: Africast</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sessions" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Sessions</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sessions">    
+        <li>
+    <a class="dropdown-item" href="../sessions/day1/basics.html" rel="" target="">
+ <span class="dropdown-text">Basics of time series and data structures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../sessions/day1/graphics.html" rel="" target="">
+ <span class="dropdown-text">Time series patterns and basic graphics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../sessions/day2/adjustments.html" rel="" target="">
+ <span class="dropdown-text">Recap day 1, transforming / adjusting time series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../sessions/day2/features.html" rel="" target="">
+ <span class="dropdown-text">Computing and visualizing features (features)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../sessions/day3/forecasting.html" rel="" target="">
+ <span class="dropdown-text">Basic modeling / forecasting</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../sessions/day3/regressors.html" rel="" target="">
+ <span class="dropdown-text">Forecasting with regression, how to represent temporal structure with regressors</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../sessions/day4/ets.html" rel="" target="">
+ <span class="dropdown-text">ETS, building on recap of temporal regressors.</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../sessions/day4/arima.html" rel="" target="">
+ <span class="dropdown-text">ARIMA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../sessions/day5/accuracy.html" rel="" target="">
+ <span class="dropdown-text">Recap forecasting methods, basic training and test accuracy</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../sessions/day5/diagnostics.html" rel="" target="">
+ <span class="dropdown-text">Advanced performance evaluation: residual diagnostics and cross validation</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html" rel="" target="">
+ <span class="menu-text">Schedule</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-downloads" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+      <i class="bi bi-download" role="img">
+</i> 
+ <span class="menu-text">Downloads</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-downloads">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/archive/refs/heads/master.zip" rel="" target="">
+ <span class="dropdown-text">Everything</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../slides.zip" rel="" target="">
+ <span class="dropdown-text">Slides</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../exercises.zip" rel="" target="">
+ <span class="dropdown-text">Lab sessions</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../license.html" rel="" target=""><i class="bi bi-file-certificate" role="img">
+</i> 
+ <span class="menu-text">License</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learn" id="toc-learn" class="nav-link active" data-scroll-target="#learn">Learn</a></li>
+  <li><a href="#apply" id="toc-apply" class="nav-link" data-scroll-target="#apply">Apply</a>
+  <ul class="collapse">
+  <li><a href="#basic-of-modellingforecasting" id="toc-basic-of-modellingforecasting" class="nav-link" data-scroll-target="#basic-of-modellingforecasting">Basic of modelling/forecasting</a>
+  <ul class="collapse">
+  <li><a href="#specify-models-and-train-models" id="toc-specify-models-and-train-models" class="nav-link" data-scroll-target="#specify-models-and-train-models">Specify models and train models</a></li>
+  <li><a href="#extract-fitted-values-and-residuals" id="toc-extract-fitted-values-and-residuals" class="nav-link" data-scroll-target="#extract-fitted-values-and-residuals">Extract fitted values and residuals</a></li>
+  <li><a href="#produce-forecast" id="toc-produce-forecast" class="nav-link" data-scroll-target="#produce-forecast">Produce forecast</a></li>
+  <li><a href="#visualise-foreacasts" id="toc-visualise-foreacasts" class="nav-link" data-scroll-target="#visualise-foreacasts">Visualise foreacasts</a></li>
+  <li><a href="#extract-prediction-intervals" id="toc-extract-prediction-intervals" class="nav-link" data-scroll-target="#extract-prediction-intervals">Extract prediction intervals</a></li>
+  <li><a href="#produce-probabilistic-forecast-using-bootstrapping" id="toc-produce-probabilistic-forecast-using-bootstrapping" class="nav-link" data-scroll-target="#produce-probabilistic-forecast-using-bootstrapping">Produce probabilistic forecast using bootstrapping</a></li>
+  </ul></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">Regression</a>
+  <ul class="collapse">
+  <li><a href="#association-between-dose_adminstrated-and-predictors" id="toc-association-between-dose_adminstrated-and-predictors" class="nav-link" data-scroll-target="#association-between-dose_adminstrated-and-predictors">Association between <code>dose_adminstrated</code> and predictors</a></li>
+  <li><a href="#cross-correlation-and-laggedlead-predictors" id="toc-cross-correlation-and-laggedlead-predictors" class="nav-link" data-scroll-target="#cross-correlation-and-laggedlead-predictors">Cross correlation and lagged/lead predictors</a></li>
+  <li><a href="#specify-and-train-time-series-regression-model" id="toc-specify-and-train-time-series-regression-model" class="nav-link" data-scroll-target="#specify-and-train-time-series-regression-model">Specify and train time series regression model</a></li>
+  <li><a href="#check-training-models-output" id="toc-check-training-models-output" class="nav-link" data-scroll-target="#check-training-models-output">Check training model’s output</a></li>
+  <li><a href="#produce-forecast-using-regression" id="toc-produce-forecast-using-regression" class="nav-link" data-scroll-target="#produce-forecast-using-regression">Produce forecast using regression</a></li>
+  </ul></li>
+  <li><a href="#visualize-forecasts-by-regression" id="toc-visualize-forecasts-by-regression" class="nav-link" data-scroll-target="#visualize-forecasts-by-regression">Visualize forecasts by regression</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/edit/main/solutions/day3.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab exercise: day 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="learn" class="level1">
+<h1>Learn</h1>
+</section>
+<section id="apply" class="level1">
+<h1>Apply</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'tsibble'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: fabletools</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fabletools)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter()       masks stats::filter()
+✖ lubridate::interval() masks tsibble::interval()
+✖ dplyr::lag()          masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>vaccine_administrated_tsb <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/vaccine_administrated_tsb.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we proceed by specifying and training models on administered vaccine doses. These models are then used to produce forecasts for the next 12 months beyond the latest data point.</p>
+<section id="basic-of-modellingforecasting" class="level2">
+<h2 class="anchored" data-anchor-id="basic-of-modellingforecasting">Basic of modelling/forecasting</h2>
+<section id="specify-models-and-train-models" class="level3">
+<h3 class="anchored" data-anchor-id="specify-models-and-train-models">Specify models and train models</h3>
+<p>We start with three simple benchmark models: i) total average, ii) naive, and iii) seasonal naive</p>
+<blockquote class="blockquote">
+<p>We specify models using the function corresponding to the name of the forecasting model. We use a formula (response ~ terms) to specify models and train models (i.e.&nbsp;estimate parameters) using <code>model(response ~ terms)</code> function. If there is no term for the method, we ignore the <code>~</code> and terms, (e.g.&nbsp;<code>MEAN(dose_adminstrated)</code>):</p>
+</blockquote>
+<p>Now, complete the following R chunk to specify and train the there simple models on data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>vaccine_fit <span class="ot">&lt;-</span> vaccine_administrated_tsb <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">MEAN</span>(dose_adminstrated),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">naive =</span> <span class="fu">SNAIVE</span>(dose_adminstrated),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">snaive =</span> <span class="fu">SNAIVE</span>(dose_adminstrated),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>vaccine_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A mable: 9 x 4
+# Key:     region [9]
+  region    mean    naive   snaive
+  &lt;chr&gt;  &lt;model&gt;  &lt;model&gt;  &lt;model&gt;
+1 A       &lt;MEAN&gt; &lt;SNAIVE&gt; &lt;SNAIVE&gt;
+2 B       &lt;MEAN&gt; &lt;SNAIVE&gt; &lt;SNAIVE&gt;
+3 C       &lt;MEAN&gt; &lt;SNAIVE&gt; &lt;SNAIVE&gt;
+4 D       &lt;MEAN&gt; &lt;SNAIVE&gt; &lt;SNAIVE&gt;
+5 E       &lt;MEAN&gt; &lt;SNAIVE&gt; &lt;SNAIVE&gt;
+6 G       &lt;MEAN&gt; &lt;SNAIVE&gt; &lt;SNAIVE&gt;
+7 H       &lt;MEAN&gt; &lt;SNAIVE&gt; &lt;SNAIVE&gt;
+8 I       &lt;MEAN&gt; &lt;SNAIVE&gt; &lt;SNAIVE&gt;
+9 J       &lt;MEAN&gt; &lt;SNAIVE&gt; &lt;SNAIVE&gt;</code></pre>
+</div>
+</div>
+<p>Observe the <code>vaccine_fit</code> object.</p>
+<p>What type of data structure is it? How many rows and columns are present, and what do they represent?</p>
+</section>
+<section id="extract-fitted-values-and-residuals" class="level3">
+<h3 class="anchored" data-anchor-id="extract-fitted-values-and-residuals">Extract fitted values and residuals</h3>
+<p>You can extract fitted values and residuals for each model. Complete the following code to extract those values for all models</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>vaccine_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 2,916 x 7 [1M]
+# Key:       region, .model [27]
+   region .model    month dose_adminstrated .fitted  .resid  .innov
+   &lt;chr&gt;  &lt;chr&gt;     &lt;mth&gt;             &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 A      mean   2013 Jan             13328  12875.   453.    453. 
+ 2 A      mean   2013 Feb             12523  12875.  -352.   -352. 
+ 3 A      mean   2013 Mar             10051  12875. -2824.  -2824. 
+ 4 A      mean   2013 Apr              9194  12875. -3681.  -3681. 
+ 5 A      mean   2013 May             15985  12875.  3110.   3110. 
+ 6 A      mean   2013 Jun             13776  12875.   901.    901. 
+ 7 A      mean   2013 Jul             14258  12875.  1383.   1383. 
+ 8 A      mean   2013 Aug             13665  12875.   790.    790. 
+ 9 A      mean   2013 Sep             12909  12875.    33.9    33.9
+10 A      mean   2013 Oct             15010  12875.  2135.   2135. 
+# ℹ 2,906 more rows</code></pre>
+</div>
+</div>
+<p>You can use <code>filter()</code> to extract these values for a specific model.</p>
+<p>Complete the following code to see only results for naive model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>vaccine_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>() <span class="sc">|&gt;</span> <span class="fu">filter</span>(.model<span class="sc">==</span><span class="st">"naive"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 972 x 7 [1M]
+# Key:       region, .model [9]
+   region .model    month dose_adminstrated .fitted .resid .innov
+   &lt;chr&gt;  &lt;chr&gt;     &lt;mth&gt;             &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1 A      naive  2013 Jan             13328      NA     NA     NA
+ 2 A      naive  2013 Feb             12523      NA     NA     NA
+ 3 A      naive  2013 Mar             10051      NA     NA     NA
+ 4 A      naive  2013 Apr              9194      NA     NA     NA
+ 5 A      naive  2013 May             15985      NA     NA     NA
+ 6 A      naive  2013 Jun             13776      NA     NA     NA
+ 7 A      naive  2013 Jul             14258      NA     NA     NA
+ 8 A      naive  2013 Aug             13665      NA     NA     NA
+ 9 A      naive  2013 Sep             12909      NA     NA     NA
+10 A      naive  2013 Oct             15010      NA     NA     NA
+# ℹ 962 more rows</code></pre>
+</div>
+</div>
+<p>You can use <code>select()</code> to get fitted values or residuals. Complete the R code to see residuals for the naive method:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>vaccine_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>() <span class="sc">|&gt;</span> <span class="fu">filter</span>(.model<span class="sc">==</span><span class="st">"naive"</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(.resid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 972 x 4 [1M]
+# Key:       region, .model [9]
+   .resid    month region .model
+    &lt;dbl&gt;    &lt;mth&gt; &lt;chr&gt;  &lt;chr&gt; 
+ 1     NA 2013 Jan A      naive 
+ 2     NA 2013 Feb A      naive 
+ 3     NA 2013 Mar A      naive 
+ 4     NA 2013 Apr A      naive 
+ 5     NA 2013 May A      naive 
+ 6     NA 2013 Jun A      naive 
+ 7     NA 2013 Jul A      naive 
+ 8     NA 2013 Aug A      naive 
+ 9     NA 2013 Sep A      naive 
+10     NA 2013 Oct A      naive 
+# ℹ 962 more rows</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>We can look into more details of the trained models (<code>mable</code>) using <code>tidy()</code>, <code>report()</code>, <code>glance()</code> and extract information related to trained models. These function would be more useful with models like Regression, exponential smoothing (ETS) and ARIMA and we use them later once these models are introduced.</p>
+</blockquote>
+</section>
+<section id="produce-forecast" class="level3">
+<h3 class="anchored" data-anchor-id="produce-forecast">Produce forecast</h3>
+<blockquote class="blockquote">
+<p>In order to produce forecasts, we pass the <code>mable</code> object, <code>vaccine_fit</code>, to the <code>forecast()</code> function and specify the forecast horizon required. This will generate both point forecast and a distribution of forecasts based on Normal distribution.</p>
+</blockquote>
+<p>Complete the following R code to produce forecasts of dose administrated for 12 months ahead:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>forecast_horizon <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>vaccine_forecast <span class="ot">&lt;-</span> vaccine_fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h=</span>forecast_horizon)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>vaccine_forecast</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A fable: 324 x 5 [1M]
+# Key:     region, .model [27]
+   region .model    month dose_adminstrated  .mean
+   &lt;chr&gt;  &lt;chr&gt;     &lt;mth&gt;            &lt;dist&gt;  &lt;dbl&gt;
+ 1 A      mean   2022 Jan N(12875, 3236838) 12875.
+ 2 A      mean   2022 Feb N(12875, 3236838) 12875.
+ 3 A      mean   2022 Mar N(12875, 3236838) 12875.
+ 4 A      mean   2022 Apr N(12875, 3236838) 12875.
+ 5 A      mean   2022 May N(12875, 3236838) 12875.
+ 6 A      mean   2022 Jun N(12875, 3236838) 12875.
+ 7 A      mean   2022 Jul N(12875, 3236838) 12875.
+ 8 A      mean   2022 Aug N(12875, 3236838) 12875.
+ 9 A      mean   2022 Sep N(12875, 3236838) 12875.
+10 A      mean   2022 Oct N(12875, 3236838) 12875.
+# ℹ 314 more rows</code></pre>
+</div>
+</div>
+<p>Observe the <code>vaccine_forecast</code> object.</p>
+<p>What type of data structure is it? How many rows and columns are present, and what do they represent?</p>
+</section>
+<section id="visualise-foreacasts" class="level3">
+<h3 class="anchored" data-anchor-id="visualise-foreacasts">Visualise foreacasts</h3>
+<p>We can also plot generated forecasts using <code>autoplot()</code>. Complete the following R code to plot the forecasts:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>vaccine_forecast <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day3_files/figure-html/plot-forecast-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Visualizing forecasts alone might not be as informative, it is generally useful to plot it in conjunction with past data.</p>
+<p>Complete the following R code to include past administered dose data along with its forecast for the next 12 months:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>vaccine_forecast <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(vaccine_administrated_tsb, <span class="at">level=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day3_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>What the argument <code>level=NULL</code> does? and what happens if you remove it?</p>
+<p>It might be hard to see the forecast lines in the above plot. To make forecasts more visible, we can plot a part of the time series data towards the end of the time series. You can use<code>filter_index()</code> or <code>tail()</code> for that.</p>
+<p>Complete the following code to see past data from 2020 until the end and its forecasts:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>vaccine_forecast <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(vaccine_administrated_tsb,<span class="st">"2020"</span><span class="sc">~</span>.), <span class="at">level=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `filter()`.
+ℹ In argument: `time_in(month, ...)`.
+Caused by warning:
+! `yearmonth()` may yield unexpected results.
+ℹ Please use arg `format` to supply formats.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="day3_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="extract-prediction-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="extract-prediction-intervals">Extract prediction intervals</h3>
+<p>You may want to extract prediction intervals for any coverage probability you are interested in.</p>
+<p>Complete the R code to achieve that:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>vaccine_forecast_interval <span class="ot">&lt;-</span> vaccine_forecast <span class="sc">|&gt;</span> <span class="fu">hilo</span>(<span class="at">level =</span> <span class="dv">90</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>vaccine_forecast_interval</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 324 x 6 [1M]
+# Key:       region, .model [27]
+   region .model    month dose_adminstrated  .mean                  `90%`
+   &lt;chr&gt;  &lt;chr&gt;     &lt;mth&gt;            &lt;dist&gt;  &lt;dbl&gt;                 &lt;hilo&gt;
+ 1 A      mean   2022 Jan N(12875, 3236838) 12875. [9915.857, 15834.44]90
+ 2 A      mean   2022 Feb N(12875, 3236838) 12875. [9915.857, 15834.44]90
+ 3 A      mean   2022 Mar N(12875, 3236838) 12875. [9915.857, 15834.44]90
+ 4 A      mean   2022 Apr N(12875, 3236838) 12875. [9915.857, 15834.44]90
+ 5 A      mean   2022 May N(12875, 3236838) 12875. [9915.857, 15834.44]90
+ 6 A      mean   2022 Jun N(12875, 3236838) 12875. [9915.857, 15834.44]90
+ 7 A      mean   2022 Jul N(12875, 3236838) 12875. [9915.857, 15834.44]90
+ 8 A      mean   2022 Aug N(12875, 3236838) 12875. [9915.857, 15834.44]90
+ 9 A      mean   2022 Sep N(12875, 3236838) 12875. [9915.857, 15834.44]90
+10 A      mean   2022 Oct N(12875, 3236838) 12875. [9915.857, 15834.44]90
+# ℹ 314 more rows</code></pre>
+</div>
+</div>
+<p>To be able to see values for lower bound and upper bound in separate columns, you need to unpack the prediction intervals extracted above.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>vaccine_forecast_interval <span class="sc">|&gt;</span> <span class="fu">unpack_hilo</span>(<span class="st">"90%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 324 x 7 [1M]
+# Key:       region, .model [27]
+   region .model    month dose_adminstrated  .mean `90%_lower` `90%_upper`
+   &lt;chr&gt;  &lt;chr&gt;     &lt;mth&gt;            &lt;dist&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+ 1 A      mean   2022 Jan N(12875, 3236838) 12875.       9916.      15834.
+ 2 A      mean   2022 Feb N(12875, 3236838) 12875.       9916.      15834.
+ 3 A      mean   2022 Mar N(12875, 3236838) 12875.       9916.      15834.
+ 4 A      mean   2022 Apr N(12875, 3236838) 12875.       9916.      15834.
+ 5 A      mean   2022 May N(12875, 3236838) 12875.       9916.      15834.
+ 6 A      mean   2022 Jun N(12875, 3236838) 12875.       9916.      15834.
+ 7 A      mean   2022 Jul N(12875, 3236838) 12875.       9916.      15834.
+ 8 A      mean   2022 Aug N(12875, 3236838) 12875.       9916.      15834.
+ 9 A      mean   2022 Sep N(12875, 3236838) 12875.       9916.      15834.
+10 A      mean   2022 Oct N(12875, 3236838) 12875.       9916.      15834.
+# ℹ 314 more rows</code></pre>
+</div>
+</div>
+<p>You may want to extract forecast you generated into Excel, it is easy to do it using <code>write_csv()</code> or</p>
+</section>
+<section id="produce-probabilistic-forecast-using-bootstrapping" class="level3">
+<h3 class="anchored" data-anchor-id="produce-probabilistic-forecast-using-bootstrapping">Produce probabilistic forecast using bootstrapping</h3>
+<p>Most time series models produce normally distributed forecasts, that is, we assume that the distribution of possible future values follows a normal distribution.</p>
+<p>When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance. You can also use <code>forecast()</code> directly to generate futures:</p>
+<blockquote class="blockquote">
+<p>Attention: Producing forecasts using bootstrapping may take time!! so, running time might be an issue if you have many time series.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fc_bootstrap <span class="ot">&lt;-</span> vaccine_fit <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> forecast_horizon, <span class="at">bootstrap =</span> <span class="cn">TRUE</span>, <span class="at">times =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can use <code>generate()</code> function to generate futures using bootstrapping. Here we do it for one model only:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> vaccine_administrated_tsb <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">naive=</span><span class="fu">NAIVE</span>(dose_adminstrated))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>sim_bootstrap <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">generate</span>(<span class="at">h =</span> forecast_horizon, <span class="at">times =</span> <span class="dv">1000</span>, <span class="at">bootstrap =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>sim_bootstrap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 108,000 x 6 [1M]
+# Key:       region, .model, .rep [9,000]
+   region .model .rep     month .innov   .sim
+   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;    &lt;mth&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1 A      naive  1     2022 Jan  3255. 16131.
+ 2 A      naive  1     2022 Feb  1867. 17998.
+ 3 A      naive  1     2022 Mar  4513. 22512.
+ 4 A      naive  1     2022 Apr -1961. 20551.
+ 5 A      naive  1     2022 May  3358. 23909.
+ 6 A      naive  1     2022 Jun   135. 24044.
+ 7 A      naive  1     2022 Jul  1956. 26001.
+ 8 A      naive  1     2022 Aug  -975. 25026.
+ 9 A      naive  1     2022 Sep -2000. 23026.
+10 A      naive  1     2022 Oct  -438. 22588.
+# ℹ 107,990 more rows</code></pre>
+</div>
+</div>
+<p>Could you describe what columns and rows represent in <code>sim_bootstrap</code>?</p>
+</section>
+</section>
+<section id="regression" class="level2">
+<h2 class="anchored" data-anchor-id="regression">Regression</h2>
+<p>When performing time series forecasting with <code>fable</code> package, it’s important to have a single tsibble that includes all the necessary variables for modeling. This includes the response variable (the variable you want to forecast) as well as all predictors.</p>
+<p>In the <code>vaccine_administrated_tsb</code>, <code>dose_adminstrated</code> is the response variable and <code>population_under1</code>, and <code>strike</code> are predictors.</p>
+<blockquote class="blockquote">
+<p>You may find your response variable and predictors in separate tsibbles. In such cases, it’s important to first join them before proceeding to the modeling stage.</p>
+</blockquote>
+<section id="association-between-dose_adminstrated-and-predictors" class="level3">
+<h3 class="anchored" data-anchor-id="association-between-dose_adminstrated-and-predictors">Association between <code>dose_adminstrated</code> and predictors</h3>
+<p>When building regression models, domain knowledge may recommend some potential driving factors that can be useful t forecast the response variable. It is important to check whether these predictors are associated with response variable using scatter plot.</p>
+<p>Complete the following code to create a scatter plot showing a possible association between population under 1 and dose_adminstrated:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vaccine_administrated_tsb, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> population_under1, <span class="at">y=</span>dose_adminstrated))<span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="day3_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Do you see any linear association between dose_adminstrated and population unde 1?</p>
+<p>Complete the following code to see if there are differences in dose_administered based on whether the months are associated with strike days or not.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vaccine_administrated_tsb, </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> strike, <span class="at">y =</span> dose_adminstrated))<span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day3_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Do you see any linear association between dose_adminstrated and strike?</p>
+</section>
+<section id="cross-correlation-and-laggedlead-predictors" class="level3">
+<h3 class="anchored" data-anchor-id="cross-correlation-and-laggedlead-predictors">Cross correlation and lagged/lead predictors</h3>
+<p>You may think that a predictor impacts the response variable, but with a delay. This is referred to as a <strong>leading predictor</strong>. For instance, you can investigate whether the population in previous months is associated with the dose administered in the future.</p>
+<p>Complete the following code to check the association between population in various lags and dose administrated:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#lag2.plot from astsa package can be used to visualize leading predictors</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lag2.plot</span>(vaccine_administrated_tsb<span class="sc">$</span>population_under1, vaccine_administrated_tsb<span class="sc">$</span>dose_adminstrated, <span class="at">max.lag =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day3_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Instead of scatter plots, you can also show the visualize the correlation between different lags of population with dose administrated using cross correlation function (cff).</p>
+<p>Complete the following code to show the ccf:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a cross correlation plot</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ccf</span>(vaccine_administrated_tsb<span class="sc">$</span>population_under1, vaccine_administrated_tsb<span class="sc">$</span>dose_adminstrated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day3_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>How strong is the correlation between lagged population and dose administrated? How do you interpret the cross correlation function plot?</p>
+</section>
+<section id="specify-and-train-time-series-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="specify-and-train-time-series-regression-model">Specify and train time series regression model</h3>
+<p>Complete the R code to specify and train the three regression models with different terms:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fit_regression <span class="ot">&lt;-</span> vaccine_administrated_tsb <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">regression1 =</span> <span class="fu">TSLM</span>(dose_adminstrated <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>()),</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">regression_population =</span> <span class="fu">TSLM</span>(dose_adminstrated <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> population_under1),</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">regression_population_strike =</span> <span class="fu">TSLM</span>(dose_adminstrated <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> population_under1<span class="sc">+</span>strike))</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>fit_regression</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A mable: 9 x 4
+# Key:     region [9]
+  region regression1 regression_population regression_population_strike
+  &lt;chr&gt;      &lt;model&gt;               &lt;model&gt;                      &lt;model&gt;
+1 A           &lt;TSLM&gt;                &lt;TSLM&gt;                       &lt;TSLM&gt;
+2 B           &lt;TSLM&gt;                &lt;TSLM&gt;                       &lt;TSLM&gt;
+3 C           &lt;TSLM&gt;                &lt;TSLM&gt;                       &lt;TSLM&gt;
+4 D           &lt;TSLM&gt;                &lt;TSLM&gt;                       &lt;TSLM&gt;
+5 E           &lt;TSLM&gt;                &lt;TSLM&gt;                       &lt;TSLM&gt;
+6 G           &lt;TSLM&gt;                &lt;TSLM&gt;                       &lt;TSLM&gt;
+7 H           &lt;TSLM&gt;                &lt;TSLM&gt;                       &lt;TSLM&gt;
+8 I           &lt;TSLM&gt;                &lt;TSLM&gt;                       &lt;TSLM&gt;
+9 J           &lt;TSLM&gt;                &lt;TSLM&gt;                       &lt;TSLM&gt;</code></pre>
+</div>
+</div>
+<p>How many rows and columns are present, and what do they represent?</p>
+</section>
+<section id="check-training-models-output" class="level3">
+<h3 class="anchored" data-anchor-id="check-training-models-output">Check training model’s output</h3>
+<p>You can to get a summary of the trained regression models, this will tell you which variables are useful in explaining the variation in the vaccine dose administrated and also how much variation could be explained bu each model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>fit_regression  <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in report.mdl_df(fit_regression): Model reporting is only supported for
+individual models, so a glance will be shown. To see the report for a specific
+model, use `select()` and `filter()` to identify a single model.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 27 × 16
+   region .model r_squared adj_r_squared sigma2 statistic  p_value    df log_lik
+   &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;
+ 1 A      regre…     0.346         0.264 2.36e6      4.19 2.84e- 5    13   -939.
+ 2 A      regre…     0.349         0.259 2.38e6      3.87 5.35e- 5    14   -939.
+ 3 A      regre…     0.466         0.386 1.97e6      5.80 5.40e- 8    15   -928.
+ 4 B      regre…     0.726         0.692 3.91e5     21.0  1.04e-21    13   -842.
+ 5 B      regre…     0.739         0.703 3.77e5     20.5  5.71e-22    14   -839.
+ 6 B      regre…     0.874         0.855 1.84e5     46.1  1.42e-35    15   -800.
+ 7 C      regre…     0.323         0.238 3.66e6      3.78 1.08e- 4    13   -962.
+ 8 C      regre…     0.333         0.241 3.65e6      3.61 1.29e- 4    14   -962.
+ 9 C      regre…     0.484         0.406 2.85e6      6.22 1.42e- 8    15   -948.
+10 D      regre…     0.275         0.184 4.57e6      3.01 1.32e- 3    13   -974.
+# ℹ 17 more rows
+# ℹ 7 more variables: AIC &lt;dbl&gt;, AICc &lt;dbl&gt;, BIC &lt;dbl&gt;, CV &lt;dbl&gt;,
+#   deviance &lt;dbl&gt;, df.residual &lt;int&gt;, rank &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>you can select any model of interest and filter any region of focus if you like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>fit_regression  <span class="sc">|&gt;</span> <span class="fu">filter</span>(region <span class="sc">==</span> <span class="st">"B"</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(regression_population_strike) <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: dose_adminstrated 
+Model: TSLM 
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-906.38 -301.04  -11.11  259.63 1223.64 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        1.391e+03  7.893e+02   1.763  0.08122 .  
+trend()            3.099e+01  1.394e+00  22.230  &lt; 2e-16 ***
+season()year2      1.249e+02  2.023e+02   0.617  0.53857    
+season()year3      5.354e+02  2.023e+02   2.646  0.00955 ** 
+season()year4      2.933e+02  2.023e+02   1.450  0.15056    
+season()year5      5.657e+02  2.024e+02   2.796  0.00629 ** 
+season()year6      5.420e+02  2.039e+02   2.658  0.00925 ** 
+season()year7      4.402e+02  2.039e+02   2.159  0.03345 *  
+season()year8      3.888e+02  2.040e+02   1.906  0.05973 .  
+season()year9      3.493e+02  2.040e+02   1.712  0.09026 .  
+season()year10     5.967e+02  2.041e+02   2.924  0.00434 ** 
+season()year11     1.335e+02  2.028e+02   0.658  0.51198    
+season()year12    -3.180e+02  2.029e+02  -1.567  0.12041    
+population_under1  1.715e-02  7.983e-03   2.149  0.03426 *  
+strike1           -2.321e+03  2.327e+02  -9.977 2.28e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 429.1 on 93 degrees of freedom
+Multiple R-squared: 0.874,  Adjusted R-squared: 0.8551
+F-statistic:  46.1 on 14 and 93 DF, p-value: &lt; 2.22e-16</code></pre>
+</div>
+</div>
+<p>Get a summary of estimated parameters and corresponding statistics using <code>tidy()</code> and <code>glance()</code>. You can try these functions by completing the following code.</p>
+<p>use <code>tidy()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>fit_regression <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 378 × 7
+   region .model      term          estimate std.error statistic  p.value
+   &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 A      regression1 (Intercept)   12892.      563.     22.9    1.90e-40
+ 2 A      regression1 trend()           3.51      4.77    0.735  4.64e- 1
+ 3 A      regression1 season()year2  -240.      724.     -0.331  7.41e- 1
+ 4 A      regression1 season()year3   184.      724.      0.255  8.00e- 1
+ 5 A      regression1 season()year4  -662.      725.     -0.913  3.63e- 1
+ 6 A      regression1 season()year5  1232.      725.      1.70   9.24e- 2
+ 7 A      regression1 season()year6  -166.      725.     -0.229  8.19e- 1
+ 8 A      regression1 season()year7   683.      725.      0.943  3.48e- 1
+ 9 A      regression1 season()year8    50.1     725.      0.0691 9.45e- 1
+10 A      regression1 season()year9   707.      725.      0.974  3.32e- 1
+# ℹ 368 more rows</code></pre>
+</div>
+</div>
+<p>use <code>glance()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>fit_regression <span class="sc">|&gt;</span> <span class="fu">glance</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 27 × 16
+   region .model r_squared adj_r_squared sigma2 statistic  p_value    df log_lik
+   &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;
+ 1 A      regre…     0.346         0.264 2.36e6      4.19 2.84e- 5    13   -939.
+ 2 A      regre…     0.349         0.259 2.38e6      3.87 5.35e- 5    14   -939.
+ 3 A      regre…     0.466         0.386 1.97e6      5.80 5.40e- 8    15   -928.
+ 4 B      regre…     0.726         0.692 3.91e5     21.0  1.04e-21    13   -842.
+ 5 B      regre…     0.739         0.703 3.77e5     20.5  5.71e-22    14   -839.
+ 6 B      regre…     0.874         0.855 1.84e5     46.1  1.42e-35    15   -800.
+ 7 C      regre…     0.323         0.238 3.66e6      3.78 1.08e- 4    13   -962.
+ 8 C      regre…     0.333         0.241 3.65e6      3.61 1.29e- 4    14   -962.
+ 9 C      regre…     0.484         0.406 2.85e6      6.22 1.42e- 8    15   -948.
+10 D      regre…     0.275         0.184 4.57e6      3.01 1.32e- 3    13   -974.
+# ℹ 17 more rows
+# ℹ 7 more variables: AIC &lt;dbl&gt;, AICc &lt;dbl&gt;, BIC &lt;dbl&gt;, CV &lt;dbl&gt;,
+#   deviance &lt;dbl&gt;, df.residual &lt;int&gt;, rank &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>You can <code>augment()</code> to see the fitted values and residuals:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>fit_regression <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 2,916 x 7 [1M]
+# Key:       region, .model [27]
+   region .model         month dose_adminstrated .fitted .resid .innov
+   &lt;chr&gt;  &lt;chr&gt;          &lt;mth&gt;             &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1 A      regression1 2013 Jan             13328  12895.   433.   433.
+ 2 A      regression1 2013 Feb             12523  12658.  -135.  -135.
+ 3 A      regression1 2013 Mar             10051  13086. -3035. -3035.
+ 4 A      regression1 2013 Apr              9194  12244. -3050. -3050.
+ 5 A      regression1 2013 May             15985  14141.  1844.  1844.
+ 6 A      regression1 2013 Jun             13776  12746.  1030.  1030.
+ 7 A      regression1 2013 Jul             14258  13599.   659.   659.
+ 8 A      regression1 2013 Aug             13665  12970.   695.   695.
+ 9 A      regression1 2013 Sep             12909  13630.  -721.  -721.
+10 A      regression1 2013 Oct             15010  12770.  2240.  2240.
+# ℹ 2,906 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="produce-forecast-using-regression" class="level3">
+<h3 class="anchored" data-anchor-id="produce-forecast-using-regression">Produce forecast using regression</h3>
+<p>Now, let’s forecast using the regression models. Forecasting with the presence of predictors (such as population and strike) is slightly different than just using time series data.</p>
+<p>We need to use the estimated values of predictors instead of actual that we have in test set. Because if we forecast for real future (e.g.&nbsp;next year), we don’t know true values of the population, we have to estimate it or use the estimation published by someone else such as Office of National Statistics.</p>
+<p>Given that we use strike and population under a year in the model and we produce forecast for the next 12 month, we need to know the future values of these predictors. Strike is considered as a deterministic predictor, so as they are planned in advance. However, population is a stochastic predictor, as its future values are unknown and we need its estimation.</p>
+<blockquote class="blockquote">
+<p>This might be different if you use leading predictors. Depending on how you include them in the model, you may not require to use their forecasts.</p>
+<p>It is important to know the difference between to Ex-ante and Ex-post. Ex-ante forecasts are those that are made using only the information that is available in advance, which means the estimated values of predictors are used. Ex-post forecasts are those that are made using actual values of the predictors. Ex-post forecasts can show you how much error in the forecast could be related to the error of the estimation of predictors.</p>
+</blockquote>
+<p>Let’s forecast the population using regression as we don’t have the estimation from officials.</p>
+<p>You first need to produce the future months. Complete the following code todo that:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>forecast_horizon <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>future_month <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vaccine_administrated_tsb, <span class="at">n=</span>forecast_horizon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Given that we forecast for the next 12 months, we assume that the country will experience strikes in March next year. Add a new column, <em>strike</em> by completing the R code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>future_month_strike <span class="ot">&lt;-</span> future_month <span class="sc">|&gt;</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">strike =</span> <span class="fu">if_else</span>(lubridate<span class="sc">::</span><span class="fu">month</span>(month, <span class="at">label =</span> <span class="cn">TRUE</span>) <span class="sc">==</span> <span class="st">"Mar"</span>, <span class="dv">1</span>,<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Add a new column, <code>population_under1</code>, to include the estimated population under 1, by completing the R code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>forecast_population <span class="ot">&lt;-</span> vaccine_administrated_tsb <span class="sc">|&gt;</span> <span class="fu">model</span>(<span class="at">regression_population=</span><span class="fu">TSLM</span>(dose_adminstrated)) <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h=</span>forecast_horizon)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>population_point_forecast <span class="ot">&lt;-</span> forecast_population <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="fu">select</span>(.mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>test_future <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(future_month_strike, population_point_forecast) <span class="sc">|&gt;</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">population_under1=</span>.mean) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>.mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we can forecast using trained models. If you have predictors (e.g.&nbsp;population, strike, holiday, etc) you need to pass the future data instead of the <code>h=</code> using the <code>new_data =</code> argument: :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>fcst_regression <span class="ot">&lt;-</span>  fit_regression <span class="sc">|&gt;</span> </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> test_future)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="visualize-forecasts-by-regression" class="level2">
+<h2 class="anchored" data-anchor-id="visualize-forecasts-by-regression">Visualize forecasts by regression</h2>
+<p>Complete the following code to see the time series of dose adminstrated and its forecasts:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>fcst_regression <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(vaccine_administrated_tsb, <span class="at">level=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day3_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">© Copyright 2023, <a href="https://www.f4sg.org/">F4SG</a></div>
+  </div>
+</footer>
+
+
+
+</body></html>
