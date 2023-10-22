@@ -1,0 +1,215 @@
+---
+title: "Lab exercise: day 4"
+editor: visual
+---
+
+# Learn
+
+# Apply
+
+```{r}
+library(tsibble)
+library(fable)
+library(feasts)
+library(fabletools)
+library(tidyverse)
+
+vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+```
+
+## Specify and traing ETS models
+
+We now want to apply the Exponential Smoothing family of models to forecast dose administrated.
+
+> Remember the following from ETS (E: Error, T:Trend, S: Seasonality) function:
+>
+> -   N: None (No trend, no seasonality)
+> -   A: additive
+> -   Ad: additive damped
+> -   M: multiplicative
+
+Complete the R code to train exponential smoothing models on the `vaccine_administrated_tsb`:
+
+```{r}
+fit_ets <- vaccine_administrated_tsb |>
+  model(
+    automatic_ets = ETS(dose_adminstrated)
+  )
+```
+
+> If you don't provide terms inside ETS(), then it is an automatic ETS! It will examine different models and return the one with lowest AICc.
+
+## Observe model table and extract model's output
+
+let's now observe the model table `fit_ets`. What type of data structure is `fit_ets`? How many rows and columns are present, and what do they represent?
+
+Complete the below R codes and run to understand model's outputs:
+
+Use `report()`:
+
+```{r}
+fit_ets |> filter(region == "A") |> report()
+```
+
+Which model is returned in, what are its components and parameter values?
+
+Use `tidy()`:
+
+```{r}
+fit_ets |> tidy()
+```
+
+Use `glance()`:
+
+```{r}
+fit_ets |> glance()
+```
+
+You can also observe the values corresponding to level, trend,and seasonal components in ETS framework. Each column corresponds to one components.
+
+Complete the R code and run to observe the selected model components:
+
+```{r}
+fit_ets |> components()
+```
+
+Could you describe what each row and column represent?
+
+## Generate forecasts using ETS
+
+Now, we can forecast with the trained ETS model. Complete and run the following code to produce forecasts:
+
+```{r}
+forecast_horizon <- 12
+forecast_ets <- fit_ets |>
+  forecast(h = forecast_horizon) 
+forecast_ets
+```
+
+What type of data structure is it? What each row and column represent?
+
+## Visualise forecasts:
+
+You can also visualize forecasts:
+
+```{r}
+forecast_ets |>
+  autoplot(filter_index(vaccine_administrated_tsb, "2020" ~ .), level = NULL)
+```
+
+## Detrmine model components and parameters manually
+
+You can use the following specific functions: `error()`, `trend()`, `season()` to manually specify the type of pattern ("N", "A", "Ad", "M") and also their corresponding parameters, if you wish.
+
+In the following R-chunk, you can change parameters and the type of pattern to see their impact on fitting and forecast
+
+```{r alpha}
+vaccine_ets <- vaccine_administrated_tsb |> filter(region == "A") |> 
+  model(
+    `alpha = 0.05` = ETS(dose_adminstrated ~ error("A") + trend("A", alpha = .05) + season("N")),
+    `alpha = 0.15` = ETS(dose_adminstrated ~ error("A") + trend("A", alpha = .15) + season("N")),
+    `alpha = 0.5` = ETS(dose_adminstrated ~ error("A") + trend("A", alpha = .5) + season("N")),
+    `alpha = 0.9` = ETS(dose_adminstrated ~ error("A") + trend("A", alpha = .9) + season("N"))
+  )
+
+vaccine_ets |> augment() |> filter_index("2020" ~ .) |> 
+  ggplot(aes(x=month))+
+  geom_line(aes(y=dose_adminstrated, colour= "Actual"))+
+  geom_line(aes(y=.fitted, colour= factor(.model)))+
+  ggthemes::scale_color_colorblind()+
+  labs(colour ="")
+```
+
+Could you describe how the value of smoothing constant , alpha affects the forecast?
+
+## ARIMA
+
+## Specify and train ARIMA model
+
+> If you want this function automatically determines the order of autoregressive and moving average orders and their parameters, then you don't need to provide arguments inside ARIMA(). The function will examine different models (combinations of p=0,1,2,.. and q =0,1,2,.., P=0,1,2,.. and Q =0,1,2,..) and return the one with lowest AICc.
+
+Complete the following code to train an automatic ARIMA model on the data:
+
+```{r}
+fit_arima <- vaccine_administrated_tsb |>
+  model(
+    automatic_arima = ARIMA(dose_adminstrated)
+  )
+```
+
+> If we don't provide terms inside ARIMA(), then it is an automatic model! It will examine different models and return the one with lowest AICc.
+
+let's now observe the fitted model, `fit_arima`:
+
+```{r}
+fit_arima
+```
+
+What type of data structure is it? What each row and column represent?
+
+## Extract model's output
+
+use `report()`
+
+```{r}
+fit_arima |> filter(region == "A") |> 
+  report()
+```
+
+Use `tidy()`:
+
+```{r}
+fit_arima |> tidy()
+```
+
+Use `glance()`:
+
+```{r}
+fit_arima |> glance()
+```
+
+## Generate forecasts using ARIMA
+
+Now, we can forecast with the fitted ARIMA model:
+
+```{r}
+forecast_horizon <- 12
+vaccine_fcst_arima <- fit_arima |> forecast(h = forecast_horizon)  
+```
+
+Let's now observe the forecast table, `vaccine_fcst_arima`:
+
+```{r}
+vaccine_fcst_arima
+```
+
+What type of data structure is it? What each row and column represent?
+
+## Visualize forecasts
+
+You can visualize your forecast:
+
+```{r}
+vaccine_fcst_arima |> 
+  autoplot(filter_index(vaccine_administrated_tsb, "2020" ~ .))
+```
+
+## Determine model components manually
+
+You can also specify the order of p,q,P,Q using specific function `pdq()` and `PDQ()`manually:
+
+```{r}
+fit_arima_manual <- vaccine_administrated_tsb |>
+  model(
+    automatic_arima = ARIMA(dose_adminstrated),
+    arima_manual1=ARIMA(dose_adminstrated ~ 1+pdq(1,1,1)+PDQ(0,0,1)),
+    arima_manual2 = ARIMA(dose_adminstrated ~ 1+ pdq(3,1,0)+PDQ(1,0,0))
+  )
+```
+
+Could you check AICc for the manual ARIMA models and compare it to the automatic ARIMA model?
+
+```{r}
+fit_arima_manual |> glance() |> select(region,.model, AICc) |>  arrange(region,AICc)
+```
+

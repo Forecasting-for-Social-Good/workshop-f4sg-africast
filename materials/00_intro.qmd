@@ -67,11 +67,11 @@ source("setup.R")
 \end{alertblock}
 
 \pause
-
+\fontsize{11}{11}\sf
   * Free and online
   * Not an in-depth technical book
   * Mindset behind forecasting
-  * Overview of the most common forecasting methods and processes
+  * Overview of forecasting methods and processes
 
 ## International Institute of Forecasters
 
@@ -114,7 +114,7 @@ install.packages(c(
 
 ## Approximate outline
 \vspace*{-0.1cm}\centering\fontsize{12}{12}\sf
-\begin{tabular}{rp{6.6cm}l}
+\begin{tabular}{rp{8.6cm}l}
   \bf Session & \bf Topic                   & \bf Chapter \\
   \midrule
   1       & 1. Basics of time series and data structures    & 2 \\
@@ -130,7 +130,7 @@ install.packages(c(
   \bottomrule
 \end{tabular}
 
-\vspace*{.0cm}\begin{alertblock}{}{\centerline{\Large\textbf{bit.ly/fable2023}}}
+\vspace*{.0cm}\begin{alertblock}{}{\centerline{\Large\textbf{https://workshop.f4sg.org/africast/}}}
 \end{alertblock}
 
 ## Access materials 

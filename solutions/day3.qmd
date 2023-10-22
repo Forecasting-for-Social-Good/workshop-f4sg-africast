@@ -1,0 +1,318 @@
+---
+title: "Lab exercise: day 3"
+editor: visual
+---
+
+# Learn
+
+# Apply
+
+```{r}
+library(tsibble)
+library(fable)
+library(feasts)
+library(fabletools)
+library(tidyverse)
+library(astsa)
+vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+```
+
+Now, we proceed by specifying and training models on administered vaccine doses. These models are then used to produce forecasts for the next 12 months beyond the latest data point.
+
+## Basic of modelling/forecasting
+
+### Specify models and train models
+
+We start with three simple benchmark models: i) total average, ii) naive, and iii) seasonal naive
+
+> We specify models using the function corresponding to the name of the forecasting model. We use a formula (response \~ terms) to specify models and train models (i.e. estimate parameters) using `model(response ~ terms)` function. If there is no term for the method, we ignore the `~` and terms, (e.g. `MEAN(dose_adminstrated)`):
+
+Now, complete the following R chunk to specify and train the there simple models on data:
+
+```{r}
+vaccine_fit <- vaccine_administrated_tsb |>
+  model(
+    mean = MEAN(dose_adminstrated),
+    naive = SNAIVE(dose_adminstrated),
+    snaive = SNAIVE(dose_adminstrated),
+  )
+vaccine_fit
+```
+
+Observe the `vaccine_fit` object.
+
+What type of data structure is it? How many rows and columns are present, and what do they represent?
+
+### Extract fitted values and residuals
+
+You can extract fitted values and residuals for each model. Complete the following code to extract those values for all models
+
+```{r}
+vaccine_fit |> augment()
+```
+
+You can use `filter()` to extract these values for a specific model.
+
+Complete the following code to see only results for naive model:
+
+```{r}
+vaccine_fit |> augment() |> filter(.model=="naive")
+```
+
+You can use `select()` to get fitted values or residuals. Complete the R code to see residuals for the naive method:
+
+```{r}
+vaccine_fit |> augment() |> filter(.model=="naive") |> select(.resid)
+```
+
+> We can look into more details of the trained models (`mable`) using `tidy()`, `report()`, `glance()` and extract information related to trained models. These function would be more useful with models like Regression, exponential smoothing (ETS) and ARIMA and we use them later once these models are introduced.
+
+### Produce forecast
+
+> In order to produce forecasts, we pass the `mable` object, `vaccine_fit`, to the `forecast()` function and specify the forecast horizon required. This will generate both point forecast and a distribution of forecasts based on Normal distribution.
+
+Complete the following R code to produce forecasts of dose administrated for 12 months ahead:
+
+```{r}
+forecast_horizon <- 12
+vaccine_forecast <- vaccine_fit |> forecast(h=forecast_horizon)
+vaccine_forecast
+```
+
+Observe the `vaccine_forecast` object.
+
+What type of data structure is it? How many rows and columns are present, and what do they represent?
+
+### Visualise foreacasts
+
+We can also plot generated forecasts using `autoplot()`. Complete the following R code to plot the forecasts:
+
+```{r}
+#| label: plot-forecast
+vaccine_forecast |> 
+  autoplot()
+```
+
+Visualizing forecasts alone might not be as informative, it is generally useful to plot it in conjunction with past data.
+
+Complete the following R code to include past administered dose data along with its forecast for the next 12 months:
+
+```{r}
+vaccine_forecast |> 
+  autoplot(vaccine_administrated_tsb, level=NULL)
+```
+
+What the argument `level=NULL` does? and what happens if you remove it?
+
+It might be hard to see the forecast lines in the above plot. To make forecasts more visible, we can plot a part of the time series data towards the end of the time series. You can use`filter_index()` or `tail()` for that.
+
+Complete the following code to see past data from 2020 until the end and its forecasts:
+
+```{r}
+vaccine_forecast |> autoplot(filter_index(vaccine_administrated_tsb,"2020"~.), level=NULL)
+```
+
+### Extract prediction intervals
+
+You may want to extract prediction intervals for any coverage probability you are interested in.
+
+Complete the R code to achieve that:
+
+```{r}
+vaccine_forecast_interval <- vaccine_forecast |> hilo(level = 90)
+vaccine_forecast_interval
+```
+
+To be able to see values for lower bound and upper bound in separate columns, you need to unpack the prediction intervals extracted above.
+
+```{r}
+vaccine_forecast_interval |> unpack_hilo("90%")
+```
+
+You may want to extract forecast you generated into Excel, it is easy to do it using `write_csv()` or
+
+### Produce probabilistic forecast using bootstrapping
+
+Most time series models produce normally distributed forecasts, that is, we assume that the distribution of possible future values follows a normal distribution.
+
+When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance. You can also use `forecast()` directly to generate futures:
+
+>Attention: Producing forecasts using bootstrapping may take time!! so, running time might be an issue if you have many time series.
+
+```{r}
+fc_bootstrap <- vaccine_fit |>
+  forecast(h = forecast_horizon, bootstrap = TRUE, times = 1000)
+```
+
+You can use `generate()` function to generate futures using bootstrapping. Here we do it for one model only:
+
+```{r}
+fit <- vaccine_administrated_tsb |>
+  model(naive=NAIVE(dose_adminstrated))
+sim_bootstrap <- fit |> generate(h = forecast_horizon, times = 1000, bootstrap = TRUE)
+sim_bootstrap
+```
+
+Could you describe what columns and rows represent in `sim_bootstrap`?
+
+## Regression
+
+When performing time series forecasting with `fable` package, it's important to have a single tsibble that includes all the necessary variables for modeling. This includes the response variable (the variable you want to forecast) as well as all predictors.
+
+In the `vaccine_administrated_tsb`, `dose_adminstrated` is the response variable and `population_under1`, and `strike` are predictors.
+
+> You may find your response variable and predictors in separate tsibbles. In such cases, it's important to first join them before proceeding to the modeling stage.
+
+### Association between `dose_adminstrated` and predictors
+
+When building regression models, domain knowledge may recommend some potential driving factors that can be useful t forecast the response variable. It is important to check whether these predictors are associated with response variable using scatter plot.
+
+Complete the following code to create a scatter plot showing a possible association between population under 1 and dose_adminstrated:
+
+```{r}
+ggplot(vaccine_administrated_tsb, 
+       aes(x= population_under1, y=dose_adminstrated))+
+  geom_point()+
+  geom_smooth()
+```
+
+Do you see any linear association between dose_adminstrated and population unde 1?
+
+Complete the following code to see if there are differences in dose_administered based on whether the months are associated with strike days or not.
+
+```{r}
+ggplot(vaccine_administrated_tsb, 
+       aes(x= ???, y=???))+
+  geom_???()
+```
+
+Do you see any linear association between dose_adminstrated and strike?
+
+### Cross correlation and lagged/lead predictors
+
+You may think that a predictor impacts the response variable, but with a delay. This is referred to as a **leading predictor**. For instance, you can investigate whether the population in previous months is associated with the dose administered in the future.
+
+Complete the following code to check the association between population in various lags and dose administrated:
+
+```{r}
+
+#lag2.plot from astsa package can be used to visualize leading predictors
+lag2.plot(vaccine_administrated_tsb$population_under1, vaccine_administrated_tsb$dose_adminstrated, max.lag = 12)
+```
+
+Instead of scatter plots, you can also show the visualize the correlation between different lags of population with dose administrated using cross correlation function (cff).
+
+Complete the following code to show the ccf:
+
+```{r}
+# create a cross correlation plot
+ccf(vaccine_administrated_tsb$population_under1, vaccine_administrated_tsb$dose_adminstrated)
+```
+
+How strong is the correlation between lagged population and dose administrated? How do you interpret the cross correlation function plot?
+
+### Specify and train time series regression model
+
+Complete the R code to specify and train the three regression models with different terms:
+
+```{r}
+fit_regression <- vaccine_administrated_tsb |>
+  model(
+  regression1 = TSLM(dose_adminstrated ~ trend() + season()),
+  regression_population = TSLM(dose_adminstrated ~ trend() + season() + population_under1),
+  regression_population_strike = TSLM(dose_adminstrated ~ trend() + season() + population_under1+strike))
+)
+fit_regression
+```
+
+How many rows and columns are present, and what do they represent?
+
+### Check training model's output
+
+You can to get a summary of the trained regression models, this will tell you which variables are useful in explaining the variation in the vaccine dose administrated and also how much variation could be explained bu each model.
+
+```{r}
+fit_regression  |> report()
+```
+
+you can select any model of interest and filter any region of focus if you like:
+
+```{r}
+fit_regression  |> filter(region == "B") |> select(regression_population_strike) |> report()
+```
+
+Get a summary of estimated parameters and corresponding statistics using `tidy()` and `glance()`. You can try these functions by completing the following code.
+
+use `tidy()`
+
+```{r}
+fit_regression |> tidy()
+```
+
+use `glance()`
+
+```{r}
+fit_regression |> glance()
+```
+
+You can `augment()` to see the fitted values and residuals:
+
+```{r}
+fit_regression |> augment()
+```
+
+### Produce forecast using regression
+
+Now, let's forecast using the regression models. Forecasting with the presence of predictors (such as population and strike) is slightly different than just using time series data.
+
+We need to use the estimated values of predictors instead of actual that we have in test set. Because if we forecast for real future (e.g. next year), we don't know true values of the population, we have to estimate it or use the estimation published by someone else such as Office of National Statistics.
+
+Given that we use strike and population under a year in the model and we produce forecast for the next 12 month, we need to know the future values of these predictors. Strike is considered as a deterministic predictor, so as they are planned in advance. However, population is a stochastic predictor, as its future values are unknown and we need its estimation.
+
+> This might be different if you use leading predictors. Depending on how you include them in the model, you may not require to use their forecasts.
+>
+> It is important to know the difference between to Ex-ante and Ex-post. Ex-ante forecasts are those that are made using only the information that is available in advance, which means the estimated values of predictors are used. Ex-post forecasts are those that are made using actual values of the predictors. Ex-post forecasts can show you how much error in the forecast could be related to the error of the estimation of predictors.
+
+Let's forecast the population using regression as we don't have the estimation from officials.
+
+You first need to produce the future months. Complete the following code todo that:
+
+```{r}
+forecast_horizon <- 12
+future_month <- new_data(vaccine_administrated_tsb, n=forecast_horizon)
+```
+
+Given that we forecast for the next 12 months, we assume that the country will experience strikes in March next year. Add a new column, *strike* by completing the R code:
+
+```{r}
+future_month_strike <- future_month |> 
+  mutate(strike = if_else(lubridate::month(month, label = TRUE) == "Mar", 1,0))
+```
+
+Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:
+
+```{r}
+forecast_population <- vaccine_administrated_tsb |> model(regression_population=TSLM(dose_adminstrated)) |> forecast(h=forecast_horizon)
+
+population_point_forecast <- forecast_population |> as_tibble() |> select(.mean)
+```
+
+```{r}
+test_future <- bind_cols(future_month_strike, population_point_forecast) |>
+  mutate(population_under1=.mean) |> select(-.mean)
+```
+
+Now, we can forecast using trained models. If you have predictors (e.g. population, strike, holiday, etc) you need to pass the future data instead of the `h=` using the `new_data =` argument: :
+
+```{r}
+fcst_regression <-  fit_regression |> 
+  forecast(new_data = test_future)
+```
+
+## Visualize forecasts by regression
+
+Complete the following code to see the time series of dose adminstrated and its forecasts:
+
+```{r }
+fcst_regression |> autoplot(vaccine_administrated_tsb, level=NULL)
+```
