@@ -34,7 +34,7 @@ train <- vaccine_administrated_tsb |> filter(month < (max(month)-forecast_horizo
 We specify four models with different components and train them on the train part:
 
 ```{r}
-fit_vaccine <- train |> model(
+fit_vaccine <- train |>
   model(
     mean = MEAN(dose_adminstrated),
     naive = NAIVE(dose_adminstrated),
@@ -43,8 +43,8 @@ fit_vaccine <- train |> model(
     automatic_arima = ARIMA(dose_adminstrated),
   regression1 = TSLM(dose_adminstrated ~ trend() + season()),
   regression_population = TSLM(dose_adminstrated ~ trend() + season() + population_under1),
-  regression_population_strike = TSLM(dose_adminstrated ~ trend() + season() + population_under1+strike))
-) |> mutate(combination = (automatic_ets+automatic_arima+regression_population_strike)/3
+  regression_population_strike = TSLM(dose_adminstrated ~ trend() + season() + population_under1+strike)) |> 
+  mutate(combination = (automatic_ets+automatic_arima+regression_population_strike)/3
 )
 ```
 
@@ -67,7 +67,6 @@ test_future <- bind_cols(test,population_forecast) |>
 
 #### Produce forecasts for dose adminstrated
 
-
 ```{r}
 forecast_vaccine <- fit_vaccine |> 
   forecast(new_data = test_future)
@@ -77,7 +76,7 @@ You can visualise your forecast and see how the forecast looks like visually for
 
 ```{r}
 forecast_vaccine |> 
-  autoplot(filter_index(???, "2020" ~ .), level=NULL)
+  autoplot(filter_index(train, "2020" ~ .), level=NULL)
 ```
 
 ### Compute forecast accuracy
@@ -99,7 +98,7 @@ Which error metric do you use to evaluate the performance of models? Which model
 
 ### Time series cross validation
 
->Attention: depedning on the umber of time series, the computation time might be big and cause compuationla time issues.
+> Attention: depedning on the umber of time series, the computation time might be big and cause compuationla time issues.
 
 This is also called rolling forecast or rolling origin: You can also reflect on the following questions:
 
@@ -285,7 +284,8 @@ What if you want to show the accuracy measure for each model and each horizon (h
 In fable we don't get automatically a column that corresponds to forecast horizon (h=1,2,3,..., 12). If this is something you are interested in, you can do it yourself, let's first observe the first 24 observations to see the difference later:
 
 ```{r}
-View(fcst_tscv[1:24,])
+fcst_tscv[1:24,]
+#View(fcst_tscv[1:24,])
 ```
 
 We first need to group by `id` and `.model` and then create a new variable called `h` and assign `row_number()` to it (you can type ?row_number in your Console to see what this function does, it simply returns the number of row):
@@ -294,7 +294,7 @@ We first need to group by `id` and `.model` and then create a new variable calle
 fc_h <- fcst_tscv |> 
   group_by(.id,.model, region) |> 
   mutate(h=row_number()) |> ungroup()
-View(fc_h[1:24,])# view the first 24 rows of ae_fc and observe h
+#View(fc_h[1:24,])# view the first 24 rows of ae_fc and observe h
 ```
 
 Now check rows from 12 to 24 to see the difference.

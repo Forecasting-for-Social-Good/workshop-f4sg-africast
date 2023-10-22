@@ -1,7 +1,7 @@
----
+???
 title: "Lab exercise: day 2"
 editor: visual
----
+???
 
 # Learn
 
@@ -98,18 +98,16 @@ Complete the following code to decompose `dose_adminstrated` into its components
 ```{r}
 stl_decom <- vaccine_administrated_tsb |>
   filter(region == "") |> 
-  ---(
-    ---(--- ~ ---(window = ---) +
-                   ---(window = ---)))
+  ???(
+    ???(??? ~ ???(window = ???) +
+                   ???(window = ???)))
 stl_decom
 ```
 
-Complete the code below ot the components produced by STL:
+Complete the code below to the components produced by STL:
 
 ```{r}
-stl_decom |> 
-  ---() |>
-  autoplot()
+
 ```
 
 Describe the result of the decomposition from the above plot.
@@ -118,7 +116,7 @@ Now, you can extract seasonal adjusted data and plot them with the data and tren
 
 ```{r}
 stl_decom |>
-    ---() |>
+    ???() |>
   ggplot(aes(x = month)) +
   geom_line(aes(y = ???, colour = "Data")) +
   geom_line(aes(y = ???,

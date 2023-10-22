@@ -137,7 +137,7 @@ Most time series models produce normally distributed forecasts, that is, we assu
 
 When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance. You can also use `forecast()` directly to generate futures:
 
->Attention: Producing forecasts using bootstrapping may take time!! so, running time might be an issue if you have many time series.
+> Attention: Producing forecasts using bootstrapping may take time!! so, running time might be an issue if you have many time series.
 
 ```{r}
 fc_bootstrap <- vaccine_fit |>
@@ -182,8 +182,8 @@ Complete the following code to see if there are differences in dose_administered
 
 ```{r}
 ggplot(vaccine_administrated_tsb, 
-       aes(x= ???, y=???))+
-  geom_???()
+       aes(x= strike, y = dose_adminstrated))+
+  geom_boxplot()
 ```
 
 Do you see any linear association between dose_adminstrated and strike?
@@ -221,7 +221,7 @@ fit_regression <- vaccine_administrated_tsb |>
   regression1 = TSLM(dose_adminstrated ~ trend() + season()),
   regression_population = TSLM(dose_adminstrated ~ trend() + season() + population_under1),
   regression_population_strike = TSLM(dose_adminstrated ~ trend() + season() + population_under1+strike))
-)
+
 fit_regression
 ```
 

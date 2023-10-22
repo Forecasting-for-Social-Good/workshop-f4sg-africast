@@ -3,7 +3,6 @@ title: "Lab exercise: day 2"
 editor: visual
 ---
 
-
 # Apply
 
 ```{r}
@@ -22,26 +21,22 @@ stl_decom <- vaccine_administrated_tsb |>
   filter(region == "H") |> 
   model(
     STL(dose_adminstrated ~ trend(window = 12) +
-                   season(window = "periodic"))) |>
-  components()
-  stl_decom |> 
-  autoplot()
+                   season(window = "periodic")))
+stl_decom
 ```
 
-Complete the code below ot the components produced by STL:
+Complete the code below to plot the components produced by STL:
 
 ```{r}
 stl_decom |> 
-  ---() |>
+  components() |>
   autoplot()
 ```
 
 Describe the result of the decomposition from the above plot.
 
-
-
 ```{r}
-stl_decom |>
+stl_decom |> components() |> 
   ggplot(aes(x = month)) +
   geom_line(aes(y = dose_adminstrated, colour = "Data")) +
   geom_line(aes(y = season_adjust,
