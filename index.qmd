@@ -47,6 +47,31 @@ Bahman is a Reader (Associate Professor) in Data-Driven Decision Science at Card
 <a href="https://twitter.com/Bahman_R_T/"><img border="0" alt="Twitter" src="https://assets.dryicons.com/uploads/icon/svg/8385/c23f7ffc-ca8d-4246-8978-ce9f6d5bcc99.svg" width="35" height="35"></a>&ensp; 
 </div>
 
+## Mentors for the cohort 2023
+
+A committed team, comprising both PhD students and MSc. students, generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the excercises. The team includes:
+
+- Harsha Halgamuwe Hewage
+- Josephine Valensia
+- Krisanat Anukarnsakulchularp
+- Laiba Khan
+- Mandy Luon
+- Mingzhe Shi
+- Sneha Kharbanda
+- Zihao Wang
+
+## Project coordination
+
+The coordination and administration of the project are overseen by a dedicated team from [Jomo Kenyatta University of Agriculture and Technology](https://www.jkuat.ac.ke/). This includes tasks such as promoting the workshop across various countries, managing the intake of 138 applications from 13 different nations, conducting a thorough shortlisting process and selecting 62 participants, and maintaining effective communication with all attendees.
+
+Jomo Kenyatta University team includes:
+
+- Henry Kissinger Ochieng 
+- Caroline Mugo
+- Winnie Chacha
+- Samuel Mwalili
+
+
 # Preparation
 
 The workshop will provide a quick-start overview of exploring time series data and producing forecasts. There is no need for prior experience in time series to get the most out of this workshop.
