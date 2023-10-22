@@ -91,7 +91,7 @@ Which error metric do you use to evaluate the performance of models? Which model
 
 ### Time series cross validation
 
->Attention: Depending on the number of time series, the computation time might be substantial and could potentially lead to computational delays.]
+> Attention: Depending on the number of time series, the computation time might be substantial and could potentially lead to computational delays.\]
 
 This is also called rolling forecast or rolling origin: You can also reflect on the following questions:
 
@@ -346,14 +346,13 @@ fcst_future <- ??? |>
   forecast(new_data = test_future)
 ```
 
-
 ```{r}
 fcst_future |> autoplot(filter_index(???, "2020" ~ .))# visualise it
 ```
 
 ### Residual diagnostics
 
-Now, let's perform the residual diagnostic for the most accurate forecasts identified above though time series cross validation.
+Now, let's perform the residual diagnostic for the most accurate forecasts identified above through time series cross validation.
 
 Plot the residuals:
 
