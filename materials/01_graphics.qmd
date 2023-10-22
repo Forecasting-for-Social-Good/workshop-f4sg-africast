@@ -28,14 +28,14 @@ source("setup.R")
 
 ## Time series patterns
 
-Level:
-  The *level* of a time series describes the center of the series.
+Level
+  : The *level* of a time series describes the center of the series.
   
 Trend
   : A *trend* describes predictable increases or decreases in the level of a series.
 
 Seasonal
-  : *Seasonality* is a consistent pattern that repeats over a fixed cycle. pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
+  : *Seasonality* is a consistent pattern that repeats over a fixed period of time. pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
 
 Cyclic
   : pattern exists when data exhibit rises and falls that are \emph{not of fixed period} (duration usually of at least 2 years).

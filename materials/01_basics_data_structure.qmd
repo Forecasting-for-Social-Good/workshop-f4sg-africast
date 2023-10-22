@@ -12,6 +12,10 @@ subtitle: "1. Basics of time series and data structures"
 #| include: false
 #| cache: false
 source("setup.R")
+ausbeer <- as_tsibble(fpp2::ausbeer) |>
+  rename(Time = index, Production = value)
+library(fpp3)
+library(tidyverse)
 ```
 
 # Introduction to forecasting
@@ -19,16 +23,16 @@ source("setup.R")
 ## What is a forecast?
 
 \fontsize{10}{11.2}\sf
-Forecasting  is estimating how the sequence of observations will continue into the future based on all of the information available at the time when we generate the forecast:
+Forecasting  is estimating how the sequence of observations will continue into the future based on all of the information available at the time when we generate the forecast.
 
-```{r forecasting, out.width="70%", fig.align='center'}
+```{r forecasting,echo=FALSE, out.width="90%", fig.align='center'}
 ausbeer %>% model(ETS(Production)) %>% forecast(h=20) %>% autoplot(tail(ausbeer, 60), level=NULL, alpha=.01)+
   geom_vline(xintercept = as.numeric(as.Date("2010-04-01")),col="red", linetype = "longdash")+
-  labs(x ="Time",y="Observation",title = "Time series forecasting")
+  labs(x ="Time",y="Observation",title = "Forecasting")
 ```
 
 
-## Data requires for forecasting
+## What data do we need for forecasting?
 
 \fontsize{10}{11.2}\sf
 Forecasting is estimating how the sequence of observations will continue into the future based on all of the information available at the time when we generate the forecast:
@@ -60,7 +64,7 @@ Why do you use forecast?
   
 ## Forecasting workflow
 
-```{r forecastingworkflow, fig.align='center'}
+```{r forecastingworkflow,echo=FALSE, fig.align='center', out.width="32%"}
 knitr::include_graphics("figs/forecasting_workflow.png")
 ```
 
@@ -74,20 +78,6 @@ knitr::include_graphics("figs/forecasting_workflow.png")
 \placefig{5}{1.4}{width=3.5cm}{tsibbledata.png}
 \placefig{3}{4.85}{width=3.5cm}{feasts.png}
 \placefig{7}{4.85}{width=3.5cm}{fable.png}
-
-## Tidyverts developers
-
-\begin{textblock}{5.7}(0.4,1.4)
-\begin{block}{Earo Wang}
-\includegraphics[height=5.8cm]{earowang}
-\end{block}
-\end{textblock}
-
-\begin{textblock}{5.7}(6.75,1.4)
-\begin{block}{Mitchell O'Hara-Wild}
-\includegraphics[height=5.8cm]{mitch}
-\end{block}
-\end{textblock}
 
 ## Time series data
 
@@ -411,61 +401,6 @@ options(width = 60)
 ```
 
 
-# Time plots
-## Time plots
-\fontsize{10}{11}\sf
 
-```{r maxtemp, fig.height=2.4}
-maxtemp <- vic_elec |>
-  index_by(Day = date(Time)) |>
-  summarise(Temperature = max(Temperature))
-maxtemp |>
-  autoplot(Temperature) +
-  labs(y = "Max temperature")
-```
 
-## Ansett airlines
-
-\full{ansettlogo}
-
-## Ansett airlines
-\fontsize{11}{12}\sf
-
-```{r, echo=TRUE, fig.height=3.1}
-ansett |>
-  autoplot(Passengers)
-```
-
-## Ansett airlines
-\fontsize{11}{12}\sf
-
-```{r, echo=TRUE, fig.height=3.1}
-ansett |>
-  filter(Class == "Economy") |>
-  autoplot(Passengers)
-```
-
-## Ansett airlines
-\fontsize{11}{12}\sf
-
-```{r, echo=TRUE, fig.height=3.1}
-ansett |>
-  filter(Airports == "MEL-SYD") |>
-  autoplot(Passengers)
-```
-
-## Ansett airlines
-\fontsize{11}{12}\sf
-
-```{r, echo=TRUE, fig.height=3.1}
-ansett |>
-  filter(Airports == "MEL-SYD") |>
-  autoplot(Passengers)
-```
-
-\begin{textblock}{2.5}(12.6,7.3)
-\begin{alertblock}{}
-Not the real data! Or is it?
-\end{alertblock}
-\end{textblock}
 

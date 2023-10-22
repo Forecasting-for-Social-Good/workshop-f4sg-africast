@@ -21,7 +21,7 @@ melsyd <- tsibbledata::ansett |>
 ```
 
 
-# Forecast accuracy measures
+# Evaluating forecast accuracy
 
 ## Evaluate forecast accuracy
 
@@ -29,13 +29,13 @@ melsyd <- tsibbledata::ansett |>
 * Forecast accuracy is compared by measuring errors based on the test set.
 * Ideally it should allow comparing benefits from improved accuracy with the cost of obtaining the improvement.
 
-## Evaluate forecast accuracy
+## Evaluate forecast accuracy- Business impact
 
 * We should be choosing forecast models that lead to better business decisions
     - least staffing costs, least emission, highest service level, least stock-out, least inventory, fastest response, least change in planing,  for example.
 * However, this is not always easy to obtain, therefore we might simply use methods that provide the most accurate forecast.
 
-## Evaluate forecast accuracy
+## In-sample (training) vs. out-of-sample (test)
 
 * Fitting and its residual are not a reliable indication of forecast accuracy
 * A model which fits the training data well will not necessarily forecast well
@@ -64,9 +64,9 @@ text(10, 1, "Training data", col = "blue")
 text(21, 1, "Test data", col = "red")
 ```
 
-## Evaluating point forecast accuracy
+# Evaluating point forecast accuracy
 
-### Forecast errors
+## Forecast errors
 
 Forecast "error": the difference between an observed value and its forecast.
 $$
@@ -74,7 +74,7 @@ $$
 $$
 where the training data is given by $\{y_1,\dots,y_T\}$
 
-### Measures of forecast accuracy
+## Measures of forecast accuracy
 \fontsize{11}{12}\sf
 
 ```r
@@ -92,7 +92,7 @@ beer_fit |>
   guides(colour = guide_legend(title = "Forecast"))
 ```
 
-### Measures of forecast accuracy
+## Measures of forecast accuracy
 
 ```{r beer-fc-1, echo=FALSE, fig.height=4}
 beer_fit <- aus_production |>
@@ -111,7 +111,7 @@ beer_fit |>
   guides(colour = guide_legend(title = "Forecast"))
 ```
 
-### Measures of forecast accuracy
+## Measures of forecast accuracy
 
 \begin{tabular}{rl}
 $y_{T+h}=$ & $(T+h)$th observation, $h=1,\dots,H$ \\
@@ -132,7 +132,7 @@ $e_{T+h} =$  & $y_{T+h} - \pred{y}{T+h}{T}$
   * MAE, MSE, RMSE are all scale dependent.
   * MAPE is scale independent but is only sensible if $y_t\gg 0$ for all $t$, and $y$ has a natural zero.
 
-### Measures of forecast accuracy
+## Measures of forecast accuracy
 \fontsize{13}{15}\sf
 
 \begin{block}{Mean Absolute Scaled Error}
@@ -152,7 +152,7 @@ $$
 
 Proposed by Hyndman and Koehler (IJF, 2006).
 
-### Measures of forecast accuracy
+## Measures of forecast accuracy
 \fontsize{13}{15}\sf
 
 \begin{block}{Root Mean Squared Scaled Error}
@@ -172,7 +172,7 @@ $$
 
 Proposed by Hyndman and Koehler (IJF, 2006).
 
-### Measures of forecast accuracy
+## Measures of forecast accuracy
 
 \fontsize{9.8}{10}\sf
 
@@ -181,10 +181,9 @@ beer_fc <- forecast(beer_fit, h = "3 years")
 accuracy(beer_fc, aus_production)
 ```
 
+# Evaluating distributional forecast accuracy
 
-## Evaluating distributional forecast accuracy
-## Prediction interval accuracy
-### Prediction interval accuracy using winkler score
+## Prediction interval accuracy using winkler score
 
 Winkler proposed a scoring method to enable comparisons between prediction intervals:
 
@@ -201,30 +200,29 @@ Winkler proposed a scoring method to enable comparisons between prediction inter
 \end{align*}
 \end{block}
 
-### Prediction interval accuracy
+## Prediction interval accuracy
 
 \fontsize{11}{12}\sf
-```{r winker-accuracy, options}
+```{r winker-accuracy, echo=TRUE}
   # Compute interval accuracy
- drug_fc_tr %>% 
-  accuracy(antidiabetic_drug_sale, 
-   measures = interval_accuracy_measures) %>% 
-   mutate(Method = paste(.model, "method")) %>%
-  select(Method, winkler) %>%
-  gt::gt() %>%
-  gt::as_latex()
+beer_fc |> accuracy(aus_production,
+   measures = interval_accuracy_measures) 
 ```
 
 
-### Quantile score
+## Quantile score
 
-\begin{block}{Winkler score}
-Q_{p,t} = \begin{cases}
-  2(1 - p) \big(f_{p,t} - y_{t}\big), & \text{if $y_{t} < f_{p,t}$}\\
-  2p \big(y_{t} - f_{p,t}\big), & \text{if $y_{t} \ge f_{p,t}$} \end{cases}
+\begin{block}{Quantile score}
+\begin{align*}
+  Q_{p,t} = 
+    \begin{cases}
+    2(1 - p) \big(f_{p,t} - y_{t}\big), & \text{if $y_{t} < f_{p,t}$}\\
+    2p \big(y_{t} - f_{p,t}\big), & \text{if $y_{t} \ge f_{p,t}$} 
+    \end{cases}
+\end{align*}
 \end{block}
 
-### Continuous Ranked Probability Score (CRPS)
+## Continuous Ranked Probability Score (CRPS)
 
 $$\large \text{CRPS} = \text{mean}(p_j),$$ 
 
@@ -233,9 +231,28 @@ where
 $$p_j = \int_{-\infty}^{\infty} \left(G_j(x) - F_j(x)\right)^2dx,$$
 
 
+## Continuous Ranked Probability Score (CRPS)
 
-```{r crps, out.width='60%'}
+```{r crps,echo=FALSE, out.width='60%', fig.align='center'}
 knitr::include_graphics("figs/crps.jpg")
 ```
+
+## Quantile score and CRPS
+
+\fontsize{11}{12}\sf
+```{r qs-crps-accuracy, echo=TRUE}
+beer_fc |>
+  accuracy(aus_production, list(measures=distribution_accuracy_measures))
+```
+
+
+## Quantile score
+
+\fontsize{11}{12}\sf
+```{r qs-accuracy, echo=TRUE}
+beer_fc |>
+  accuracy(aus_production, list(qs=quantile_score), probs = .9)
+```
+
 
 

@@ -13,7 +13,7 @@ subtitle: "6. Forecasting with regression, how to represent temporal structure w
 #| include: false
 #| cache: false
 source("setup.R")
-us_change <- read_csv("data/uschange.csv") %>%
+us_change <- readr::read_csv("data/uschange.csv") %>%
   mutate(Time = yearquarter(Time)) %>%
   as_tsibble(index = Time)
 ```
@@ -66,12 +66,13 @@ These need to be estimated from the data.
 
 ## What is the best fit
 
-```{r SLR, fig.align='center'}
-knitr::include_graphics("figs/SLRpop1-1.png")
-```
-
+\fontsize{11}{13}\sf
 * There are many ways that a straight line can be laid on the scatter
 * Best known criterion is called Ordinary Least Squares(OLS)
+
+```{r SLR, echo=FALSE, fig.align='center', out.width= "70%"}
+knitr::include_graphics("figs/SLRpop1-1.png")
+```
 
 ## Estimation of the model
 
@@ -312,7 +313,7 @@ $R^2 = \frac{\sum(\hat{y}_t - \bar{y})^2}{\sum(y_t-\bar{y})^2}$
 * It is the proportion of variance accounted for (explained) by the predictors.
 
 ## Comparing regression models
-\fontsize{13}{15}\sf
+\fontsize{11}{13}\sf
 
 However \dots
 
@@ -459,7 +460,9 @@ us_change %>% autoplot(Consumption) +
 
 ## Correlation does not imply causation
 
-```{r, fig.align='center'}
+Check out [https://www.tylervigen.com/spurious-correlations](https://www.tylervigen.com/spurious-correlations)
+
+```{r,echo=FALSE, fig.align='center', out.width="80%"}
 knitr::include_graphics("figs/corr_not_caus.jpeg")
 ```
 
@@ -592,16 +595,15 @@ For example, sometimes the effect of a partiucluar event might be different if i
 * you need to introduce an interaction variable
 * you can use a new dummy as : `v1*v2`
 
-# Lagged predictors
-
 
 ## Lagged predictors
 
 The model include present and past values of predictor: $x_t,x_{t-1},x_{t-2},\dots.$
-\begin{block}{}
-\centerline{$
-y_t = a + \nu_0x_t + \nu_1x_{t-1} + \dots + \nu_kx_{t-k} + \e_t$}
-\end{block}
+
+\[
+y_{t} = a + \nu_{0} x_{t} + \nu_{1} x_{t-1} + \dots + \nu_{k} x_{t-k} + \varepsilon_{t}
+\]
+
 
   * $x$ can influence $y$, but $y$ is not allowed to influence $x$.
 
@@ -762,7 +764,6 @@ Sometimes a change in the predictor $x_t$ that will happen in the future will af
   \item $y_t=$ sales, $x_t=$ tax policy announcement
 \end{itemize}
 \end{block}
-\pause
 
 
   

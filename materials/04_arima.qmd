@@ -553,19 +553,3 @@ fc |>
   filter(Region == "Snowy Mountains", Purpose == "Holiday") |>
   autoplot(tourism, level = NULL)
 ```
-
-## Forecast ensembles
-\fontsize{10}{11}\sf
-
-```{r snowy-test-accuracy, dependson='trainfc'}
-accuracy(fc, tourism) |>
-  group_by(.model) |>
-  summarise(
-    RMSE = mean(RMSE),
-    MAE = mean(MAE),
-    MASE = mean(MASE)
-  ) |>
-  arrange(RMSE)
-```
-
-

@@ -13,28 +13,27 @@ subtitle: "7. Exponential smoothing"
 #| include: false
 #| cache: false
 source("setup.R")
-melsyd <- tsibbledata::ansett |>
-  filter(Airports == "MEL-SYD")
+library(fpp3)
+library(tidyverse)
+melsyd <- tsibbledata::ansett |> filter(Airports == "MEL-SYD")
 ```
 
 # Exponential smoothing
 
 ## From simple methods to Exponential Smoothing
 
-* Naïve method: Use only the last observation
+* Naive method: Use only the last observation
 * Average method: Use all observations
 * Want something in between naive and average methods.
 * Most recent data should have more weight.
 * This is exactly the concept behind exponential smoothing
 
----
 ## Pegel's classification
 
-```{r pegel1, out.width='95%'}
+```{r pegel1,echo=FALSE, out.width='90%', fig.align='center'}
 knitr::include_graphics("figs/pegel1.PNG")
 ```
 
----
 ## Historical perspective
 
  * Developed in the 1950s and 1960s as methods (algorithms) to produce point forecasts.
