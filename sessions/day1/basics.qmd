@@ -7,8 +7,15 @@ order: 1
 
 <!-- Materials will be distributed sooner to the event. -->
 
-<!-- ```{=html} -->
-<!-- <embed src="../../materials/basics.pdf" type="application/pdf" width="750px" height="420px"> -->
-<!-- ``` -->
+```{=html}
+<embed src="../../materials/00_intro.pdf" type="application/pdf" width="750px" height="420px">
+```
 
-<!-- [View slides in full screen](../../materials/basics.pdf) -->
+[View slides in full screen](../../materials/basics.pdf)
+
+
+```{=html}
+<embed src="../../materials/01_basics_data_structure.pdf" type="application/pdf" width="750px" height="420px">
+```
+
+[View slides in full screen](../../materials/01_basics_data_structure.pdf)

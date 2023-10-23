@@ -14,6 +14,7 @@ Transformations provide useful simplifications of the patterns in a time series.
 Let's look at the turnover of print media in Australia.
 
 ```{r}
+#| message: false
 library(tsibbledata)
 library(fable)
 library(dplyr)
