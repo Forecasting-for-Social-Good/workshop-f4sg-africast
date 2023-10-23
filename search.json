@@ -74,7 +74,7 @@
     "href": "schedule.html#day-1",
     "title": "Schedule",
     "section": "Day 1",
-    "text": "Day 1\n\n\n\n\n\n\nTime\n\n\nSession\n\n\n\n\n\n\n08:00-09:30\n\n\nBasics of time series and data structures\n\n\n\n\n09:45-11:15\n\n\nTime series patterns and basic graphics\n\n\n\n\nCheck with your mentor on Slack\n\n\nExercises\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 1\n\n\n\n\n\n\nTime\n\n\nSession\n\n\n\n\n\n\n08:00-09:30\n\n\nBasics of time series and data structures\n\n\n\n\n09:45-11:15\n\n\nTime series patterns and basic graphics\n\n\n\n\nCheck with your mentor on Slack\n\n\nExercises\n\n\n\n\n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-2",
@@ -151,13 +151,6 @@
     "href": "sessions/day1/exercises.html#about-the-dataset",
     "title": "Exercises",
     "section": "About the dataset",
-    "text": "About the dataset\nIn this exercise, we use a dataset containing dose of BCG (Cacille Calmette-Guérin), vaccine administrated in 9 regions of an African country from January 2013 untill December 2021. BCG is a widely administered vaccine primarily used to protect against tuberculosis (TB), a serious infection that primarily affects the lungs but can also affect other parts of the body. BCG vaccination is recommended for newborn babies at risk of tuberculosis (TB) and is typically administered shortly after birth, usually within the first 28 days of life.\nIn addition to the administered dose, it also includes data on the population of children under one year old, whether a strike occurred in a specific month and region, and whether a region is affected by flooding events.\nIn this exercise, you will apply what you have learned so far on a dataset containing doses of administered vaccine in an African country."
-  },
-  {
-    "objectID": "sessions/day1/exercises.html#about-the-dataset-1",
-    "href": "sessions/day1/exercises.html#about-the-dataset-1",
-    "title": "Exercises",
-    "section": "About the dataset",
     "text": "About the dataset\nIn this exercise, we use a dataset containing dose of BCG (Cacille Calmette-Guérin), vaccine administrated in 9 regions of an African country from January 2013 until December 2021. BCG is a widely administered vaccine primarily used to protect against tuberculosis (TB), a serious infection that primarily affects the lungs but can also affect other parts of the body. BCG vaccination is recommended for newborn babies at risk of tuberculosis (TB) and is typically administered shortly after birth, usually within the first 28 days of life.\nIn addition to the administered dose, it also includes data on the population of children under one year old, and whether a strike occurred in a specific month and region.\nIn this exercise, you will apply what you have learned about different steps in the forecasting workflow on this dataset.\n\n\n\n\n\n\nYour turn!\n\n\n\n\nImport vaccine_adminstrated.csv data into R\n\nCheck and modify the data types of variables as needed\n\nPrepare your data\n\nCheck and fix missing values\nCheck duplications and fix it\nCreate tsibble\nCheck and fix temporal gaps\n\nManipulating time series\n\nCreate monthly time series of total doses adminstrated in the country\nCreate quarterly time series of doses adminstrated in each region\nCreate quarterly time series of total doses adminstrated in the country\n\nVisualizing time series\n\nUse time plots and describe what patterns you observe\nCreate plots to see if any consistent pattern exsists in monthly and quarterly of dose admisntrated\nCreate plots to see how dose admisntrated chnage over time for each month/quarter and how it differs across differnt month/quarter"
   },
   {
@@ -166,6 +159,13 @@
     "title": "Time series patterns and basic graphics",
     "section": "",
     "text": "View slides in full screen"
+  },
+  {
+    "objectID": "sessions/day1/resources.html",
+    "href": "sessions/day1/resources.html",
+    "title": "Resources (recording and code)",
+    "section": "",
+    "text": "Click here to download the demo code from this session"
   },
   {
     "objectID": "sessions/day2/adjustments.html",

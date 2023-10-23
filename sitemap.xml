@@ -2,82 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://workshop.f4sg.org/africast/index.html</loc>
-    <lastmod>2023-10-23T08:39:55.948Z</lastmod>
+    <lastmod>2023-10-23T13:35:46.458Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/license.html</loc>
-    <lastmod>2023-10-23T08:39:57.132Z</lastmod>
+    <lastmod>2023-10-23T13:35:47.046Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/schedule.html</loc>
-    <lastmod>2023-10-23T08:39:59.704Z</lastmod>
+    <lastmod>2023-10-23T13:35:47.762Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/break.html</loc>
-    <lastmod>2023-10-23T08:40:00.892Z</lastmod>
+    <lastmod>2023-10-23T13:35:48.226Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day1/basics.html</loc>
-    <lastmod>2023-10-23T08:40:01.984Z</lastmod>
+    <lastmod>2023-10-23T13:35:48.646Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day1/exercises.html</loc>
-    <lastmod>2023-10-23T08:40:39.707Z</lastmod>
+    <lastmod>2023-10-23T13:35:58.382Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day1/graphics.html</loc>
-    <lastmod>2023-10-23T08:40:40.999Z</lastmod>
+    <lastmod>2023-10-23T13:35:58.714Z</lastmod>
+  </url>
+  <url>
+    <loc>https://workshop.f4sg.org/africast/sessions/day1/resources.html</loc>
+    <lastmod>2023-10-23T13:35:59.066Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day2/adjustments.html</loc>
-    <lastmod>2023-10-23T08:40:42.355Z</lastmod>
+    <lastmod>2023-10-23T13:35:59.390Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day2/exercises.html</loc>
-    <lastmod>2023-10-23T08:41:48.281Z</lastmod>
+    <lastmod>2023-10-23T13:36:14.590Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day2/features.html</loc>
-    <lastmod>2023-10-23T08:41:49.933Z</lastmod>
+    <lastmod>2023-10-23T13:36:14.906Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day3/exercises.html</loc>
-    <lastmod>2023-10-23T08:42:46.160Z</lastmod>
+    <lastmod>2023-10-23T13:36:29.314Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day3/forecasting.html</loc>
-    <lastmod>2023-10-23T08:42:47.480Z</lastmod>
+    <lastmod>2023-10-23T13:36:29.726Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day3/regressors.html</loc>
-    <lastmod>2023-10-23T08:42:48.700Z</lastmod>
+    <lastmod>2023-10-23T13:36:30.242Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day4/arima.html</loc>
-    <lastmod>2023-10-23T08:42:50.052Z</lastmod>
+    <lastmod>2023-10-23T13:36:30.762Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day4/ets.html</loc>
-    <lastmod>2023-10-23T08:42:51.192Z</lastmod>
+    <lastmod>2023-10-23T13:36:31.254Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day4/exercises.html</loc>
-    <lastmod>2023-10-23T08:43:33.779Z</lastmod>
+    <lastmod>2023-10-23T13:36:42.702Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day5/accuracy.html</loc>
-    <lastmod>2023-10-23T08:43:35.195Z</lastmod>
+    <lastmod>2023-10-23T13:36:43.226Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day5/diagnostics.html</loc>
-    <lastmod>2023-10-23T08:43:36.435Z</lastmod>
+    <lastmod>2023-10-23T13:36:43.854Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day5/exercises.html</loc>
-    <lastmod>2023-10-23T08:49:46.152Z</lastmod>
+    <lastmod>2023-10-23T13:38:52.511Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/template.html</loc>
-    <lastmod>2023-10-23T08:49:47.548Z</lastmod>
+    <lastmod>2023-10-23T13:38:53.051Z</lastmod>
   </url>
 </urlset>
