@@ -1,7 +1,7 @@
-???
+---
 title: "Lab exercise: day 2"
 editor: visual
-???
+---
 
 # Learn
 
