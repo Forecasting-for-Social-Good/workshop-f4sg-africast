@@ -70,9 +70,7 @@ tbl-colwidths: [5,20,50,25]
 editor: source
 ---
 
-<!-- 11-12th July 2023 -->
-<!-- Columbia University -->
-
+All times are listed in UK time (UTC+1).
 
 ## Day 1
 
