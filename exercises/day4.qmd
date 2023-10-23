@@ -3,17 +3,57 @@ title: "Lab exercise: day 4"
 editor: visual
 ---
 
-# Learn
-
-# Apply
-
 ```{r}
+#| label: setup
+
 library(tsibble)
 library(fable)
 library(feasts)
 library(fabletools)
 library(tidyverse)
+```
 
+# Learn
+
+Produce forecasts from an automatically selected ETS model for Australia's print media turnover. Does the chosen ETS model align with the patterns you see in the data?
+
+```{r}
+aus_print <- aus_retail |> 
+  filter(Industry == "Newspaper and book retailing") |> 
+  summarise(Turnover = sum(Turnover))
+
+fit <- aus_print |> 
+  model(
+    ???
+  )
+fit
+fit |> 
+  ???(h = "10 years") |> 
+  autoplot(???)
+```
+
+
+Produce forecasts from an automatically selected ARIMA model for Australia's print media turnover. Don't forget to find and use a suitable transformation to simplify the multiplicative patterns in the data.
+
+```{r}
+# Find an appropriate transformation
+aus_print |> 
+  autoplot(Turnover)
+
+# Estimate an ARIMA model
+fit <- aus_print |> 
+  model(
+    ???
+  )
+fit
+fit |> 
+  ???(h = "10 years") |> 
+  autoplot(???)
+```
+
+# Apply
+
+```{r}
 vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
 ```
 

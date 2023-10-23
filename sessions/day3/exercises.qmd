@@ -38,6 +38,11 @@ The models used for forecasting should match the patterns identified when plotti
 Let's look at the population of the United Kingdon
 
 ```{r}
+#| message: false
+library(tsibble)
+library(tsibbledata)
+library(tidyverse)
+library(fable)
 uk_economy <- global_economy |> 
   filter(Country == "United Kingdom")
 uk_economy |> 
@@ -296,6 +301,7 @@ hh_budget |>
 This seems to produce a better model than the random walk with drift, as it can better anticipate the drops in wealth before they happen. However there's a catch, when we come to forecasting we need to know the future...
 
 ```{r}
+#| error: true
 hh_budget |> 
   model(
     TSLM(Wealth ~ trend() + Expenditure)
