@@ -7,7 +7,336 @@ order: 3
 
 # Learn
 
-Mitch's section to learn the concepts on various datasets
+Forecasting involves modelling the historical patterns in the data and then projecting them into the future. Some models use time information alone, while others use additional information. Importantly, forecasting models assume the patterns in the past will continue into the future.
+
+## Basic forecasting models
+
+::: {.callout-tip}
+There are four basic forecasting models which are commonly used as 'benchmarks' for other more sophisticated methods. These are:
+
+* `MEAN()` - the average of the data (mean)
+* `NAIVE()` - the most recent value (naive)
+* `SNAIVE()` - the most recent value from the same season (seasonal naive)
+* `RW(y ~ drift())` - a straight between the first and last values (random walk with drift)
+:::
+
+Despite their simplicity, these models work well for many time series and can be difficult to improve upon!
+
+::: {.callout-tip}
+## Fit for purpose
+
+Each of these methods work for a specific pattern that might exist in the data.
+
+* `MEAN()` - no pattern
+* `NAIVE()` - unit root process
+* `SNAIVE()` - seasonality
+* `RW(y ~ drift())` - simple trend
+:::
+
+The models used for forecasting should match the patterns identified when plotting the time series.
+
+Let's look at the population of the United Kingdon
+
+```{r}
+uk_economy <- global_economy |> 
+  filter(Country == "United Kingdom")
+uk_economy |> 
+  autoplot(Population)
+```
+
+This time series shows an upward trend and no seasonality, so the random walk with drift is the most appropriate method from the four simple benchmark models above.
+
+Similar to how we estimated an STL model, we use `model()` to train a model specification (`RW(Population ~ drift())`) to the data.
+
+```{r}
+fit <- global_economy |> 
+  filter(Country == "United Kingdom") |> 
+  model(RW(Population ~ drift()))
+fit
+```
+
+::: {.callout-tip}
+## The model formula
+
+Models in `{fable}` are specified using a model formula (`lhs ~ rhs`).
+
+On the left of `~` we specify the response variable (what we want to forecast) along with any transformations we've made to simplify the patterns. 
+
+On the right of `~` we specify the model specials, which describe the patterns in the data we will use when forecasting. This is model specific, so check the help file of the model with `?RW` for more information!
+:::
+
+To produce a forecast from this model we use the `forecast()` function, and specify how far ahead we wish to forecast with the `h` (horizon) argument. The `h` argument can be a number for how many steps to forecast, or plain text describing the duration.
+
+```{r}
+fc <- fit |> 
+  forecast(h = "10 years")
+fc
+```
+
+Here we have a `fable` - a forecasting table. It looks like a tsibble, but the response variable `Population` contains entire distributions of possible future values at each step in the future. We can look at these forecasts using the `autoplot()` function.
+
+```{r}
+fc |> 
+  autoplot()
+```
+
+::: {.callout-important}
+## Context is key
+
+When plotting the forecasts it is useful to also show some historical data. This helps us see if the forecasts seem reasonable.
+To add historical data, add the original dataset to the first argument of the `autoplot()` function.
+:::
+
+```{r}
+fc |> 
+  autoplot(uk_economy)
+```
+
+Not bad. These forecasts are trended upward but likely a bit flat. Verify that this forecast simply continues the line that connects the first and last observations. This trend is known as a global trend (or 'drift' for this model), but we can see the trend changes over time for this data. Later we'll see more advanced models which can handle changing (local) trends.
+
+:::{.callout-caution}
+## Your turn!
+
+Choose a country from the `global_economy` dataset and select the most suitable benchmark method. Produce forecasts of population for 15 years into the future, and comment on the suitability of these forecasts based on a plot of them and the data.
+:::
+
+Next let's forecast the household wealth of the four countries in the `hh_budget` dataset.
+
+```{r}
+hh_budget |> 
+  autoplot(Wealth)
+```
+
+These time series all show some trend that changes over time. There isn't any seasonality here, so the random walk with drift model would also work well here. The `model()` function will apply the specified model to all time series in the data, so the code looks very similar to above.
+
+```{r}
+fit <- hh_budget |> 
+  model(RW(Wealth ~ drift()))
+fit
+```
+
+Here we have four random walk with drift models that have been trained on the household wealth from each of the four countries in the dataset. We can forecast from all four models using the `forecast()` function, and then plot them with `autoplot()`.
+
+```{r}
+fit |> 
+  forecast(h = "10 years") |> 
+  autoplot(hh_budget)
+```
+
+:::{.callout-caution}
+## Your turn!
+
+Comment on the suitability of these forecasts.
+:::
+
+Let's try to forecast the future turnover of Australia's print media industry. Recall this plot from the previous exercises.
+
+```{r}
+aus_print <- aus_retail |> 
+  filter(Industry == "Newspaper and book retailing") |> 
+  summarise(Turnover = sum(Turnover))
+aus_print |> 
+  autoplot(Turnover)
+```
+
+::: {.callout-tip}
+## Most appropriate model
+
+Which model would be most appropriate for this dataset? In this case none of the methods can capture all of the patterns here.
+
+This dataset has a strong seasonal pattern, which a trend that changes over time.
+
+The random walk with drift can handle trends, but in this case the changing trend does not match the global trend that this model will use.
+
+The seasonal naive model can handle the seasonality, but it is unable to handle the trend too.
+
+None of the four basic models can capture all of the patterns in this dataset, but the seasonal naive model is most appropriate since it can handle some of the patterns in the data.
+:::
+
+```{r}
+fit <- aus_print |> 
+  model(SNAIVE(Turnover))
+fit |> 
+  forecast(h = "5 years") |> 
+  autoplot(aus_print)
+```
+
+As expected, the forecasts have the same seasonal pattern as the recent data but don't have any trend. We'll need more advanced models to capture both.
+
+::: {.callout-tip}
+## Multiple models
+
+We can compare the forecasts from multiple models by specifying several models in the `model()` function.
+:::
+
+```{r}
+fit <- aus_print |> 
+  model(
+    snaive = SNAIVE(Turnover),
+    rwdrift = RW(Turnover ~ drift())
+  )
+fit
+```
+
+Here we have a column for each of the models that we have specified. Forecasts from both of these models can be created using `forecast()`, and compared visually with `autoplot()`.
+
+```{r}
+fit |> 
+  forecast(h = "5 years") |> 
+  autoplot(aus_print)
+```
+
+The seasonal naive method looks much better than the random walk with drift. The forecast intervals of the drift method are very wide, and the forecasts are trended slightly upward despite the recent turnover trending downward.
+
+:::{.callout-caution}
+## Your turn!
+
+Produce forecasts from two suitable models for the total Australian retail turnover, and select the most appropriate one based on visual inspection of the forecast plot.
+:::
+
+## Regression forecasting
+
+Linear regression can also be used to forecast time series, and by carefully constructing predictors we can use it to capture trends, seasonality, and relationships with other variables all at once.
+
+A regression model is estimated using `TSLM()`, and there are some useful model specials which help create predictors for trend and seasonality.
+
+::: {.callout-tip}
+## Regression specials
+
+A linear trend can be created with the `trend()` special. You can also specify changepoints in the trend by describing the 'knot' location(s) with `trend(knots = yearmonth("2010 Jan"))`, which will create different trends before and after these knot(s).
+
+Seasonal patterns can be modelled with the `season()` special, which will create dummy variables for each time point in the season. Don't forget to transform your data first, since the `season()` special assumes all seasons have the same size and shape.
+:::
+
+Let's try to create a regression model for the Australian print media turnover. I've used a `log()` transformation to regularise the variance, but a box-cox transformation would work even better.
+
+```{r}
+aus_print |> 
+  model(
+    TSLM(log(Turnover) ~ trend() + season())
+  ) |> 
+  forecast(h = "5 years") |> 
+  autoplot(aus_print)
+```
+
+::: {.callout-important}
+## Model misspecification 
+
+Those forecasts look bad! The seasonality matches the right shape, but the trend is completely wrong and the forecasts are very far from the most recent data. We need to improve our trend parameter with some knots.
+:::
+
+```{r}
+aus_print |> 
+  model(
+    TSLM(log(Turnover) ~ trend(knots = yearmonth("2011 Jan")) + season())
+  ) |> 
+  forecast(h = "5 years") |> 
+  autoplot(aus_print)
+```
+
+Much better! Adding a knot just as the trend changes in 2011 allows the forecasts to follow the more recent trend.
+
+:::{.callout-caution}
+## Your turn!
+
+Produce suitable forecasts from a regression model for the total Australian retail turnover that captures both the trend and seasonality in the data. Compare these forecasts with the two basic models produced earlier, which model produces the most reasonable forecasts and why?
+:::
+
+The coefficients from this model can be obtained with the `tidy()` function, `glance()` provides a summary of the model and `augment()` returns a tsibble of the model's predictions and errors on the training data. These functions are useful for better understanding the model that was used to produce the forecasts.
+
+```{r}
+fit <- aus_print |> 
+  model(
+    lm = TSLM(log(Turnover) ~ trend(knots = yearmonth("2011 Jan")) + season())
+  )
+fit |> 
+  tidy()
+```
+
+The initial trend is upward (+0.002477/month), but after 2011 the trend decreases (0.002477-0.008432=-0.005955/month). The seasonality peaks in December, which is +0.27426 more than January.
+
+```{r}
+fit |> 
+  glance()
+```
+
+The r-squared of this model is high, at 0.91.
+
+```{r}
+fit |> 
+  augment() |> 
+  ggplot(aes(x = Month)) + 
+  geom_line(aes(y = Turnover)) + 
+  geom_line(aes(y = .fitted), colour = "steelblue", alpha = 0.8)
+```
+
+The model matches the historical data quite well, but the small changes in trend before 2010 can be improved upon.
+
+Regression models can also use additional information from other variables in the data. Let's consider the household budget again.
+
+```{r}
+hh_budget
+```
+
+Here we have lots of information about the households in these countries, including their debt, disposable income, savings, and more. We can use this information when modelling household wealth.
+
+```{r}
+hh_budget |> 
+  model(
+    TSLM(Wealth ~ trend() + Expenditure),
+    RW(Wealth ~ drift())
+  ) |> 
+  augment() |> 
+  ggplot(aes(x = Year)) + 
+  geom_line(aes(y = Wealth), data = hh_budget) + 
+  geom_line(aes(y = .fitted, colour = .model)) + 
+  facet_grid(vars(Country))
+```
+
+This seems to produce a better model than the random walk with drift, as it can better anticipate the drops in wealth before they happen. However there's a catch, when we come to forecasting we need to know the future...
+
+```{r}
+hh_budget |> 
+  model(
+    TSLM(Wealth ~ trend() + Expenditure)
+  ) |> 
+  forecast(h = "5 years")
+```
+
+::: {.callout-important}
+## Extra information
+
+> `object 'Expenditure' not found`, ..., Does your model require extra variables to produce forecasts?
+
+To produce forecasts from models that use extra information for transforming or modelling the data, you will need to provide the future values of these variables when forecasting! Often these are just as difficult to forecast as your response variable!
+
+However if you cannot forecast these variables, the model can still be useful for scenario analysis.
+:::
+
+The future values of extra variables used in the model must be provided to the `forecast(new_data = ???)` argument. The `new_data` argument is for a tsibble containing the future points in time, and values of other variables, needed to produce the forecasts. We can produce a tsibble with the future time points easily using the `new_data()` function.
+
+```{r}
+new_data(hh_budget, 5)
+```
+
+Adding the future values for `Expenditure` is tricky though - we can forecast it or set up scenarios. For simplicity we'll just see what happens if the expenditure has a growth rate of 3% for all countries over the 5 years.
+
+```{r}
+future_hh_budget <- new_data(hh_budget, 5) |> 
+  mutate(Expenditure = 3)
+future_hh_budget
+
+hh_budget |> 
+  model(
+    TSLM(Wealth ~ trend() + Expenditure)
+  ) |> 
+  forecast(new_data = future_hh_budget) |> 
+  autoplot(hh_budget)
+```
+
+A better estimate of `Expenditure` will produce better forecasts.
+
+<!-- You can also model seasonal patterns with `fourier()`, which uses fourier terms to estimate the seasonality. This is useful if you have non-integer -->
 
 # Apply
 

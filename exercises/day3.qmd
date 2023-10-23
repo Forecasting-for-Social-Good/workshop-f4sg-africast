@@ -5,6 +5,72 @@ editor: visual
 
 # Learn
 
+Choose a country from the `global_economy` dataset and select the most suitable benchmark method. Produce forecasts of population for 15 years into the future, and comment on the suitability of these forecasts based on a plot of them and the data.
+
+```{r}
+???_economy <- global_economy |> 
+  filter(???)
+
+???_economy |> 
+  autoplot(???)
+
+fit <- ???_economy |> 
+  model(???)
+fit
+
+fit |> 
+  ???(h = ???) |> 
+  autoplot(???)
+```
+
+In the exercise we saw how a random walk with drift model can be used to forecast to several time series.
+
+```{r}
+hh_budget |> 
+  model(RW(Wealth ~ drift())) |> 
+  forecast(h = "10 years") |> 
+  autoplot(hh_budget)
+```
+
+> Comment on the suitability of these forecasts.
+
+Hint: does the forecast match the recent patterns in the data?
+
+Produce forecasts from two suitable models for the total Australian retail turnover, and select the most appropriate one based on visual inspection of the forecast plot.
+
+```{r}
+aus_retail |> 
+  summarise(Turnover = sum(Turnover)) |> 
+  autoplot(Turnover)
+```
+
+```{r}
+aus_retail |> 
+  summarise(Turnover = sum(Turnover)) |> 
+  model(
+    ???,
+    ???
+  ) |> 
+  ???(h = "10 years") |> 
+  autoplot(aus_retail)
+```
+
+Produce suitable forecasts from a regression model for the total Australian retail turnover that captures both the trend and seasonality in the data. Compare these forecasts with the two basic models produced earlier, which model produces the most reasonable forecasts and why?
+
+```{r}
+aus_retail |> 
+  summarise(Turnover = sum(Turnover)) |> 
+  model(
+    TSLM(???),
+    ???,
+    ???
+  ) |> 
+  ???(h = "10 years") |> 
+  autoplot(aus_retail)
+```
+
+
+
 # Apply
 
 ```{r}
