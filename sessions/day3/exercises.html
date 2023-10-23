@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -186,7 +249,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learn" id="toc-learn" class="nav-link active" data-scroll-target="#learn">Learn</a></li>
+  <li><a href="#learn" id="toc-learn" class="nav-link active" data-scroll-target="#learn">Learn</a>
+  <ul class="collapse">
+  <li><a href="#basic-forecasting-models" id="toc-basic-forecasting-models" class="nav-link" data-scroll-target="#basic-forecasting-models">Basic forecasting models</a></li>
+  <li><a href="#regression-forecasting" id="toc-regression-forecasting" class="nav-link" data-scroll-target="#regression-forecasting">Regression forecasting</a></li>
+  </ul></li>
   <li><a href="#apply" id="toc-apply" class="nav-link" data-scroll-target="#apply">Apply</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/edit/main/sessions/day3/exercises.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -220,7 +287,562 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="learn" class="level1">
 <h1>Learn</h1>
-<p>Mitch’s section to learn the concepts on various datasets</p>
+<p>Forecasting involves modelling the historical patterns in the data and then projecting them into the future. Some models use time information alone, while others use additional information. Importantly, forecasting models assume the patterns in the past will continue into the future.</p>
+<section id="basic-forecasting-models" class="level2">
+<h2 class="anchored" data-anchor-id="basic-forecasting-models">Basic forecasting models</h2>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are four basic forecasting models which are commonly used as ‘benchmarks’ for other more sophisticated methods. These are:</p>
+<ul>
+<li><code>MEAN()</code> - the average of the data (mean)</li>
+<li><code>NAIVE()</code> - the most recent value (naive)</li>
+<li><code>SNAIVE()</code> - the most recent value from the same season (seasonal naive)</li>
+<li><code>RW(y ~ drift())</code> - a straight between the first and last values (random walk with drift)</li>
+</ul>
+</div>
+</div>
+<p>Despite their simplicity, these models work well for many time series and can be difficult to improve upon!</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Fit for purpose
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each of these methods work for a specific pattern that might exist in the data.</p>
+<ul>
+<li><code>MEAN()</code> - no pattern</li>
+<li><code>NAIVE()</code> - unit root process</li>
+<li><code>SNAIVE()</code> - seasonality</li>
+<li><code>RW(y ~ drift())</code> - simple trend</li>
+</ul>
+</div>
+</div>
+<p>The models used for forecasting should match the patterns identified when plotting the time series.</p>
+<p>Let’s look at the population of the United Kingdon</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibble)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibbledata)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fable)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>uk_economy <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"United Kingdom"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>uk_economy <span class="sc">|&gt;</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This time series shows an upward trend and no seasonality, so the random walk with drift is the most appropriate method from the four simple benchmark models above.</p>
+<p>Similar to how we estimated an STL model, we use <code>model()</code> to train a model specification (<code>RW(Population ~ drift())</code>) to the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"United Kingdom"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">RW</span>(Population <span class="sc">~</span> <span class="fu">drift</span>()))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A mable: 1 x 2
+# Key:     Country [1]
+  Country        `RW(Population ~ drift())`
+  &lt;fct&gt;                             &lt;model&gt;
+1 United Kingdom              &lt;RW w/ drift&gt;</code></pre>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+The model formula
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Models in <code>{fable}</code> are specified using a model formula (<code>lhs ~ rhs</code>).</p>
+<p>On the left of <code>~</code> we specify the response variable (what we want to forecast) along with any transformations we’ve made to simplify the patterns.</p>
+<p>On the right of <code>~</code> we specify the model specials, which describe the patterns in the data we will use when forecasting. This is model specific, so check the help file of the model with <code>?RW</code> for more information!</p>
+</div>
+</div>
+<p>To produce a forecast from this model we use the <code>forecast()</code> function, and specify how far ahead we wish to forecast with the <code>h</code> (horizon) argument. The <code>h</code> argument can be a number for how many steps to forecast, or plain text describing the duration.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"10 years"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A fable: 10 x 5 [1Y]
+# Key:     Country, .model [1]
+   Country        .model                    Year          Population     .mean
+   &lt;fct&gt;          &lt;chr&gt;                    &lt;dbl&gt;              &lt;dist&gt;     &lt;dbl&gt;
+ 1 United Kingdom RW(Population ~ drift())  2018 N(6.6e+07, 2.7e+10) 66261260.
+ 2 United Kingdom RW(Population ~ drift())  2019 N(6.7e+07, 5.5e+10) 66500247.
+ 3 United Kingdom RW(Population ~ drift())  2020 N(6.7e+07, 8.4e+10) 66739235.
+ 4 United Kingdom RW(Population ~ drift())  2021 N(6.7e+07, 1.1e+11) 66978222.
+ 5 United Kingdom RW(Population ~ drift())  2022 N(6.7e+07, 1.4e+11) 67217209.
+ 6 United Kingdom RW(Population ~ drift())  2023 N(6.7e+07, 1.8e+11) 67456196.
+ 7 United Kingdom RW(Population ~ drift())  2024 N(6.8e+07, 2.1e+11) 67695184.
+ 8 United Kingdom RW(Population ~ drift())  2025 N(6.8e+07, 2.4e+11) 67934171.
+ 9 United Kingdom RW(Population ~ drift())  2026 N(6.8e+07, 2.8e+11) 68173158.
+10 United Kingdom RW(Population ~ drift())  2027 N(6.8e+07, 3.1e+11) 68412145.</code></pre>
+</div>
+</div>
+<p>Here we have a <code>fable</code> - a forecasting table. It looks like a tsibble, but the response variable <code>Population</code> contains entire distributions of possible future values at each step in the future. We can look at these forecasts using the <code>autoplot()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Context is key
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When plotting the forecasts it is useful to also show some historical data. This helps us see if the forecasts seem reasonable. To add historical data, add the original dataset to the first argument of the <code>autoplot()</code> function.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(uk_economy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Not bad. These forecasts are trended upward but likely a bit flat. Verify that this forecast simply continues the line that connects the first and last observations. This trend is known as a global trend (or ‘drift’ for this model), but we can see the trend changes over time for this data. Later we’ll see more advanced models which can handle changing (local) trends.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Choose a country from the <code>global_economy</code> dataset and select the most suitable benchmark method. Produce forecasts of population for 15 years into the future, and comment on the suitability of these forecasts based on a plot of them and the data.</p>
+</div>
+</div>
+<p>Next let’s forecast the household wealth of the four countries in the <code>hh_budget</code> dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>hh_budget <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Wealth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>These time series all show some trend that changes over time. There isn’t any seasonality here, so the random walk with drift model would also work well here. The <code>model()</code> function will apply the specified model to all time series in the data, so the code looks very similar to above.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> hh_budget <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">RW</span>(Wealth <span class="sc">~</span> <span class="fu">drift</span>()))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A mable: 4 x 2
+# Key:     Country [4]
+  Country   `RW(Wealth ~ drift())`
+  &lt;chr&gt;                    &lt;model&gt;
+1 Australia          &lt;RW w/ drift&gt;
+2 Canada             &lt;RW w/ drift&gt;
+3 Japan              &lt;RW w/ drift&gt;
+4 USA                &lt;RW w/ drift&gt;</code></pre>
+</div>
+</div>
+<p>Here we have four random walk with drift models that have been trained on the household wealth from each of the four countries in the dataset. We can forecast from all four models using the <code>forecast()</code> function, and then plot them with <code>autoplot()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"10 years"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(hh_budget)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Comment on the suitability of these forecasts.</p>
+</div>
+</div>
+<p>Let’s try to forecast the future turnover of Australia’s print media industry. Recall this plot from the previous exercises.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Industry <span class="sc">==</span> <span class="st">"Newspaper and book retailing"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Turnover =</span> <span class="fu">sum</span>(Turnover))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Most appropriate model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Which model would be most appropriate for this dataset? In this case none of the methods can capture all of the patterns here.</p>
+<p>This dataset has a strong seasonal pattern, which a trend that changes over time.</p>
+<p>The random walk with drift can handle trends, but in this case the changing trend does not match the global trend that this model will use.</p>
+<p>The seasonal naive model can handle the seasonality, but it is unable to handle the trend too.</p>
+<p>None of the four basic models can capture all of the patterns in this dataset, but the seasonal naive model is most appropriate since it can handle some of the patterns in the data.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">SNAIVE</span>(Turnover))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_print)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As expected, the forecasts have the same seasonal pattern as the recent data but don’t have any trend. We’ll need more advanced models to capture both.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Multiple models
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We can compare the forecasts from multiple models by specifying several models in the <code>model()</code> function.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">snaive =</span> <span class="fu">SNAIVE</span>(Turnover),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">rwdrift =</span> <span class="fu">RW</span>(Turnover <span class="sc">~</span> <span class="fu">drift</span>())</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A mable: 1 x 2
+    snaive       rwdrift
+   &lt;model&gt;       &lt;model&gt;
+1 &lt;SNAIVE&gt; &lt;RW w/ drift&gt;</code></pre>
+</div>
+</div>
+<p>Here we have a column for each of the models that we have specified. Forecasts from both of these models can be created using <code>forecast()</code>, and compared visually with <code>autoplot()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_print)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The seasonal naive method looks much better than the random walk with drift. The forecast intervals of the drift method are very wide, and the forecasts are trended slightly upward despite the recent turnover trending downward.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Produce forecasts from two suitable models for the total Australian retail turnover, and select the most appropriate one based on visual inspection of the forecast plot.</p>
+</div>
+</div>
+</section>
+<section id="regression-forecasting" class="level2">
+<h2 class="anchored" data-anchor-id="regression-forecasting">Regression forecasting</h2>
+<p>Linear regression can also be used to forecast time series, and by carefully constructing predictors we can use it to capture trends, seasonality, and relationships with other variables all at once.</p>
+<p>A regression model is estimated using <code>TSLM()</code>, and there are some useful model specials which help create predictors for trend and seasonality.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Regression specials
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A linear trend can be created with the <code>trend()</code> special. You can also specify changepoints in the trend by describing the ‘knot’ location(s) with <code>trend(knots = yearmonth("2010 Jan"))</code>, which will create different trends before and after these knot(s).</p>
+<p>Seasonal patterns can be modelled with the <code>season()</code> special, which will create dummy variables for each time point in the season. Don’t forget to transform your data first, since the <code>season()</code> special assumes all seasons have the same size and shape.</p>
+</div>
+</div>
+<p>Let’s try to create a regression model for the Australian print media turnover. I’ve used a <code>log()</code> transformation to regularise the variance, but a box-cox transformation would work even better.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">TSLM</span>(<span class="fu">log</span>(Turnover) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>())</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_print)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Model misspecification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Those forecasts look bad! The seasonality matches the right shape, but the trend is completely wrong and the forecasts are very far from the most recent data. We need to improve our trend parameter with some knots.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">TSLM</span>(<span class="fu">log</span>(Turnover) <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">knots =</span> <span class="fu">yearmonth</span>(<span class="st">"2011 Jan"</span>)) <span class="sc">+</span> <span class="fu">season</span>())</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_print)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Much better! Adding a knot just as the trend changes in 2011 allows the forecasts to follow the more recent trend.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Your turn!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Produce suitable forecasts from a regression model for the total Australian retail turnover that captures both the trend and seasonality in the data. Compare these forecasts with the two basic models produced earlier, which model produces the most reasonable forecasts and why?</p>
+</div>
+</div>
+<p>The coefficients from this model can be obtained with the <code>tidy()</code> function, <code>glance()</code> provides a summary of the model and <code>augment()</code> returns a tsibble of the model’s predictions and errors on the training data. These functions are useful for better understanding the model that was used to produce the forecasts.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">lm =</span> <span class="fu">TSLM</span>(<span class="fu">log</span>(Turnover) <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">knots =</span> <span class="fu">yearmonth</span>(<span class="st">"2011 Jan"</span>)) <span class="sc">+</span> <span class="fu">season</span>())</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 6
+   .model term                            estimate std.error statistic   p.value
+   &lt;chr&gt;  &lt;chr&gt;                              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 lm     "(Intercept)"                    5.13    0.0154      334.    0        
+ 2 lm     "trend(knots = yearmonth(\"201…  0.00248 0.0000396    62.6   3.45e-217
+ 3 lm     "trend(knots = yearmonth(\"201… -0.00843 0.000215    -39.3   7.68e-144
+ 4 lm     "season()year2"                 -0.00887 0.0189       -0.469 6.39e-  1
+ 5 lm     "season()year3"                  0.0262  0.0189        1.39  1.66e-  1
+ 6 lm     "season()year4"                 -0.0830  0.0188       -4.42  1.24e-  5
+ 7 lm     "season()year5"                 -0.0278  0.0188       -1.48  1.40e-  1
+ 8 lm     "season()year6"                 -0.0864  0.0188       -4.60  5.52e-  6
+ 9 lm     "season()year7"                 -0.0220  0.0188       -1.17  2.42e-  1
+10 lm     "season()year8"                  0.00197 0.0188        0.105 9.17e-  1
+11 lm     "season()year9"                 -0.0450  0.0188       -2.39  1.71e-  2
+12 lm     "season()year10"                -0.0257  0.0188       -1.37  1.72e-  1
+13 lm     "season()year11"                 0.0167  0.0188        0.888 3.75e-  1
+14 lm     "season()year12"                 0.274   0.0188       14.6   1.75e- 39</code></pre>
+</div>
+</div>
+<p>The initial trend is upward (+0.002477/month), but after 2011 the trend decreases (0.002477-0.008432=-0.005955/month). The seasonality peaks in December, which is +0.27426 more than January.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 15
+  .model r_squared adj_r_squared  sigma2 statistic   p_value    df log_lik
+  &lt;chr&gt;      &lt;dbl&gt;         &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;
+1 lm         0.913         0.910 0.00643      345. 6.25e-217    14    494.
+# ℹ 7 more variables: AIC &lt;dbl&gt;, AICc &lt;dbl&gt;, BIC &lt;dbl&gt;, CV &lt;dbl&gt;,
+#   deviance &lt;dbl&gt;, df.residual &lt;int&gt;, rank &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>The r-squared of this model is high, at 0.91.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Month)) <span class="sc">+</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Turnover)) <span class="sc">+</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted), <span class="at">colour =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The model matches the historical data quite well, but the small changes in trend before 2010 can be improved upon.</p>
+<p>Regression models can also use additional information from other variables in the data. Let’s consider the household budget again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>hh_budget</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 88 x 8 [1Y]
+# Key:       Country [4]
+   Country    Year  Debt     DI Expenditure Savings Wealth Unemployment
+   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Australia  1995  95.7 3.72          3.40   5.24    315.         8.47
+ 2 Australia  1996  99.5 3.98          2.97   6.47    315.         8.51
+ 3 Australia  1997 108.  2.52          4.95   3.74    323.         8.36
+ 4 Australia  1998 115.  4.02          5.73   1.29    339.         7.68
+ 5 Australia  1999 121.  3.84          4.26   0.638   354.         6.87
+ 6 Australia  2000 126.  3.77          3.18   1.99    350.         6.29
+ 7 Australia  2001 132.  4.36          3.10   3.24    348.         6.74
+ 8 Australia  2002 149.  0.0218        4.03  -1.15    349.         6.37
+ 9 Australia  2003 159.  6.06          5.04  -0.413   360.         5.93
+10 Australia  2004 170.  5.53          4.54   0.657   379.         5.40
+# ℹ 78 more rows</code></pre>
+</div>
+</div>
+<p>Here we have lots of information about the households in these countries, including their debt, disposable income, savings, and more. We can use this information when modelling household wealth.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>hh_budget <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">TSLM</span>(Wealth <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> Expenditure),</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">RW</span>(Wealth <span class="sc">~</span> <span class="fu">drift</span>())</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year)) <span class="sc">+</span> </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Wealth), <span class="at">data =</span> hh_budget) <span class="sc">+</span> </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted, <span class="at">colour =</span> .model)) <span class="sc">+</span> </span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="fu">vars</span>(Country))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing missing values (`geom_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This seems to produce a better model than the random walk with drift, as it can better anticipate the drops in wealth before they happen. However there’s a catch, when we come to forecasting we need to know the future…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>hh_budget <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">TSLM</span>(Wealth <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> Expenditure)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `mutate()`:
+ℹ In argument: `TSLM(Wealth ~ trend() + Expenditure) = (function
+  (object, ...) ...`.
+Caused by error in `value[[3L]]()`:
+! object 'Expenditure' not found
+  Unable to compute required variables from provided `new_data`.
+  Does your model require extra variables to produce forecasts?</code></pre>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Extra information
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p><code>object 'Expenditure' not found</code>, …, Does your model require extra variables to produce forecasts?</p>
+</blockquote>
+<p>To produce forecasts from models that use extra information for transforming or modelling the data, you will need to provide the future values of these variables when forecasting! Often these are just as difficult to forecast as your response variable!</p>
+<p>However if you cannot forecast these variables, the model can still be useful for scenario analysis.</p>
+</div>
+</div>
+<p>The future values of extra variables used in the model must be provided to the <code>forecast(new_data = ???)</code> argument. The <code>new_data</code> argument is for a tsibble containing the future points in time, and values of other variables, needed to produce the forecasts. We can produce a tsibble with the future time points easily using the <code>new_data()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new_data</span>(hh_budget, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 20 x 2 [1Y]
+# Key:       Country [4]
+   Country    Year
+   &lt;chr&gt;     &lt;dbl&gt;
+ 1 Australia  2017
+ 2 Australia  2018
+ 3 Australia  2019
+ 4 Australia  2020
+ 5 Australia  2021
+ 6 Canada     2017
+ 7 Canada     2018
+ 8 Canada     2019
+ 9 Canada     2020
+10 Canada     2021
+11 Japan      2017
+12 Japan      2018
+13 Japan      2019
+14 Japan      2020
+15 Japan      2021
+16 USA        2017
+17 USA        2018
+18 USA        2019
+19 USA        2020
+20 USA        2021</code></pre>
+</div>
+</div>
+<p>Adding the future values for <code>Expenditure</code> is tricky though - we can forecast it or set up scenarios. For simplicity we’ll just see what happens if the expenditure has a growth rate of 3% for all countries over the 5 years.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>future_hh_budget <span class="ot">&lt;-</span> <span class="fu">new_data</span>(hh_budget, <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Expenditure =</span> <span class="dv">3</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>future_hh_budget</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 20 x 3 [1Y]
+# Key:       Country [4]
+   Country    Year Expenditure
+   &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Australia  2017           3
+ 2 Australia  2018           3
+ 3 Australia  2019           3
+ 4 Australia  2020           3
+ 5 Australia  2021           3
+ 6 Canada     2017           3
+ 7 Canada     2018           3
+ 8 Canada     2019           3
+ 9 Canada     2020           3
+10 Canada     2021           3
+11 Japan      2017           3
+12 Japan      2018           3
+13 Japan      2019           3
+14 Japan      2020           3
+15 Japan      2021           3
+16 USA        2017           3
+17 USA        2018           3
+18 USA        2019           3
+19 USA        2020           3
+20 USA        2021           3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>hh_budget <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">TSLM</span>(Wealth <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> Expenditure)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> future_hh_budget) <span class="sc">|&gt;</span> </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(hh_budget)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exercises_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A better estimate of <code>Expenditure</code> will produce better forecasts.</p>
+<!-- You can also model seasonal patterns with `fourier()`, which uses fourier terms to estimate the seasonality. This is useful if you have non-integer -->
+</section>
 </section>
 <section id="apply" class="level1">
 <h1>Apply</h1>
