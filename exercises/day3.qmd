@@ -199,13 +199,15 @@ Complete the following code to check the association between population in vario
 lag2.plot(???, ???, max.lag = 12)
 ```
 
-Instead of scatter plots, you can also show the visualize the correlation between different lags of population with dose administrated using cross correlation function (cff).
+Instead of scatter plots, you can also show the visualize the correlation between different lags of population with dose administrated using cross correlation function (ccf).
 
 Complete the following code to show the ccf:
 
 ```{r}
 # create a cross correlation plot
-ccf(???, ???)
+vaccine_administrated_tsb |> 
+  CCF(???, ???) |> 
+  autoplot()
 ```
 
 How strong is the correlation between lagged population and dose administrated? How do you interpret the cross correlation function plot?

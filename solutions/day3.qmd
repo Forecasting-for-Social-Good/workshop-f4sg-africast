@@ -206,7 +206,9 @@ Complete the following code to show the ccf:
 
 ```{r}
 # create a cross correlation plot
-ccf(vaccine_administrated_tsb$population_under1, vaccine_administrated_tsb$dose_adminstrated)
+vaccine_administrated_tsb |> 
+  CCF(population_under1, dose_adminstrated) |> 
+  autoplot()
 ```
 
 How strong is the correlation between lagged population and dose administrated? How do you interpret the cross correlation function plot?
