@@ -8,6 +8,8 @@ project:
     - "*.qmd"
     - "!exercises"
     - "!materials"
+    - "!solutions"
+    - "!demo"
     - "!README.Rmd"
   pre-render: zip.R
 
