@@ -2,102 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://workshop.f4sg.org/africast/index.html</loc>
-    <lastmod>2023-10-22T20:18:25.885Z</lastmod>
+    <lastmod>2023-10-23T02:03:43.930Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/license.html</loc>
-    <lastmod>2023-10-22T20:18:26.265Z</lastmod>
+    <lastmod>2023-10-23T02:03:44.302Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/schedule.html</loc>
-    <lastmod>2023-10-22T20:18:26.940Z</lastmod>
+    <lastmod>2023-10-23T02:03:45.010Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/break.html</loc>
-    <lastmod>2023-10-22T20:18:27.321Z</lastmod>
+    <lastmod>2023-10-23T02:03:45.474Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day1/basics.html</loc>
-    <lastmod>2023-10-22T20:18:27.691Z</lastmod>
+    <lastmod>2023-10-23T02:03:45.954Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day1/exercises.html</loc>
-    <lastmod>2023-10-22T20:18:38.386Z</lastmod>
+    <lastmod>2023-10-23T02:03:59.529Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day1/graphics.html</loc>
-    <lastmod>2023-10-22T20:18:38.765Z</lastmod>
+    <lastmod>2023-10-23T02:03:59.913Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day2/adjustments.html</loc>
-    <lastmod>2023-10-22T20:18:39.125Z</lastmod>
+    <lastmod>2023-10-23T02:04:00.357Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day2/exercises.html</loc>
-    <lastmod>2023-10-22T20:18:52.821Z</lastmod>
+    <lastmod>2023-10-23T02:04:22.649Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day2/features.html</loc>
-    <lastmod>2023-10-22T20:18:53.209Z</lastmod>
+    <lastmod>2023-10-23T02:04:23.049Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day3/exercises.html</loc>
-    <lastmod>2023-10-22T20:18:53.675Z</lastmod>
+    <lastmod>2023-10-23T02:04:23.557Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day3/forecasting.html</loc>
-    <lastmod>2023-10-22T20:18:54.041Z</lastmod>
+    <lastmod>2023-10-23T02:04:24.001Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day3/regressors.html</loc>
-    <lastmod>2023-10-22T20:18:54.422Z</lastmod>
+    <lastmod>2023-10-23T02:04:24.469Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day4/arima.html</loc>
-    <lastmod>2023-10-22T20:18:54.799Z</lastmod>
+    <lastmod>2023-10-23T02:04:24.881Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day4/ets.html</loc>
-    <lastmod>2023-10-22T20:18:55.164Z</lastmod>
+    <lastmod>2023-10-23T02:04:25.293Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day4/exercises.html</loc>
-    <lastmod>2023-10-22T20:18:55.563Z</lastmod>
+    <lastmod>2023-10-23T02:04:25.765Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day5/accuracy.html</loc>
-    <lastmod>2023-10-22T20:18:55.938Z</lastmod>
+    <lastmod>2023-10-23T02:04:26.193Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day5/diagnostics.html</loc>
-    <lastmod>2023-10-22T20:18:56.313Z</lastmod>
+    <lastmod>2023-10-23T02:04:26.665Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/day5/exercises.html</loc>
-    <lastmod>2023-10-22T20:18:56.844Z</lastmod>
+    <lastmod>2023-10-23T02:04:27.289Z</lastmod>
   </url>
   <url>
     <loc>https://workshop.f4sg.org/africast/sessions/template.html</loc>
-    <lastmod>2023-10-22T20:18:57.211Z</lastmod>
-  </url>
-  <url>
-    <loc>https://workshop.f4sg.org/africast/solutions/day1.html</loc>
-    <lastmod>2023-10-22T20:19:09.898Z</lastmod>
-  </url>
-  <url>
-    <loc>https://workshop.f4sg.org/africast/solutions/day2.html</loc>
-    <lastmod>2023-10-22T20:19:17.924Z</lastmod>
-  </url>
-  <url>
-    <loc>https://workshop.f4sg.org/africast/solutions/day3.html</loc>
-    <lastmod>2023-10-22T20:19:48.192Z</lastmod>
-  </url>
-  <url>
-    <loc>https://workshop.f4sg.org/africast/solutions/day4.html</loc>
-    <lastmod>2023-10-22T20:20:53.033Z</lastmod>
-  </url>
-  <url>
-    <loc>https://workshop.f4sg.org/africast/solutions/day5.html</loc>
-    <lastmod>2023-10-22T20:28:44.224Z</lastmod>
+    <lastmod>2023-10-23T02:04:27.693Z</lastmod>
   </url>
 </urlset>
