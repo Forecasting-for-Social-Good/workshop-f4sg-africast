@@ -3,6 +3,15 @@ title: "Lab exercise: day 3"
 editor: visual
 ---
 
+```{r}
+#| label: setup
+library(tsibble)
+library(fable)
+library(feasts)
+library(fabletools)
+library(tidyverse)
+```
+
 # Learn
 
 Choose a country from the `global_economy` dataset and select the most suitable benchmark method. Produce forecasts of population for 15 years into the future, and comment on the suitability of these forecasts based on a plot of them and the data.
@@ -69,16 +78,9 @@ aus_retail |>
   autoplot(aus_retail)
 ```
 
-
-
 # Apply
 
 ```{r}
-library(tsibble)
-library(fable)
-library(feasts)
-library(fabletools)
-library(tidyverse)
 library(astsa)
 vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
 ```
