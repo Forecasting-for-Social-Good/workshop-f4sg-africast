@@ -4,6 +4,7 @@ project:
     - "images/twitter-card.png"
     - "materials/*.pdf"
     - "exercises.zip"
+    - "demo"
   render:
     - "*.qmd"
     - "!exercises"
