@@ -556,7 +556,7 @@ Once a model has been fitted, it is important to check  how well it has performe
 
 \fontsize{10}{13}\sf
 
-```{r beer-fc, echo = TRUE, dependson='brick-model'}
+```{r beer-fc, echo = TRUE, dependson='beer-model'}
 beer_fc <- beer_fit |>
   forecast(h = "5 years")
 ```
@@ -576,8 +576,8 @@ A \texttt{fable} is a forecast table with point forecasts and distributions.
 ```{r beer-fc-plot, warning=FALSE, message=FALSE, fig.height=3.4, dependson='brick-fc'}
 beer_fc |>
   autoplot(aus_production, level = NULL) +
-  labs(title = "Forecasts for quarterly clay brick production",
-       x = "Year", y = "Millions of bricks") +
+  labs(title = "Forecasts for quarterly beer production",
+       x = "Quarter", y = "Megalitres") +
   guides(colour = guide_legend(title = "Forecast"))
 ```
 
@@ -608,7 +608,6 @@ where $k$ is the integer part of $(h-1)/m$.
 Note that when $h=1$ and $T$ is large, these all give the same approximate forecast variance: $\hat{\sigma}^2$.
  
 ## Forecast distributions from bootstrapping
-\fontsize{10}{13}\sf
 
 When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance.
 
@@ -637,7 +636,8 @@ beer_2000 |>
   ggplot(aes(x = Quarter)) +
   geom_line(aes(y = Beer)) +
   geom_line(aes(y = .sim, colour = as.factor(.rep)),
-    data = sim)
+    data = sim)+
+  labs(colour="Future")
 ```
 
 ## Use `forecast()` function to generate probabilistic forecasts
@@ -648,10 +648,6 @@ fc <- fit |> forecast(h = 12, bootstrap = TRUE)
 fc
 ```
 
-## Prediction intervals
-
- * A prediction interval gives a region within which we expect $y_{T+h}$ to lie with a specified probability
- * It consists of an upper and a lower limit between which the future value is expected to lie
 
 ## Prediction intervals
 
@@ -699,14 +695,14 @@ beer_fc |>
 \begin{block}{}
 \textbf{Residuals in forecasting:} difference between observed value and its fitted value: $e_t = y_t-\hat{y}_{t|t-1}$.
 \end{block}
-\pause\fontsize{13}{15}\sf
+
 
 
 ## Beer production - augment
 \fontsize{10}{10}\sf
 
 ```{r augment}
-fit <- aus_production |> select(Beer) %>% model(NAIVE(Beer))
+fit <- aus_production |> select(Beer) %>% model(SNAIVE(Beer))
 augment(fit)
 ```
 
@@ -726,5 +722,5 @@ augment(fit) |>
 ```{r dj5, echo=TRUE, warning = FALSE, dependson="augment"}
 augment(fit) |>
   autoplot(.resid) +
-  labs(x = "Quarter", y = "", title = "Residuals from naïve method")
+  labs(x = "Quarter", y = "", title = "Residuals from snaïve method")
 ```
