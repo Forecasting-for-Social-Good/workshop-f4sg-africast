@@ -18,72 +18,7 @@ h02 <- tsibbledata::PBS |>
   summarise(Cost = sum(Cost))
 melsyd <- tsibbledata::ansett |>
   filter(Airports == "MEL-SYD")
-```
 
-# Statistical forecasting
-
-## Forecasting is difficult
-
-\full{hopecasts2}
-
-## What can we forecast?
-
-\full{nasdaq-stock-market}
-
-## What can we forecast?
-
-\full{Forex2}
-
-## What can we forecast?
-
-\full{pills}
-
-## What can we forecast?
-
-\full{elecwires2}
-
-## What can we forecast?
-
-\full{AusBOM}
-
-## What can we forecast?
-
-\full{ts22015}
-
-## What can we forecast?
-
-\full{comet}
-
-## Which is easiest to forecast?
-
- 1. daily electricity demand in 3 days time
- 2. timing of next Halley's comet appearance
- 3. time of sunrise this day next year
- 4. Google stock price tomorrow
- 5. Google stock price in 6 months time
- 6. maximum temperature tomorrow
- 7. exchange rate of \$US/AUS next week
- 8. total sales of drugs in Australian pharmacies next month
-
-\pause
-
- - how do we measure "easiest"?
- - what makes something easy/difficult to forecast?
-
-## Factors affecting forecastability
-
-Something is easier to forecast if:
-
- - we have a good understanding of the factors that contribute to it
- - there is lots of data available;
- - the forecasts cannot affect the thing we are trying to forecast.
- - there is relatively low natural/unexplainable random variation.
- - the future is somewhat similar to the past
-
-## Random futures
-
-```{r austa, echo=FALSE}
-# Grab ABS data
 austa <- readxl::read_excel("data/340101.xlsx", sheet = "Data1", skip = 9) |>
   rename(date = `Series ID`, value = A85375847A) |>
   select(date, value) |>
@@ -97,6 +32,41 @@ austa <- readxl::read_excel("data/340101.xlsx", sheet = "Data1", skip = 9) |>
   )) |>
   as_tsibble(index = Month) |>
   filter(Month >= yearmonth("2000 Jan"))
+```
+
+# Statistical forecasting
+
+## Forecasting workflow
+
+```{r forecasting_process,echo=FALSE, fig.align='center'}
+knitr::include_graphics("figs/forecasting_workflow.png")
+```
+
+## Statistical forecasting steps
+
+* Prepare data.
+* Visualise data.
+* Choosing and fitting models (specify and train models).
+* Produce forecast.
+* Evaluate quality.
+
+## What is a forecast?
+
+```{r austa, echo=FALSE}
+austa <- readxl::read_excel("data/340101.xlsx", sheet = "Data1", skip = 9) |>
+  rename(date = `Series ID`, value = A85375847A) |>
+  select(date, value) |>
+  transmute(
+    Month = yearmonth(date),
+    Visitors = value / 1e3
+  ) |>
+  bind_rows(tibble(
+    Month = yearmonth(seq(as.Date("2021-11-01"), by = "1 month", length = 2)),
+    Visitors = NA_real_
+  )) |>
+  as_tsibble(index = Month) |>
+  filter(Month >= yearmonth("2000 Jan"))
+# Grab ABS data
 # Fit ETS model
 fit <- austa |>
   filter(Month < yearmonth("2018 Jan")) |>
@@ -176,7 +146,7 @@ aligned_plots <- align_patches(p1, p2, p3, p4, p5, p6, p7, p8, p9)
 aligned_plots[[1]]
 ```
 
-## Random futures
+## What is a forecast?
 
 \forecast
 
@@ -186,7 +156,7 @@ aligned_plots[[2]]
 
 \simfutures
 
-## Random futures
+## What is a forecast?
 
 \forecast
 
@@ -196,7 +166,7 @@ aligned_plots[[3]]
 
 \simfutures
 
-## Random futures
+## What is a forecast?
 
 \forecast
 
@@ -206,7 +176,7 @@ aligned_plots[[4]]
 
 \simfutures
 
-## Random futures
+## What is a forecast?
 
 \forecast
 
@@ -216,7 +186,7 @@ aligned_plots[[5]]
 
 \simfutures
 
-## Random futures
+## What is a forecast?
 
 \forecast
 
@@ -226,7 +196,7 @@ aligned_plots[[6]]
 
 \simfutures
 
-## Random futures
+## What is a forecast?
 
 \forecast
 
@@ -236,7 +206,7 @@ aligned_plots[[7]]
 
 \simfutures
 
-## Random futures
+## What is a forecast?
 
 \forecast
 
@@ -246,7 +216,7 @@ aligned_plots[[8]]
 
 \simfutures
 
-## Random futures
+## Prediction interval
 
 \forecast
 
@@ -256,7 +226,31 @@ aligned_plots[[9]]
 
 \simfutures
 
-## Random futures
+## Visualising forecast distributions
+
+```{r viz-prob-forecast,echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("figs/daily_probabilistic_forecast.png")
+```
+
+## Forecast distribution
+
+```{r fcst-viz-dist,echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("figs/forecasts_probabilistic_perspective.png")
+```
+
+## Statistical forecasting
+
+- Thing to be forecast: $y_{T+h}$.
+- What we know: $y_1,\dots,y_T$.
+- Forecast distribution: ${y}_{T+h|t} = y_{T+h} \mid \{y_1,y_2,\dots,y_{T}\}$.
+- Point forecast: $\hat{y}_{T+h|T} =\text{E}[y_{T+h} \mid y_1,\dots,y_T]$.
+- Forecast variance: $\text{Var}[y_{t}  \mid y_1,\dots,y_T]$
+- Prediction interval is a range of values of $y_{T+h}$ with high probability.
+
+
+# What can we forecast?
+
+## What can we forecast?
 
 \forecast
 
@@ -270,25 +264,66 @@ aligned_plots[[9]] +
 
 \simfutures
 
-\only<2>{\begin{textblock}{8.5}(.3,6.5)\begin{alertblock}{}\fontsize{13}{15}\sf
-``He who sees the past as surprise-free is bound to have a future full of surprises.''\\\mbox{}\hfill{\small (Amos Tversky)}
-\end{alertblock}\end{textblock}
-}
+## What can we forecast?
 
-## Statistical forecasting
+\full{nasdaq-stock-market}
 
-- Thing to be forecast: $y_{T+h}$.
-- What we know: $y_1,\dots,y_T$.
-- Forecast distribution: ${y}_{T+h|t} = y_{T+h} \mid \{y_1,y_2,\dots,y_{T}\}$.
-- Point forecast: $\hat{y}_{T+h|T} =\text{E}[y_{T+h} \mid y_1,\dots,y_T]$.
-- Forecast variance: $\text{Var}[y_{t}  \mid y_1,\dots,y_T]$
-- Prediction interval is a range of values of $y_{T+h}$ with high probability.
+## What can we forecast?
+
+\full{Forex2}
+
+## What can we forecast?
+
+\full{pills}
+
+## What can we forecast?
+
+\full{elecwires2}
+
+## What can we forecast?
+
+\full{AusBOM}
+
+## What can we forecast?
+
+\full{ts22015}
+
+## What can we forecast?
+
+\full{comet}
+
+## Which is easiest to forecast?
+
+ 1. daily electricity demand in 3 days time
+ 2. timing of next Halley's comet appearance
+ 3. time of sunrise this day next year
+ 4. Google stock price tomorrow
+ 5. Google stock price in 6 months time
+ 6. maximum temperature tomorrow
+ 7. exchange rate of \$US/AUS next week
+ 8. total sales of drugs in Australian pharmacies next month
+
+\pause
+
+ - how do we measure "easiest"?
+ - what makes something easy/difficult to forecast?
+
+## Factors affecting forecastability
+
+Something is easier to forecast if:
+
+ - we have a good understanding of the factors that contribute to it
+ - there is lots of data available;
+ - the forecasts cannot affect the thing we are trying to forecast.
+ - there is relatively low natural/unexplainable random variation.
+ - the future is somewhat similar to the past
+
 
 # Benchmark methods
 
 ## Some simple forecasting methods
 
-```{r ausbeer, fig.height=4.6, echo=FALSE}
+```{r ausbeer, out.width="90%", echo=FALSE}
 new_production <- aus_production |>
   filter(year(Quarter) >= 1992)
 new_production |> autoplot(Beer) +
@@ -298,7 +333,7 @@ new_production |> autoplot(Beer) +
   )
 ```
 
-\begin{textblock}{7}(0.4,7.9)
+\begin{textblock}{7}(0.4,6.9)
 \begin{alertblock}{}
 \small{How would you forecast these series?}
 \end{alertblock}
@@ -306,7 +341,7 @@ new_production |> autoplot(Beer) +
 
 ## Some simple forecasting methods
 
-```{r pigs, fig.height=4.6, echo=FALSE}
+```{r pigs, out.width="90%", echo=FALSE}
 aus_livestock |>
   filter(
     between(year(Month), 1992, 1996),
@@ -319,7 +354,7 @@ aus_livestock |>
   )
 ```
 
-\begin{textblock}{7}(0.4,7.9)
+\begin{textblock}{7}(0.4,6.9)
 \begin{alertblock}{}
 \small{How would you forecast these series?}
 \end{alertblock}
@@ -327,7 +362,7 @@ aus_livestock |>
 
 ## Some simple forecasting methods
 
-```{r dj, fig.height=4.6, echo=FALSE}
+```{r dj, out.width="90%", echo=FALSE}
 gafa_stock |>
   filter(Symbol == "FB", Date >= ymd("2018-01-01")) |>
   autoplot(Close) +
@@ -337,7 +372,7 @@ gafa_stock |>
   )
 ```
 
-\begin{textblock}{7}(0.4,7.9)
+\begin{textblock}{7}(0.4,6.9)
 \begin{alertblock}{}
 \small{How would you forecast these series?}
 \end{alertblock}
@@ -437,42 +472,97 @@ aus_production |>
   labs(title = "Clay brick production in Australia")
 ```
 
-## Model fitting
+# Specify and estimate
 
-The `model()` function trains models to data.
+## Model specification
 
-\fontsize{10}{11}\sf
+- Model specification in fable supports a formula based interface 
+- A model formula in R is expressed using `response ~ terms`
+    - the formula’s left side describes the response 
+    - the right describes terms used to model the response.
+- `Attention`: MODEL name is in capital letters, e.g. `SNAIVE`
 
-```{r brick-model}
-brick_fit <- aus_production |>
-  filter(!is.na(Bricks)) |>
+## Model estimation
+
+The `model()` function trains models on data.
+- It returns a `mable` object.
+
+\fontsize{10}{13}\sf
+
+```{r model_template, eval=FALSE, echo=TRUE}
+# Fit the models
+my_mable <- my_data %>%
   model(
-    `Seasonal_naïve` = SNAIVE(Bricks),
-    `Naïve` = NAIVE(Bricks),
-    Drift = RW(Bricks ~ drift()),
-    Mean = MEAN(Bricks)
+    choose_name1 = MODEL1(response ~ term1+...),
+    choose_name2 = MODEL2(response ~ term1+...),
+    choose_name3 = MODEL3(response ~ term1+...),
+    choose_name4 = MODEL4(response ~ term1+...)
   )
 ```
 
-```{r brick-model2, echo=FALSE, dependson='brick-model'}
-brick_fit
+
+## Model fitting- example
+
+The `model()` function trains models on data.
+
+\fontsize{10}{11}\sf
+
+```{r beer-model}
+beer_fit <- aus_production |>
+  model(
+    `Seasonal_naïve` = SNAIVE(Beer),
+    `Naïve` = NAIVE(Beer),
+    Drift = RW(Beer ~ drift()),
+    Mean = MEAN(Beer)
+  )
+```
+
+```{r beer-model2, echo=FALSE, dependson='beer-model'}
+beer_fit
 ```
 
 \vspace*{0.2cm}\begin{alertblock}{}
 A \texttt{mable} is a model table, each cell corresponds to a fitted model.
 \end{alertblock}
 
+## Extract information from `mable`
+
+\fontsize{10}{12}\sf
+```{r beer-mablea, eval= FALSE, dependson='beer-model'}
+beer_fit %>% select(snaive) %>% report()
+beer_fit %>% tidy()
+beer_fit %>% glance()
+```
+
+- The `report()` function gives a formatted model-specific display.
+- The `tidy()` function is used to extract the coefficients from the models.
+- We can extract information about some specific model using the `filter()` and `select()`functions.
+
+## Check model performance
+
+Once a model has been fitted, it is important to check  how well it has performed on the data. I come back to this latter.
+
+# Produce forecasts
+
+## Producing forecasts
+
+- The `forecast()` function is used to produce forecasts from estimated models.
+- **h** can be specified with:
+    * a number (the number of future observations)
+    * natural language (the length of time to predict)
+    * provide a dataset of future time periods
+    
 ## Producing forecasts
 
 \fontsize{10}{13}\sf
 
-```{r brick-fc, echo = TRUE, dependson='brick-model'}
-brick_fc <- brick_fit |>
+```{r beer-fc, echo = TRUE, dependson='brick-model'}
+beer_fc <- beer_fit |>
   forecast(h = "5 years")
 ```
 
-```{r brick-fbl, echo = FALSE, dependson='brick-fc'}
-print(brick_fc, n = 4)
+```{r beer-fbl, echo = FALSE, dependson='beer-fc'}
+print(beer_fc, n = 4)
 ```
 
 \vspace*{0.2cm}\begin{alertblock}{}
@@ -483,30 +573,114 @@ A \texttt{fable} is a forecast table with point forecasts and distributions.
 
 \footnotesize
 
-```{r brick-fc-plot, warning=FALSE, message=FALSE, fig.height=3.4, dependson='brick-fc'}
-brick_fc |>
+```{r beer-fc-plot, warning=FALSE, message=FALSE, fig.height=3.4, dependson='brick-fc'}
+beer_fc |>
   autoplot(aus_production, level = NULL) +
   labs(title = "Forecasts for quarterly clay brick production",
        x = "Year", y = "Millions of bricks") +
   guides(colour = guide_legend(title = "Forecast"))
 ```
 
+
+## Forecast distributions
+
+ * A forecast $\hat{y}_{T+h|T}$ is (usually) the mean of the conditional distribution $y_{T+h} \mid y_1, \dots, y_{T}$.
+ * Most time series models produce normally distributed forecasts.
+ * The forecast distribution describes the probability of observing any future value.
+
+## Forecast distributions - normal distribution
+
+\fontsize{14}{18}\sf
+
+Assuming residuals are normal, uncorrelated, sd = $\hat\sigma$:
+
+\begin{block}{}
+\begin{tabular}{ll}
+\bf Mean: & $\hat{y}_{T+h|T} \sim N(\bar{y}, (1 + 1/T)\hat{\sigma}^2)$\\[0.2cm]
+\bf Naïve: & $\hat{y}_{T+h|T} \sim N(y_T, h\hat{\sigma}^2)$\\[0.2cm]
+\bf Seasonal naïve: & $\hat{y}_{T+h|T} \sim N(y_{T+h-m(k+1)}, (k+1)\hat{\sigma}^2)$\\[0.2cm]
+\bf Drift: & $\hat{y}_{T+h|T} \sim N(y_T + \frac{h}{T-1}(y_T - y_1),h\frac{T+h}{T}\hat{\sigma}^2)$
+\end{tabular}
+\end{block}
+
+where $k$ is the integer part of $(h-1)/m$.
+
+Note that when $h=1$ and $T$ is large, these all give the same approximate forecast variance: $\hat{\sigma}^2$.
+ 
+## Forecast distributions from bootstrapping
+\fontsize{10}{13}\sf
+
+When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance.
+
+- A one-step forecast error is defined as $e_t = y_t - \hat{y}_{t|t-1}$, $y_t = \hat{y}_{t|t-1} + e_t.$
+
+- So we can simulate the next observation of a time series using $y_{T+1} = \hat{y}_{T+1|T} + e_{T+1}$
+
+- Adding the new simulated observation to our data set, we can repeat the process to obtain $y_{T+2} = \hat{y}_{T+2|T+1} + e_{T+2}$
+
+## Generate many possible future using `generate()`
+\fontsize{10}{13}\sf
+
+```{r generate, echo=TRUE}
+beer_2000 <- aus_production |> filter(year(Quarter) == 2000) |> select(Beer)
+fit <- beer_2000 |>
+  model(NAIVE(Beer))
+sim <- fit |> generate(h = 12, times = 5, bootstrap = TRUE)
+sim
+```
+
+## Generate 5 different futures
+\fontsize{10}{13}\sf
+
+```{r visualise-future, echo=FALSE}
+beer_2000 |> 
+  ggplot(aes(x = Quarter)) +
+  geom_line(aes(y = Beer)) +
+  geom_line(aes(y = .sim, colour = as.factor(.rep)),
+    data = sim)
+```
+
+## Use `forecast()` function to generate probabilistic forecasts
+\fontsize{10}{13}\sf
+
+```{r probabilistic-forecast, echo=TRUE}
+fc <- fit |> forecast(h = 12, bootstrap = TRUE)
+fc
+```
+
+## Prediction intervals
+
+ * A prediction interval gives a region within which we expect $y_{T+h}$ to lie with a specified probability
+ * It consists of an upper and a lower limit between which the future value is expected to lie
+
+## Prediction intervals
+
+- Forecast intervals can be extracted using the `hilo()` function.
+
+\fontsize{10}{13}\sf
+```{r fb-fc, echo=TRUE}
+fit <- aus_production |> select(Beer) %>% model(NAIVE(Beer))
+forecast(fit) %>% hilo(level = 95) %>% unpack_hilo("95%")
+```
+
 ## Prediction intervals
 \fontsize{10}{12}\sf
 
-```{r brick-fc-interval, dependson='brick-fc'}
-brick_fc |>
+```{r beer-fc-interval, dependson='beer-fc'}
+beer_fc |>
   hilo(level = c(50, 75))
 ```
 
 ## Prediction intervals
 \fontsize{10}{12}\sf
 
-```{r brick-fc-interval2, dependson='brick-fc'}
-brick_fc |>
+```{r beer-fc-interval2, dependson='beer-fc'}
+beer_fc |>
   hilo(level = c(50, 75)) |>
   mutate(lower = `50%`$lower, upper = `50%`$upper)
 ```
+
+# Fitted values and residuals
 
 ## Fitted values
 
@@ -528,52 +702,29 @@ brick_fc |>
 \pause\fontsize{13}{15}\sf
 
 
-## Facebook closing stock price
-\fontsize{9}{10}\sf
-
-```{r fbf}
-fb_stock <- gafa_stock |>
-  filter(Symbol == "FB")
-fb_stock |> autoplot(Close)
-```
-
-## Facebook closing stock price
+## Beer production - augment
 \fontsize{10}{10}\sf
 
 ```{r augment}
-fb_stock <- fb_stock |>
-  mutate(trading_day = row_number()) |>
-  update_tsibble(index = trading_day, regular = TRUE)
-fit <- fb_stock |> model(NAIVE(Close))
+fit <- aus_production |> select(Beer) %>% model(NAIVE(Beer))
 augment(fit)
 ```
 
-## Facebook closing stock price
+## Beer production - fitted values
 \fontsize{10}{10}\sf
 
 ```{r dj4, echo=TRUE, warning=FALSE, fig.height=3.4, dependson="augment"}
 augment(fit) |>
-  ggplot(aes(x = trading_day)) +
-  geom_line(aes(y = Close, colour = "Data")) +
+  ggplot(aes(x = Quarter)) +
+  geom_line(aes(y = Beer, colour = "Data")) +
   geom_line(aes(y = .fitted, colour = "Fitted"))
 ```
 
-## Facebook closing stock price
-\fontsize{10}{10}\sf
-
-```{r dj4a, echo=TRUE, warning=FALSE, fig.height=3.4, dependson="augment"}
-augment(fit) |>
-  filter(trading_day > 1100) |>
-  ggplot(aes(x = trading_day)) +
-  geom_line(aes(y = Close, colour = "Data")) +
-  geom_line(aes(y = .fitted, colour = "Fitted"))
-```
-
-## Facebook closing stock price
+## Beer production - residuals
 \fontsize{10}{10}\sf
 
 ```{r dj5, echo=TRUE, warning = FALSE, dependson="augment"}
 augment(fit) |>
   autoplot(.resid) +
-  labs(x = "Day", y = "", title = "Residuals from naïve method")
+  labs(x = "Quarter", y = "", title = "Residuals from naïve method")
 ```
