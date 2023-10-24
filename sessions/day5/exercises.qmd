@@ -5,12 +5,151 @@ date: "2023-10-27"
 order: 3
 ---
 
+```{r}
+#| message: false
+library(tsibble)
+library(tsibbledata)
+library(tidyverse)
+library(fable)
+```
+
 # Learn
 
-Mitch's section to learn the concepts on various datasets
+There are several approaches which can be used to evaluate the performance of a forecasting model. These methods can be split into two main categories: accuracy summaries and diagnostic checks. Accuracy summaries are single valued representations of the model's performance (like features, but on forecast errors), while diagnostic checks involve plotting the residuals to identify any shortcomings in the model.
+
+## Accuracy summaries
+
+In the previous exercise we looked at forecasting the total Australian retail turnover using ETS and ARIMA models, and we produced these forecasts:
+
+```{r}
+aus_turnover <- aus_retail |> 
+  summarise(Turnover = sum(Turnover))
+fit <- aus_turnover |> 
+  model(
+    ets = ETS(Turnover),
+    arima = ARIMA(box_cox(Turnover, 0.2))
+  )
+fit |> 
+  forecast(h = "10 years") |> 
+  autoplot(aus_turnover, alpha = 0.5)
+```
+
+Plotting the forecasts simultaneously makes it easy to compare them. This allows us to see that while the seasonality and intervals from both models are similar, the trend from ARIMA is stronger than ETS. But which model is better?
+
+To answer this we can summarise the forecasting performance of the models. The simplest is the accuracy on the historical training data.
+
+In addition to the forecasts shown above, we produce 1-step forecasts on the training data when fitting the model. We can obtain these from the `.fitted` column of the `augment()` output.
+
+```{r}
+fit |> 
+  forecast(h = "10 years") |> 
+  autoplot(aus_turnover, alpha = 0.5) + 
+  autolayer(augment(fit), .fitted, alpha = 0.7)
+```
+
+Both models match the historical data closely, but which is more accurate? For this we can use the `accuracy()` function, which summarises the errors into a single summary statistic.
+
+```{r}
+accuracy(fit)
+```
+
+By default you will see a set of statistics that summarise the point forecasting accuracy, where the models closer to 0 are more accurate. MAE and RMSE are commonly used, but their scale independent versions MASE and RMSSE are useful if you're comparing between multiple datasets.
+
+In all accuracy metrics we see that the ARIMA model is more accurate on the training data. But is it more accurate for forecasting?
+
+::: {.callout-caution}
+## Your turn!
+
+Compare the in-sample accuracy statistics for all models used to forecast Australia's print media turnover. Which is most accurate, and which is least? Does this align with your expectations?
+:::
+
+A more genuine approach to calculating forecasting performance is to use a training and test set split. This separates the data into two parts, and because the test data is not used in producing the forecasts, it should provide a reliable indication of how well the model is likely to forecast on new data.
+
+To withhold some data for forecast evaluation, we first `filter()` the data to exclude the test period before training the model.
+
+```{r}
+fit <- aus_turnover |> 
+  # Keep 2 years of test data for evaluation
+  filter(Month < yearmonth("2017 Jan")) |> 
+  model(
+    ets = ETS(Turnover),
+    arima = ARIMA(box_cox(Turnover, 0.2))
+  )
+fit |> 
+  forecast(h = "2 years") |> 
+  autoplot(aus_turnover, alpha = 0.5)
+```
+
+We can then calculate the same accuracy metrics on the forecasted test set using `accuracy()` again, but this time we need to provide the data used.
+
+```{r}
+fit |> 
+  forecast(h = "2 years") |> 
+  accuracy(aus_turnover)
+```
+
+Looks like ETS was actually more accurate at forecasting the two year test set.
+
+::: {.callout-caution}
+## Your turn!
+
+Now compare the out-of-sample (test set) accuracy statistics for all models used to forecast Australia's print media turnover. Which is most accurate, and which is least? Does it differ to the results from the in-sample (training set) accuracy?
+:::
+
+However a test set of two years isn't a very reliable indication of forecasting performance - what if these two years looked slightly different from the training data and one model got lucky?
+
+The gold standard in forecasting performance evaluation is to use time series cross-validation. This involves creating many training and test splits across many time points in the data. The most common is to use a stretching window, which incrementally grows the training data to include new information. Instead of using `filter()` to create the training set, we will now use `stretch_tsibble()` to create the stretching 'folds' of training data. The `.id` column identifies the fold of cross-validation for each series.
+
+::: {.callout-tip}
+## Cross-validation options
+
+It is useful to set a few options in `stretch_tsibble()`, as the default can easily create 100s of folds. This helps reduce the workload for your computer while still giving a reasonable indication of your model's forecasting performance!
+
+* `.init` controls the initial fold size, I've set it to 48 months to include 4 years of data to start with
+* `.step` controls how much additional data is introduced in each fold, 12 months will increase the training data's length by 1 year at a time.
+:::
+
+```{r}
+aus_turnover |> 
+  stretch_tsibble(.init = 48, .step = 12)
+```
+
+```{r}
+#| echo: false
+
+aus_turnover |> 
+  stretch_tsibble(.init = 48, .step = 12) |> 
+  autoplot(Turnover + .id * 15000) + 
+  guides(colour = "none") + 
+  scale_y_continuous(labels = NULL) + 
+  labs(y = NULL)
+```
+
+
+To produce forecasts on the cross-validation folds and compute cross-validated accuracy summaries, we again train the models and use `accuracy()` but this time on the cross-validated data. This might take a while since we are now estimating a model making a forecast for every fold in cross-validated data!
+
+```{r}
+aus_turnover |> 
+  # Prepare cross-validation folds of the data
+  stretch_tsibble(.init = 48, .step = 12) |> 
+  model(
+    ets = ETS(Turnover),
+    arima = ARIMA(box_cox(Turnover, 0.2))
+  ) |> 
+  forecast(h = "1 year") |> 
+  accuracy(aus_turnover)
+```
+
+::: {.callout-caution}
+## Your turn!
+
+Now compare the cross-validated accuracy statistics for all models used to forecast Australia's print media turnover. Which is most accurate, and which is least? Does it differ to the results from the in-sample (training set) and out-of-sample (test set) accuracy?
+:::
+
+## Diagnostic checks 
+
 
 # Apply
-
 
 In this part, we evaluate the forecast accuracy of all models we have covered so far using a simple train/test split and time series cross validation.
 

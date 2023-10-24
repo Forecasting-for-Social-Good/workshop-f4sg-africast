@@ -25,7 +25,7 @@ We've prepared an exercises project with some starter code for each of the sessi
 
 ```{r}
 #| eval: false
-usethis::use_course("https://workshop.mitchelloharawild.com/f4sg-africa/exercises.zip")
+usethis::use_course("https://workshop.f4sg.org/africast/exercises.zip")
 ```
 
 

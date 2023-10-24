@@ -4,10 +4,13 @@ project:
     - "images/twitter-card.png"
     - "materials/*.pdf"
     - "exercises.zip"
+    - "demo"
   render:
     - "*.qmd"
     - "!exercises"
     - "!materials"
+    - "!solutions"
+    - "!demo"
     - "!README.Rmd"
   pre-render: zip.R
 
