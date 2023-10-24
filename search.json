@@ -81,7 +81,7 @@
     "href": "schedule.html#day-2",
     "title": "Schedule",
     "section": "Day 2",
-    "text": "Day 2\n\n\n\n\n\n\nTime\n\n\nSession\n\n\n\n\n\n\n08:00-09:30\n\n\nTransforming / adjusting time series\n\n\n\n\n09:45-11:15\n\n\nComputing and visualizing features\n\n\n\n\nCheck with your mentor on Slack\n\n\nExercises\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 2\n\n\n\n\n\n\nTime\n\n\nSession\n\n\n\n\n\n\n08:00-09:30\n\n\nTransforming / adjusting time series\n\n\n\n\n09:45-11:15\n\n\nComputing and visualizing features\n\n\n\n\nCheck with your mentor on Slack\n\n\nExercises\n\n\n\n\n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-3",
@@ -123,7 +123,7 @@
     "href": "sessions/day1/exercises.html",
     "title": "Exercises",
     "section": "",
-    "text": "We’ve prepared an exercises project with some starter code for each of the sessions. You can download and open this project using:\n\nusethis::use_course(\"https://workshop.mitchelloharawild.com/f4sg-africa/exercises.zip\")"
+    "text": "We’ve prepared an exercises project with some starter code for each of the sessions. You can download and open this project using:\n\nusethis::use_course(\"https://workshop.f4sg.org/africast/exercises.zip\")"
   },
   {
     "objectID": "sessions/day1/exercises.html#creating-a-time-series-tibble-a-tsibble",
@@ -187,6 +187,13 @@
     "title": "Computing and visualizing features",
     "section": "",
     "text": "View slides in full screen"
+  },
+  {
+    "objectID": "sessions/day2/resources.html",
+    "href": "sessions/day2/resources.html",
+    "title": "Resources (recording and code)",
+    "section": "",
+    "text": "Click here to download the demo code from this session"
   },
   {
     "objectID": "sessions/day3/exercises.html",
