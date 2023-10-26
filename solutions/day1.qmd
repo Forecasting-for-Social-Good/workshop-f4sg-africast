@@ -3,6 +3,90 @@ title: "Lab exercise: day 1"
 editor: visual
 ---
 
+# Learn
+
+Complete the code to read in the tourism dataset from `data/tourism.csv` and convert it to a `tsibble`. It should look like `tsibble::tourism` when you're done.
+
+```{r}
+library(readr)
+library(tsibble)
+library(dplyr)
+library(fable)
+library(feasts)
+library(lubridate)
+tourism <- read_csv("data/tourism.csv") |> 
+  mutate(Quarter = yearquarter(Quarter)) |> 
+  as_tsibble(index = Quarter, key = c(State, Region, Purpose))
+```
+
+Create an **annual** time series of the `Purpose` of travel for visitors to Australia (summing over `State` and `Region`).
+
+```{r}
+tourism |> 
+  group_by(Purpose) |> 
+  index_by(Year = year(Quarter)) |> 
+  summarise(Trips = sum(Trips))
+```
+
+Which `Purpose` of travel is most common in each state? What can you conclude about tourism in Australia?
+
+```{r}
+tourism |> 
+  as_tibble() |> 
+  group_by(State, Purpose) |> 
+  summarise(Trips = sum(Trips)) |> 
+  # The code below will find the Purpose matching the most trips for each State
+  group_by(State) |> 
+  summarise(Most_Common_Purpose = Purpose[which.max(Trips)])
+```
+
+> Most common travel purpose to the states is for a holiday, however people visit ACT most often to visit friends and family.
+Produce several time plots of the data. Which patterns can you observe?
+
+```{r}
+tourism |> 
+  filter(Region == "Melbourne") |> 
+  autoplot(Trips)
+
+tourism |> 
+  filter(Region == "Melbourne", Purpose == "Holiday") |> 
+  autoplot(Trips)
+
+tourism |> 
+  group_by(Purpose) |> 
+  summarise(Trips = sum(Trips)) |> 
+  autoplot(Trips)
+
+tourism |> 
+  filter(State == "Queensland") |> 
+  group_by(Purpose) |> 
+  summarise(Trips = sum(Trips)) |> 
+  autoplot(Trips)
+```
+
+> Most time series have an upward trend after 2010, and the amount of seasonality varies by the purpose of travel.
+
+Create a seasonal plot for the total holiday travel to Australia over time. In which quarter is holiday travel highest and lowest?
+
+```{r}
+tourism |> 
+  filter(Purpose == "Holiday") |> 
+  summarise(Trips = sum(Trips)) |> 
+  gg_season(Trips)
+```
+
+> Holiday travel to Australia is most common in Q1, and least common in Q3 - this makes sense since Q1 is during summer and Q3 is in winter.
+
+Create a seasonal subseries plot for the total business travel to Victoria over time. Does the seasonal pattern change over time?
+
+```{r}
+tourism |> 
+  filter(Purpose == "Business", State == "Victoria") |> 
+  summarise(Trips = sum(Trips)) |> 
+  gg_subseries(Trips)
+```
+
+> The business travel to Victoria dropped in Q1 compared to other quarters from 2005 to 2010.
 
 # Apply
 

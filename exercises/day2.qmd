@@ -3,6 +3,11 @@ title: "Lab exercise: day 2"
 editor: visual
 ---
 
+```{r}
+#| label: setup
+library(fpp3)
+```
+
 # Learn
 
 Select a country of your choice from `global_economy`, then calculate and visualise the the GDP per capita over time (that is, the GDP scaled by the population).
@@ -13,7 +18,7 @@ global_economy |>
   autoplot(GDP / ???)
 ```
 
-Calculate the monthly total Australian retail turnover from `aus_retail` and visualise the seasonal pattern. Then scale by the number of days in each month to calculate the daily average turnover and comparse the seasonal patterns.
+Calculate the monthly total Australian retail turnover from `aus_retail` and visualise the seasonal pattern. Then scale by the number of days in each month to calculate the daily average turnover and compare the seasonal patterns.
 
 ```{r}
 aus_retail_total <- aus_retail |> 
@@ -54,8 +59,8 @@ fit |>
   autoplot()
 
 fit |> 
-  components(???) |> 
-  autoplot()
+  components() |> 
+  autoplot(???)
 ```
 
 Produce a seasonal plot of the seasonal component from your STL decomposition on Australian retail turnover.

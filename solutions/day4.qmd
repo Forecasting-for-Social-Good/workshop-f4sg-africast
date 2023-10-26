@@ -3,7 +3,58 @@ title: "Lab exercise: day 4"
 editor: visual
 ---
 
+
+```{r}
+#| label: setup
+
+library(tsibble)
+library(tsibbledata)
+library(fable)
+library(feasts)
+library(fabletools)
+library(tidyverse)
+```
+
 # Learn
+
+Produce forecasts from an automatically selected ETS model for Australia's print media turnover. Does the chosen ETS model align with the patterns you see in the data?
+
+```{r}
+aus_print <- aus_retail |> 
+  filter(Industry == "Newspaper and book retailing") |> 
+  summarise(Turnover = sum(Turnover))
+
+fit <- aus_print |> 
+  model(
+    ETS(Turnover)
+  )
+fit
+fit |> 
+  forecast(h = "10 years") |> 
+  autoplot(aus_print)
+```
+
+> The automatic ETS model produces reasonable forecasts, but it has chosen not to include a trend. We might like to force it to include an additive trend with `trend("A")` if we expect the future values to continue to trend downward.
+
+Produce forecasts from an automatically selected ARIMA model for Australia's print media turnover. Don't forget to find and use a suitable transformation to simplify the multiplicative patterns in the data.
+
+```{r}
+# Find an appropriate transformation
+aus_print |> 
+  autoplot(log(Turnover))
+
+# Estimate an ARIMA model
+fit <- aus_print |> 
+  model(
+    ARIMA(log(Turnover))
+  )
+fit
+fit |> 
+  forecast(h = "10 years") |> 
+  autoplot(aus_print)
+```
+
+> A log transformation is suitable for regularising the variance of this time series. The ARIMA forecasts look great, matching the seasonal pattern and continuing the trend downward.
 
 # Apply
 
@@ -212,4 +263,3 @@ Could you check AICc for the manual ARIMA models and compare it to the automatic
 ```{r}
 fit_arima_manual |> glance() |> select(region,.model, AICc) |>  arrange(region,AICc)
 ```
-

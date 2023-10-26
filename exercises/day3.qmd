@@ -6,6 +6,7 @@ editor: visual
 ```{r}
 #| label: setup
 library(tsibble)
+library(tsibbledata)
 library(fable)
 library(feasts)
 library(fabletools)
@@ -54,28 +55,28 @@ aus_retail |>
 ```
 
 ```{r}
-aus_retail |> 
-  summarise(Turnover = sum(Turnover)) |> 
+aus_tot_retail <- aus_retail |> 
+  summarise(Turnover = sum(Turnover)) 
+aus_tot_retail |> 
   model(
     ???,
     ???
   ) |> 
   ???(h = "10 years") |> 
-  autoplot(aus_retail)
+  autoplot(???)
 ```
 
 Produce suitable forecasts from a regression model for the total Australian retail turnover that captures both the trend and seasonality in the data. Compare these forecasts with the two basic models produced earlier, which model produces the most reasonable forecasts and why?
 
 ```{r}
-aus_retail |> 
-  summarise(Turnover = sum(Turnover)) |> 
+aus_tot_retail |> 
   model(
     TSLM(???),
     ???,
     ???
   ) |> 
   ???(h = "10 years") |> 
-  autoplot(aus_retail)
+  autoplot(???)
 ```
 
 # Apply

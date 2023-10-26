@@ -3,8 +3,85 @@ title: "Lab exercise: day 3"
 editor: visual
 ---
 
+```{r}
+#| label: setup
+library(tsibble)
+library(tsibbledata)
+library(fable)
+library(feasts)
+library(fabletools)
+library(tidyverse)
+```
+
 # Learn
 
+Choose a country from the `global_economy` dataset and select the most suitable benchmark method. Produce forecasts of population for 15 years into the future, and comment on the suitability of these forecasts based on a plot of them and the data.
+
+```{r}
+aus_economy <- global_economy |> 
+  filter(Country == "Australia")
+
+aus_economy |> 
+  autoplot(Population)
+
+fit <- aus_economy |> 
+  model(RW(Population ~ drift()))
+fit
+
+fit |> 
+  forecast(h = "15 years") |> 
+  autoplot(aus_economy)
+```
+
+> The random walk with drift works fairly well for the Australian population, since the trend is very linear.
+
+In the exercise we saw how a random walk with drift model can be used to forecast to several time series.
+
+```{r}
+hh_budget |> 
+  model(RW(Wealth ~ drift())) |> 
+  forecast(h = "10 years") |> 
+  autoplot(hh_budget)
+```
+
+> The random walk with drift is likely underpredicting the wealth in these states since the historical data contains cycles and is not a simple straight line trend.
+
+Produce forecasts from two suitable models for the total Australian retail turnover, and select the most appropriate one based on visual inspection of the forecast plot.
+
+```{r}
+aus_retail |> 
+  summarise(Turnover = sum(Turnover)) |> 
+  autoplot(Turnover)
+```
+
+```{r}
+aus_tot_retail <- aus_retail |> 
+  summarise(Turnover = sum(Turnover)) 
+aus_tot_retail |> 
+  model(
+    RW(Turnover ~ drift()),
+    SNAIVE(Turnover)
+  ) |> 
+  forecast(h = "10 years") |> 
+  autoplot(aus_tot_retail)
+```
+
+> Neither method works well for this time series since they cannot handle both trend and seasonality at the same time. Despite this, the short term forecasts from the SNAIVE model are likely better while the longer term RW w/ drift forecasts (\> 20 years) are likely better.
+
+Produce suitable forecasts from a regression model for the total Australian retail turnover that captures both the trend and seasonality in the data. Compare these forecasts with the two basic models produced earlier, which model produces the most reasonable forecasts and why?
+
+```{r}
+aus_tot_retail|> 
+  model(
+    TSLM(log(Turnover) ~ trend() + season()),
+    RW(Turnover ~ drift()),
+    SNAIVE(Turnover)
+  ) |> 
+  forecast(h = "10 years") |> 
+  autoplot(aus_tot_retail)
+```
+
+> The regression model produces the best forecasts since it produces both trend and seasonality into the future.
 # Apply
 
 ```{r}

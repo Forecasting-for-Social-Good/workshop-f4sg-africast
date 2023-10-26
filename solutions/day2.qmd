@@ -3,6 +3,94 @@ title: "Lab exercise: day 2"
 editor: visual
 ---
 
+```{r}
+#| label: setup
+library(fpp3)
+```
+
+# Learn
+
+Select a country of your choice from `global_economy`, then calculate and visualise the the GDP per capita over time (that is, the GDP scaled by the population).
+
+```{r}
+global_economy |> 
+  filter(Country == "Australia") |> 
+  autoplot(GDP / Population)
+```
+
+Calculate the monthly total Australian retail turnover from `aus_retail` and visualise the seasonal pattern. Then scale by the number of days in each month to calculate the daily average turnover and compare the seasonal patterns.
+
+```{r}
+aus_retail_total <- aus_retail |> 
+  summarise(Turnover = sum(Turnover))
+
+aus_retail_total |> 
+  gg_subseries(Turnover)
+
+aus_retail_total |> 
+  gg_subseries(Turnover / days_in_month(Month))
+```
+
+> The drop in February is removed when taking into account the number of days in each month.
+
+Find a suitable box-cox transformation for the monthly total Australian retail turnover, then compare your choice with the automatically selected parameter from the `guerrero()` feature.
+
+```{r}
+aus_retail_total |> 
+  autoplot(log(Turnover))
+
+aus_retail_total |> 
+  autoplot(box_cox(Turnover, lambda = 0.1))
+
+aus_retail_total |> 
+  features(Turnover, features = guerrero)
+
+aus_retail_total |> 
+  autoplot(box_cox(Turnover, lambda = guerrero(Turnover)))
+```
+
+> The log transformation seems a bit strong since the seasonal variation is now bigger when the level of the series (Turnover) is lower. Using box_cox() with lambda=0.1 seems better, but the optimal guerrero finds lambda=0.196 which works very well.
+
+Find a suitable STL decomposition for the total Australian retail turnover, then produce and visualise the seasonally adjusted time series. Hint: don't forget to use the suitable transformation found previously!
+
+```{r}
+fit <- aus_retail_total |> 
+  model(STL(box_cox(Turnover, guerrero(Turnover)) ~ trend(window = 30) + season(window = Inf)))
+
+fit |> 
+  components() |> 
+  autoplot()
+
+fit |> 
+  components() |> 
+  autoplot(season_adjust)
+```
+
+Produce a seasonal plot of the seasonal component from your STL decomposition on Australian retail turnover.
+
+```{r}
+fit |> 
+  components() |> 
+  gg_season(season_year)
+```
+
+Calculate the STL features for the time series in the `tourism` dataset. Try colouring the points in the scatterplot by the purpose of travel, are some reasons more trended or seasonal than others?
+
+```{r}
+tourism_features <- tourism |> 
+  features(Trips, feat_stl) 
+  
+tourism_features |> 
+  ggplot(aes(x = trend_strength, y = seasonal_strength_year)) + 
+  geom_point()
+
+tourism_features |> 
+  ggplot(aes(x = trend_strength, y = seasonal_strength_year)) + 
+  geom_point(aes(colour = Purpose))
+```
+
+Holiday travel is usually more seasonal than other reasons of travel.
+
 # Apply
 
 ```{r}

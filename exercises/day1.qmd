@@ -74,7 +74,7 @@ Create a seasonal subseries plot for the total business travel to Victoria over 
 
 ```{r}
 tourism |> 
-  ???(Purpose == ???) |> 
+  ???(Purpose == ???, ??? == "Victoria") |> 
   ???(Trips = sum(Trips)) |> 
   gg_???(Trips)
 ```

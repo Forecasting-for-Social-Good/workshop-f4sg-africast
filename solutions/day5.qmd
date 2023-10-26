@@ -3,7 +3,102 @@ title: "Lab exercise: day 5"
 editor: visual
 ---
 
+```{r}
+#| label: setup
+
+library(tsibble)
+library(tsibbledata)
+library(fable)
+library(feasts)
+library(tidyverse)
+```
+
 # Learn
+
+Compare the in-sample accuracy statistics for all models used to forecast Australia's print media turnover. Which is most accurate, and which is least? Does this align with your expectations?
+
+```{r}
+aus_print <- aus_retail |> 
+  filter(Industry == "Newspaper and book retailing") |> 
+  summarise(Turnover = sum(Turnover))
+
+aus_print |> 
+  autoplot(Turnover)
+
+fit <- aus_print |> 
+  model(
+    snaive = SNAIVE(Turnover),
+    lm = TSLM(log(Turnover) ~ trend(knots = yearmonth("2011 Jan")) + season()),
+    ets = ETS(Turnover),
+    arima = ARIMA(log(Turnover))
+  )
+
+accuracy(fit)
+```
+
+> The most accurate model is ARIMA based on RMSE and MAE, the least accurate is SNAIVE.
+
+Modify the code to produce and evaluate forecasts on a test set. Does this change your conclusions?
+
+```{r}
+fit_train <- aus_print |> 
+  filter(Month < yearmonth("2016 Jan")) |> 
+  model(
+    snaive = SNAIVE(Turnover),
+    lm = TSLM(log(Turnover) ~ trend(knots = yearmonth("2011 Jan")) + season()),
+    ets = ETS(Turnover),
+    arima = ARIMA(log(Turnover))
+  )
+
+fit_train |> 
+  forecast(h = "2 years") |> 
+  accuracy(aus_print)
+```
+
+> The most accurate model on the 2-year test set is the ARIMA model again, however the SNAIVE model performed much better on this time perios. The linear regression model performed the worst on the test set.
+
+Now compare the cross-validated accuracy statistics for all models used to forecast Australia's print media turnover. Which is most accurate, and which is least? Does it differ to the results from the in-sample (training set) and out-of-sample (test set) accuracy?
+
+```{r}
+#| warning: false
+
+fit_cv <- aus_print |> 
+  stretch_tsibble(.init = 240, .step = 12) |> 
+  model(
+    snaive = SNAIVE(Turnover),
+    lm = TSLM(log(Turnover) ~ trend(knots = yearmonth("2011 Jan")) + season()),
+    ets = ETS(Turnover),
+    arima = ARIMA(log(Turnover))
+  )
+
+fit_cv |>
+  forecast(h = "1 year") |>
+  accuracy(aus_print)
+```
+
+> The ARIMA model continues to be the best forecasting model for this dataset. On the cross-validated test sets the SNAIVE performs the worst, which suggests that the model was simply lucky on the previous test set.
+
+Produce a residual diagnostics plot of the ETS and ARIMA models, are the residuals consistent with the assumptions of the models? Do they appear random (time plot), uncorrelated (ACF plot), and normally distributed (histogram)?
+
+```{r}
+fit <- aus_print |> 
+  model(
+    ets = ETS(Turnover),
+    arima = ARIMA(log(Turnover))
+  )
+
+fit |> 
+  select(ets) |> 
+  gg_tsresiduals()
+
+fit |> 
+  select(arima) |> 
+  gg_tsresiduals()
+```
+
+> The ETS model's residuals in the time plot look okay, although the ACF reveals that there is still significant autocorrelations in the residuals. The large significant ACF at lag 12 indicates that there still exists substantial seasonality that the model hasn't captured. The histogram seems mostly Normally distributed.
+>
+> The ARIMA model's residuals in the time plot also look good, and the ACF is much better than the the ETS model's residual ACF. In particular the ACF at lag 12 is not significant, which indicates that it is much better than ETS at capturing the seasonality. The histogram shows a Normal distribution, which implies that the forecast intervals can be trusted.
 
 # Apply
 

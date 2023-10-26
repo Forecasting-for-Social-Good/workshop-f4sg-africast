@@ -7,6 +7,7 @@ editor: visual
 #| label: setup
 
 library(tsibble)
+library(tsibbledata)
 library(fable)
 library(feasts)
 library(tidyverse)
@@ -35,7 +36,7 @@ fit <- aus_print |>
 ???(fit)
 ```
 
-Modify the code to produce and evaluate forecasts on a test set. Does this change your conclusions?
+Modify the code to produce and evaluate forecasts on a 2-year test set. Does this change your conclusions?
 
 ```{r}
 fit_train <- aus_print |> 
@@ -47,7 +48,9 @@ fit_train <- aus_print |>
     arima = ARIMA(log(Turnover))
   )
 
-???(fit_train, ???)
+fit_train |> 
+  forecast(h = ???) |> 
+  ???(???)
 ```
 
 Now compare the cross-validated accuracy statistics for all models used to forecast Australia's print media turnover. Which is most accurate, and which is least? Does it differ to the results from the in-sample (training set) and out-of-sample (test set) accuracy?
