@@ -7,6 +7,6 @@ order: 4
 
 <!-- Materials will be distributed sooner to the event. -->
 
-<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/thuRmh-nEyY?si=u17DY-3A_GlHuAvP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
+<iframe width="560" height="315" src="https://youtu.be/cDzYjeRVjE4?list=PLQMuwuCypmejaddG2vsfIjIBgieFamwAc&t=3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 [Click here to download the demo code from this session](../../demo/day3.R)

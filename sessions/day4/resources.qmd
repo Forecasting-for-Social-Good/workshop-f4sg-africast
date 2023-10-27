@@ -1,0 +1,12 @@
+---
+title: "Resources (recording and code)"
+subtitle: ""
+date: "2023-10-26"
+order: 4
+---
+
+<!-- Materials will be distributed sooner to the event. -->
+
+<iframe width="560" height="315" src="https://youtu.be/TmH5CxudMNA?list=PLQMuwuCypmejaddG2vsfIjIBgieFamwAc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+[Click here to download the demo code from this session](../../demo/day4.R)
