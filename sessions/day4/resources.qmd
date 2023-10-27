@@ -7,6 +7,10 @@ order: 4
 
 <!-- Materials will be distributed sooner to the event. -->
 
-<iframe width="560" height="315" src="https://youtu.be/TmH5CxudMNA?list=PLQMuwuCypmejaddG2vsfIjIBgieFamwAc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+## Recording
+
+<iframe width="800" height="450" src="https://www.youtube.com/embed/TmH5CxudMNA?si=RFqm0NjJHYZmXLiI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+## Code demonstrated in workshop sessions
 
 [Click here to download the demo code from this session](../../demo/day4.R)
