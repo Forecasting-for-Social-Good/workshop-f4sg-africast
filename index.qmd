@@ -2,6 +2,11 @@
 title: "Tidy time series & forecasting in R"
 ---
 
+
+## About AFRICAST project 
+
+<iframe width="560" height="315" src="https://youtu.be/4pYlobR-rbQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ![](images/fable.svg){style="float:right;padding: 0 0 0 10px;" fig-alt="Fable Hex Logo" width="175"}
 
 ## Course Overview
