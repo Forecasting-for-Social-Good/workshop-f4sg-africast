@@ -1,4 +1,9 @@
 library(fpp3)
+## Basic of modelling and forecasting
+
+
+## Time Series Regression Model (TSLM)
+
 us_change |> 
   autoplot(Consumption)
 
