@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.326">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,10 +18,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,13 +47,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -94,11 +123,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <meta name="twitter:title" content="F4SG: Africast - Exercises">
-<meta name="twitter:description" content="Check with your mentor on Slack">
+<meta name="twitter:description" content="<span class='code'>Check with your mentor on Slack</span>">
 <meta name="twitter:image" content="https://workshop.f4sg.org/africast/images/twitter-card.png">
 <meta name="twitter:creator" content="@mitchoharawild">
 <meta name="twitter:image-height" content="654">
@@ -117,99 +145,97 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">F4SG: Africast</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sessions" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sessions" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Sessions</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-sessions">    
         <li>
-    <a class="dropdown-item" href="../../sessions/day1/basics.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day1/basics.html">
  <span class="dropdown-text">Basics of time series and data structures</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day1/graphics.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day1/graphics.html">
  <span class="dropdown-text">Time series patterns and basic graphics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day2/adjustments.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day2/adjustments.html">
  <span class="dropdown-text">Recap day 1, transforming / adjusting time series</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day2/features.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day2/features.html">
  <span class="dropdown-text">Computing and visualizing features (features)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day3/forecasting.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day3/forecasting.html">
  <span class="dropdown-text">Basic modeling / forecasting</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day3/regressors.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day3/regressors.html">
  <span class="dropdown-text">Forecasting with regression, how to represent temporal structure with regressors</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day4/ets.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day4/ets.html">
  <span class="dropdown-text">ETS, building on recap of temporal regressors.</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day4/arima.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day4/arima.html">
  <span class="dropdown-text">ARIMA</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day5/accuracy.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day5/accuracy.html">
  <span class="dropdown-text">Recap forecasting methods, basic training and test accuracy</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day5/diagnostics.html" rel="" target="">
+    <a class="dropdown-item" href="../../sessions/day5/diagnostics.html">
  <span class="dropdown-text">Advanced performance evaluation: residual diagnostics and cross validation</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../schedule.html" rel="" target="">
+    <a class="nav-link" href="../../schedule.html">
  <span class="menu-text">Schedule</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-downloads" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-downloads" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-download" role="img">
 </i> 
  <span class="menu-text">Downloads</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-downloads">    
         <li>
-    <a class="dropdown-item" href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/archive/refs/heads/master.zip" rel="" target="">
+    <a class="dropdown-item" href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/archive/refs/heads/master.zip">
  <span class="dropdown-text">Everything</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../slides.zip" rel="" target="">
+    <a class="dropdown-item" href="../../slides.zip">
  <span class="dropdown-text">Slides</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../exercises.zip" rel="" target="">
+    <a class="dropdown-item" href="../../exercises.zip">
  <span class="dropdown-text">Lab sessions</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../license.html" rel="" target=""><i class="bi bi-file-certificate" role="img">
+    <a class="nav-link" href="../../license.html"><i class="bi bi-file-certificate" role="img">
 </i> 
  <span class="menu-text">License</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa"><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
+              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -311,12 +337,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>By default you will see a set of statistics that summarise the point forecasting accuracy, where the models closer to 0 are more accurate. MAE and RMSE are commonly used, but their scale independent versions MASE and RMSSE are useful if you’re comparing between multiple datasets.</p>
 <p>In all accuracy metrics we see that the ARIMA model is more accurate on the training data. But is it more accurate for forecasting?</p>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Your turn!
 </div>
 </div>
@@ -350,17 +376,17 @@ Your turn!
 <pre><code># A tibble: 2 × 10
   .model .type     ME  RMSE   MAE   MPE  MAPE  MASE RMSSE    ACF1
   &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-1 arima  Test  -1217. 1340. 1217. -2.41  2.41 0.978 0.935  0.0605
+1 arima  Test  -1217. 1340. 1217. -2.41  2.41 0.979 0.935  0.0605
 2 ets    Test   -737.  913.  761. -1.44  1.49 0.612 0.637 -0.199 </code></pre>
 </div>
 </div>
 <p>Looks like ETS was actually more accurate at forecasting the two year test set.</p>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Your turn!
 </div>
 </div>
@@ -370,12 +396,12 @@ Your turn!
 </div>
 <p>However a test set of two years isn’t a very reliable indication of forecasting performance - what if these two years looked slightly different from the training data and one model got lucky?</p>
 <p>The gold standard in forecasting performance evaluation is to use time series cross-validation. This involves creating many training and test splits across many time points in the data. The most common is to use a stretching window, which incrementally grows the training data to include new information. Instead of using <code>filter()</code> to create the training set, we will now use <code>stretch_tsibble()</code> to create the stretching ‘folds’ of training data. The <code>.id</code> column identifies the fold of cross-validation for each series.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Cross-validation options
 </div>
 </div>
@@ -436,12 +462,12 @@ Cross-validation options
 2 ets    Test   70.3  653.  515.  0.430  2.19 0.414 0.456 0.503</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Your turn!
 </div>
 </div>
@@ -457,12 +483,12 @@ Your turn!
 <section id="apply" class="level1">
 <h1>Apply</h1>
 <p>In this part, we evaluate the forecast accuracy of all models we have covered so far using a simple train/test split and time series cross validation.</p>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Basic of train/test forecast accuracy
 </div>
 </div>
@@ -491,12 +517,12 @@ Basic of train/test forecast accuracy
 </ol>
 </div>
 </div>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Advanced performance evaluation
 </div>
 </div>
@@ -576,23 +602,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -657,92 +669,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -786,9 +712,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
     <div class="nav-footer-right">© Copyright 2023, <a href="https://www.f4sg.org/">F4SG</a></div>
   </div>
 </footer>
