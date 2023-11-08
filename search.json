@@ -313,19 +313,5 @@
     "title": "Resources (recording and code)",
     "section": "Code demonstrated in workshop sessions",
     "text": "Code demonstrated in workshop sessions\nClick here to download the demo code from this session"
-  },
-  {
-    "objectID": "sessions/template.html",
-    "href": "sessions/template.html",
-    "title": "{{title}}",
-    "section": "",
-    "text": "View slides in full screen"
-  },
-  {
-    "objectID": "sessions/template.html#lab-sessions",
-    "href": "sessions/template.html#lab-sessions",
-    "title": "{{title}}",
-    "section": "Lab sessions",
-    "text": "Lab sessions"
   }
 ]
