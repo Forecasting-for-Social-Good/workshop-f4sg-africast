@@ -87,3 +87,4 @@ format:
     code-copy: true
     code-overflow: wrap
     mainfont: "Open Sans"
+    include-after-body: plausible.html
