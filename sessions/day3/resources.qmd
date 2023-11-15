@@ -9,7 +9,7 @@ order: 4
 
 ## Recording
 
-<iframe width="800" height="450" src="https://youtu.be/cDzYjeRVjE4?list=PLQMuwuCypmejaddG2vsfIjIBgieFamwAc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/cDzYjeRVjE4?si=Lrb1SccUNuMd8JHl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Code demonstrated in workshop sessions
 
