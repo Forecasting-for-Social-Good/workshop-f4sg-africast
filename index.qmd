@@ -54,18 +54,27 @@ Bahman is a Reader (Associate Professor) in Data-Driven Decision Science at Card
 
 ## Mentors for the cohort 2024
 
-A committed team, comprising both PhD students and MSc. students, generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the excercises. 
+A committed team, comprising both PhD students and MSc. students, generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the exercises. 
 
-<!-- The team includes: -->
+The team includes:
 
-<!-- - Harsha Halgamuwe Hewage -->
-<!-- - Josephine Valensia -->
-<!-- - Krisanat Anukarnsakulchularp -->
-<!-- - Laiba Khan -->
-<!-- - Mandy Luon -->
-<!-- - Mingzhe Shi -->
-<!-- - Sneha Kharbanda -->
-<!-- - Zihao Wang -->
+- Akar Stephen Eghelakpo
+- Agnes Njambi Wanjau 
+- Caroline Mugo
+- Debra Ukamaka Okeh
+- Njeri Kennedy Mung'are
+- Elizabeth Anyango Magero 
+- Ivy Lucy Owuor
+- Lumumba Wandera Victor
+- Matabel Odin
+- Verrah Otiende
+- Winnie Chacha
+- Abel Mokua Nyabera
+- Herbert Imboga
+- Harsha Charma
+- Mustafa Aslan
+- Mingshe Zhi
+- Udeshi Salgado
 
 ## Project coordination
 

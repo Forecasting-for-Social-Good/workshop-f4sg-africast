@@ -32,14 +32,26 @@ source("setup.R")
 
 ## Mentors
 
-- Harsha Halgamuwe Hewage
-- Josephine Valensia
-- Krisanat Anukarnsakulchularp
-- Laiba Khan
-- Mandy Luon
-- Mingzhe Shi
-- Sneha Kharbanda
-- Zihao Wang
+- Akar Stephen Eghelakpo
+- Agnes Njambi Wanjau 
+- Caroline Mugo
+- Debra Ukamaka Okeh
+- Njeri Kennedy Mung'are
+- Elizabeth Anyango Magero 
+- Ivy Lucy Owuor
+- Lumumba Wandera Victor
+
+## Mentors
+
+- Matabel Odin
+- Verrah Otiende
+- Winnie Chacha
+- Abel Mokua Nyabera
+- Herbert Imboga
+- Harsha Charma
+- Mustafa Aslan
+- Mingshe Zhi
+- Udeshi Salgado
 
 ## Coordination and admin lead
 
