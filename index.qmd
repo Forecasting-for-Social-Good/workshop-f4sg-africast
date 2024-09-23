@@ -15,7 +15,7 @@ Forecasting is a valuable tool that allows organizations to make informed decisi
 
 It is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyze data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.
 
-This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, and will run online from the 23rd-27th October 2023.
+This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, and will run online from the 23rd-27th September 2024.
 
 ## Learning objectives
 
@@ -30,7 +30,7 @@ During the training, participants will gain knowledge and skills in:
 ## Instructor
 
 ![](images/mitch.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Mitchell O'Hara-Wild" width="200"}
-[**Mitchell O'Hara-Wild**](https://mitchelloharawild.com/) (he/him) is a PhD student at [Monash University](https://www.monash.edu), creating new techniques and tools for forecasting large collections of time series with Rob Hyndman and George Athanasopoulos. He is the lead developer of the tidy time-series forecasting tools fable and feasts, and has co-developed the widely used forecast package since 2015. Mitchell also operates a data consultancy, and has worked on many forecasting projects that have supported decision making and planning for businesses and governments. He is an award-winning educator, and has taught applied forecasting at Monash University and various forecasting workshops around the world.
+[**Mitchell O'Hara-Wild**](https://mitchelloharawild.com/) (he/him) is a PhD candidate at [Monash University](https://www.monash.edu), creating new techniques and tools for forecasting large collections of time series with Rob Hyndman and George Athanasopoulos. He is the lead developer of the tidy time-series forecasting tools fable and feasts, and has co-developed the widely used forecast package since 2015. Mitchell also operates a data consultancy, and has worked on many forecasting projects that have supported decision making and planning for businesses and governments. He is an award-winning educator, and has taught applied forecasting at Monash University and various forecasting workshops around the world.
 
 
 <div align="center">
@@ -52,22 +52,26 @@ Bahman is a Reader (Associate Professor) in Data-Driven Decision Science at Card
 <a href="https://twitter.com/Bahman_R_T/"><img border="0" alt="Twitter" src="https://assets.dryicons.com/uploads/icon/svg/8385/c23f7ffc-ca8d-4246-8978-ce9f6d5bcc99.svg" width="35" height="35"></a>&ensp; 
 </div>
 
-## Mentors for the cohort 2023
+## Mentors for the cohort 2024
 
-A committed team, comprising both PhD students and MSc. students, generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the excercises. The team includes:
+A committed team, comprising both PhD students and MSc. students, generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the excercises. 
 
-- Harsha Halgamuwe Hewage
-- Josephine Valensia
-- Krisanat Anukarnsakulchularp
-- Laiba Khan
-- Mandy Luon
-- Mingzhe Shi
-- Sneha Kharbanda
-- Zihao Wang
+<!-- The team includes: -->
+
+<!-- - Harsha Halgamuwe Hewage -->
+<!-- - Josephine Valensia -->
+<!-- - Krisanat Anukarnsakulchularp -->
+<!-- - Laiba Khan -->
+<!-- - Mandy Luon -->
+<!-- - Mingzhe Shi -->
+<!-- - Sneha Kharbanda -->
+<!-- - Zihao Wang -->
 
 ## Project coordination
 
-The coordination and administration of the project are overseen by a dedicated team from [Jomo Kenyatta University of Agriculture and Technology](https://www.jkuat.ac.ke/). This includes tasks such as promoting the workshop across various countries, managing the intake of 138 applications from 13 different nations, conducting a thorough shortlisting process and selecting 62 participants, and maintaining effective communication with all attendees.
+The coordination and administration of the project are overseen by a dedicated team from [Jomo Kenyatta University of Agriculture and Technology](https://www.jkuat.ac.ke/). 
+
+<!-- This includes tasks such as promoting the workshop across various countries, managing the intake of 138 applications from 13 different nations, conducting a thorough shortlisting process and selecting 62 participants, and maintaining effective communication with all attendees. -->
 
 Jomo Kenyatta University team includes:
 
