@@ -88,3 +88,10 @@ format:
     code-overflow: wrap
     mainfont: "Open Sans"
     include-after-body: plausible.html
+
+execute:
+  echo: false
+  message: false
+  warning: false
+  cache: true
+  freeze: true
