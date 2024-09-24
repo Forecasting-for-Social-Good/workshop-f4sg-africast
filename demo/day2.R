@@ -74,4 +74,97 @@ food |>
   components() |> 
   autoplot()
 
-lm(y ~ x)
+# lm(y ~ x)
+
+food |> 
+  features(Turnover, feat_stl)
+
+tourism |> 
+  autoplot(Trips) + 
+  guides(colour = "none")
+
+tourism |> 
+  features(Trips, feat_stl) |> 
+  ggplot(aes(x = trend_strength, y = seasonal_strength_year)) + 
+  geom_point(aes(colour = Purpose))
+
+tourism_feat <- tourism |> 
+  features(Trips, feat_stl)
+
+tourism_most_seasonal <- tourism_feat |> 
+  # top_n(1, seasonal_strength_year)
+  filter(seasonal_strength_year == max(seasonal_strength_year))
+
+tourism_most_seasonal
+
+tourism |> 
+  semi_join(tourism_most_seasonal) |> 
+  # filter(
+  #   Purpose == "Holiday",
+  #   State == "New South Wales",
+  #   Region == "Snowy Mountains"
+  # ) |> 
+  autoplot(Trips)
+
+
+
+tourism_trendy <- tourism_feat |> 
+  top_n(3, trend_strength)
+
+tourism_feat |> 
+  # arrange(-trend_strength) |> 
+  head(3)
+
+tourism_trendy$Region
+
+tourism |> 
+  semi_join(tourism_trendy) |> 
+  autoplot(Trips)
+
+
+tourism |> 
+  semi_join(tourism_trendy) |> 
+  ACF(Trips) |> 
+  autoplot()
+
+
+tourism_features <- tourism |>
+  features(Trips, feature_set(pkgs = "feasts"))
+
+tourism_features
+# 48 features from the data!
+
+tourism_features |> 
+  select(seasonal_strength_year, trend_strength, acf1, spectral_entropy)
+
+tourism_features |>
+  select(where(is.numeric)) |> 
+  # select(-State, -Region, -Purpose) |>
+  prcomp(scale = TRUE)
+
+pcs <- tourism_features |>
+  select(where(is.numeric)) |> 
+  # select(-State, -Region, -Purpose) |>
+  prcomp(scale = TRUE) |>
+  broom::augment(tourism_features)
+
+pcs
+
+pcs |> 
+  ggplot(aes(x=.fittedPC1, y=.fittedPC2)) +
+  geom_point(aes(colour = Purpose)) + 
+  theme(aspect.ratio=1)
+
+tourism_outliers <- pcs |> 
+  filter(.fittedPC1 > 10)
+
+tourism |> 
+  semi_join(tourism_outliers) |> 
+  autoplot()
+
+pc_fit <- tourism_features |>
+  select(where(is.numeric)) |> 
+  # select(-State, -Region, -Purpose) |>
+  prcomp(scale = TRUE)
+
+plot(pc_fit)
