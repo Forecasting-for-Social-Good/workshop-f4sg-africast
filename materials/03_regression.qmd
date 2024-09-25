@@ -38,9 +38,9 @@ Regression model allows for a linear relationship between the forecast variable 
 \fontsize{13}{15}\sf
 
 \begin{block}{}\vspace*{-0.3cm}
-\[
+$$
   y_t = \beta_0 + \beta_1 x_{t} + \varepsilon_t.
-\]
+$$
 \end{block}
 
 * $y_t$ is the variable we want to predict: the ``response`` variable
@@ -54,9 +54,9 @@ In practice, of course, we have a collection of observations but we do not know 
 These need to be estimated from the data.
 
 \begin{block}{}\vspace*{-0.3cm}
-\[
+$$
   y_t = \hat\beta_0 + \hat\beta_1 x_{t}.
-\]
+$$
 \end{block}
 
 * $y_t$ is the ``response`` variable
@@ -79,9 +79,9 @@ knitr::include_graphics("figs/SLRpop1-1.png")
 That is, we find the values of $\beta_0$ and $\beta_1$ which minimize
 
 \begin{block}{}\vspace*{-0.3cm}
-\[
+$$
   \sum_{i=1}^N e_{i}^2 = \sum_{i=1}^N (y_{i} - \beta_{0} - \beta_{1}x_{i})^2. 
-\]
+$$
 \end{block}
 
 * This is called *least squares* estimation because it gives the least value of the sum of squared errors. 
@@ -169,9 +169,9 @@ $$
 ## Useful predictors in linear regression
 
 **Linear trend**
-\[
+$$
   x_t = t
-\]
+$$
 
 * $t=1,2,\dots,T$
 * Strong assumption that trend will continue.
@@ -326,9 +326,9 @@ However \dots
 To overcome this problem, we can use *adjusted $R^2$*:
 
 \begin{block}{}
-\[
+$$
 \bar{R}^2 = 1-(1-R^2)\frac{T-1}{T-k-1}
-\]
+$$
 where $k=$ no.\ predictors and $T=$ no.\ observations.
 \end{block}
 
@@ -351,9 +351,9 @@ where $k=$ no.\ predictors and $T=$ no.\ observations.
 ## Akaike's Information Criterion
 
 \begin{block}{}
-\[
+$$
 \text{AIC} = -2\log(L) + 2(k+2)
-\]
+$$
 \end{block}
 where $L$ is the likelihood and $k$ is the number of predictors in the model.
 
@@ -367,9 +367,9 @@ where $L$ is the likelihood and $k$ is the number of predictors in the model.
 For small values of $T$, the AIC tends to select too many predictors, and so a bias-corrected version of the AIC has been developed.
 
 \begin{block}{}
-\[
+$$
 \text{AIC}_{\text{C}} = \text{AIC} + \frac{2(k+2)(k+3)}{T-k-3}
-\]
+$$
 \end{block}
 
 As with the AIC, the AIC$_{\text{C}}$ should be minimized.
@@ -421,9 +421,9 @@ has lower CV or AICc.
  * If getting forecasts of predictors is difficult, you can use lagged predictors instead.
 
  \begin{block}{}\vspace*{-0.3cm}
-\[
+$$
   beta_0+\beta_1x_{1,t-h}+\dots+\beta_kx_{k,t-h}+\varepsilon_{t}.
-\]
+$$
 \end{block}
 
  * A different model for each forecast horizon $h$.
