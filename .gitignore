@@ -7,3 +7,5 @@
 /_site/
 *_files/
 /site_libs/
+/_freeze/
+*_cache/

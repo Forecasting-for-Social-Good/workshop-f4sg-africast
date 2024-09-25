@@ -1,3 +1,4 @@
 /.quarto/
-*_files
+*_files/
+*_cache/
 _freeze
