@@ -124,13 +124,13 @@ report(fit_cons)
 
 * In multiple regression there is one variable to be forecast and several predictor variables.
 * The basic concept is that we forecast the time series of interest $y$ assuming that it has a linear relationship with other time series $x_1$, $x_2$, ...., $x_K$
-* We might forecast daily A&E attendnace  $y$ using temperature   $x_1$ and GP visits $x_2$ as predictors.
+* We might forecast daily A&E attendance  $y$ using temperature   $x_1$ and GP visits $x_2$ as predictors.
 
 ## How many variable can we add?
 
 You can add as many as you want but be aware of:
 
-* Overfitting
+* Over-fitting
 * Multicollinearity
 
 ## Multiple regression and forecasting
@@ -138,9 +138,10 @@ You can add as many as you want but be aware of:
 \fontsize{13}{15}\sf
 
 \begin{block}{}\vspace*{-0.3cm}
-\[
+$$
   y_t = \beta_0 + \beta_1 x_{1,t} + \beta_2 x_{2,t} + \cdots + \beta_kx_{k,t} + \varepsilon_t.
-\]
+$$
+
 \end{block}
 
 * $y_t$ is the variable we want to predict: the ``response`` variable
@@ -178,8 +179,8 @@ $$
 
 **Seasonality**
 
-* Seasinality will be considered based on the interval of index
-* use special fucntion `season()`
+* Seasonality will be considered based on the interval of index
+* use special function `season()`
 
 ## Example: US consumption expenditure
 
@@ -261,7 +262,7 @@ It is **useful** to also have $\varepsilon_t \sim \text{N}(0,\sigma^2)$ when pro
 
 There are a series of plots that should be produced in order to check different aspects of the fitted model and the underlying assumptions.
 
-1. check if residuls are uncorrelated using `ACF`
+1. check if residuals are uncorrelated using `ACF`
 2. Check if residuals are normally distributed
 
 ## Residual scatterplots
@@ -293,7 +294,7 @@ p4 <- ggplot(df, aes(x=Unemployment, y=.resid)) +
 
 ## Residual patterns
 
-* If a plot of the residuals vs any predictor in the model shows a pattern, then the relationship is nonlinear.
+* If a plot of the residuals vs any predictor in the model shows a pattern, then the relationship is non-linear.
 
 * If a plot of the residuals vs any predictor **not** in the model shows a pattern, then the predictor should be added to the model.
 
@@ -506,7 +507,7 @@ If multicollinearity exists\dots
 
 ## Modern regression models
 
-* Suppose instead of 3 regressor we had 44.
+* Suppose instead of 3 regressors we had 44.
     * For example, 44 predictors leads to 18 trillion possible models!
 * Stepwise regression cannot solve this problem due to the number of variables.
 * We need to use the family of Lasso models: lasso, ridge, elastic net
@@ -590,7 +591,7 @@ be coded using several dummy variables (one fewer than the total number of categ
 
 ## Interactions
 
-For example, sometimes the effect of a partiucluar event might be different if it is on a weekend or a week day or its efefct might be different in each shift:
+For example, sometimes the effect of a particular event might be different if it is on a weekend or a week day or its effect might be different in each shift:
 
 * you need to introduce an interaction variable
 * you can use a new dummy as : `v1*v2`
@@ -600,9 +601,9 @@ For example, sometimes the effect of a partiucluar event might be different if i
 
 The model include present and past values of predictor: $x_t,x_{t-1},x_{t-2},\dots.$
 
-\[
-y_{t} = a + \nu_{0} x_{t} + \nu_{1} x_{t-1} + \dots + \nu_{k} x_{t-k} + \varepsilon_{t}
-\]
+$$
+y_{t} = a + \beta_{0} x_{t} + \beta_{1} x_{t-1} + \dots + \beta_{k} x_{t-k} + \varepsilon_{t}
+$$
 
 
   * $x$ can influence $y$, but $y$ is not allowed to influence $x$.
