@@ -1,144 +1,105 @@
 library(fpp3)
-## Basic of modelling and forecasting
+library(ggdist)
+
+aus_beer <- aus_production |> select(Beer)
+
+fit <- aus_beer |> filter_index(. ~ "2009 Q1") |> 
+  model(snaive = SNAIVE(Beer),
+        naive = NAIVE(Beer),
+        average = MEAN(Beer))
+
+fcst <- fit |> forecast(h = 5)
+fitted_ets <- fit |> augment()
+
+ggplot(data = fcst, mapping = aes(x = Quarter, ydist = Beer))+
+  ggdist::stat_halfeye(alpha = .4)+
+  geom_line(aes(y=.mean, colour ="Point Forecast"))+
+  geom_line(aes(y = .fitted, colour ="Fitted"), data = filter_index(fitted_ets, "2005 Q1" ~ .))+
+  geom_point(aes(y = .fitted, colour ="Fitted"), data = filter_index(fitted_ets, "2005 Q1" ~ .))+
+  geom_line(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+
+  geom_point(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+
+  scale_color_manual(name=NULL,
+                     breaks=c('Fitted', 'Data',"Point Forecast"),
+                     values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))
 
 
-## Time Series Regression Model (TSLM)
-
+library(fpp3)
 us_change |> 
   autoplot(Consumption)
-
 us_change |> 
   autoplot(Income)
+us_change |> 
+  autoplot(vars(Consumption, Income))
+ggplot() + 
+  autolayer(us_change, Consumption, colour = "red") + 
+  autolayer(us_change, Income, colour = "steelblue")
 
 us_change |> 
-  autoplot(Consumption) + 
-  geom_line(aes(y = Income), colour = "steelblue")
-
-us_change |> 
-  ggplot(aes(y = Consumption, x = Income)) + 
+  ggplot(aes(x = Income, y = Consumption)) + 
   geom_point() + 
   geom_smooth(method = "lm")
 
+# lm()
 fit <- us_change |> 
-  model(
-    # TSLM(Consumption ~ 1), 
-    TSLM(Consumption ~ Income),
-    TSLM(Consumption ~ Income + Production + Savings + Unemployment),
-    TSLM(Consumption ~ Income + Savings)
-  )
-
-tidy(fit)
-glance(fit)
-
-# Coefficients
-fit |> tidy()
-
-# Summary
-fit |> glance()
-
-# Fits
-fit |> augment()
-
-fit |> 
-  augment() |> 
-  autoplot(Consumption) + 
-  geom_line(aes(y = .fitted), colour = "steelblue")
-
-# Report
-fit |> report()
-
-us_retail <- us_employment |> 
-  filter(Month >= yearmonth("1990 Jan"), Title == "Retail Trade")
-
-us_retail |> 
-  autoplot(Employed)
-
-fit <- us_retail |> 
-  model(
-    # TSLM(Employed ~ 1),
-    # TSLM(Employed ~ 1 + trend()),
-    # TSLM(Employed ~ 1 + season()),
-    linear = TSLM(Employed ~ 1 + trend() + season()),
-    piecewise = TSLM(Employed ~ 1 + trend(knots = yearmonth(c("2000 Jan", "2010 Jan"))) + season())
-  )
+  model(lm = TSLM(Consumption ~ Income))
+fit
+report(fit)
 tidy(fit)
 
-us_retail |> 
-  autoplot(Employed) + 
-  geom_line(aes(y = .fitted, colour = .model), data = augment(fit))
+# Ctrl + Enter
+fit_mr <- us_change |> 
+  model(lm = TSLM(Consumption ~ Income + Production + Savings + Unemployment))
+report(fit_mr)
+tidy(fit_mr)
 
-fit |> 
-  forecast(h = "1 year") |> 
-  autoplot(us_retail)
-
-library(ggdist)
-fit |> 
-  forecast(h = "1 year") |> 
-  filter(.model == "linear") |> 
-  ggplot(aes(ydist = Employed, x = Month)) + 
-  stat_dist_halfeye() + 
-  autolayer(tail(us_retail, 20), Employed)
-
-fit <- us_change |> 
+fit_both <- us_change |> 
   model(
-    TSLM(Consumption ~ Income + Savings)
+    slr = TSLM(Consumption ~ Income),
+    mlr = TSLM(Consumption ~ Income + Production + Savings + Unemployment)
   )
 
-fit |> 
-  forecast(h = "1 year")
-future_us_change <- new_data(us_change, 1) |> 
-  mutate(Income = mean(us_change$Income) + 1, Savings = mean(us_change$Savings) + 0.3)
-fit |> 
-  forecast(new_data = future_us_change) |> 
-  autoplot(us_change)
+tidy(fit_both)
+report(fit_both) # doesn't work because we have > 1 model
 
-fit <- us_change |> 
+augment(fit_both)
+us_change |> 
+  autoplot(Consumption, colour = "orange") + 
+  autolayer(augment(fit_both), .fitted)
+
+glance(fit_both)
+
+augment(fit_both) |> 
+  features(.innov, ljung_box, lag = 16)
+
+fit_both |> select(slr) |> gg_tsresiduals()
+
+augment(fit_both)
+
+# CV from glance()
+glance(fit_both)
+
+
+fit_select <- us_change |> 
   model(
-    TSLM(Consumption ~ lag(Income, 1) + lag(Savings, 1))
+    mlr0 = TSLM(Consumption ~ Income + Production + Savings + Unemployment),
+    mlr1 = TSLM(Consumption ~ Income + Production + Unemployment),
+    mlr2 = TSLM(log(Consumption) ~ Income + Production + Savings)
   )
-tidy(fit)
-
-future_us_change <- new_data(us_change, 1) |> 
-  mutate(Income = 1, Savings = 1)
-
-fit |> 
-  forecast(future_us_change)
+glance(fit_select)
 
 
-ansett |> 
-  summarise(Passengers = sum(Passengers)) |> 
-  filter_index("1989 W26" ~ "1990 W1") |> 
-  autoplot(Passengers) + 
-  scale_x_yearweek(date_breaks = "3 week")
+fit_select |> 
+  select(mlr0) |> 
+  forecast(h = "5 years")
 
-fit <- ansett |> 
-  summarise(Passengers = sum(Passengers)) |> 
-  mutate(strike = Passengers == 0) |>  #time_in(Week, "1989 W34" ~ "1989 W40")
+
+fit_lagged <- us_change |> 
   model(
-    TSLM(Passengers ~ trend(yearweek("1990 W1"))*strike + lag(strike))
-  )
-
-augment(fit) |> 
-  autoplot(Passengers) + 
-  geom_line(aes(y = .fitted), colour = "steelblue")
-
-vic_elec |> 
-  print(n = 100)
-
-insurance |> 
-  autoplot(Quotes) + 
-  geom_line(aes(y = TVadverts), colour = "steelblue")
-
-insurance |> 
-  ggplot(aes(y = Quotes, x = lag(TVadverts, 1))) + 
-  geom_point() + 
-  geom_smooth(method = "lm")
-
-fit <- insurance |> 
-  model(
-    TSLM(Quotes ~ TVadverts),
-    TSLM(Quotes ~ TVadverts + lag(TVadverts, 1))
-    # TSLM(Quotes ~ TVadverts + lag(TVadverts, 1) + lag(TVadverts, 2))
+    mlr_lag = TSLM(Consumption ~ lag(Income) + lag(Production) + lag(Savings) + lag(Unemployment))
   )
 
-glance(fit)
+fit_lagged |> 
+  forecast(new_data(us_change) |> mutate(Income = NA, Production = NA, Savings = NA, Unemployment = NA))
+
+fit_lagged |> 
+  forecast(h = 1)
