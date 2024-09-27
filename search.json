@@ -4,7 +4,7 @@
     "href": "sessions/day1/exercises.html",
     "title": "Exercises",
     "section": "",
-    "text": "We’ve prepared an exercises project with some starter code for each of the sessions. You can download and open this project using:"
+    "text": "We’ve prepared an exercises project with some starter code for each of the sessions. You can download and open this project using:\n\nusethis::use_course(\"https://workshop.f4sg.org/africast/exercises.zip\")"
   },
   {
     "objectID": "sessions/day1/exercises.html#creating-a-time-series-tibble-a-tsibble",
