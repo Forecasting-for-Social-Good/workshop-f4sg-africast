@@ -9,7 +9,15 @@ order: 4
 
 ## Recording
 
-<iframe width="800" height="450" src="https://www.youtube.com/embed/TmH5CxudMNA?si=RFqm0NjJHYZmXLiI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/I0xStHQ4c-4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+::: {.callout-note icon="false" collapse="true"}
+## Recordings from previous years
+
+**2023**
+
+<iframe width="800" height="450" src="https://www.youtube.com/embed/TmH5CxudMNA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+:::
 
 ## Code demonstrated in workshop sessions
 
