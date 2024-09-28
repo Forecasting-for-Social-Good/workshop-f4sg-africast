@@ -20,7 +20,7 @@ website:
   description: "Homepage for forecasting for social good time series AFRICAST workshop"
   site-url: "https://workshop.f4sg.org/africast"
   
-  repo-url: https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa
+  repo-url: https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast
   repo-actions: [edit, issue]
 
   # opengraph: true
@@ -44,7 +44,7 @@ website:
         text: Downloads
         menu: 
           - text: Everything
-            href: 'https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa/archive/refs/heads/master.zip'
+            href: 'https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/archive/refs/heads/main.zip'
           - text: Slides
             href: 'slides.zip'
           - text: Lab sessions
@@ -52,7 +52,7 @@ website:
       - icon: file-certificate
         href: license.qmd
       - icon: github
-        href: https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africa
+        href: https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast
     left:
       - text: Sessions
         menu: 

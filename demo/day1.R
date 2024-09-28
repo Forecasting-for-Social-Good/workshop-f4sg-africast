@@ -11,7 +11,7 @@ global_economy |>
 tourism |> 
   filter(Purpose == "Holiday")
 
-prison <- readr::read_csv("https://raw.githubusercontent.com/Forecasting-for-Social-Good/workshop-f4sg-africa/refs/heads/master/materials/data/prison_population.csv")
+prison <- readr::read_csv("https://raw.githubusercontent.com/Forecasting-for-Social-Good/workshop-f4sg-africast/refs/heads/main/materials/data/prison_population.csv")
 
 prison |> 
   as_tsibble(index = date, key = c(state, gender, legal, indigenous))
