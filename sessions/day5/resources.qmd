@@ -6,10 +6,18 @@ order: 4
 ---
 
 <!-- Materials will be distributed sooner to the event. -->
-
 ## Recording
 
-<iframe width="800" height="450" src="https://www.youtube.com/embed/V8rk--9szvE?si=hK84KuaKwcWgOn1E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/?si=FmCZP_rCQIc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+::: {.callout-note icon="false" collapse="true"}
+## Recordings from previous years
+
+**2023**
+
+<iframe width="800" height="450" src="https://www.youtube.com/embed/V8rk--9szvE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+:::
+
 
 ## Code demonstrated in workshop sessions
 
