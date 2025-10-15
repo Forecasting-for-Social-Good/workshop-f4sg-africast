@@ -1,6 +1,7 @@
 ---
 title: "Lab exercise: day 3"
-editor: visual
+execute: 
+  echo: true
 ---
 
 ```{r}
