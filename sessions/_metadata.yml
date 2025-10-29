@@ -1,2 +1,4 @@
 language: 
   title-block-published: "Date"
+
+date-format: "dddd"

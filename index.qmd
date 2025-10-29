@@ -15,7 +15,7 @@ Forecasting is a valuable tool that allows organizations to make informed decisi
 
 It is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyze data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.
 
-This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, and will run online from the 23rd-27th September 2024.
+This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, and will run online from the 10th-14th November 2025.
 
 ## Learning objectives
 
