@@ -1,7 +1,5 @@
 ---
 title: "Lab exercise: day 2"
-execute: 
-  echo: true
 ---
 
 ```{r}
