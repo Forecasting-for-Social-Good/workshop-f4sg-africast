@@ -34,24 +34,47 @@ During the training, participants will gain knowledge and skills in:
 
 
 <div align="center">
-<a href="https://www.mitchelloharawild.com"><img border="0" alt="Blog" src="https://assets.dryicons.com/uploads/icon/svg/4926/home.svg" width="35" height="35"></a>&ensp;
-<a href="https://github.com/mitchelloharawild"><img border="0" alt="Github" src="https://assets.dryicons.com/uploads/icon/svg/8312/cc33248a-e56e-4e7f-93f4-0e16350e5768.svg" width="35" height="35"></a>&ensp; 
-<a href="https://twitter.com/mitchoharawild"><img border="0" alt="Twitter" src="https://assets.dryicons.com/uploads/icon/svg/8385/c23f7ffc-ca8d-4246-8978-ce9f6d5bcc99.svg" width="35" height="35"></a>&ensp; 
-<a href="https://www.linkedin.com/in/mitchelloharawild/"><img border="0" alt="LinkedIn" src="https://assets.dryicons.com/uploads/icon/svg/8337/a347cd89-1662-4421-be90-58e5e8004eae.svg" width="35" height="35"></a>&ensp;&emsp;
+<a href="https://www.mitchelloharawild.com"><img border="0" alt="Blog" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
+<a href="https://github.com/mitchelloharawild"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>&ensp; 
+<a href="https://www.linkedin.com/in/mitchelloharawild/"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>&ensp;&emsp;
 </div>
 
 ## Instructor
 
-![](images/photo_Bhaman.jpeg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Dr. Bahman Rostami-Tabar" width="200"}
+![](images/bahman.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Dr. Bahman Rostami-Tabar" width="200"}
 Bahman is the Professor of Data-Driven Decision Science at Cardiff Business School, Cardiff University, UK. He is interested in transforming data into insights for making smart decisions. Bahman is the founder and director of [Data Lab for Social Good Research Group](https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good) at Cardiff University and the founder of [Forecasting for Social Good committee](https://www.f4sg.org/) initiatives sponsored by the [International Institute of Forecasters](https://forecasters.org/programs/communities/forecasting-for-social-good-f4sg/). He is also leading the "Uncertainty & the Future" theme at the [Digital Transformation Innovation Institute](https://www.cardiff.ac.uk/digital-transformation-innovation-institute/work-with-us/uncertainty-and-the-future0.
 
 Bahman specializes in the development and application of modelling, forecasting and management science tools and techniques providing informed insights for planning & decision-making processes in sectors contributing to social good, including healthcare operations, global health and humanitarian supply chains. His collaborative efforts have spanned a multitude of organisations, including notable bodies such as the National Health Service (NHS), Welsh Ambulance Service Trusts (WAST), United States Agency for International Developments (USAID), the International Committee of the Red Cross (ICRC), and John Snow Inc. (JSI). A remarkable highlight of his contributions is his pivotal role in disseminating forecasting knowledge especially in low and lower-middle income countries through the [democratizing forecasting](https://www.f4sg.org/services/democratising-forecasting/) project sponsored by International Institute of Forecasters.
 
 <div align="center">
-<a href="http://www.bahmanrt.com/"><img border="0" alt="Website" src="https://assets.dryicons.com/uploads/icon/svg/4926/home.svg" width="35" height="35"></a>&ensp;
-<a href="https://github.com/bahmanrostamitabar/"><img border="0" alt="Github" src="https://assets.dryicons.com/uploads/icon/svg/8312/cc33248a-e56e-4e7f-93f4-0e16350e5768.svg" width="35" height="35"></a>&ensp; 
-<a href="https://twitter.com/Bahman_R_T/"><img border="0" alt="Twitter" src="https://assets.dryicons.com/uploads/icon/svg/8385/c23f7ffc-ca8d-4246-8978-ce9f6d5bcc99.svg" width="35" height="35"></a>&ensp; 
+<a href="http://www.bahmanrt.com/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
+<a href="https://github.com/bahmanrostamitabar/"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>&ensp; 
+<a href="https://x.com/Bahman_R_T/"><img border="0" alt="X" src="images/social-x.svg" width="35" height="35"></a>&ensp; 
 </div>
+
+
+## Instructor
+
+![](images/debra.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Debra Okeh" width="200"}
+Debra Okeh is a Cohort 1 Fellow of the Nigeria Malaria Modelling Fellowship, CMS, Nigeria.
+She also serves as a member of the Learning Committee of the Applied Malaria Modelling
+Network (AMMnet) and the Assistant General Secretary of AMMnet Nigeria. As a global
+health physician and infectious disease epidemiologist, she specializes in translating
+complex epidemiological models into actionable policy. Her research interests are on using
+modelling for strategic planning by utilising subnational data to predict the impact of
+malaria control interventions, and implementing time-series analysis for disease forecasting.
+She has honed her skills in providing modelling and analytical support to the Nigeria
+National Malaria Elimination Programme. Her expertise has been recognised through
+presentations at Harvard's Centre for Communicable Disease Dynamics, the 2024 American
+Society of Tropical Medicine and Hygiene Conference, the Gates Foundation 2024 Institute
+for Disease Modeling Symposium, and the 2024 Multilateral Initiative on Malaria (MIM)
+Society 8th Pan-African Conference.
+
+<div align="center">
+<a href="https://x.com/DebraOkeh"><img border="0" alt="X" src="images/social-x.svg" width="35" height="35"></a>&ensp; 
+<a href="https://www.linkedin.com/in/debra-okeh-1500ab109/"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>&ensp;&emsp;
+</div>
+
 
 ## Mentors for the cohort 2024
 
