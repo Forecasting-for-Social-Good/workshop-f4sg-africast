@@ -198,13 +198,14 @@ install.packages(c(
 \vspace*{.0cm}\begin{alertblock}{}{\centerline{\Large\textbf{https://workshop.f4sg.org/africast/}}}
 \end{alertblock}
 
-## Schedule for each session (UK time zone)
+## Schedule for each session (UTC+3)
 
-- Start at 08:00 a.m. 
-- Lecture 1: 08:00 - 09:30
-- Break: 09:30 - 09:45
-- Lecture 2:  09:45 - 11:15
-- Check your group on Slack for mentorship sessions
+- Start at 10:00 a.m. 
+- Lecture 1: 10:00 - 11:30
+- Break: 11:30 - 11:45
+- Lecture 2:  11:45 - 13:15
+- Exercises: 14:00 - 17:00 (on your own)
+- Mentorship: 17:00 - 18:00
 
 ## Access materials 
 
