@@ -12,46 +12,70 @@ source("setup.R")
 
 ## Project lead and Instructors
 
-\placefig{0.6}{1.5}{width=3.5cm}{Bahman}
-\begin{textblock}{8.2}(5.6,1.3)
-\begin{alertblock}{Bahman Rostami-Tabar}
-\href{https://www.bahmanrt.com/}{\faIcon{home} bahmanrt.com}\\
-\href{https://github.com/bahmanrostamitabar}{\faIcon{github}  @bahmanrostamitabar}\\
-\href{mailto:Rostami-TabarB@cardiff.ac.uk}{\faIcon{envelope}  Rostami-TabarB@cardiff.ac.uk}
-\end{alertblock}
+\placefig{0.5}{1.2}{width=2.5cm}{Bahman}
+\begin{textblock}{11.5}(3.5,1)
+  \begin{alertblock}{Bahman Rostami-Tabar}
+    {\small
+      \href{https://www.bahmanrt.com/}{\faIcon{home} bahmanrt.com}\\
+      \href{https://github.com/bahmanrostamitabar}{\faIcon{github} @bahmanrostamitabar}\\
+      \href{mailto:Rostami-TabarB@cardiff.ac.uk}{\faIcon{envelope} Rostami-TabarB@cardiff.ac.uk}
+    }
+  \end{alertblock}
 \end{textblock}
 
-\placefig{0.6}{5.4}{width=3.5cm}{Mitch}
-\begin{textblock}{8.2}(5.6,5.4)
-\begin{alertblock}{Mitchell O'Hara-Wild}
-\href{https://mitchelloharawild.com}{\faIcon{home} mitchelloharawild.com}\\
-\href{https://github.com/mitchoharawild}{\faIcon{github}  @mitchelloharawild}\\
-\href{mailto:Mitch.OHara-Wild@monash.edu}{\faIcon{envelope}  Mitch.OHara-Wild@monash.edu}
-\end{alertblock}
+\placefig{0.5}{3.2}{width=2.5cm}{Mitch}
+\begin{textblock}{11.5}(3.5,3.7)
+  \begin{alertblock}{Mitchell O'Hara-Wild}
+    {\small
+      \href{https://mitchelloharawild.com}{\faIcon{home} mitchelloharawild.com}\\
+      \href{https://github.com/mitchoharawild}{\faIcon{github} @mitchelloharawild}\\
+      \href{mailto:Mitch.OHara-Wild@monash.edu}{\faIcon{envelope} Mitch.OHara-Wild@monash.edu}
+    }
+  \end{alertblock}
 \end{textblock}
 
-## Mentors
+\placefig{0.5}{5.9}{width=2.5cm}{debra}
+\begin{textblock}{11.5}(3.5,6.4)
+  \begin{alertblock}{Debra Okeh}
+    {\small
+      \href{https://x.com/DebraOkeh}{\faIcon{twitter} x.com/DebraOkeh}\\
+      \href{https://www.linkedin.com/in/debra-okeh-1500ab109/}{\faIcon{linkedin} debra-okeh-1500ab109}
+    }
+  \end{alertblock}
+\end{textblock}
 
-- Akar Stephen Eghelakpo
-- Agnes Njambi Wanjau 
-- Caroline Mugo
-- Debra Ukamaka Okeh
-- Njeri Kennedy Mung'are
-- Elizabeth Anyango Magero 
-- Ivy Lucy Owuor
-- Lumumba Wandera Victor
+## Mentors  
+* Mama Kouandé Abdou Rakib  
+* Ninguin Romuald Guillaume  
+* Sode Akoeugnigan Idelphonse  
+* Akounda Badibassa  
+* Mihertab Ermias  
+* Agnes Njambi  
+* Caroline Mugo  
+* Catherine Chepkoech Munga  
+* Charity Wamwea  
 
-## Mentors
+## Mentors  
+* Dickson Ochichi Suguku  
+* Herbert Imbogah  
+* Matabel Odin  
+* Simon Kamau  
+* Susan Mwelu  
+* Abiodun Egwuenu  
+* Adamu Saidu Saleh  
+* Adebayo, Olatunji Joyce  
+* Anthony C. Uwandu-Uzoma  
 
-- Matabel Odin
-- Verrah Otiende
-- Winnie Chacha
-- Abel Mokua Nyabera
-- Herbert Imboga
-- Harsha Charma
-- Mustafa Aslan
-- Mingshe Zhi
-- Udeshi Salgado
+## Mentors  
+* Haruna Jimoh  
+* Hassan Adam Murtala  
+* Okorie, Oluchukwu Chiamaka  
+* Olagbami Oluwafemi Samson  
+* Ugonma Regina Okorie  
+* Shittu Ola Abdulganiy  
+* Ali Mohamed Ali  
+* Kundu Sam  
+* Ssembatya Ronald
 
 ## Coordination and admin lead
 
