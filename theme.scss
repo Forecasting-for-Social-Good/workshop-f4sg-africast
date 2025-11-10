@@ -32,3 +32,18 @@ h1, .navbar-title {
 .listing-subtitle {
   width: 100px;
 }
+
+.quarto-listing-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.quarto-listing-table th:nth-child(1),
+.quarto-listing-table td:nth-child(1) {
+  width: 60px;   /* set desired width for Time column */
+}
+
+.quarto-listing-table th:nth-child(2),
+.quarto-listing-table td:nth-child(2) {
+  width: 320px;   /* set desired width for Session column */
+}
