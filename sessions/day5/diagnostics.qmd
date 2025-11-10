@@ -1,6 +1,6 @@
 ---
 title: "Residual diagnostics and cross validation"
-subtitle: "<span class='code'>09:45-11:15</span>"
+subtitle: "<span class='code'>11:45-13:15</span>"
 date: "2023-10-27"
 order: 2
 ---

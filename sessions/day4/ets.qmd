@@ -1,6 +1,6 @@
 ---
 title: "ETS"
-subtitle: "<span class='code'>09:45-11:15</span>"
+subtitle: "<span class='code'>11:45-13:15</span>"
 date: "2023-10-26"
 order: 2
 ---

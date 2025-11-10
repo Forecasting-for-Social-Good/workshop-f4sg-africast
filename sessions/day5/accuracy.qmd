@@ -1,6 +1,6 @@
 ---
 title: "Basic training and test accuracy"
-subtitle: "<span class='code'>08:00-09:30</span>"
+subtitle: "<span class='code'>10:00-11:30</span>"
 date: "2023-10-27"
 order: 1
 ---

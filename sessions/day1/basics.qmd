@@ -1,6 +1,6 @@
 ---
 title: "Basics of time series and data structures"
-subtitle: "<span class='code'>08:00-09:30</span>"
+subtitle: "<span class='code'>10:00-11:30</span>"
 date: "2023-10-23"
 order: 1
 ---
