@@ -211,5 +211,5 @@ install.packages(c(
 
 * AFRICAST workshop website
 * Mentorship sessions and Q/A
-* Slack
+* Google Classroom
 
