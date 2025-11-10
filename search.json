@@ -270,42 +270,42 @@
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "All times are listed in UK time (UTC+1)."
+    "text": "All times are listed in Africa/Nairobi time (UTC+3)."
   },
   {
     "objectID": "schedule.html#day-1",
     "href": "schedule.html#day-1",
     "title": "Schedule",
     "section": "Day 1",
-    "text": "Day 1\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n08:00-09:30\n\n\nBasics of time series and data structures\n\n\n\n\n\n\n09:45-11:15\n\n\nTime series patterns and basic graphics\n\n\n\n\n\n\nCheck with your mentor on Slack\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 1\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nBasics of time series and data structures\n\n\n\n\n\n\n11:45-13:15\n\n\nTime series patterns and basic graphics\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-2",
     "href": "schedule.html#day-2",
     "title": "Schedule",
     "section": "Day 2",
-    "text": "Day 2\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n08:00-09:30\n\n\nTransforming / adjusting time series\n\n\n\n\n\n\n09:45-11:15\n\n\nComputing and visualizing features\n\n\n\n\n\n\nCheck with your mentor on Slack\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 2\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nTransforming / adjusting time series\n\n\n\n\n\n\n11:45-13:15\n\n\nComputing and visualizing features\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-3",
     "href": "schedule.html#day-3",
     "title": "Schedule",
     "section": "Day 3",
-    "text": "Day 3\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n08:00-09:30\n\n\nBasic modeling / forecasting\n\n\n\n\n\n\n09:45-11:15\n\n\nForecasting with regression, how to represent temporal structure with regressors\n\n\n\n\n\n\nCheck with your mentor on Slack\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 3\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nBasic modeling / forecasting\n\n\n\n\n\n\n11:45-13:15\n\n\nForecasting with regression, how to represent temporal structure with regressors\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-4",
     "href": "schedule.html#day-4",
     "title": "Schedule",
     "section": "Day 4",
-    "text": "Day 4\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n08:00-09:30\n\n\nARIMA\n\n\n\n\n\n\n09:45-11:15\n\n\nETS\n\n\n\n\n\n\nCheck with your mentor on Slack\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 4\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nARIMA\n\n\n\n\n\n\n11:45-13:15\n\n\nETS\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-5",
     "href": "schedule.html#day-5",
     "title": "Schedule",
     "section": "Day 5",
-    "text": "Day 5\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n08:00-09:30\n\n\nBasic training and test accuracy\n\n\n\n\n\n\n09:45-11:15\n\n\nResidual diagnostics and cross validation\n\n\n\n\n\n\nCheck with your mentor on Slack\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 5\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nBasic training and test accuracy\n\n\n\n\n\n\n11:45-13:15\n\n\nResidual diagnostics and cross validation\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "sessions/day1/basics.html",
