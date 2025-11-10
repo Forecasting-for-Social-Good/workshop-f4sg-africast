@@ -263,7 +263,7 @@
     "href": "index.html#required-software",
     "title": "Tidy time series & forecasting in R",
     "section": "Required software",
-    "text": "Required software\nTo be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.\n\nTime series packages and extensions\n\nfpp3, sugrrants\n\ntidyverse packages and friends\n\ntidyverse, fpp3\n\n\nThe following code will install the main packages needed for the workshop.\ninstall.packages(c(\"tidyverse\",\"fpp3\", \"GGally\", \"sugrrants\", \"astsa\"))\nPlease have the required software installed and pre-work completed before attending the workshop."
+    "text": "Required software\nTo be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.\n\nTime series packages and extensions\n\nfpp3, sugrrants\n\ntidyverse packages and friends\n\ntidyverse, fpp3\n\n\nThe following code will install the main packages needed for the workshop.\ninstall.packages(c(\"tidyverse\",\"fpp3\", \"GGally\", \"sugrrants\", \"astsa\", \"usethis\"))\nAfter installing these packages, you can create download the exercises and data for the course using the following code:\nusethis::use_course(\"https://workshop.f4sg.org/africast/exercises.zip\")\nPlease have the required software installed and pre-work completed before attending the workshop."
   },
   {
     "objectID": "schedule.html",
