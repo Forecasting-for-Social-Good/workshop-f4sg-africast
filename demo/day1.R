@@ -1,62 +1,66 @@
-# install.packages("fpp3")
-
 library(fpp3)
-
-global_economy
-# Ctrl + Enter (Cmd + Enter)
-
-global_economy |> 
-  filter(Country == "Australia")
-
-tourism |> 
-  filter(Purpose == "Holiday")
-
-prison <- readr::read_csv("https://raw.githubusercontent.com/Forecasting-for-Social-Good/workshop-f4sg-africast/refs/heads/main/materials/data/prison_population.csv")
-
-prison |> 
-  as_tsibble(index = date, key = c(state, gender, legal, indigenous))
-
-prison |> 
-  mutate(quarter = yearquarter(date)) |> 
-  as_tsibble(index = quarter, key = c(state, gender, legal, indigenous))
-
-PBS
-
-
-## Session 2
-
+ansett
 ansett %>%
   filter(Airports=="MEL-SYD", Class=="Economy") %>%
   autoplot(Passengers)
-
 ansett %>%
-  filter(Airports=="MEL-SYD") %>%
+  filter(Airports=="MEL-SYD", Class=="Business") %>%
   autoplot(Passengers)
 
 PBS %>%
-  filter(ATC2 == "A10") %>%
+  filter(., ATC2 == "A10") %>%
   summarise(Cost = sum(Cost)/1e6) %>%
-  autoplot(Cost) +
-  ylab("$ million") + xlab("Year") +
-  ggtitle("Antidiabetic drug sales")
+  autoplot(Cost)
 
-library(fpp3)
+# Help information for `aus_production`
+?aus_production
+aus_production
+
+beer <- aus_production |>
+  select(Quarter, Beer) |>
+  filter(year(Quarter) >= 1992)
+
+# Time plot
+beer |> autoplot(Beer)
+
+# Seasonal plot
+beer |> gg_season(Beer)
+
+# Sub-series plot
+beer |> gg_subseries(Beer)
+
+
 holidays <- tourism |>
   filter(Purpose == "Holiday") |>
   group_by(State) |>
   summarise(Trips = sum(Trips))
 
-## gg_season(), gg_subseries()
-holidays |> 
+holidays |>
   autoplot(Trips)
 
-holidays |> 
+holidays |>
   gg_season(Trips)
 
-holidays |> 
+holidays |>
   gg_subseries(Trips)
 
 
-# No seasonality in annual data
-global_economy |> 
-  gg_season(GDP)
+beer |>
+  mutate(lag4 = lag(Beer, 4))
+
+beer |>
+  autoplot(Beer) +
+  geom_line(aes(y = lag(Beer, 4)), colour = "steelblue")
+
+beer |>
+  ACF(Beer) |>
+  autoplot()
+
+pelt |>
+  autoplot(Lynx)
+
+pelt |>
+  ACF(Lynx) |>
+  autoplot()
+
+usethis::use_course("https://workshop.f4sg.org/africast/exercises.zip")

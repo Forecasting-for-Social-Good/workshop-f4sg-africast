@@ -1,170 +1,312 @@
 library(fpp3)
+
+as_tibble(aus_retail) |>
+  as_tsibble(key = `Series ID`)
+
 food <- aus_retail |>
   filter(Industry == "Food retailing") |>
   summarise(Turnover = sum(Turnover))
 
-food |> 
+
+# sqrt(y), y^(1/3), log(y)
+
+# Identity transformation
+food |>
   autoplot(Turnover)
 
-food |> 
+# Square root transformation
+food |>
   autoplot(sqrt(Turnover))
-# need stronger transformation
 
-food |> 
+# Cubed root transformation
+food |>
+  autoplot(Turnover^(1/3))
+
+# Log transformation
+food |>
   autoplot(log(Turnover))
 
-?log
+# Inverse transformation
+food |>
+  autoplot(-1/Turnover)
 
-food |> 
-  autoplot(log10(Turnover))
+# Identity -> sqrt() -> y^(1/3) -> log(y) -> -1/y
 
-food |> 
-  autoplot(box_cox(Turnover, 0.5))
+food |>
+  autoplot(box_cox(Turnover, lambda = 0.1))
 
-# lambda < 0.5 (stronger transformation needed)
-# lambda = 0.5 (just right - keep it)
-# lambda > 0.5 (transformation was too strong)
-
-food |> 
-  autoplot(box_cox(Turnover, 0.05))
-
-food |> 
+food |>
   features(Turnover, guerrero)
 
+food |>
+  autoplot(box_cox(Turnover, lambda = 0.0895))
 
-food |> 
-  autoplot(box_cox(Turnover, 0.0895))
+library(fpp3)
+PBS |>
+  summarise(Cost = sum(Cost)) |>
+  autoplot(box_cox(Cost, lambda = 0.364))
 
-food |> 
-  autoplot(box_cox(Turnover, guerrero(Turnover))) + 
-  ylab("Box-Cox transformed Turnover (lambda = 0.895")
 
-food |> 
-  autoplot(box_cox(Turnover, 0.09))
+PBS |>
+  summarise(Cost = sum(Cost)) |>
+  features(Cost, guerrero)
 
-food |> 
-  mutate(
-    Turnover_bc = box_cox(Turnover, guerrero(Turnover))
-  )
+log(0)
 
-food |> 
-  autoplot(log(Turnover))
-food |> 
-  model(stl = STL(log(Turnover))) |> 
-  components() |> 
-  autoplot()
 
-food |> 
-  gg_season(Turnover)
+us_retail_employment <- us_employment |>
+  filter(year(Month) >= 1990, Title == "Retail Trade") |>
+  select(-Series_ID)
+us_retail_employment |>
+  autoplot(Employed)
 
-food |> 
-  model(stl = STL(log(Turnover))) |> 
-  components() |> 
+us_retail_employment |>
+  gg_subseries(Employed)
+us_retail_employment |>
+  gg_season(Employed)
+
+us_retail_employment |>
+  model(STL(Employed)) |>
+  components() |>
+  gg_subseries(season_year)
+
+us_retail_employment |>
+  model(STL(Employed)) |>
+  components() |>
   gg_season(season_year)
 
-food |> 
-  model(stl = STL(log(Turnover))) |> 
-  components() |> 
-  as_tsibble() |> 
-  autoplot(season_adjust)
 
+food |>
+  autoplot(Turnover)
 
-food |> 
-  model(stl = STL(log(Turnover) ~ trend(window = 9) + season(window = 13))) |> 
-  components() |> 
+# 1. Transform the data (if it is multiplicative)
+food |>
+  autoplot(log(Turnover))
+
+# 2. Perform the STL decomposition
+food_dcmp <- food |>
+  model(
+    STL(log(Turnover) ~ trend(window = 21) + season(window = 13))) |>
+  components()
+
+# 3. Plot the decomposition
+food_dcmp |>
   autoplot()
 
-# lm(y ~ x)
+# 4. Adjust the decomposition
+# Choosing an appropriate seasonal window
 
-food |> 
-  features(Turnover, feat_stl)
+# 5. Use the decomposition (make some plots)
+food_dcmp |>
+  autoplot()
+food_dcmp |>
+  gg_season(season_year)
+food_dcmp |>
+  gg_subseries(season_year)
 
-tourism |> 
-  autoplot(Trips) + 
+# Try it yourself - decompose the number of tourists to Australia
+aus_travel <- tourism |>
+  summarise(Trips = sum(Trips))
+aus_travel |>
+  autoplot(Trips)
+
+# 1. Transform if the data is multiplicative
+# Data doesn't need any transformations.
+# aus_travel |>
+#   autoplot(log(Trips))
+aus_travel |>
+  features(Trips, guerrero) # Don't trust because it says lambda=2
+?guerrero
+
+# 2. STL decomposition
+aus_dcmp <- aus_travel |>
+  model(STL(Trips ~ trend(window = 21) + season(window = 13), robust = TRUE)) |>
+  components()
+
+# 3. Plot the decomposition, and adjust the windows if needed
+aus_dcmp |>
+  autoplot()
+
+# 4. Explore the seasonality
+aus_dcmp |>
+  gg_season(season_year)
+aus_travel |>
+  gg_season(Trips)
+
+pbs_total <- PBS |>
+  summarise(Scripts = sum(Scripts))
+
+pbs_total |>
+  autoplot(sqrt(Scripts))
+pbs_total |>
+  features(Scripts, guerrero)
+
+pbs_total |>
+  model(STL(sqrt(Scripts))) |>
+  components() |>
+  autoplot()
+
+pbs_total |>
+  model(STL(sqrt(Scripts))) |>
+  components() |>
+  gg_season(season_year)
+
+
+tourism
+
+tourism |>
+  autoplot(Trips) +
   guides(colour = "none")
 
-tourism |> 
-  features(Trips, feat_stl) |> 
-  ggplot(aes(x = trend_strength, y = seasonal_strength_year)) + 
+tourism |>
+  features(Trips, guerrero)
+
+tourism |>
+  filter(Region == "Adelaide", Purpose == "Visiting") |>
+  autoplot(Trips)
+
+tourism |>
+  features(Trips, feat_stl) |>
+  arrange(trend_strength)
+
+tourism |>
+  filter(Region == "East Coast", Purpose == "Other") |>
+  autoplot(Trips)
+
+tourism |>
+  features(Trips, feat_stl) |>
+  arrange(desc(trend_strength))
+
+tourism |>
+  filter(Region == "Australia's North West", Purpose == "Business") |>
+  autoplot(Trips)
+
+# What is the most seasonal time series in the tourism dataset?
+tourism |>
+  features(Trips, feat_stl) |>
+  arrange(desc(seasonal_strength_year))
+
+tourism |>
+  filter(Region == "Snowy Mountains", Purpose == "Holiday") |>
+  autoplot(Trips)
+
+
+tourism |>
+  features(Trips, feat_stl) |>
+  ggplot(aes(x = trend_strength, y = seasonal_strength_year)) +
   geom_point(aes(colour = Purpose))
 
-tourism_feat <- tourism |> 
-  features(Trips, feat_stl)
 
-tourism_most_seasonal <- tourism_feat |> 
-  # top_n(1, seasonal_strength_year)
+most_seasonal <- tourism |>
+  features(Trips, feat_stl) |>
   filter(seasonal_strength_year == max(seasonal_strength_year))
 
-tourism_most_seasonal
-
-tourism |> 
-  semi_join(tourism_most_seasonal) |> 
-  # filter(
-  #   Purpose == "Holiday",
-  #   State == "New South Wales",
-  #   Region == "Snowy Mountains"
-  # ) |> 
-  autoplot(Trips)
+tourism |>
+  right_join(most_seasonal, by = c("State", "Region", "Purpose")) |>
+  ggplot(aes(x = Quarter, y = Trips)) +
+  geom_line() + facet_grid(vars(State, Region, Purpose))
 
 
 
-tourism_trendy <- tourism_feat |> 
-  top_n(3, trend_strength)
+top_5_seasonal <- tourism |>
+  features(Trips, feat_stl) |>
+  slice_max(seasonal_strength_year, n = 5)
 
-tourism_feat |> 
-  # arrange(-trend_strength) |> 
-  head(3)
-
-tourism_trendy$Region
-
-tourism |> 
-  semi_join(tourism_trendy) |> 
-  autoplot(Trips)
+tourism |>
+  right_join(top_5_seasonal, by = c("State", "Region", "Purpose")) |>
+  ggplot(aes(x = Quarter, y = Trips)) +
+  geom_line() + facet_grid(vars(State, Region, Purpose))
 
 
-tourism |> 
-  semi_join(tourism_trendy) |> 
-  ACF(Trips) |> 
+
+
+top5_trends <- tourism |>
+  features(Trips, feat_stl) |>
+  slice_max(trend_strength, n = 5)
+
+tourism |>
+  right_join(top5_trends, by = c("State", "Region", "Purpose")) |>
+  ggplot(aes(x = Quarter, y = Trips)) +
+  geom_line() +
+  facet_grid(
+    vars(State, Region, Purpose),
+    scale = "free_y"
+  )
+
+
+aus_retail |>
+  summarise(Turnover = sum(Turnover)) |>
+  autoplot(Turnover)
+
+aus_retail |>
+  summarise(Turnover = sum(Turnover)) |>
+  features(-Turnover, feat_stl)
+
+# Create a new feature for estimating the trend slope
+estimate_trend <- function(x) {
+  c(trend = unname(lm(x ~ seq_along(x))$coef[2]))
+}
+
+aus_retail |>
+  summarise(Turnover = sum(Turnover)) |>
+  features(Turnover, estimate_trend)
+
+
+aus_retail |>
+  summarise(Turnover = sum(Turnover)) |>
+  ACF(Turnover) |>
   autoplot()
+
+
+aus_retail |>
+  summarise(Turnover = sum(Turnover)) |>
+  features(Turnover, feat_acf)
+
+
+
+aus_retail |>
+  summarise(Turnover = sum(Turnover)) |>
+  features(Turnover, list(feat_stl, feat_acf))
+
+
+aus_retail |>
+  summarise(Turnover = sum(Turnover)) |>
+  features(Turnover, feature_set(pkgs = "feasts"))
+
 
 
 tourism_features <- tourism |>
   features(Trips, feature_set(pkgs = "feasts"))
 
 tourism_features
-# 48 features from the data!
 
-tourism_features |> 
-  select(seasonal_strength_year, trend_strength, acf1, spectral_entropy)
-
-tourism_features |>
-  select(where(is.numeric)) |> 
-  # select(-State, -Region, -Purpose) |>
+pca_fit <- tourism_features |>
+  select(-State, -Region, -Purpose) |>
   prcomp(scale = TRUE)
+pca_fit |> plot()
 
 pcs <- tourism_features |>
-  select(where(is.numeric)) |> 
-  # select(-State, -Region, -Purpose) |>
+  select(-State, -Region, -Purpose) |>
   prcomp(scale = TRUE) |>
   broom::augment(tourism_features)
 
-pcs
+pcs |>
+  ggplot(aes(x = .fittedPC1, y = .fittedPC2, colour = Purpose)) +
+  geom_point()
 
-pcs |> 
-  ggplot(aes(x=.fittedPC1, y=.fittedPC2)) +
-  geom_point(aes(colour = Purpose)) + 
-  theme(aspect.ratio=1)
 
-tourism_outliers <- pcs |> 
+tourism_outliers <- pcs |>
   filter(.fittedPC1 > 10)
 
-tourism |> 
-  semi_join(tourism_outliers) |> 
-  autoplot()
+tourism |>
+  right_join(tourism_outliers, by = c("State", "Region", "Purpose")) |>
+  ggplot(aes(x = Quarter, y = Trips)) +
+  geom_line() +
+  facet_grid(
+    vars(State, Region, Purpose),
+    scale = "free_y"
+  )
 
-pc_fit <- tourism_features |>
-  select(where(is.numeric)) |> 
-  # select(-State, -Region, -Purpose) |>
-  prcomp(scale = TRUE)
 
-plot(pc_fit)
+as_tsibble(ChickWeight,
+           index = Time, key = Chick)
