@@ -1,117 +1,107 @@
 library(fpp3)
-library(ggdist)
-library(tidyverse)
-aus_beer <- aus_production |> select(Beer)
+# Load necessary libraries
+
+# use aus_retail data , turnover of cafe industry in Australia
+cafe_retail <- aus_retail |>
+  filter(Industry == "Cafes, restaurants and catering services") |>
+  summarise(Turnover = sum(Turnover))
+# visualize the data
+cafe_retail |> autoplot(Turnover)
 
 ## Basic accuracy- split to Test and Train
-forecast_horizon <- 4
-#test <- aus_beer |>
-  filter_index(as.character(max(aus_beer$Quarter)-forecast_horizon +1) ~ .)
+forecast_horizon <- 12 # 12 months forecast horizon
 
-test <- aus_beer |>
-  filter_index("2009 Q3" ~ .)
+# split data to train and test
+test <- cafe_retail |>
+  filter_index(as.character(max(cafe_retail$Month)-forecast_horizon +1) ~ .)
 
-#train <- aus_beer |> filter_index(. ~ as.character(max(aus_beer$Quarter)-forecast_horizon))
+train <- cafe_retail |> filter_index(. ~ as.character(max(cafe_retail$Month)-forecast_horizon))
 
-train <- aus_beer |>
-  filter_index(. ~ "2009 Q2")
-
-fit <- train |>
-  model(average = MEAN(Beer),
-        snaiev = SNAIVE(Beer),
-        regression = TSLM(Beer ~ trend() + season()),
-        automatic_ets = ETS(Beer),
-        automatc_arima = ARIMA(Beer)
+# fit models on train data
+fit_basic <- train |> model(
+  naive = NAIVE(Turnover),
+  snaive = SNAIVE(Turnover),
+  arima = ARIMA(Turnover),
+  ets = ETS(Turnover),
+  regression = TSLM(Turnover ~ trend() + season()),
+  stl = decomposition_model(
+    STL(Turnover ~ trend(window = 21), robust =TRUE),
+    NAIVE(season_adjust)
   )
+) |> 
+  mutate(comb = (arima+ets+stl)/3)# forecast combination, simple average of top 3 models
+# generate forecasts
+fcst_basic <- fit_basic |> forecast(h = forecast_horizon)
+# evaluate forecast accuracy
+fcst_accuracy <- fcst_basic |> accuracy(cafe_retail,
+                       measures = list(point_accuracy_measures,
+                                       interval_accuracy_measures,
+                                       distribution_accuracy_measures))
+# display accuracy metrics fro selected metrics
+fcst_accuracy |> select(.model,ME, RMSE, MAE, winkler, pinball, CRPS)
 
-fcst <- fit |> forecast(h = forecast_horizon)
-
-fcst_accuracy <- fcst |>
-accuracy(aus_beer,
-        measures = list(point_accuracy_measures,
-                        interval_accuracy_measures,
-                        distribution_accuracy_measures))
-
-fcst_accuracy |> select(.model, MAE, RMSE, winkler, CRPS)
-
-# Time series cross validation
-forecast_horizon <- 4
+#--------time series cross validation
 percentage_test <- 0.3
+# split data to train and test, 30 percent of data for test
+test <- cafe_retail |> filter_index(as.character(max(cafe_retail$Month) -
+                                                   round(percentage_test*length(unique(cafe_retail$Month)))+1) ~ .)
+# 70% of data for train
+train <- cafe_retail |> filter_index(. ~ as.character(max(cafe_retail$Month) -
+                                                        round(percentage_test*length(unique(cafe_retail$Month)))))
+# create time series cross validation sets
+tscv_cafe_retail <- cafe_retail |>
+  filter_index(. ~ as.character(max(cafe_retail$Month)-forecast_horizon)) |>
+  stretch_tsibble(.init = length(unique(train$Month)), .step = 1)
+# fit models on tscv data
+fit <- tscv_cafe_retail |> model(
+  naive = NAIVE(Turnover),
+  snaive = SNAIVE(Turnover),
+  arima = ARIMA(Turnover),
+  ets = ETS(Turnover),
+  regression = TSLM(Turnover ~ trend() + season()),
+  stl = decomposition_model(
+    STL(Turnover ~ trend(window = 21), robust =TRUE),
+    NAIVE(season_adjust)
+  )
+) |> 
+  mutate(comb = (arima+ets+stl)/3)
+# generate forecasts
+fcst <- fit |> forecast(h= forecast_horizon)
+# evaluate forecast accuracy
+fcst_accuracy <- fcst |> accuracy(cafe_retail,
+                                        measures = list(point_accuracy_measures,
+                                                        interval_accuracy_measures,
+                                                        distribution_accuracy_measures))
+# display accuracy metrics fro selected metrics
+fcst_accuracy |> select(.model,ME, RMSE, MAE, winkler, pinball, CRPS)
+# accuracy report for specific pediction interval score
+fcst |> accuracy(cafe_retail, list(winkler = winkler_score), level=.95)
+# accuracy report for specific quantile score
+fcst |> accuracy(cafe_retail, list(qs = quantile_score), probs=.95)
 
-test <- aus_beer |> filter_index(as.character(max(aus_beer$Quarter) -
-                              round(percentage_test*length(unique(aus_beer$Quarter)))+1) ~ .)
+# accuracy report based on each id and model
 
-train <- aus_beer |> filter_index(. ~ as.character(max(aus_beer$Quarter) -
-                                                   round(percentage_test*length(unique(aus_beer$Quarter)))))
-
-tscv_aus_beer <- aus_beer |>
-  filter_index(. ~ as.character(max(aus_beer$Quarter)-forecast_horizon)) |>
-  stretch_tsibble(.init = length(unique(train$Quarter)), .step = 1)
-
-fit <- tscv_aus_beer |>
-  model(average = MEAN(Beer),
-        naive = NAIVE(Beer),
-        snaiev = SNAIVE(Beer),
-        regression = TSLM(Beer ~ trend() + season()),
-        automatic_ets = ETS(Beer),
-        automatc_arima = ARIMA(Beer)
-  ) |>
-  mutate(combination = (automatc_arima+automatic_ets+snaiev)/3)
-
-fcst <- fit |> forecast(h = forecast_horizon)
-
-fcst_accuracy <- fcst |>
-  accuracy(aus_beer,
-           measures = list(point_accuracy_measures,
-                           interval_accuracy_measures,
-                           distribution_accuracy_measures))
-
-fcst_accuracy |> select(.model, MAE, RMSE, winkler, CRPS)
-
-# Winkler score alone
-fcst |>
-  accuracy(aus_beer, list(qs = winkler_score), level = .9)
-
-# quantile score alone
-fcst |>
-  accuracy(aus_beer, list(qs = quantile_score), probs = .9)
-
-# Accuracy by model and .id
-fcst_accuracy <- fcst |>
-  accuracy(aus_beer, by = c(".model", ".id"))
-
-fcst_accuracy |> ggplot(aes( x = RMSE, y = fct_reorder(.model, RMSE)))+
+#.id is the identifier for each rolling origin created in tscv
+# calculate accuracy by .id and .model
+accuracy_by_id <- fcst |> accuracy(cafe_retail, 
+                                   measures = list(point_accuracy_measures,
+                                                   interval_accuracy_measures,
+                                                   distribution_accuracy_measures),
+                                   by = c(".model", ".id"))
+# visualize the variation of RMSE across different .id for each model
+ggplot(data = accuracy_by_id, mapping = aes( x = RMSE, y = fct_reorder(.model, RMSE)))+
   geom_boxplot()+
   ggthemes::theme_few()
-
-# Density plot
-fcst_accuracy |>
-  ggplot(aes(RMSE))+
-  ggridges::geom_density_ridges(aes(y=fct_reorder(.model, RMSE)))+
-  ggthemes::theme_few()
-
-#### accuracy across horizon
-
-View(fcst[1:24,])
-
-
-#We first need to group by `id` and `.model` and then create a new variable called `h` and assign `row_number()` to it (you can type ?row_number in your Console to see what this function does, it simply returns the number of row):
-
+  
+# accuracy by forecast horizon
+# add horizon column to forecast data
 fc_h <- fcst |>
   group_by(.id,.model) |>
   mutate(h=row_number()) |> ungroup() |>
-  as_fable(response = "Beer", distribution = "Beer")
-
-
-View(fc_h[1:24,])# view the first 24 rows of ae_fc and observe h
-
-
-#Now check rows from 12 to 24 to see the difference.
-
-#To calculate the accuracy measures for each horizon and model, complete the following code :
-
-  fc_accuracy_h <- fc_h |>
-  accuracy(aus_beer,
+  as_fable(response = "Turnover", distribution = "Turnover")
+# calculate accuracy by h and .model
+fc_accuracy_h <- fc_h |>
+  accuracy(cafe_retail,
            measures = list(point_accuracy_measures,
                            interval_accuracy_measures,
                            distribution_accuracy_measures),
@@ -119,25 +109,12 @@ View(fc_h[1:24,])# view the first 24 rows of ae_fc and observe h
 
 
 
-#You can now create a line chart to show how forecast accuracy may change over the forecast horizon. Please complete the R code for a metric of your preference. You can replicate this process by changing the chosen metric:
+#You can now create a line chart to show how forecast accuracy may change over the forecast horizon.
 
-  ggplot(data = fc_accuracy_h,
-         mapping = aes(x = h, y = RMSE, color = .model))+
+ggplot(data = fc_accuracy_h,
+       mapping = aes(x = h, y = RMSE, color = .model))+
   geom_point()+
   geom_line()+
   ggthemes::scale_color_colorblind()+
   ggthemes::theme_clean()
-
-
-  ggplot(data = fcst, mapping = aes(x = Quarter, ydist = Beer))+
-    ggdist::stat_halfeye(alpha = .4)+
-    geom_line(aes(y=.mean, colour ="Point Forecast"))+
-    geom_line(aes(y = .fitted, colour ="Fitted"), data = filter_index(fitted_ets, "2005 Q1" ~ .))+
-    geom_point(aes(y = .fitted, colour ="Fitted"), data = filter_index(fitted_ets, "2005 Q1" ~ .))+
-    geom_line(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+
-    geom_point(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+
-    scale_color_manual(name=NULL,
-                       breaks=c('Fitted', 'Data',"Point Forecast"),
-                       values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))
-
 
