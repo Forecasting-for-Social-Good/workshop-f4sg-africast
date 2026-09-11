@@ -1,0 +1,31 @@
+# Tells Forecasting-for-Social-Good/workshops to pull in this repo's latest
+# gh-pages commit (as the `africast` submodule) right after it's published,
+# instead of waiting for that repo's weekly fallback poll.
+#
+# One-time setup (already done if this comment has been removed):
+#   1. Create a token able to dispatch to Forecasting-for-Social-Good/workshops:
+#      https://github.com/settings/personal-access-tokens/new, scoped to
+#      *only* that repository, permission Contents: Read and write. (A
+#      classic PAT with the `repo` scope also works, but is far broader than
+#      needed.)
+#   2. Add it as a secret named WORKSHOPS_HUB_TOKEN in *this* repo
+#      (Settings -> Secrets and variables -> Actions), e.g.:
+#        gh secret set WORKSHOPS_HUB_TOKEN --repo Forecasting-for-Social-Good/workshop-f4sg-africast
+name: Notify workshops hub
+
+on:
+  push:
+    branches: [gh-pages]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch update to Forecasting-for-Social-Good/workshops
+        env:
+          GH_TOKEN: ${{ secrets.WORKSHOPS_HUB_TOKEN }}
+        run: |
+          gh api repos/Forecasting-for-Social-Good/workshops/dispatches \
+            -f event_type=gh-pages-updated \
+            -f "client_payload[repo]=${{ github.repository }}" \
+            -f "client_payload[sha]=${{ github.sha }}"
