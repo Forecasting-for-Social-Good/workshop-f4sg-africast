@@ -2,6 +2,18 @@
 # gh-pages commit (as the `africast` submodule) right after it's published,
 # instead of waiting for that repo's weekly fallback poll.
 #
+# This site is published by running `quarto publish gh-pages` locally, which
+# replaces the entire gh-pages tree with the freshly rendered output on every
+# publish -- so a workflow file living only on gh-pages would (a) never
+# actually trigger a `push`-scoped workflow, since GitHub only evaluates
+# on.push workflows using the file as it exists in the ref being pushed, and
+# (b) get wiped by the next publish even if it somehow got there. `page_build`
+# sidesteps both problems: GitHub fires it whenever it finishes building
+# Pages from the branch configured as the publishing source (Settings ->
+# Pages; currently gh-pages, "legacy"/branch build type here), and evaluates
+# it from workflow files on the *default* branch (main), which quarto's
+# publish never touches.
+#
 # One-time setup (already done if this comment has been removed):
 #   1. Create a token able to dispatch to Forecasting-for-Social-Good/workshops:
 #      https://github.com/settings/personal-access-tokens/new, scoped to
@@ -14,12 +26,14 @@
 name: Notify workshops hub
 
 on:
-  push:
-    branches: [gh-pages]
+  page_build: {}
+  workflow_dispatch: {}
 
 jobs:
   notify:
     runs-on: ubuntu-latest
+    # page_build fires even when the Pages build fails; only notify on success.
+    if: github.event_name == 'workflow_dispatch' || github.event.build.state == 'built'
     steps:
       - name: Dispatch update to Forecasting-for-Social-Good/workshops
         env:
