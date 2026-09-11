@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Tidy time series &amp; forecasting in R – F4SG: Africast</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -71,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e547a3e8836fafd532eb956e7dd2d267.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-cc6d87c63f75e33b23f1e40b3bec5464.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -144,15 +150,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Time series patterns and basic graphics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./sessions/day2/adjustments.html">
- <span class="dropdown-text">Recap day 1, transforming / adjusting time series</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./sessions/day2/features.html">
  <span class="dropdown-text">Computing and visualizing features (features)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./sessions/day3/forecasting.html">
+    <a class="dropdown-item" href="./sessions/day2/forecasting.html">
  <span class="dropdown-text">Basic modeling / forecasting</span></a>
   </li>  
         <li>
@@ -160,7 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Forecasting with regression, how to represent temporal structure with regressors</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./sessions/day4/ets.html">
+    <a class="dropdown-item" href="./sessions/day3/ets.html">
  <span class="dropdown-text">ETS, building on recap of temporal regressors.</span></a>
   </li>  
         <li>
@@ -168,12 +170,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">ARIMA</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./sessions/day5/accuracy.html">
- <span class="dropdown-text">Recap forecasting methods, basic training and test accuracy</span></a>
+    <a class="dropdown-item" href="./sessions/day4/accuracy.html">
+ <span class="dropdown-text">Basic training and test accuracy</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./sessions/day5/diagnostics.html">
- <span class="dropdown-text">Advanced performance evaluation: residual diagnostics and cross validation</span></a>
+ <span class="dropdown-text">Residual diagnostics and cross validation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./sessions/day5/foundation_models.html">
+ <span class="dropdown-text">Time series foundation models</span></a>
   </li>  
     </ul>
   </li>
@@ -238,8 +244,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#instructor" id="toc-instructor" class="nav-link" data-scroll-target="#instructor">Instructor</a></li>
   <li><a href="#instructor-1" id="toc-instructor-1" class="nav-link" data-scroll-target="#instructor-1">Instructor</a></li>
   <li><a href="#instructor-2" id="toc-instructor-2" class="nav-link" data-scroll-target="#instructor-2">Instructor</a></li>
-  <li><a href="#mentors-for-the-cohort-2025" id="toc-mentors-for-the-cohort-2025" class="nav-link" data-scroll-target="#mentors-for-the-cohort-2025">Mentors for the cohort 2025</a></li>
-  <li><a href="#project-coordination" id="toc-project-coordination" class="nav-link" data-scroll-target="#project-coordination">Project coordination</a></li>
+  <li><a href="#instructor-3" id="toc-instructor-3" class="nav-link" data-scroll-target="#instructor-3">Instructor</a></li>
+  <li><a href="#coordinator" id="toc-coordinator" class="nav-link" data-scroll-target="#coordinator">Coordinator</a></li>
   </ul></li>
   <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a>
   <ul class="collapse">
@@ -281,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
 <p>Forecasting is a valuable tool that allows organizations to make informed decisions about the future. Time series forecasting, in particular, uses historical data to predict future trends over time. This technique has extensive applications across a wide range of fields, including finance and economics, health and humanitarian operations, supply chain management, and more. By analyzing trends and patterns in data, time series forecasting can help decision-makers identify potential challenges and opportunities, and plan accordingly.</p>
 <p>It is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyze data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.</p>
-<p>This workshop is part of the <a href="https://www.f4sg.org/">Forecasting for Social Good (F4SG)</a> initiative, and will run online from the 10th-14th November 2025.</p>
+<p>This workshop is part of the <a href="https://www.f4sg.org/">Forecasting for Social Good (F4SG)</a> initiative, and will run online from the 19th-23rd October 2026.</p>
 </section>
 <section id="learning-objectives" class="level2">
 <h2 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h2>
@@ -311,55 +317,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="instructor-2" class="level2">
 <h2 class="anchored" data-anchor-id="instructor-2">Instructor</h2>
-<p><img src="images/debra.jpg" class="img-fluid" style="float:right;padding: 0 0 0 10px;" alt="Headshot of Debra Okeh" width="200"> Debra Okeh is a Cohort 1 Fellow of the Nigeria Malaria Modelling Fellowship, CMS, Nigeria. She also serves as a member of the Learning Committee of the Applied Malaria Modelling Network (AMMnet) and the Assistant General Secretary of AMMnet Nigeria. As a global health physician and infectious disease epidemiologist, she specializes in translating complex epidemiological models into actionable policy. Her research&nbsp;interests are on using modelling for strategic planning by utilising subnational data to predict the impact of malaria control interventions, and implementing time-series analysis for disease forecasting. She has honed her skills in providing modelling and analytical support to the Nigeria National Malaria Elimination Programme. Her expertise has been recognised through presentations at Harvard’s Centre for Communicable Disease Dynamics, the 2024 American Society of Tropical Medicine and Hygiene Conference, the Gates Foundation 2024 Institute for Disease Modeling Symposium, and the 2024 Multilateral Initiative on Malaria (MIM) Society 8th Pan-African Conference.</p>
-<div data-align="center">
-<p><a href="https://x.com/DebraOkeh"><img border="0" alt="X" src="images/social-x.svg" width="35" height="35"></a>  <a href="https://www.linkedin.com/in/debra-okeh-1500ab109/"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>  </p>
-</div>
+<p><strong>Abiodun Egwuenu</strong></p>
+<p>Bio coming soon.</p>
 </section>
-<section id="mentors-for-the-cohort-2025" class="level2">
-<h2 class="anchored" data-anchor-id="mentors-for-the-cohort-2025">Mentors for the cohort 2025</h2>
-<p>A committed team, comprising both PhD students and MSc. students, generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the exercises.</p>
-<p>The team includes:</p>
-<ul>
-<li>Mama Kouandé Abdou Rakib</li>
-<li>Ninguin Romuald Guillaume</li>
-<li>Sode Akoeugnigan Idelphonse</li>
-<li>Akounda Badibassa</li>
-<li>Mihertab Ermias</li>
-<li>Agnes Njambi</li>
-<li>Caroline Mugo</li>
-<li>Catherine Chepkoech Munga</li>
-<li>Charity Wamwea</li>
-<li>Dickson Ochichi Suguku</li>
-<li>Herbert Imbogah</li>
-<li>Matabel Odin</li>
-<li>Simon Kamau</li>
-<li>Susan Mwelu</li>
-<li>Abiodun Egwuenu</li>
-<li>Adamu Saidu Saleh</li>
-<li>Adebayo, Olatunji Joyce</li>
-<li>Anthony C. Uwandu-Uzoma</li>
-<li>Haruna Jimoh</li>
-<li>Hassan Adam Murtala</li>
-<li>Okorie, Oluchukwu Chiamaka</li>
-<li>Olagbami Oluwafemi Samson</li>
-<li>Ugonma Regina Okorie</li>
-<li>Shittu Ola Abdulganiy</li>
-<li>Ali Mohamed Ali</li>
-<li>Kundu Sam</li>
-<li>Ssembatya Ronald</li>
-</ul>
+<section id="instructor-3" class="level2">
+<h2 class="anchored" data-anchor-id="instructor-3">Instructor</h2>
+<p><strong>Harsha Halgamuwe Hewage</strong></p>
+<p>Bio coming soon.</p>
+<!--
+## Mentors for the cohort 2026
+
+A committed team, comprising both PhD students and MSc. students, generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the exercises. 
+
+The team includes:
+
+- Mama Kouandé Abdou Rakib
+- Ninguin Romuald Guillaume
+- Sode Akoeugnigan Idelphonse
+- Akounda Badibassa
+- Mihertab Ermias
+- Agnes Njambi
+- Caroline Mugo
+- Catherine Chepkoech Munga
+- Charity Wamwea
+- Dickson Ochichi Suguku
+- Herbert Imbogah
+- Matabel Odin
+- Simon Kamau
+- Susan Mwelu
+- Adamu Saidu Saleh
+- Adebayo, Olatunji Joyce
+- Anthony C. Uwandu-Uzoma
+- Haruna Jimoh
+- Hassan Adam Murtala
+- Okorie, Oluchukwu Chiamaka
+- Olagbami Oluwafemi Samson
+- Ugonma Regina Okorie
+- Shittu Ola Abdulganiy
+- Ali Mohamed Ali
+- Kundu Sam
+- Ssembatya Ronald
+-->
 </section>
-<section id="project-coordination" class="level2">
-<h2 class="anchored" data-anchor-id="project-coordination">Project coordination</h2>
-<p>The coordination and administration of the project are overseen by a dedicated team from <a href="https://www.jkuat.ac.ke/">Jomo Kenyatta University of Agriculture and Technology</a>.</p>
-<!-- This includes tasks such as promoting the workshop across various countries, managing the intake of 138 applications from 13 different nations, conducting a thorough shortlisting process and selecting 62 participants, and maintaining effective communication with all attendees. -->
-<p>Jomo Kenyatta University team includes:</p>
+<section id="coordinator" class="level2">
+<h2 class="anchored" data-anchor-id="coordinator">Coordinator</h2>
+<p>The workshop is coordinated by:</p>
 <ul>
 <li>Henry Kissinger Ochieng</li>
-<li>Caroline Mugo</li>
-<li>Winnie Chacha</li>
-<li>Samuel Mwalili</li>
 </ul>
 </section>
 </section>
@@ -378,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>Time series packages and extensions</strong>
 <ul>
-<li>fpp3, sugrrants</li>
+<li>fpp3, mixtime, ggtime</li>
 </ul></li>
 <li><strong>tidyverse packages and friends</strong>
 <ul>
@@ -386,9 +390,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <p>The following code will install the main packages needed for the workshop.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>,<span class="st">"fpp3"</span>, <span class="st">"GGally"</span>, <span class="st">"sugrrants"</span>, <span class="st">"astsa"</span>, <span class="st">"usethis"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>,<span class="st">"fpp3"</span>, <span class="st">"GGally"</span>, <span class="st">"mixtime"</span>, <span class="st">"ggtime"</span>, <span class="st">"astsa"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>After installing these packages, you can create download the exercises and data for the course using the following code:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_course</span>(<span class="st">"https://workshop.f4sg.org/africast/exercises.zip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_course</span>(<span class="st">"https://workshop.f4sg.org/africast/exercises.zip"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Please have the required software installed and pre-work completed before attending the workshop.</p>
 
 
@@ -397,7 +401,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </main> <!-- /main -->
 <!-- plausible --> 
-<script defer="" data-domain="workshop.f4sg.org" src="https://track.mitchelloharawild.com/js/plausible.js"></script>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async="" src="https://track.mitchelloharawild.com/js/pa-mzb0zqBlxpfntVWyCnnOX.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -449,13 +458,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

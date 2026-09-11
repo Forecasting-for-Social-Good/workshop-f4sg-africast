@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Resources (recording and code) – F4SG: Africast</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -36,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-e547a3e8836fafd532eb956e7dd2d267.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-cc6d87c63f75e33b23f1e40b3bec5464.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -109,15 +115,11 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Time series patterns and basic graphics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day2/adjustments.html">
- <span class="dropdown-text">Recap day 1, transforming / adjusting time series</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="../../sessions/day2/features.html">
  <span class="dropdown-text">Computing and visualizing features (features)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day3/forecasting.html">
+    <a class="dropdown-item" href="../../sessions/day2/forecasting.html">
  <span class="dropdown-text">Basic modeling / forecasting</span></a>
   </li>  
         <li>
@@ -125,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Forecasting with regression, how to represent temporal structure with regressors</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day4/ets.html">
+    <a class="dropdown-item" href="../../sessions/day3/ets.html">
  <span class="dropdown-text">ETS, building on recap of temporal regressors.</span></a>
   </li>  
         <li>
@@ -133,12 +135,16 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">ARIMA</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../sessions/day5/accuracy.html">
- <span class="dropdown-text">Recap forecasting methods, basic training and test accuracy</span></a>
+    <a class="dropdown-item" href="../../sessions/day4/accuracy.html">
+ <span class="dropdown-text">Basic training and test accuracy</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../sessions/day5/diagnostics.html">
- <span class="dropdown-text">Advanced performance evaluation: residual diagnostics and cross validation</span></a>
+ <span class="dropdown-text">Residual diagnostics and cross validation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../sessions/day5/foundation_models.html">
+ <span class="dropdown-text">Time series foundation models</span></a>
   </li>  
     </ul>
   </li>
@@ -231,20 +237,20 @@ ul.task-list li input[type="checkbox"] {
 <!-- Materials will be distributed sooner to the event. -->
 <section id="recording" class="level2">
 <h2 class="anchored" data-anchor-id="recording">Recording</h2>
-<iframe width="800" height="450" src="https://www.youtube.com/embed/p9Oo8gQd-Gw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
-</iframe>
+<p>The recording for this session will be added here after the workshop.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Recordings from previous years
+<span class="screen-reader-only">Note</span>Recordings from previous years
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>2025</strong> <iframe width="800" height="450" src="https://www.youtube.com/embed/p9Oo8gQd-Gw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></p>
 <p><strong>2024</strong></p>
 <iframe width="800" height="450" src="https://www.youtube.com/embed/FmCZP_rCQIc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
@@ -264,7 +270,12 @@ Recordings from previous years
 
 </main> <!-- /main -->
 <!-- plausible --> 
-<script defer="" data-domain="workshop.f4sg.org" src="https://track.mitchelloharawild.com/js/plausible.js"></script>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async="" src="https://track.mitchelloharawild.com/js/pa-mzb0zqBlxpfntVWyCnnOX.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -316,13 +327,14 @@ Recordings from previous years
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

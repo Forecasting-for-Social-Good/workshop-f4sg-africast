@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Schedule – F4SG: Africast</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -38,10 +44,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e547a3e8836fafd532eb956e7dd2d267.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-cc6d87c63f75e33b23f1e40b3bec5464.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -212,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
   </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -225,7 +231,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -281,15 +287,11 @@ window.Quarto = {
  <span class="dropdown-text">Time series patterns and basic graphics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./sessions/day2/adjustments.html">
- <span class="dropdown-text">Recap day 1, transforming / adjusting time series</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./sessions/day2/features.html">
  <span class="dropdown-text">Computing and visualizing features (features)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./sessions/day3/forecasting.html">
+    <a class="dropdown-item" href="./sessions/day2/forecasting.html">
  <span class="dropdown-text">Basic modeling / forecasting</span></a>
   </li>  
         <li>
@@ -297,7 +299,7 @@ window.Quarto = {
  <span class="dropdown-text">Forecasting with regression, how to represent temporal structure with regressors</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./sessions/day4/ets.html">
+    <a class="dropdown-item" href="./sessions/day3/ets.html">
  <span class="dropdown-text">ETS, building on recap of temporal regressors.</span></a>
   </li>  
         <li>
@@ -305,12 +307,16 @@ window.Quarto = {
  <span class="dropdown-text">ARIMA</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./sessions/day5/accuracy.html">
- <span class="dropdown-text">Recap forecasting methods, basic training and test accuracy</span></a>
+    <a class="dropdown-item" href="./sessions/day4/accuracy.html">
+ <span class="dropdown-text">Basic training and test accuracy</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./sessions/day5/diagnostics.html">
- <span class="dropdown-text">Advanced performance evaluation: residual diagnostics and cross validation</span></a>
+ <span class="dropdown-text">Residual diagnostics and cross validation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./sessions/day5/foundation_models.html">
+ <span class="dropdown-text">Time series foundation models</span></a>
   </li>  
     </ul>
   </li>
@@ -417,10 +423,10 @@ Session
 </thead>
 <tbody class="list">
 
-<tr data-index="0" data-listing-date-sort="1697979600000" data-listing-file-modified-sort="1762759193843" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="26" data-listing-title-sort="Basics of time series and data structures" data-listing-filename-sort="basics.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="0" data-listing-date-sort="1792328400000" data-listing-file-modified-sort="1789101551360" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="26" data-listing-title-sort="Basics of time series and data structures" data-listing-filename-sort="basics.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
+<span class="listing-subtitle"><span class="code">10:00-11:30</span> · Mitchell O’Hara-Wild</span>
 </td>
 <td>
 <a href="./sessions/day1/basics.html" class="title listing-title">Basics of time series and data structures</a>
@@ -428,10 +434,10 @@ Session
 
 </tr>
 
-<tr data-index="1" data-listing-date-sort="1697979600000" data-listing-file-modified-sort="1762759193843" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Time series patterns and basic graphics" data-listing-filename-sort="graphics.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="1" data-listing-date-sort="1792328400000" data-listing-file-modified-sort="1789101552837" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Time series patterns and basic graphics" data-listing-filename-sort="graphics.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
+<span class="listing-subtitle"><span class="code">11:45-13:15</span> · Abiodun Egwuenu</span>
 </td>
 <td>
 <a href="./sessions/day1/graphics.html" class="title listing-title">Time series patterns and basic graphics</a>
@@ -439,7 +445,7 @@ Session
 
 </tr>
 
-<tr data-index="2" data-listing-date-sort="1697979600000" data-listing-file-modified-sort="1762759195950" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2604" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="2" data-listing-date-sort="1792328400000" data-listing-file-modified-sort="1789101553777" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2604" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
@@ -450,7 +456,7 @@ Session
 
 </tr>
 
-<tr data-index="3" data-listing-date-sort="1697979600000" data-listing-file-modified-sort="1762780781586" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="76" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="3" data-listing-date-sort="1792328400000" data-listing-file-modified-sort="1789101577505" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="87" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle">&nbsp;</span>
@@ -485,21 +491,10 @@ Session
 </thead>
 <tbody class="list">
 
-<tr data-index="0" data-listing-date-sort="1698066000000" data-listing-file-modified-sort="1762759193844" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Transforming / adjusting time series" data-listing-filename-sort="adjustments.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="0" data-listing-date-sort="1792414800000" data-listing-file-modified-sort="1789101555186" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Computing and visualizing features" data-listing-filename-sort="features.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
-</td>
-<td>
-<a href="./sessions/day2/adjustments.html" class="title listing-title">Transforming / adjusting time series</a>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-date-sort="1698066000000" data-listing-file-modified-sort="1762759193843" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Computing and visualizing features" data-listing-filename-sort="features.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
+<span class="listing-subtitle"><span class="code">10:00-11:30</span> · Mitchell O’Hara-Wild</span>
 </td>
 <td>
 <a href="./sessions/day2/features.html" class="title listing-title">Computing and visualizing features</a>
@@ -507,7 +502,18 @@ Session
 
 </tr>
 
-<tr data-index="2" data-listing-date-sort="1698066000000" data-listing-file-modified-sort="1762759193843" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1804" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="1" data-listing-date-sort="1792414800000" data-listing-file-modified-sort="1789101556660" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Basic modeling / forecasting" data-listing-filename-sort="forecasting.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+ if (href) { window.location=href ; return false; }">
+<td>
+<span class="listing-subtitle"><span class="code">11:45-13:15</span> · Mitchell O’Hara-Wild</span>
+</td>
+<td>
+<a href="./sessions/day2/forecasting.html" class="title listing-title">Basic modeling / forecasting</a>
+</td>
+
+</tr>
+
+<tr data-index="2" data-listing-date-sort="1792414800000" data-listing-file-modified-sort="1789101557715" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1804" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
@@ -518,7 +524,7 @@ Session
 
 </tr>
 
-<tr data-index="3" data-listing-date-sort="1698066000000" data-listing-file-modified-sort="1762857820444" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="76" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="3" data-listing-date-sort="1792414800000" data-listing-file-modified-sort="1789101581162" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="87" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle">&nbsp;</span>
@@ -553,21 +559,10 @@ Session
 </thead>
 <tbody class="list">
 
-<tr data-index="0" data-listing-date-sort="1698152400000" data-listing-file-modified-sort="1762759193841" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Basic modeling / forecasting" data-listing-filename-sort="forecasting.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="0" data-listing-date-sort="1792501200000" data-listing-file-modified-sort="1789101559136" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Forecasting with regression, how to represent temporal structure with regressors" data-listing-filename-sort="regressors.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
-</td>
-<td>
-<a href="./sessions/day3/forecasting.html" class="title listing-title">Basic modeling / forecasting</a>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-date-sort="1698152400000" data-listing-file-modified-sort="1762759193841" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Forecasting with regression, how to represent temporal structure with regressors" data-listing-filename-sort="regressors.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
+<span class="listing-subtitle"><span class="code">10:00-11:30</span> · Mitchell O’Hara-Wild</span>
 </td>
 <td>
 <a href="./sessions/day3/regressors.html" class="title listing-title">Forecasting with regression, how to represent temporal structure with regressors</a>
@@ -575,7 +570,18 @@ Session
 
 </tr>
 
-<tr data-index="2" data-listing-date-sort="1698152400000" data-listing-file-modified-sort="1762759193841" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2204" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="1" data-listing-date-sort="1792501200000" data-listing-file-modified-sort="1789101560505" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="ETS" data-listing-filename-sort="ets.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+ if (href) { window.location=href ; return false; }">
+<td>
+<span class="listing-subtitle"><span class="code">11:45-13:15</span> · Bahman Rostami-Tabar</span>
+</td>
+<td>
+<a href="./sessions/day3/ets.html" class="title listing-title">ETS</a>
+</td>
+
+</tr>
+
+<tr data-index="2" data-listing-date-sort="1792501200000" data-listing-file-modified-sort="1789101561530" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2204" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
@@ -586,7 +592,7 @@ Session
 
 </tr>
 
-<tr data-index="3" data-listing-date-sort="1698152400000" data-listing-file-modified-sort="1763015742333" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="76" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="3" data-listing-date-sort="1792501200000" data-listing-file-modified-sort="1789101584728" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="87" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle">&nbsp;</span>
@@ -621,21 +627,10 @@ Session
 </thead>
 <tbody class="list">
 
-<tr data-index="0" data-listing-date-sort="1698238800000" data-listing-file-modified-sort="1763015804600" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="ETS" data-listing-filename-sort="ets.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="0" data-listing-date-sort="1792587600000" data-listing-file-modified-sort="1789101563026" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="ARIMA" data-listing-filename-sort="arima.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
-</td>
-<td>
-<a href="./sessions/day4/ets.html" class="title listing-title">ETS</a>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-date-sort="1698238800000" data-listing-file-modified-sort="1763015803097" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="ARIMA" data-listing-filename-sort="arima.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
+<span class="listing-subtitle"><span class="code">10:00-11:30</span> · Bahman Rostami-Tabar / Mustafa</span>
 </td>
 <td>
 <a href="./sessions/day4/arima.html" class="title listing-title">ARIMA</a>
@@ -643,7 +638,18 @@ Session
 
 </tr>
 
-<tr data-index="2" data-listing-date-sort="1698238800000" data-listing-file-modified-sort="1762759193842" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1066" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="1" data-listing-date-sort="1792587600000" data-listing-file-modified-sort="1789101564411" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Basic training and test accuracy" data-listing-filename-sort="accuracy.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+ if (href) { window.location=href ; return false; }">
+<td>
+<span class="listing-subtitle"><span class="code">11:45-13:15</span> · Bahman Rostami-Tabar</span>
+</td>
+<td>
+<a href="./sessions/day4/accuracy.html" class="title listing-title">Basic training and test accuracy</a>
+</td>
+
+</tr>
+
+<tr data-index="2" data-listing-date-sort="1792587600000" data-listing-file-modified-sort="1789101565358" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1066" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
@@ -654,7 +660,7 @@ Session
 
 </tr>
 
-<tr data-index="3" data-listing-date-sort="1698238800000" data-listing-file-modified-sort="1763032837516" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="86" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="3" data-listing-date-sort="1792587600000" data-listing-file-modified-sort="1789101588334" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="97" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle">&nbsp;</span>
@@ -689,21 +695,10 @@ Session
 </thead>
 <tbody class="list">
 
-<tr data-index="0" data-listing-date-sort="1698325200000" data-listing-file-modified-sort="1762759193844" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Basic training and test accuracy" data-listing-filename-sort="accuracy.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="0" data-listing-date-sort="1792674000000" data-listing-file-modified-sort="1789101566815" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Residual diagnostics and cross validation" data-listing-filename-sort="diagnostics.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
-</td>
-<td>
-<a href="./sessions/day5/accuracy.html" class="title listing-title">Basic training and test accuracy</a>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-date-sort="1698325200000" data-listing-file-modified-sort="1762759193844" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Residual diagnostics and cross validation" data-listing-filename-sort="diagnostics.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
+<span class="listing-subtitle"><span class="code">10:00-11:30</span> · Bahman Rostami-Tabar</span>
 </td>
 <td>
 <a href="./sessions/day5/diagnostics.html" class="title listing-title">Residual diagnostics and cross validation</a>
@@ -711,7 +706,18 @@ Session
 
 </tr>
 
-<tr data-index="2" data-listing-date-sort="1698325200000" data-listing-file-modified-sort="1762759193844" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1420" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="1" data-listing-date-sort="1792674000000" data-listing-file-modified-sort="1789101571857" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="88" data-listing-title-sort="Time series foundation models" data-listing-filename-sort="foundation_models.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+ if (href) { window.location=href ; return false; }">
+<td>
+<span class="listing-subtitle"><span class="code">11:45-13:15</span> · Harsha Halgamuwe Hewage</span>
+</td>
+<td>
+<a href="./sessions/day5/foundation_models.html" class="title listing-title">Time series foundation models</a>
+</td>
+
+</tr>
+
+<tr data-index="2" data-listing-date-sort="1792674000000" data-listing-file-modified-sort="1789101567733" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1420" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
@@ -722,7 +728,7 @@ Session
 
 </tr>
 
-<tr data-index="3" data-listing-date-sort="1698325200000" data-listing-file-modified-sort="1763119814619" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="76" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+<tr data-index="3" data-listing-date-sort="1792674000000" data-listing-file-modified-sort="1789101591903" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="87" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
  if (href) { window.location=href ; return false; }">
 <td>
 <span class="listing-subtitle">&nbsp;</span>
@@ -738,20 +744,24 @@ Session
 <div class="listing-no-matching d-none">No matching items</div>
 </div>
 <!-- Day 1: The basics of time series -->
-<!-- Session 1. Basics of time series and data structures -->
-<!-- Session 2. Time series patterns and basic graphics -->
-<!-- Day 2: Time series exploration -->
-<!-- Session 1. Recap day 1, transforming / adjusting time series -->
-<!-- Session 2. Computing and visualizing features (features) -->
-<!-- Day 3: The basics of forecasting -->
-<!-- Session 1. Basic modeling / forecasting -->
-<!-- Session 2. Forecasting with regression, how to represent temporal structure with regressors -->
-<!-- Day 4: Forecasting temporal patterns -->
-<!-- Session 1. ETS, building on recap of temporal regressors. -->
-<!-- Session 2. ARIMA -->
-<!-- Day 5: Evaluating model performance -->
-<!-- Session 1. Recap forecasting methods, basic training and test accuracy -->
-<!-- Session 2. Advanced performance evaluation: residual diagnostics and cross validation -->
+<!-- Session 1. Basics of time series and data structures (Mitch) -->
+<!-- Session 2. Time series patterns and basic graphics (Abiodun Egwuenu) -->
+<!-- Day 2: Time series exploration and basic forecasting -->
+<!-- Session 1. Computing and visualizing features (Mitch) -->
+<!-- Session 2. Basic modeling / forecasting (Mitch) -->
+<!-- Day 3: Forecasting temporal patterns -->
+<!-- Session 1. Forecasting with regression, how to represent temporal structure with regressors (Mitch) -->
+<!-- Session 2. ETS (Bahman) -->
+<!-- Day 4: ARIMA and forecast accuracy -->
+<!-- Session 1. ARIMA (Bahman/Mustafa) -->
+<!-- Session 2. Basic training and test accuracy (Bahman) -->
+<!-- Day 5: Evaluating model performance and foundation models -->
+<!-- Session 1. Residual diagnostics and cross validation (Bahman) -->
+<!-- Session 2. Time series foundation models (Harsha) -->
+<!-- Note: "Transforming / adjusting time series" (previously Day 2, session 1) has no
+     slot in the 2026 schedule and has been dropped from the site's session listing.
+     The Day 2 exercises still cover transformations/adjustments, so this content is
+     not entirely gone, just without its own lecture slide session for now. -->
 
 
 
@@ -759,7 +769,12 @@ Session
 
 </main> <!-- /main -->
 <!-- plausible --> 
-<script defer="" data-domain="workshop.f4sg.org" src="https://track.mitchelloharawild.com/js/plausible.js"></script>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async="" src="https://track.mitchelloharawild.com/js/pa-mzb0zqBlxpfntVWyCnnOX.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -811,13 +826,14 @@ Session
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
