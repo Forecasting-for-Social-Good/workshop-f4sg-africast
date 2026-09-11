@@ -1,0 +1,14 @@
+---
+title: "Basic training and test accuracy"
+subtitle: "<span class='code'>11:45-13:15</span> · Bahman Rostami-Tabar"
+date: "2026-10-22"
+order: 2
+---
+
+<!-- Materials will be distributed sooner to the event. -->
+
+```{=html}
+<embed src="../../materials/05_accuracy_basic.pdf" type="application/pdf" width="750px" height="420px">
+```
+
+[View slides in full screen](../../materials/05_accuracy_basic.pdf)

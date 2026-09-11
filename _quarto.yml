@@ -55,27 +55,27 @@ website:
         href: https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast
     left:
       - text: Sessions
-        menu: 
+        menu:
           - text: Basics of time series and data structures
             href: sessions/day1/basics.qmd
           - text: Time series patterns and basic graphics
             href: sessions/day1/graphics.qmd
-          - text: Recap day 1, transforming / adjusting time series
-            href: sessions/day2/adjustments.qmd
           - text: Computing and visualizing features (features)
             href: sessions/day2/features.qmd
           - text: Basic modeling / forecasting
-            href: sessions/day3/forecasting.qmd
+            href: sessions/day2/forecasting.qmd
           - text: Forecasting with regression, how to represent temporal structure with regressors
             href: sessions/day3/regressors.qmd
           - text: ETS, building on recap of temporal regressors.
-            href: sessions/day4/ets.qmd
+            href: sessions/day3/ets.qmd
           - text: ARIMA
             href: sessions/day4/arima.qmd
-          - text: Recap forecasting methods, basic training and test accuracy
-            href: sessions/day5/accuracy.qmd
-          - text: "Advanced performance evaluation: residual diagnostics and cross validation"
+          - text: Basic training and test accuracy
+            href: sessions/day4/accuracy.qmd
+          - text: "Residual diagnostics and cross validation"
             href: sessions/day5/diagnostics.qmd
+          - text: Time series foundation models
+            href: sessions/day5/foundation_models.qmd
       - href: schedule.qmd
 
 from: markdown+emoji

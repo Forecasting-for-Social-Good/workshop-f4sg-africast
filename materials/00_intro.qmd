@@ -34,17 +34,17 @@ source("setup.R")
   \end{alertblock}
 \end{textblock}
 
-\placefig{0.5}{5.9}{width=2.5cm}{debra}
-\begin{textblock}{11.5}(3.5,6.4)
-  \begin{alertblock}{Debra Okeh}
-    {\small
-      \href{https://x.com/DebraOkeh}{\faIcon{twitter} x.com/DebraOkeh}\\
-      \href{https://www.linkedin.com/in/debra-okeh-1500ab109/}{\faIcon{linkedin} debra-okeh-1500ab109}
-    }
-  \end{alertblock}
-\end{textblock}
+## Project lead and Instructors (cont.)
 
-## Mentors  
+\begin{alertblock}{Abiodun Egwuenu}
+  {\small Bio coming soon.}
+\end{alertblock}
+
+\begin{alertblock}{Harsha Halgamuwe Hewage}
+  {\small Bio coming soon.}
+\end{alertblock}
+
+## Mentors
 * Mama Kouandé Abdou Rakib  
 * Ninguin Romuald Guillaume  
 * Sode Akoeugnigan Idelphonse  
@@ -59,10 +59,9 @@ source("setup.R")
 * Dickson Ochichi Suguku  
 * Herbert Imbogah  
 * Matabel Odin  
-* Simon Kamau  
-* Susan Mwelu  
-* Abiodun Egwuenu  
-* Adamu Saidu Saleh  
+* Simon Kamau
+* Susan Mwelu
+* Adamu Saidu Saleh
 * Adebayo, Olatunji Joyce  
 * Anthony C. Uwandu-Uzoma  
 
@@ -77,12 +76,9 @@ source("setup.R")
 * Kundu Sam  
 * Ssembatya Ronald
 
-## Coordination and admin lead
+## Coordinator
 
-- Henry Kissinger Ochieng 
-- Caroline Mugo
-- Winnie Chacha
-- Samuel Mwalili
+- Henry Kissinger Ochieng
 
 ## Assumptions
 
@@ -184,14 +180,14 @@ install.packages(c(
   \midrule
   1       & 1. Basics of time series and data structures    & 2 \\
   1       & 2. Time series patterns and basic graphics      & 2 \\
-  2       & 3. Transforming / adjusting time series         & 3 \\
-  2       & 4. Computing and visualizing features     & 4 \\
-  3       & 5. Basic modeling / forecasting & 1,3,5 \\
-  3       & 6. Forecasting with regression         & 7,10 \\
-  4       & 7. Exponential smoothing       & 8 \\
-  4       & 8. ARIMA models                & 9 \\
-  5       & 9. Basic training and test accuracy       & 5 \\
-  5       & 10. Residual diagnostics and cross validation                & 5 \\
+  2       & 3. Computing and visualizing features     & 4 \\
+  2       & 4. Basic modeling / forecasting & 1,3,5 \\
+  3       & 5. Forecasting with regression         & 7,10 \\
+  3       & 6. Exponential smoothing       & 8 \\
+  4       & 7. ARIMA models                & 9 \\
+  4       & 8. Basic training and test accuracy       & 5 \\
+  5       & 9. Residual diagnostics and cross validation                & 5 \\
+  5       & 10. Time series foundation models              & -- \\
   \bottomrule
 \end{tabular}
 

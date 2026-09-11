@@ -1,0 +1,35 @@
+---
+title: "Africast-Time Series Analysis & Forecasting Using R"
+subtitle: "10. Time series foundation models"
+---
+
+<!-- STUB: content to be written. This slide deck has not yet been rendered to PDF. -->
+
+## Outline
+
+\vspace*{0.7cm}\tableofcontents
+
+## What is a time series foundation model?
+
+* Large, pre-trained models (e.g. Chronos, TimeGPT, Moirai) that forecast directly from
+  historical data
+* Trained once on huge, diverse collections of time series
+* Little or no task-specific training required to forecast a new series ("zero-shot")
+
+## How do they compare to classical methods?
+
+* Classical methods (ETS, ARIMA, regression) are fit to *your* series
+* Foundation models are pre-trained on *many* series, then applied to yours
+* Trade-offs: convenience and speed vs. interpretability and control
+
+## When to use a foundation model
+
+* Useful for quick baselines, and series with little historical data
+* Classical methods often still competitive, and more transparent, once tuned
+* Consider the operational context (compute, explainability, cost)
+
+## Summary
+
+* Foundation models are a fast-moving area of forecasting research
+* A useful addition to the toolkit alongside ETS, ARIMA and regression
+* This session gives a high-level introduction; hands-on examples to follow

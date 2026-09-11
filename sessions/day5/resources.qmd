@@ -1,17 +1,20 @@
 ---
 title: "Resources (recording and code)"
 subtitle: ""
-date: "2023-10-27"
+date: "2026-10-23"
 order: 4
 ---
 
 <!-- Materials will be distributed sooner to the event. -->
 ## Recording
 
-<iframe width="800" height="450" src="https://www.youtube.com/embed/p9Oo8gQd-Gw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+The recording for this session will be added here after the workshop.
 
 ::: {.callout-note icon="false" collapse="true"}
 ## Recordings from previous years
+
+**2025**
+<iframe width="800" height="450" src="https://www.youtube.com/embed/p9Oo8gQd-Gw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 **2024**
 

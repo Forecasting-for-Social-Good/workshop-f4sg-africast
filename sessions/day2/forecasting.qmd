@@ -1,0 +1,14 @@
+---
+title: "Basic modeling / forecasting"
+subtitle: "<span class='code'>11:45-13:15</span> · Mitchell O'Hara-Wild"
+date: "2026-10-20"
+order: 2
+---
+
+<!-- Materials will be distributed sooner to the event. -->
+
+```{=html}
+<embed src="../../materials/03_basic_modelling.pdf" type="application/pdf" width="750px" height="420px">
+```
+
+[View slides in full screen](../../materials/03_basic_modelling.pdf)

@@ -1,8 +1,8 @@
 ---
 title: "ARIMA"
-subtitle: "<span class='code'>11:45-13:15</span>"
-date: "2023-10-26"
-order: 2
+subtitle: "<span class='code'>10:00-11:30</span> · Bahman Rostami-Tabar / Mustafa"
+date: "2026-10-22"
+order: 1
 ---
 
 <!-- Materials will be distributed sooner to the event. -->

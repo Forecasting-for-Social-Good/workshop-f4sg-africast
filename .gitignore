@@ -9,3 +9,5 @@
 /site_libs/
 /_freeze/
 *_cache/
+
+**/*.quarto_ipynb

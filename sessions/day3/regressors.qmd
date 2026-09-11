@@ -1,8 +1,8 @@
 ---
 title: "Forecasting with regression, how to represent temporal structure with regressors"
-subtitle: "<span class='code'>11:45-13:15</span>"
-date: "2023-10-25"
-order: 2
+subtitle: "<span class='code'>10:00-11:30</span> · Mitchell O'Hara-Wild"
+date: "2026-10-21"
+order: 1
 ---
 
 <!-- Materials will be distributed sooner to the event. -->

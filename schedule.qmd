@@ -99,17 +99,22 @@ All times are listed in Africa/Nairobi time (UTC+3).
 
 
 <!-- Day 1: The basics of time series -->
-<!-- Session 1. Basics of time series and data structures -->
-<!-- Session 2. Time series patterns and basic graphics -->
-<!-- Day 2: Time series exploration -->
-<!-- Session 1. Recap day 1, transforming / adjusting time series -->
-<!-- Session 2. Computing and visualizing features (features) -->
-<!-- Day 3: The basics of forecasting -->
-<!-- Session 1. Basic modeling / forecasting -->
-<!-- Session 2. Forecasting with regression, how to represent temporal structure with regressors -->
-<!-- Day 4: Forecasting temporal patterns -->
-<!-- Session 1. ETS, building on recap of temporal regressors. -->
-<!-- Session 2. ARIMA -->
-<!-- Day 5: Evaluating model performance -->
-<!-- Session 1. Recap forecasting methods, basic training and test accuracy -->
-<!-- Session 2. Advanced performance evaluation: residual diagnostics and cross validation -->
+<!-- Session 1. Basics of time series and data structures (Mitch) -->
+<!-- Session 2. Time series patterns and basic graphics (Abiodun Egwuenu) -->
+<!-- Day 2: Time series exploration and basic forecasting -->
+<!-- Session 1. Computing and visualizing features (Mitch) -->
+<!-- Session 2. Basic modeling / forecasting (Mitch) -->
+<!-- Day 3: Forecasting temporal patterns -->
+<!-- Session 1. Forecasting with regression, how to represent temporal structure with regressors (Mitch) -->
+<!-- Session 2. ETS (Bahman) -->
+<!-- Day 4: ARIMA and forecast accuracy -->
+<!-- Session 1. ARIMA (Bahman/Mustafa) -->
+<!-- Session 2. Basic training and test accuracy (Bahman) -->
+<!-- Day 5: Evaluating model performance and foundation models -->
+<!-- Session 1. Residual diagnostics and cross validation (Bahman) -->
+<!-- Session 2. Time series foundation models (Harsha) -->
+
+<!-- Note: "Transforming / adjusting time series" (previously Day 2, session 1) has no
+     slot in the 2026 schedule and has been dropped from the site's session listing.
+     The Day 2 exercises still cover transformations/adjustments, so this content is
+     not entirely gone, just without its own lecture slide session for now. -->

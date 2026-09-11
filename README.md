@@ -6,7 +6,7 @@
 This five day workshop provides the basics of time series analysis and
 forecasting in R. This workshop is part of the the IIF’s forecasting for
 social good (F4SG) initiative, and will run online for a select group of
-students from Africa between the 23-27th October 2023.
+students from Africa between the 19-23rd October 2026.
 
 ## Learning objectives
 

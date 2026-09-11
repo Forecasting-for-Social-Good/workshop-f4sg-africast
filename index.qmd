@@ -15,7 +15,7 @@ Forecasting is a valuable tool that allows organizations to make informed decisi
 
 It is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyze data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.
 
-This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, and will run online from the 10th-14th November 2025.
+This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, and will run online from the 19th-23rd October 2026.
 
 ## Learning objectives
 
@@ -31,7 +31,6 @@ During the training, participants will gain knowledge and skills in:
 
 ![](images/mitch.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Mitchell O'Hara-Wild" width="200"}
 [**Mitchell O'Hara-Wild**](https://mitchelloharawild.com/) (he/him) is a PhD candidate at [Monash University](https://www.monash.edu), creating new techniques and tools for forecasting large collections of time series with Rob Hyndman and George Athanasopoulos. He is the lead developer of the tidy time-series forecasting tools fable and feasts, and has co-developed the widely used forecast package since 2015. Mitchell also operates a data consultancy, and has worked on many forecasting projects that have supported decision making and planning for businesses and governments. He is an award-winning educator, and has taught applied forecasting at Monash University and various forecasting workshops around the world.
-
 
 <div align="center">
 <a href="https://www.mitchelloharawild.com"><img border="0" alt="Blog" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
@@ -52,31 +51,21 @@ Bahman specializes in the development and application of modelling, forecasting 
 <a href="https://x.com/Bahman_R_T/"><img border="0" alt="X" src="images/social-x.svg" width="35" height="35"></a>&ensp; 
 </div>
 
+## Instructor
+
+**Abiodun Egwuenu**
+
+Bio coming soon.
 
 ## Instructor
 
-![](images/debra.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Debra Okeh" width="200"}
-Debra Okeh is a Cohort 1 Fellow of the Nigeria Malaria Modelling Fellowship, CMS, Nigeria.
-She also serves as a member of the Learning Committee of the Applied Malaria Modelling
-Network (AMMnet) and the Assistant General Secretary of AMMnet Nigeria. As a global
-health physician and infectious disease epidemiologist, she specializes in translating
-complex epidemiological models into actionable policy. Her research interests are on using
-modelling for strategic planning by utilising subnational data to predict the impact of
-malaria control interventions, and implementing time-series analysis for disease forecasting.
-She has honed her skills in providing modelling and analytical support to the Nigeria
-National Malaria Elimination Programme. Her expertise has been recognised through
-presentations at Harvard's Centre for Communicable Disease Dynamics, the 2024 American
-Society of Tropical Medicine and Hygiene Conference, the Gates Foundation 2024 Institute
-for Disease Modeling Symposium, and the 2024 Multilateral Initiative on Malaria (MIM)
-Society 8th Pan-African Conference.
+**Harsha Halgamuwe Hewage**
 
-<div align="center">
-<a href="https://x.com/DebraOkeh"><img border="0" alt="X" src="images/social-x.svg" width="35" height="35"></a>&ensp; 
-<a href="https://www.linkedin.com/in/debra-okeh-1500ab109/"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>&ensp;&emsp;
-</div>
+Bio coming soon.
 
 
-## Mentors for the cohort 2025
+<!--
+## Mentors for the cohort 2026
 
 A committed team, comprising both PhD students and MSc. students, generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the exercises. 
 
@@ -96,7 +85,6 @@ The team includes:
 - Matabel Odin
 - Simon Kamau
 - Susan Mwelu
-- Abiodun Egwuenu
 - Adamu Saidu Saleh
 - Adebayo, Olatunji Joyce
 - Anthony C. Uwandu-Uzoma
@@ -109,19 +97,13 @@ The team includes:
 - Ali Mohamed Ali
 - Kundu Sam
 - Ssembatya Ronald
+-->
 
-## Project coordination
+## Coordinator
 
-The coordination and administration of the project are overseen by a dedicated team from [Jomo Kenyatta University of Agriculture and Technology](https://www.jkuat.ac.ke/). 
+The workshop is coordinated by:
 
-<!-- This includes tasks such as promoting the workshop across various countries, managing the intake of 138 applications from 13 different nations, conducting a thorough shortlisting process and selecting 62 participants, and maintaining effective communication with all attendees. -->
-
-Jomo Kenyatta University team includes:
-
-- Henry Kissinger Ochieng 
-- Caroline Mugo
-- Winnie Chacha
-- Samuel Mwalili
+- Henry Kissinger Ochieng
 
 
 # Preparation
@@ -141,14 +123,14 @@ Please have your own laptop capable of running R.
 To be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.
 
 -   **Time series packages and extensions**
-    -   fpp3, sugrrants
+    -   fpp3, mixtime, ggtime
 -   **tidyverse packages and friends**
     -   tidyverse, fpp3
 
 The following code will install the main packages needed for the workshop.
 
 ```r
-install.packages(c("tidyverse","fpp3", "GGally", "sugrrants", "astsa", "usethis"))
+install.packages(c("tidyverse","fpp3", "GGally", "mixtime", "ggtime", "astsa", "usethis"))
 ```
 
 After installing these packages, you can create download the exercises and data for the course using the following code:
