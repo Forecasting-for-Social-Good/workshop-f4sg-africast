@@ -44,37 +44,21 @@ source("setup.R")
   {\small Bio coming soon.}
 \end{alertblock}
 
+## Facilitator
+* Abiodun Egwuenu
+
+## Planning team
+* Mkajuma Charity
+* Kennedy Mung'are
+* José Thiéry Hagbe
+
 ## Mentors
-* Mama Kouandé Abdou Rakib  
-* Ninguin Romuald Guillaume  
-* Sode Akoeugnigan Idelphonse  
-* Akounda Badibassa  
-* Mihertab Ermias  
-* Agnes Njambi  
-* Caroline Mugo  
-* Catherine Chepkoech Munga  
-* Charity Wamwea  
-
-## Mentors  
-* Dickson Ochichi Suguku  
-* Herbert Imbogah  
-* Matabel Odin  
-* Simon Kamau
-* Susan Mwelu
-* Adamu Saidu Saleh
-* Adebayo, Olatunji Joyce  
-* Anthony C. Uwandu-Uzoma  
-
-## Mentors  
-* Haruna Jimoh  
-* Hassan Adam Murtala  
-* Okorie, Oluchukwu Chiamaka  
-* Olagbami Oluwafemi Samson  
-* Ugonma Regina Okorie  
-* Shittu Ola Abdulganiy  
-* Ali Mohamed Ali  
-* Kundu Sam  
-* Ssembatya Ronald
+* Samson Oluwafemi
+* Oluchukwu Aghadi
+* Lumumba Victor
+* Adamu SAIDU Saleh
+* Akoeugnigan Idelphonse SODE
+* AKOUNDA Badjibassa
 
 ## Coordinator
 
