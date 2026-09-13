@@ -2,3 +2,5 @@
 *_files/
 *_cache/
 _freeze
+
+**/*.quarto_ipynb

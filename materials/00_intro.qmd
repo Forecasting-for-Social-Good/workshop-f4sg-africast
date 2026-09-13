@@ -152,7 +152,8 @@ install.packages(c(
   "tidyverse",
   "fpp3",
   "GGally",
-  "sugrrants",
+  "ggtime",
+  "mixtime",
   "astsa"
 ))
 ```

@@ -16,6 +16,7 @@ ausbeer <- as_tsibble(fpp2::ausbeer) |>
   rename(Time = index, Production = value)
 library(fpp3)
 library(tidyverse)
+library(mixtime)
 ```
 
 # Introduction to forecasting
@@ -118,6 +119,13 @@ library(fable)
 library(fpp3)
 ```
 
+\pause
+
+```r
+# Flexible, mixed-granularity time classes for the tsibble index
+library(mixtime)
+```
+
 
 
 ## `tsibble` objects
@@ -172,14 +180,34 @@ tourism
 
 * It works with tidyverse functions.
 
+## Introducing `mixtime`
+
+\begin{block}{}
+The \alert{mixtime} package provides flexible time classes for time series with mixed temporal granularities, and is a great fit for the tsibble index.
+\end{block}
+\fontsize{12}{13}\sf
+
+* One consistent family of time classes, instead of a different type for each frequency
+* Supports every calendar granularity, not just the common ones
+* Handles changing observation frequency, multiple resolutions, and timezones
+* \url{https://pkg.mitchelloharawild.com/mixtime/}
+
+```r
+library(mixtime)
+```
+
 ## The `tsibble` index
+
+\begin{block}{}
+A time class on the index tells the tsibble what frequency the data is observed at.
+\end{block}
 
 ### Example
 \fontsize{11}{12}\sf
 
 ```{r tstable}
 mydata <- tsibble(
-  year = 2012:2016,
+  year = mixtime::year(2012:2016),
   y = c(123, 39, 78, 52, 110),
   index = year
 )
@@ -189,7 +217,7 @@ mydata
 ## The `tsibble` index
 
 \begin{block}{}
-For observations more frequent than once per year, we need to use a time class function on the index.
+The same idea extends to any frequency -- here monthly data as plain text needs converting to a time class.
 \end{block}
 \fontsize{12}{13}\sf
 
@@ -207,13 +235,13 @@ z
 ## The `tsibble` index
 
 \begin{block}{}
-For observations more frequent than once per year, we need to use a time class function on the index.
+The same idea extends to any frequency -- here monthly data as plain text needs converting to a time class.
 \end{block}
 \fontsize{12}{13}\sf
 
 ```{r month-tsibble}
 z |>
-  mutate(Month = yearmonth(Month)) |>
+  mutate(Month = mixtime::yearmonth(Month)) |>
   as_tsibble(index = Month)
 ```
 
@@ -222,20 +250,83 @@ z |>
 ## The `tsibble` index
 \vspace*{-0.2cm}
 
-Common time index variables can be created with these functions:
+Common `mixtime` index variables can be created with these functions:
 
 ###
 ```{r tstable2, echo=FALSE}
 tribble(
   ~`Frequency`, ~Function,
-  "Annual", "`start:end`",
+  "Annual", "`year()`",
   "Quarterly", "`yearquarter()`",
   "Monthly", "`yearmonth()`",
   "Weekly", "`yearweek()`",
-  "Daily", "`as_date()`, `ymd()`",
-  "Sub-daily", "`as_datetime()`"
+  "Daily", "`date()`",
+  "Sub-daily", "`datetime()`"
 ) |>
   knitr::kable(booktabs = TRUE)
+```
+
+\begin{alertblock}{}
+\fontsize{10}{11}\sf These names also exist in \texttt{lubridate}/\texttt{tsibble} --- load \texttt{mixtime} last (as in \texttt{fpp3}'s package list) or call them as \texttt{mixtime::yearmonth()} to be explicit.
+\end{alertblock}
+
+# Chronons: any granularity you like
+
+## What is a chronon?
+
+\begin{block}{}
+A \alert{chronon} is the smallest indivisible time granule underlying a \texttt{mixtime} vector.
+\end{block}
+\fontsize{12}{13}\sf
+
+* A chronon is built from a **calendar** and a **count** of one of its units
+* `yearmonth()`, `yearquarter()`, `date()`, etc. are just convenient shortcuts for common chronons
+* Under the hood, `yearmonth(x)` is `linear_time(x, chronon = cal_gregorian$month(1L))`
+* `date(x)` is `linear_time(x, chronon = cal_gregorian$day(1L))`
+
+\pause
+
+So what about a time series that doesn't fit any of these standard frequencies?
+
+## Custom granularity with `linear_time()`
+
+\begin{block}{}
+Use \texttt{linear\_time(x, chronon = ...)} to build an index at \alert{any} granularity.
+\end{block}
+\fontsize{10}{11.2}\sf
+
+```{r chronon-minute, echo = TRUE}
+timestamps <- datetime("2024-01-01 00:00:00") + minutes(0:8) * 5
+linear_time(timestamps, chronon = cal_gregorian$minute(15L))
+```
+
+\pause
+
+* `cal_gregorian$minute(15L)` is a 15-minute granule
+* Several other counts also make useful chronons:
+
+```{r chronon-examples, echo = TRUE, eval = FALSE}
+cal_gregorian$minute(5L)  # 5-minute freeway traffic counts
+cal_gregorian$hour(6L)    # 6-hourly weather observations
+cal_gregorian$day(5L)     # 5-day (business week) reporting
+cal_gregorian$month(4L)   # 4-monthly (tri-annual) reporting
+```
+
+## Other calendars
+
+\fontsize{12}{13}\sf
+
+`linear_time()` isn't limited to the Gregorian calendar:
+
+* `cal_gregorian` -- everyday calendar (year/quarter/month/week/day/hour/...)
+* `cal_isoweek` -- ISO 8601 week-based years (`yearweek()` uses this)
+* `cal_sym454` -- Symmetry454 fixed 4-5-4 fiscal calendar
+* `new_calendar()` -- define your own calendar and units
+
+\pause
+
+```{r chronon-calendar, echo = TRUE}
+linear_time(as.Date("2024-01-01"), chronon = cal_isoweek$week(1L))
 ```
 
 # Example: Australian prison population
@@ -258,7 +349,7 @@ prison
 
 ```{r prison3}
 prison <- readr::read_csv("data/prison_population.csv") |>
-  mutate(Quarter = yearquarter(date))
+  mutate(Quarter = mixtime::yearquarter(date))
 ```
 
 ```{r prison3a, dependson="prison3", echo=FALSE}
@@ -270,7 +361,7 @@ prison
 
 ```{r prison4}
 prison <- readr::read_csv("data/prison_population.csv") |>
-  mutate(Quarter = yearquarter(date)) |>
+  mutate(Quarter = mixtime::yearquarter(date)) |>
   select(-date)
 ```
 
@@ -283,7 +374,7 @@ prison
 
 ```{r prison5}
 prison <- readr::read_csv("data/prison_population.csv") |>
-  mutate(Quarter = yearquarter(date)) |>
+  mutate(Quarter = mixtime::yearquarter(date)) |>
   select(-date) |>
   as_tsibble(
     index = Quarter,

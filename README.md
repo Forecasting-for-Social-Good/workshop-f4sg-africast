@@ -29,7 +29,7 @@ installed. The following code will install the main packages needed for
 the workshop.
 
 ``` r
-install.packages(c("tidyverse", "fpp3", "lubridate", "GGally", "sugrrants", "astsa"))
+install.packages(c("tidyverse", "fpp3", "lubridate", "GGally", "ggtime", "mixtime", "astsa"))
 ```
 
 Please have the required software installed and pre-work completed

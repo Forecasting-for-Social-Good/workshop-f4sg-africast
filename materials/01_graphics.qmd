@@ -12,6 +12,10 @@ subtitle: "2. Time series patterns and basic graphics"
 #| include: false
 #| cache: false
 source("setup.R")
+# ggtime provides the time series graphics (gg_season(), gg_subseries(),
+# gg_lag(), and autoplot() for tsibbles/ACF); feasts is reserved for
+# decomposition and feature extraction.
+library(ggtime)
 ```
 
 # Time series Patterns
@@ -151,7 +155,7 @@ PBS %>% filter(ATC2 == "A10") %>%
   * Data plotted against the individual "seasons" in which the data were observed.  (In this case a "season" is a month.)
   * Something like a time plot except that the data from each season are overlapped.
   * Enables the underlying seasonal pattern to be seen more clearly, and also allows any substantial departures from the seasonal pattern to be easily identified.
-  * In R: `gg_season()`
+  * In R: `gg_season()` (ggtime)
 
 ## Quarterly Australian Beer Production
 
@@ -197,7 +201,7 @@ vic_elec |> gg_season(Demand, period = "day")
 
   * Data for each season collected together in time plot as separate time series.
   * Enables the underlying seasonal pattern to be seen clearly, and changes in seasonality over time to be visualized.
-  * In R: `gg_subseries()`
+  * In R: `gg_subseries()` (ggtime)
 
 ## Quarterly Australian Beer Production
 
@@ -245,27 +249,30 @@ holidays |> gg_subseries(Trips) +
 
 ## Calendar plots
 
-```{r sugrrants, eval=FALSE}
-library(sugrrants)
+```{r ggtime_calendar, eval=FALSE}
+library(ggtime)
+library(mixtime)
 vic_elec |>
-  filter(year(Date) == 2014) |>
-  mutate(Hour = hour(Time)) |>
-  frame_calendar(x = Hour, y = Demand, date = Date, nrow = 4) |>
-  ggplot(aes(x = .Hour, y = .Demand, group = Date)) +
-  geom_line() -> p1
-prettify(p1,
-  size = 3,
-  label.padding = unit(0.15, "lines")
-)
+  filter(lubridate::year(Date) == 2014) |>
+  as_tibble() |>
+  mutate(Time = datetime(Time)) |>
+  ggplot(aes(x = Time, y = Demand)) +
+  geom_line() +
+  coord_calendar(rows = month(1L), cols = NULL) +
+  scale_x_mixtime(
+    time_breaks = days(1L),
+    time_labels = "{cyc(day, cal_isoweek$week, label = TRUE, abbreviate = TRUE)}"
+  ) +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
 ```
 
-* `frame_calendar()` makes a compact calendar plot
-* `facet_calendar()` provides an easier ggplot2 integration.
+* `coord_calendar()` cuts a time axis into a calendar-like grid of rows/columns
+* each row above is a month, and each cell within it a day
 
 ## Calendar plots
 \fontsize{10}{11}\sf
 
-```{r sugrrants2, ref.label="sugrrants", echo=FALSE, out.height="90%", fig.height=5.4, fig.width=9}
+```{r ggtime_calendar2, ref.label="ggtime_calendar", echo=FALSE, out.height="90%", fig.height=5.4, fig.width=9}
 ```
 
 # Seasonal or cyclic?
