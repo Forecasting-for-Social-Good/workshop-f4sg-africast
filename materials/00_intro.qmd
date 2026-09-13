@@ -34,15 +34,21 @@ source("setup.R")
   \end{alertblock}
 \end{textblock}
 
-## Project lead and Instructors (cont.)
+## Instructors
 
-\begin{alertblock}{Abiodun Egwuenu}
-  {\small Bio coming soon.}
-\end{alertblock}
+\placefig{0.5}{1.2}{width=2.5cm}{Abiodun}
+\begin{textblock}{11.5}(3.5,1)
+  \begin{alertblock}{Abiodun Egwuenu}
+    {\footnotesize Medical doctor, field epidemiologist \& researcher specialising in antimicrobial resistance (AMR). National lead for Nigeria's mpox response (2022/23). PhD candidate at Charit\'e -- Universit\"atsmedizin Berlin, modelling the spatiotemporal dynamics of AMR. Vice Chair, Board of Members, Applied Epi.}
+  \end{alertblock}
+\end{textblock}
 
-\begin{alertblock}{Harsha Halgamuwe Hewage}
-  {\small Bio coming soon.}
-\end{alertblock}
+\placefig{0.5}{3.7}{width=2.5cm}{Harsha}
+\begin{textblock}{11.5}(3.5,3.5)
+  \begin{alertblock}{Harsha Halgamuwe Hewage}
+    {\footnotesize Researcher, Data Lab for Social Good, Cardiff Business School. Works on forecasting \& decision support under uncertainty for public health supply chains, with JSI, USAID and the HISP Centre, Oslo. Delivers F4SG training and researches time series foundation models.}
+  \end{alertblock}
+\end{textblock}
 
 ## Facilitator
 * Abiodun Egwuenu
