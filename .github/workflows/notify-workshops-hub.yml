@@ -33,7 +33,7 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     # page_build fires even when the Pages build fails; only notify on success.
-    if: github.event_name == 'workflow_dispatch' || github.event.build.state == 'built'
+    if: github.event_name == 'workflow_dispatch' || github.event.build.status == 'built'
     steps:
       - name: Dispatch update to Forecasting-for-Social-Good/workshops
         env:
