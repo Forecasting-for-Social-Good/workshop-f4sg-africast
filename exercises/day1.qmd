@@ -10,7 +10,8 @@ Complete the code to read in the tourism dataset from `data/tourism.csv` and con
 library(readr)
 library(tsibble)
 library(dplyr)
-library(lubridate)
+library(mixtime)
+library(ggtime)
 tourism <- read_csv("data/tourism.csv") |> 
   ???(Quarter = ???(Quarter)) |> 
   as_tsibble(index = ???, key = c(???))
@@ -87,7 +88,8 @@ Let's first import data and observe it. This dataset is located in`data` directo
 ```{r}
 library(tidyverse)
 library(tsibble)
-library(lubridate)
+library(mixtime)
+library(ggtime)
 vaccine_administrated <- read_csv("data/vaccine_adminstrated.csv")
 vaccine_administrated
 ```
