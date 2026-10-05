@@ -11,6 +11,8 @@ library(fable)
 library(feasts)
 library(fabletools)
 library(tidyverse)
+library(mixtime)
+library(ggtime)
 ```
 
 # Learn
@@ -119,7 +121,7 @@ Could you describe what each row and column represent?
 Now, we can forecast with the trained ETS model. Complete and run the following code to produce forecasts:
 
 ```{r}
-forecast_horizon <- 12
+forecast_horizon <- 12L
 forecast_ets <- fit_ets |>
   ???(h = ???) 
 forecast_ets
@@ -214,7 +216,7 @@ fit_arima |> ???()
 Now, we can forecast with the fitted ARIMA model:
 
 ```{r}
-forecast_horizon <- 12
+forecast_horizon <- 12L
 vaccine_fcst_arima <- ??? |> ???(h = ???)  
 ```
 

@@ -10,6 +10,8 @@ library(fable)
 library(feasts)
 library(fabletools)
 library(tidyverse)
+library(mixtime)
+library(ggtime)
 ```
 
 # Learn
@@ -142,7 +144,7 @@ vaccine_fit |> ???() |> filter(.model=="???") |> select(???)
 Complete the following R code to produce forecasts of dose administrated for 12 months ahead:
 
 ```{r}
-forecast_horizon <- 12
+forecast_horizon <- 12L
 vaccine_forecast <- ??? |> ???(h=???)
 vaccine_forecast
 ```
@@ -347,7 +349,7 @@ Let's forecast the population using regression as we don't have the estimation f
 You first need to produce the future months. Complete the following code todo that:
 
 ```{r}
-forecast_horizon <- 12
+forecast_horizon <- 12L
 future_month <- new_data(vaccine_administrated_tsb, n=forecast_horizon)
 ```
 
@@ -355,7 +357,7 @@ Given that we forecast for the next 12 months, we assume that the country will e
 
 ```{r}
 future_month_strike <- future_month |> 
-  mutate(strike = if_else(lubridate::month(month, label = TRUE) == "Mar", 1,0))
+  mutate(strike = if_else(month_of_year(month) == "Mar", 1,0))
 ```
 
 Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:
