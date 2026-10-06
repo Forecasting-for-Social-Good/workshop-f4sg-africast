@@ -1,5 +1,5 @@
 ---
-title: "Computing and visualizing features"
+title: "Computing and visualising features"
 subtitle: "<span class='code'>10:00-11:30</span>"
 author: "Mitchell O'Hara-Wild"
 date: "2026-10-20"

@@ -116,8 +116,8 @@ All times are listed in Africa/Nairobi time (UTC+3).
 <!-- Session 1. Basics of time series and data structures (Mitch) -->
 <!-- Session 2. Time series patterns and basic graphics (Abiodun Egwuenu) -->
 <!-- Day 2: Time series exploration and basic forecasting -->
-<!-- Session 1. Computing and visualizing features (Mitch) -->
-<!-- Session 2. Basic modeling / forecasting (Mitch) -->
+<!-- Session 1. Computing and visualising features (Mitch) -->
+<!-- Session 2. Basic modelling / forecasting (Mitch) -->
 <!-- Day 3: Forecasting temporal patterns (regression and ARIMA) -->
 <!-- Session 1. Time series regression (Mitch) -->
 <!-- Session 2. ARIMA (Mustafa) -->

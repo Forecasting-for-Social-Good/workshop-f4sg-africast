@@ -4,7 +4,7 @@
 # Africast: tidy time series & forecasting in R
 
 This five day workshop provides the basics of time series analysis and
-forecasting in R. This workshop is part of the the IIF’s forecasting for
+forecasting in R. This workshop is part of the IIF’s forecasting for
 social good (F4SG) initiative, and will run online for a select group of
 students from Africa between the 19-23rd October 2026.
 
@@ -14,7 +14,7 @@ Attendees will learn:
 
 1.  Preparing time series data for analysis and exploration.
 2.  Extracting and computing useful features from time series data and
-    effectively visualizing it.
+    effectively visualising it.
 3.  Identifying appropriate forecasting algorithms for time series and
     selecting the best approach for the data at hand.
 

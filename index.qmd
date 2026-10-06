@@ -3,7 +3,7 @@ title: "Tidy time series & forecasting in R"
 ---
 
 
-## About AFRICAST project 
+## About AFRICAST project
 
 <iframe width="800" height="450" src="https://www.youtube.com/embed/4pYlobR-rbQ?si=p795vCfEx38K98KU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
@@ -11,9 +11,9 @@ title: "Tidy time series & forecasting in R"
 
 ## Course Overview
 
-Forecasting is a valuable tool that allows organizations to make informed decisions about the future. Time series forecasting, in particular, uses historical data to predict future trends over time. This technique has extensive applications across a wide range of fields, including finance and economics, health and humanitarian operations, supply chain management, and more. By analyzing trends and patterns in data, time series forecasting can help decision-makers identify potential challenges and opportunities, and plan accordingly.
+Forecasting is a valuable tool that allows organisations to make informed decisions about the future. Time series forecasting, in particular, uses historical data to predict future trends over time. This technique has extensive applications across a wide range of fields, including finance and economics, health and humanitarian operations, supply chain management, and more. By analysing trends and patterns in data, time series forecasting can help decision-makers identify potential challenges and opportunities, and plan accordingly.
 
-It is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyze data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.
+It is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyse data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.
 
 This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, and will run online from the 19th-23rd October 2026.
 
@@ -22,7 +22,7 @@ This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4
 During the training, participants will gain knowledge and skills in:
 
 1. Preparing time series data for analysis and exploration.
-2. Extracting and computing useful features from time series data and effectively visualizing it.
+2. Extracting and computing useful features from time series data and effectively visualising it.
 3. Identifying appropriate forecasting algorithms for time series and selecting the best approach for the data at hand.
 
 # Educators
@@ -43,7 +43,7 @@ During the training, participants will gain knowledge and skills in:
 ![](images/bahman.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Dr. Bahman Rostami-Tabar" width="200"}
 Bahman is the Professor of Data-Driven Decision Science at Cardiff Business School, Cardiff University, UK. He is interested in transforming data into insights for making smart decisions. Bahman is the founder and director of [Data Lab for Social Good Research Group](https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good) at Cardiff University and the founder of [Forecasting for Social Good committee](https://www.f4sg.org/) initiatives sponsored by the [International Institute of Forecasters](https://forecasters.org/programs/communities/forecasting-for-social-good-f4sg/). He is also leading the "Uncertainty & the Future" theme at the [Digital Transformation Innovation Institute](https://www.cardiff.ac.uk/digital-transformation-innovation-institute/).
 
-Bahman specializes in the development and application of modelling, forecasting and management science tools and techniques providing informed insights for planning & decision-making processes in sectors contributing to social good, including healthcare operations, global health and humanitarian supply chains. His collaborative efforts have spanned a multitude of organisations, including notable bodies such as the National Health Service (NHS), Welsh Ambulance Service Trusts (WAST), United States Agency for International Developments (USAID), the International Committee of the Red Cross (ICRC), and John Snow Inc. (JSI). A remarkable highlight of his contributions is his pivotal role in disseminating forecasting knowledge especially in low and lower-middle income countries through the [democratizing forecasting](https://www.f4sg.org/services/democratising-forecasting/) project sponsored by International Institute of Forecasters.
+Bahman specialises in the development and application of modelling, forecasting and management science tools and techniques providing informed insights for planning & decision-making processes in sectors contributing to social good, including healthcare operations, global health and humanitarian supply chains. His collaborative efforts have spanned a multitude of organisations, including notable bodies such as the National Health Service (NHS), Welsh Ambulance Service Trusts (WAST), United States Agency for International Development (USAID), the International Committee of the Red Cross (ICRC), and John Snow Inc. (JSI). A remarkable highlight of his contributions is his pivotal role in disseminating forecasting knowledge especially in low and lower-middle income countries through the [democratising forecasting](https://www.f4sg.org/services/democratising-forecasting/) project sponsored by International Institute of Forecasters.
 
 <div align="center">
 <a href="http://www.bahmanrt.com/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
@@ -74,9 +74,9 @@ Harsha is also involved in [Forecasting for Social Good (F4SG)](https://forecast
 ## Instructor
 
 ![](images/mustafa.jpeg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Mustafa Aslan" width="200"}
-**Mustafa Aslan** is a third-year PhD researcher in the [Data Lab for Social Good Research Group](https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good) at Cardiff University, UK. His research focuses on reducing delays and inefficiencies in hospital discharge processes and patient flow. Specifically, he works to improve discharge care coordination and operational effectiveness, including workforce planning and patient care delivery. To achieve this, he develops decision-making frameworks that integrate probabilistic forecasting models with sequential optimization techniques. His work also leverages machine learning-based causal inference methods to provide actionable insights for healthcare providers and administrators on the factors contributing to discharge delays and inefficiencies.
+**Mustafa Aslan** is a third-year PhD researcher in the [Data Lab for Social Good Research Group](https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good) at Cardiff University, UK. His research focuses on reducing delays and inefficiencies in hospital discharge processes and patient flow. Specifically, he works to improve discharge care coordination and operational effectiveness, including workforce planning and patient care delivery. To achieve this, he develops decision-making frameworks that integrate probabilistic forecasting models with sequential optimisation techniques. His work also leverages machine learning-based causal inference methods to provide actionable insights for healthcare providers and administrators on the factors contributing to discharge delays and inefficiencies.
 
-In addition to his PhD work, he is passionate about mathematical modeling and uncertainty quantification to address complex real-world challenges. He also builds reusable Python packages and is the developer of [peshbeen](https://mustafaslancoto.github.io/peshbeen/), an open-source forecasting package that helps users forecast using both statistical and machine learning models within a single pipeline, as well as generate probabilistic forecasts using various techniques. Furthermore, he is part of the Data Lab for Social Good team working on forecasting avoidable patient harm with the NHS, following the team's joint first-place result in the 2026 NHS SPHERE-PPL forecasting challenge.
+In addition to his PhD work, he is passionate about mathematical modelling and uncertainty quantification to address complex real-world challenges. He also builds reusable Python packages and is the developer of [peshbeen](https://mustafaslancoto.github.io/peshbeen/), an open-source forecasting package that helps users forecast using both statistical and machine learning models within a single pipeline, as well as generate probabilistic forecasts using various techniques. Furthermore, he is part of the Data Lab for Social Good team working on forecasting avoidable patient harm with the NHS, following the team's joint first-place result in the 2026 NHS SPHERE-PPL forecasting challenge.
 
 <div align="center">
 <a href="https://mustafaslancoto.github.io/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
@@ -113,7 +113,7 @@ The workshop is coordinated by:
 
 The workshop will provide a quick-start overview of exploring time series data and producing forecasts. There is no need for prior experience in time series to get the most out of this workshop.
 
-It is expected that you are comfortable with writing R cod and using tidyverse packages including dplyr and ggplot2. If you are unfamiliar with writing R code or using the tidyverse, consider working through the learnr materials here: <https://learnr.numbat.space/>.
+It is expected that you are comfortable with writing R code and using tidyverse packages including dplyr and ggplot2. If you are unfamiliar with writing R code or using the tidyverse, consider working through the learnr materials here: <https://learnr.numbat.space/>.
 
 Some familiarity with statistical concepts such as the mean, variance, quantiles, normal distribution, and regression would be helpful to better understand the forecasts, although this is not strictly necessary.
 
@@ -128,7 +128,7 @@ To be able to complete the exercises of this workshop, please install a suitable
 -   **Time series packages and extensions**
     -   fpp3, mixtime, ggtime
 -   **tidyverse packages and friends**
-    -   tidyverse, fpp3
+    -   tidyverse
 
 The following code will install the main packages needed for the workshop.
 
@@ -136,7 +136,7 @@ The following code will install the main packages needed for the workshop.
 install.packages(c("tidyverse","fpp3", "GGally", "mixtime", "ggtime", "astsa", "usethis"))
 ```
 
-After installing these packages, you can create download the exercises and data for the course using the following code:
+After installing these packages, you can download the exercises and data for the course using the following code:
 
 ```r
 usethis::use_course("https://workshop.f4sg.org/africast/exercises.zip")

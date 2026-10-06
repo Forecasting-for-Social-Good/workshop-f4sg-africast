@@ -19,7 +19,7 @@ There are four basic forecasting models which are commonly used as 'benchmarks' 
 * `MEAN()` - the average of the data (mean)
 * `NAIVE()` - the most recent value (naive)
 * `SNAIVE()` - the most recent value from the same season (seasonal naive)
-* `RW(y ~ drift())` - a straight between the first and last values (random walk with drift)
+* `RW(y ~ drift())` - a straight line between the first and last values (random walk with drift)
 :::
 
 Despite their simplicity, these models work well for many time series and can be difficult to improve upon!
@@ -37,7 +37,7 @@ Each of these methods work for a specific pattern that might exist in the data.
 
 The models used for forecasting should match the patterns identified when plotting the time series.
 
-Let's look at the population of the United Kingdon
+Let's look at the population of the United Kingdom.
 
 ```{r}
 #| message: false
@@ -153,7 +153,7 @@ aus_print |>
 
 Which model would be most appropriate for this dataset? In this case none of the methods can capture all of the patterns here.
 
-This dataset has a strong seasonal pattern, which a trend that changes over time.
+This dataset has a strong seasonal pattern, with a trend that changes over time.
 
 The random walk with drift can handle trends, but in this case the changing trend does not match the global trend that this model will use.
 
@@ -269,7 +269,7 @@ fit |>
   glance()
 ```
 
-The r-squared of this model is high, at 0.91.
+The R-squared of this model is high, at 0.91.
 
 ```{r}
 fit |> 
@@ -353,46 +353,46 @@ A better estimate of `Expenditure` will produce better forecasts.
 In this exercise, we first use simple models to produce forecasts of future administered vaccine doses for the next 12 months. Following that, we use regression models to produce such a forecast.
 
 :::{.callout-caution}
-## Basic of modelling/forecating
-1. Specify and train three simple models including total average, naive and seasonal naive on administered vaccine doses.
+## Basics of modelling/forecasting
+1. Specify and train three simple models: total average, naive and seasonal naive on administered vaccine doses.
 
 2. Examine the model table (`mable`) object and describe what each column and row represent.
 
-3. Use `report()`, `tidy()`, `glance()` and `augment()` to explore the trained model's output.
+3. Use `report()`, `tidy()`, `glance()`, and `augment()` to explore the trained model's output.
 
 4. Produce forecasts for 12 months ahead including both point forecast and forecast distribution.
 
 5. Examine the forecast table (`fable`) object and explain what each column and row represent.
 
-6. Visualize the point forecasts alongside past values, as well as prediction interval for $90%$ coverage.
+6. Visualise the point forecasts alongside past values, as well as prediction intervals for 90% coverage.
 
-7. Extract prediction intervals for $90%$ coverage.
+7. Extract prediction intervals for 90% coverage.
 
-8. Produce probabilistic forecast using bootstrapping instead of assuming normal distribution. Generate 1000 possible future.
+8. Produce probabilistic forecasts using bootstrapping instead of assuming a normal distribution. Generate 1000 possible futures.
 :::
 
 
 :::{.callout-caution}
-## Forecating using regression
-1. Examine the association between `dose_adminstrated` and predictors
+## Forecasting using regression
+1. Examine the association between `dose_administered` and predictors
 
-    - Assess the association between `dose_adminstrated` and `population_under1`
-    - Assess the association between `dose_adminstrated` and `strike`
-    - Examine the association between leading predictors of `population_under1` and `dose_adminstrated`
+    - Assess the association between `dose_administered` and `population_under1`
+    - Assess the association between `dose_administered` and `strike`
+    - Examine the association between leading predictors of `population_under1` and `dose_administered`
 
-2. Specify and train the four different regression models with the following terms:
+2. Specify and train the three different regression models with the following terms:
 
-    - trensd and seasonality
-    - trensd, seasonality, and population_under1
-    - trensd, seasonality, population_under1, and strike
+    - trend and seasonality
+    - trend, seasonality, and population_under1
+    - trend, seasonality, population_under1, and strike
 
-3. Examine trained model output using `report()`, `tidy()`, and `glance()` and `augment()`
+3. Examine trained model output using `report()`, `tidy()`, and `glance()`, and `augment()`
 
 4. Produce forecast
 
     - Use `new_data()` to generate future months corresponding to forecast horizon
-    - Add future values for the strike
+    - Add future values for `strike`
     - Add future values for the population_under1 
     - Generate forecasts for future periods
-5. Visualize forecasts
+5. Visualise forecasts
 :::

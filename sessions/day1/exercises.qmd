@@ -60,7 +60,7 @@ library(tsibble)
 guinea_rice <- as_tsibble(guinea_rice, index = Year)
 ```
 
-A `tsibble` enables time-aware data manipulation, which makes it easy to work with time series. It also has extra checks to prevent common errors, while these can be frustrating at first they are important in correctly analysing your data.
+A `tsibble` enables time-aware data manipulation, which makes it easy to work with time series. It also has extra checks to prevent common errors. While these can be frustrating at first, they are important in correctly analysing your data.
 
 There are two common mistakes when creating a `tsibble`, which we'll see in the next example of Australian accommodation.
 
@@ -114,7 +114,7 @@ Hurray, we have a `tsibble`! :tada:
 In the first row of the output we see [1D] - this means that the frequency of the data is **daily**.
 :::
 
-Looking at the index column (`Date`), we can see that each point in time is three months apart - or **quarterly**. This is another common mistake when working with time series, you need to set the appropriate *temporal granularity*.
+Looking at the index column (`Date`), we can see that each point in time is three months apart - or **quarterly**. This is another common mistake when working with time series: you need to set the appropriate *temporal granularity*.
 
 :::{.callout-tip}
 ## What is temporal granularity?
@@ -170,7 +170,7 @@ Some starter code has been provided for you in the day 1 exercises.
 
 ## Manipulating time series
 
-Often you want to work with specific series, or perhaps the sum up the values across multiple series. We can use the same `dplyr` functions that are used in data analysis to explore our time series. Let's focus on a single state from the Australian accommodation example - here we use `filter()` to keep only the Queensland data.
+Often you want to work with specific series, or perhaps sum up the values across multiple series. We can use the same `dplyr` functions that are used in data analysis to explore our time series. Let's focus on a single state from the Australian accommodation example - here we use `filter()` to keep only the Queensland data.
 
 ```{r}
 aus_accommodation |> 
@@ -257,7 +257,7 @@ guinea_rice |>
   autoplot(Production)
 ```
 
-In this plot we can see that `Production` increases over time (known as **trend**). The increase is mostly smooth but there are a couple anomalies in 2001 and 2008.
+In this plot we can see that `Production` increases over time (known as **trend**). The increase is mostly smooth but there are a couple of anomalies in 2001 and 2008.
 
 :::{.callout-tip}
 ## Plotting the time variable
@@ -303,7 +303,7 @@ aus_accommodation |>
   gg_season(Takings)
 ```
 
-Here we can see that the Q3 and Q4 takings are higher than Q1 and Q2, this is known as the seasonal peak and trough respectively.
+Here we can see that the Q3 and Q4 takings are higher than Q1 and Q2, which are known as the seasonal peak and trough respectively.
 
 :::{.callout-tip}
 ## The season plot
@@ -322,7 +322,7 @@ Some starter code has been provided for you in the day 1 exercises.
 
 ### Seasonal subseries plot
 
-Another useful plot to understand the seasonal pattern of a time series is the subseries plot, it can be created with `gg_subseries()`. This plot is splits each month / quarter into separate facets (mini-plots), which shows how the values within each season change over time. The blue lines represent the average, which is a useful way to see the overall seasonality at a glance.
+Another useful plot to understand the seasonal pattern of a time series is the subseries plot, it can be created with `gg_subseries()`. This plot splits each month / quarter into separate facets (mini-plots), which shows how the values within each season change over time. The blue lines represent the average, which is a useful way to see the overall seasonality at a glance.
 
 ```{r}
 aus_accommodation |> 
@@ -348,19 +348,19 @@ aus_beer |>
   autoplot(Beer)
 ```
 
-At a glance, this looks like the it is very seasonal and has a slight downward trend. However the seasonal subseries plot reveals that the trend is misleading!
+At a glance, this looks like it is very seasonal and has a slight downward trend. However the seasonal subseries plot reveals that the trend is misleading!
 
 ```{r}
 aus_beer |> 
   gg_subseries(Beer)
 ```
 
-Here we see that only Q4 (the peak) has a downward trend, while the other quarters are staying roughly the same. The seasonality is changing shape over time.
+Here we see that only Q4 (the peak) has a downward trend, while the other quarters stay roughly the same. The seasonality is changing shape over time.
 
 :::{.callout-warning}
 ## Changing seasonality
 
-Look back at the time plot and focus only on the Q4 peaks, can you see these values decreasing over time? Now look at the Q1-Q3 throughs, how do they change over time?
+Look back at the time plot and focus only on the Q4 peaks, can you see these values decreasing over time? Now look at the Q1-Q3 troughs, how do they change over time?
 
 This can be tricky to notice in the time plot, which is why seasonal subseries plots can be particularly helpful!
 :::
@@ -415,12 +415,12 @@ To the untrained eye, this series has lots of up and down patterns - a bit like 
 :::{.callout-tip}
 ## Seasonal or cyclic?
 
-Seasonality is a consistent repeating pattern, where the shape shape with similar peak and trough repeats at the same time interval.
+Seasonality is a consistent repeating pattern, where the shape with similar peak and trough repeats at the same time interval.
 
-Cyclical patterns are less consistent, with varying peaks and troughs that repeats over a varied time period.
+Cyclical patterns are less consistent, with varying peaks and troughs that repeat over a varied time period.
 :::
 
-Let's see the ACF for this dataset
+Let's see the ACF for this dataset.
 
 ```{r}
 tsibbledata::pelt |> 
@@ -458,7 +458,7 @@ We'll be revisiting this plot to evaluate our models on day 5. We hope that a mo
 
 ## About the dataset
 
-In this exercise, we use a dataset containing dose of BCG (Cacille Calmette-Guérin), vaccine administrated in 9 regions of an African country from January 2013 until December 2021. BCG is a widely administered vaccine primarily used to protect against tuberculosis (TB), a serious infection that primarily affects the lungs but can also affect other parts of the body. BCG vaccination is recommended for newborn babies at risk of tuberculosis (TB) and is typically administered shortly after birth, usually within the first 28 days of life.
+In this exercise, we use a dataset containing dose of BCG (Bacille Calmette-Guérin) vaccine administered in 9 regions of an African country from January 2013 until December 2021. BCG is a widely administered vaccine primarily used to protect against tuberculosis (TB), a serious infection that primarily affects the lungs but can also affect other parts of the body. BCG vaccination is recommended for newborn babies at risk of tuberculosis (TB) and is typically administered shortly after birth, usually within the first 28 days of life.
 
 In addition to the administered dose, it also includes data on the population of children under one year old, and whether a strike occurred in a specific month and region.
 
@@ -466,27 +466,27 @@ In this exercise, you will apply what you have learned about different steps in 
 
 :::{.callout-caution}
 ## Your turn!
-1. Import `vaccine_administrated.csv` data into R
+1. Import `vaccine_administered.csv` data into R
 
     - Check and modify the data types of variables as needed
     
 2. Prepare your data 
 
     - Check and fix missing values
-    - Check duplications and fix it 
+    - Check for duplicates and fix them 
     - Create tsibble
     - Check and fix temporal gaps
   
 3. Manipulating time series
 
-    - Create monthly time series of total doses adminstrated in the country
-    - Create quarterly time series of doses adminstrated in each region
-    - Create quarterly time series of total doses adminstrated in the country
+    - Create monthly time series of total doses administered in the country
+    - Create quarterly time series of doses administered in each region
+    - Create quarterly time series of total doses administered in the country
 
-3. Visualizing time series
+4. Visualising time series
 
     - Use time plots and describe what patterns you observe
-    - Create plots to see if any consistent pattern exsists in monthly and quarterly of dose admisntrated
-    - Create plots to see how dose admisntrated chnage over time for each month/quarter and how it differs across differnt month/quarter
+    - Create plots to see if any consistent pattern exists in monthly and quarterly doses administered
+    - Create plots to see how doses administered change over time for each month/quarter and how this differs across months/quarters
 :::
 
