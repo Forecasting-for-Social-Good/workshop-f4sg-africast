@@ -11,6 +11,8 @@ library(tsibbledata)
 library(fable)
 library(feasts)
 library(tidyverse)
+library(mixtime)
+library(ggtime)
 ```
 
 # Learn
@@ -20,7 +22,8 @@ Compare the in-sample accuracy statistics for all models used to forecast Austra
 ```{r}
 aus_print <- aus_retail |> 
   filter(Industry == "Newspaper and book retailing") |> 
-  summarise(Turnover = sum(Turnover))
+  summarise(Turnover = sum(Turnover)) |> 
+  mutate(Month = yearmonth(Month))
 
 aus_print |> 
   autoplot(Turnover)
@@ -108,6 +111,8 @@ library(fable)
 library(feasts)
 library(fabletools)
 library(tidyverse)
+library(mixtime)
+library(ggtime)
 
 vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
 ```
@@ -119,9 +124,9 @@ vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
 We tart by splitting data into two sets to describe the modeling process. We leave out 12 periods (equal to forecast horizon) as test set, and we pretend this is the future we want to forecast.
 
 ```{r}
-forecast_horizon <- 12# forecast horizon
-test <- vaccine_administrated_tsb |> filter(month >= (max(month)-forecast_horizon+1))
-train <- vaccine_administrated_tsb |> filter(month < (max(month)-forecast_horizon+1))
+forecast_horizon <- 12L# forecast horizon
+test <- vaccine_administrated_tsb |> filter(month >= (max(month)-forecast_horizon+1L))
+train <- vaccine_administrated_tsb |> filter(month < (max(month)-forecast_horizon+1L))
 ```
 
 ### Specify and train models
@@ -150,7 +155,7 @@ Here we need to first prepare the future values of predictors corresponding to t
 #### Values of population and strike in the test set
 
 ```{r}
-forecast_horizon <- 12
+forecast_horizon <- 12L
 fcs_ets_population <- train |> model(ets=ETS(population_under1)) |> forecast(h=forecast_horizon)
 
 population_forecast <- fcs_ets_population |> as_tibble() |> select(.mean)
@@ -213,14 +218,14 @@ let's see how we do it in R:
 We initially split the data into test and train. We defined a new variable, `percentage_test`. This will determine the percentage of the time series we use to evaluate the forecast accuracy using TSCV. As a general rule, we use 20%-30% of the length of time series as the test set. For instance, if we have 120 months of data, and use 20% as test set, that means we will have 24 months (120\*0.2) in the test set:
 
 ```{r}
-forecast_horizon <- 12# forecast horizon
+forecast_horizon <- 12L# forecast horizon
 percentage_test <- 0.2 #20% of time series for test set
 
 test <- vaccine_administrated_tsb |> 
-  filter_index(as.character(max(vaccine_administrated_tsb$month)-round(percentage_test*length(unique(vaccine_administrated_tsb$month)))+1) ~ .)
+  filter_index(as.character(max(vaccine_administrated_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administrated_tsb$month))))+1L) ~ .)
 
 train <- vaccine_administrated_tsb |>
-  filter_index(. ~ as.character(max(vaccine_administrated_tsb$month)-(round(percentage_test*length(unique(vaccine_administrated_tsb$month))))))
+  filter_index(. ~ as.character(max(vaccine_administrated_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administrated_tsb$month))))))
 ```
 
 #### Time series cross validation
@@ -436,7 +441,7 @@ We assume that we know that in March the country will face strikes. Add a new co
 
 ```{r}
 future_month_strike <- future_month |> 
-  mutate(strike = if_else(lubridate::month(month, label = TRUE) == "Mar", 1,0))
+  mutate(strike = if_else(month_of_year(month) == "Mar", 1,0))
 ```
 
 Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:

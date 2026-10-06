@@ -13,7 +13,8 @@ library(tsibble)
 library(dplyr)
 library(fable)
 library(feasts)
-library(lubridate)
+library(mixtime)
+library(ggtime)
 tourism <- read_csv("data/tourism.csv") |> 
   mutate(Quarter = yearquarter(Quarter)) |> 
   as_tsibble(index = Quarter, key = c(State, Region, Purpose))
@@ -90,7 +91,7 @@ tourism |>
 
 # Apply
 
-## Import `vaccine_adminstrated.csv` data into R
+## Import `vaccine_administrated.csv` data into R
 
 Let's first import data and observe it. This dataset is located in`data` directory in the working directory:
 
@@ -98,8 +99,9 @@ Let's first import data and observe it. This dataset is located in`data` directo
 library(tidyverse)
 library(tsibble)
 library(feasts)
-library(lubridate)
-vaccine_administrated <- read_csv("data/vaccine_adminstrated.csv")
+library(mixtime)
+library(ggtime)
+vaccine_administrated <- read_csv("data/vaccine_administrated.csv")
 vaccine_administrated
 ```
 

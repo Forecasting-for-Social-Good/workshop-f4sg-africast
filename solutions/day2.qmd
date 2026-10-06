@@ -6,6 +6,8 @@ editor: visual
 ```{r}
 #| label: setup
 library(fpp3)
+library(mixtime)
+library(ggtime)
 ```
 
 # Learn
@@ -28,7 +30,7 @@ aus_retail_total |>
   gg_subseries(Turnover)
 
 aus_retail_total |> 
-  gg_subseries(Turnover / days_in_month(Month))
+  gg_subseries(Turnover / lubridate::days_in_month(Month))
 ```
 
 > The drop in February is removed when taking into account the number of days in each month.
@@ -98,6 +100,8 @@ library(tsibble)
 library(feasts)
 library(fabletools)
 library(tidyverse)
+library(mixtime)
+library(ggtime)
 
 vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
 ```
