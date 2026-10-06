@@ -490,7 +490,7 @@ vic_elec |>
   model(STL(Demand)) |>
   components() |>
   autoplot()
-crop::dev.off.crop()
+crop::dev.off.crop("figs/vic_elec_stl.png")
 ```
 
 \placefig{7}{0.2}{width=8.7cm, height=20cm}{vic_elec_stl}

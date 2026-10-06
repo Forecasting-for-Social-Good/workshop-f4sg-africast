@@ -50,6 +50,18 @@ source("setup.R")
   \end{alertblock}
 \end{textblock}
 
+## Instructors
+
+\placefig{0.5}{1.2}{width=2.5cm}{Mustafa}
+\begin{textblock}{11.5}(3.5,1)
+  \begin{alertblock}{Mustafa Aslan}
+    {\footnotesize Third-year PhD researcher, Data Lab for Social Good, Cardiff University. Researches hospital discharge delays and patient flow, combining probabilistic forecasting, sequential optimization and ML-based causal inference. Developer of the \texttt{peshbeen} forecasting package. Part of the team placing joint first in the 2026 NHS SPHERE-PPL forecasting challenge.\\
+      \href{https://mustafaslancoto.github.io/}{\faIcon{home} mustafaslancoto.github.io}\\
+      \href{https://github.com/mustafaslanCoto}{\faIcon{github} @mustafaslanCoto}
+    }
+  \end{alertblock}
+\end{textblock}
+
 ## Facilitator
 * Abiodun Egwuenu
 
