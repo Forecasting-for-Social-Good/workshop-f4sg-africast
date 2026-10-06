@@ -71,9 +71,18 @@ listing:
     sort-ui: false
     filter-ui: false
     image-height: 75px
-tbl-colwidths: [5,15,20,60]
 editor: source
 ---
+
+```{=html}
+<style>
+.quarto-listing-table { table-layout: auto; width: 100%; }
+.quarto-listing-table th.listing-subtitle,
+.quarto-listing-table td.listing-subtitle { width: 1%; white-space: nowrap; }
+.quarto-listing-table th.listing-author,
+.quarto-listing-table td.listing-author { width: 25%; }
+</style>
+```
 
 All times are listed in Africa/Nairobi time (UTC+3).
 
