@@ -71,6 +71,19 @@ Harsha is also involved in [Forecasting for Social Good (F4SG)](https://forecast
 <a href="https://www.linkedin.com/in/harshachamara/"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>&ensp;&emsp;
 </div>
 
+## Instructor
+
+![](images/mustafa.jpeg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Mustafa Aslan" width="200"}
+**Mustafa Aslan** is a third-year PhD researcher in the [Data Lab for Social Good Research Group](https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good) at Cardiff University, UK. His research focuses on reducing delays and inefficiencies in hospital discharge processes and patient flow. Specifically, he works to improve discharge care coordination and operational effectiveness, including workforce planning and patient care delivery. To achieve this, he develops decision-making frameworks that integrate probabilistic forecasting models with sequential optimization techniques. His work also leverages machine learning-based causal inference methods to provide actionable insights for healthcare providers and administrators on the factors contributing to discharge delays and inefficiencies.
+
+In addition to his PhD work, he is passionate about mathematical modeling and uncertainty quantification to address complex real-world challenges. He also builds reusable Python packages and is the developer of [peshbeen](https://mustafaslancoto.github.io/peshbeen/), an open-source forecasting package that helps users forecast using both statistical and machine learning models within a single pipeline, as well as generate probabilistic forecasts using various techniques. Furthermore, he is part of the Data Lab for Social Good team working on forecasting avoidable patient harm with the NHS, following the team's joint first-place result in the 2026 NHS SPHERE-PPL forecasting challenge.
+
+<div align="center">
+<a href="https://mustafaslancoto.github.io/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
+<a href="https://github.com/mustafaslanCoto"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>&ensp;
+<a href="https://www.linkedin.com/in/aslanmu"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>&ensp;&emsp;
+</div>
+
 ## Planning team
 
 The workshop is organised behind the scenes by a dedicated planning team, who volunteer their time to coordinate logistics and ensure the workshop runs smoothly. The team includes:
