@@ -93,19 +93,19 @@ fit |>
 # Apply
 
 ```{r}
-vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+vaccine_administered_tsb <- read_rds("data/vaccine_administered_tsb.rds")
 ```
 
 ## Basic of train/test forecast accuracy
 
 ### Split data
 
-We tart by splitting data into two sets to describe the modeling process. We leave out 12 periods (equal to forecast horizon) as test set, and we pretend this is the future we want to forecast.
+We start by splitting data into two sets to describe the modelling process. We leave out 12 periods (equal to forecast horizon) as test set, and we pretend this is the future we want to forecast.
 
 ```{r}
 forecast_horizon <- 12L# forecast horizon
-test <- vaccine_administrated_tsb |> filter(month >= (max(month)-forecast_horizon+1L))
-train <- vaccine_administrated_tsb |> filter(month < (max(month)-forecast_horizon+1L))
+test <- vaccine_administered_tsb |> filter(month >= (max(month)-forecast_horizon+1L))
+train <- vaccine_administered_tsb |> filter(month < (max(month)-forecast_horizon+1L))
 ```
 
 ### Specify and train models
@@ -130,12 +130,12 @@ fcs_ets_population <- train |> model(ets=ETS(???)) |> forecast(h=forecast_horizo
 population_forecast <- fcs_ets_population |> as_tibble() |> select(.mean)
 
 test_future <- bind_cols(test,population_forecast) |>
-  mutate(dose_adminstrated=.mean) |> 
-  select(-.mean,-dose_adminstrated)
+  mutate(dose_administered=.mean) |> 
+  select(-.mean,-dose_administered)
 
 ```
 
-#### Produce forecasts for dose adminstrated
+#### Produce forecasts for dose administered
 
 Complete the following code to generate forecast for the test set:
 
@@ -193,11 +193,11 @@ We initially split the data into test and train. We defined a new variable, `per
 forecast_horizon <- 12L# forecast horizon
 percentage_test <- 0.2 #20% of time series for test set
 
-test <- vaccine_administrated_tsb |> 
-  filter_index(as.character(max(vaccine_administrated_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administrated_tsb$month))))+1L) ~ .)
+test <- vaccine_administered_tsb |> 
+  filter_index(as.character(max(vaccine_administered_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administered_tsb$month))))+1L) ~ .)
 
-train <- vaccine_administrated_tsb |>
-  filter_index(. ~ as.character(max(vaccine_administrated_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administrated_tsb$month))))))
+train <- vaccine_administered_tsb |>
+  filter_index(. ~ as.character(max(vaccine_administered_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administered_tsb$month))))))
 ```
 
 #### Time series cross validation
@@ -207,13 +207,13 @@ Before fitting the models, we need to create the time series origins in both tra
 Next, we apply time series cross validation on the test data. We create slides in the test set that corresponds to each origin created using train data, equal to the length of the forecast horizon.
 
 ```{r}
-train_tscv <- vaccine_administrated_tsb |> 
-  filter_index(. ~ as.character(max(vaccine_administrated_tsb$month)-(forecast_horizon))) |>
+train_tscv <- vaccine_administered_tsb |> 
+  filter_index(. ~ as.character(max(vaccine_administered_tsb$month)-(forecast_horizon))) |>
   ---(.init = length(unique(train$month)), .step = 1) # split data into different time series (i.e. origin or id) with increasing size
 
 # you need also to get future values that correspond to each .id, because you need them in the forecast model:
 test_tscv <- test |> 
-  ---(.size = ---, .step = 1, .id = ".id") |> select(-dose_adminstrated)
+  ---(.size = ---, .step = 1, .id = ".id") |> select(-dose_administered)
 ```
 
 > `.init` is the size of first origin, `.step` is the increment step, this can correspond to the forecasting frequency, i.e. how often you generate the forecast. If .step = 1 in a monthly time series, it means we generate forecasts very month for the given forecast horizon.
@@ -232,7 +232,7 @@ fcs_ets_population_tscv <- ??? |>
 population_forecast_tscv <- fcs_ets_population_tscv |> as_tibble() |> select(.mean)
 
 test_future_tscv <- bind_cols(test_tscv,population_forecast_tscv) |>
-  mutate(dose_adminstrated=.mean) |> 
+  mutate(dose_administered=.mean) |> 
   select(-.mean)
 ```
 
@@ -358,7 +358,7 @@ To calculate the accuracy measures for each horizon and model, complete the foll
 
 ```{r}
 fc_accuracy_h <- fc_h |> 
-  as_fable(response = "dose_adminstrated", distribution = "dose_adminstrated") |> 
+  as_fable(response = "dose_administered", distribution = "dose_administered") |> 
 accuracy(???, 
            measures = list(point_accuracy_measures, 
                            interval_accuracy_measures, 
@@ -387,7 +387,7 @@ Now, we need to generate forecast for the future of the time series using the be
 You first need to produce the future months. Complete the following code todo that:
 
 ```{r}
-future_month <- new_data(vaccine_administrated_tsb, n=forecast_horizon)
+future_month <- new_data(vaccine_administered_tsb, n=forecast_horizon)
 ```
 
 We assume that we know that in March the country will face strikes. Add a new column, *strike* by completing the R code:
@@ -400,19 +400,19 @@ future_month_strike <- future_month |>
 Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:
 
 ```{r}
-forecast_population <- vaccine_administrated_tsb |> model(regression_population=ETS(???)) |> forecast(h=???)
+forecast_population <- vaccine_administered_tsb |> model(regression_population=ETS(???)) |> forecast(h=???)
 
 population_point_forecast <- forecast_population |> as_tibble() |> select(.mean)
 
 test_future <- bind_cols(future_month_strike, population_point_forecast) |>
-  mutate(population_under1=.mean) |> select(-.mean,-dose_adminstrated)
+  mutate(population_under1=.mean) |> select(-.mean,-dose_administered)
 
 ```
 
 Train the combination approach on the entire time series data:
 
 ```{r}
-fit_future <- vaccine_administrated_tsb |> 
+fit_future <- vaccine_administered_tsb |> 
   model(???) |> 
   mutate(combination = (automatic_ets+automatic_arima+regression_population_strike)/3
 ) 

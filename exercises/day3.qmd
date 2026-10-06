@@ -84,7 +84,7 @@ aus_tot_retail |>
 
 ```{r}
 library(astsa)
-vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+vaccine_administered_tsb <- read_rds("data/vaccine_administered_tsb.rds")
 ```
 
 Now, we proceed by specifying and training models on administered vaccine doses. These models are then used to produce forecasts for the next 12 months beyond the latest data point.
@@ -95,12 +95,12 @@ Now, we proceed by specifying and training models on administered vaccine doses.
 
 We start with three simple benchmark models: i) total average, ii) naive, and iii) seasonal naive
 
-> We specify models using the function corresponding to the name of the forecasting model. We use a formula (response \~ terms) to specify models and train models (i.e. estimate parameters) using `model(response ~ terms)` function. If there is no term for the method, we ignore the `~` and terms, (e.g. `MEAN(dose_adminstrated)`):
+> We specify models using the function corresponding to the name of the forecasting model. We use a formula (response \~ terms) to specify models and train models (i.e. estimate parameters) using `model(response ~ terms)` function. If there is no term for the method, we ignore the `~` and terms, (e.g. `MEAN(dose_administered)`):
 
 Now, complete the following R chunk to specify and train the there simple models on data:
 
 ```{r}
-vaccine_fit <- vaccine_administrated_tsb |>
+vaccine_fit <- vaccine_administered_tsb |>
   ???(
     ??? = ???(???),
     ??? = ???(???),
@@ -141,7 +141,7 @@ vaccine_fit |> ???() |> filter(.model=="???") |> select(???)
 
 > In order to produce forecasts, we pass the `mable` object, `vaccine_fit`, to the `forecast()` function and specify the forecast horizon required. This will generate both point forecast and a distribution of forecasts based on Normal distribution.
 
-Complete the following R code to produce forecasts of dose administrated for 12 months ahead:
+Complete the following R code to produce forecasts of dose administered for 12 months ahead:
 
 ```{r}
 forecast_horizon <- 12L
@@ -163,7 +163,7 @@ vaccine_forecast |>
   ???(???)
 ```
 
-Visualizing forecasts alone might not be as informative, it is generally useful to plot it in conjunction with past data.
+Visualising forecasts alone might not be as informative, it is generally useful to plot it in conjunction with past data.
 
 Complete the following R code to include past administered dose data along with its forecast for the next 12 months:
 
@@ -227,67 +227,67 @@ Could you describe what columns and rows represent in `sim_bootstrap`?
 
 ## Regression
 
-When performing time series forecasting with `fable` package, it's important to have a single tsibble that includes all the necessary variables for modeling. This includes the response variable (the variable you want to forecast) as well as all predictors.
+When performing time series forecasting with `fable` package, it's important to have a single tsibble that includes all the necessary variables for modelling. This includes the response variable (the variable you want to forecast) as well as all predictors.
 
-In the `vaccine_administrated_tsb`, `dose_adminstrated` is the response variable and `population_under1`, and `strike` are predictors.
+In the `vaccine_administered_tsb`, `dose_administered` is the response variable and `population_under1`, and `strike` are predictors.
 
-> You may find your response variable and predictors in separate tsibbles. In such cases, it's important to first join them before proceeding to the modeling stage.
+> You may find your response variable and predictors in separate tsibbles. In such cases, it's important to first join them before proceeding to the modelling stage.
 
-### Association between `dose_adminstrated` and predictors
+### Association between `dose_administered` and predictors
 
 When building regression models, domain knowledge may recommend some potential driving factors that can be useful t forecast the response variable. It is important to check whether these predictors are associated with response variable using scatter plot.
 
-Complete the following code to create a scatter plot showing a possible association between population under 1 and dose_adminstrated:
+Complete the following code to create a scatter plot showing a possible association between population under 1 and dose_administered:
 
 ```{r}
-ggplot(vaccine_administrated_tsb, 
+ggplot(vaccine_administered_tsb, 
        aes(x= ???, y=???))+
   geom_point()+
   geom_smooth()
 ```
 
-Do you see any linear association between dose_adminstrated and population under 1?
+Do you see any linear association between dose_administered and population under 1?
 
 Complete the following code to see if there are differences in dose_administered based on whether the months are associated with strike days or not.
 
 ```{r}
-ggplot(vaccine_administrated_tsb, 
+ggplot(vaccine_administered_tsb, 
        aes(x= ---, y=---))+
   geom_???()
 ```
 
-Do you see any linear association between dose_adminstrated and strike?
+Do you see any linear association between dose_administered and strike?
 
 ### Cross correlation and lagged/lead predictors
 
 You may think that a predictor impacts the response variable, but with a delay. This is referred to as a **leading predictor**. For instance, you can investigate whether the population in previous months is associated with the dose administered in the future.
 
-Complete the following code to check the association between population in various lags and dose administrated:
+Complete the following code to check the association between population in various lags and dose administered:
 
 ```{r}
-#lag2.plot from astsa package can be used to visualize leading predictors
+#lag2.plot from astsa package can be used to visualise leading predictors
 lag2.plot(???, ???, max.lag = 12)
 ```
 
-Instead of scatter plots, you can also show the visualize the correlation between different lags of population with dose administrated using cross correlation function (ccf).
+Instead of scatter plots, you can also show the visualise the correlation between different lags of population with dose administered using cross correlation function (ccf).
 
 Complete the following code to show the ccf:
 
 ```{r}
 # create a cross correlation plot
-vaccine_administrated_tsb |> 
+vaccine_administered_tsb |> 
   CCF(???, ???) |> 
   autoplot()
 ```
 
-How strong is the correlation between lagged population and dose administrated? How do you interpret the cross correlation function plot?
+How strong is the correlation between lagged population and dose administered? How do you interpret the cross correlation function plot?
 
 ### Specify and train time series regression model
 
 Complete the R code to specify and train the three regression models with different terms:
 
 ```{r}
-fit_regression <- vaccine_administrated_tsb |>
+fit_regression <- vaccine_administered_tsb |>
   ???(
   ??? = ???(??? ~ ??? + ???),
   ??? = ???(??? ~ ??? + ??? + ???),
@@ -300,7 +300,7 @@ How many rows and columns are present, and what do they represent?
 
 ### Check training model's output
 
-You can to get a summary of the trained regression models, this will tell you which variables are useful in explaining the variation in the vaccine dose administrated and also how much variation could be explained bu each model.
+You can to get a summary of the trained regression models, this will tell you which variables are useful in explaining the variation in the vaccine dose administered and also how much variation could be explained bu each model.
 
 ```{r}
 fit_regression  |> ???()
@@ -350,7 +350,7 @@ You first need to produce the future months. Complete the following code todo th
 
 ```{r}
 forecast_horizon <- 12L
-future_month <- new_data(vaccine_administrated_tsb, n=forecast_horizon)
+future_month <- new_data(vaccine_administered_tsb, n=forecast_horizon)
 ```
 
 Given that we forecast for the next 12 months, we assume that the country will experience strikes in March next year. Add a new column, *strike* by completing the R code:
@@ -363,7 +363,7 @@ future_month_strike <- future_month |>
 Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:
 
 ```{r}
-forecast_population <- vaccine_administrated_tsb |> model(regression_population=TSLM(???)) |> forecast(h=???)
+forecast_population <- vaccine_administered_tsb |> model(regression_population=TSLM(???)) |> forecast(h=???)
 
 population_point_forecast <- forecast_population |> as_tibble() |> select(.mean)
 ```
@@ -380,9 +380,9 @@ fcst_regression <- ??? |>
   forecast(new_data = ???)
 ```
 
-## Visualize forecasts by regression
+## Visualise forecasts by regression
 
-Complete the following code to see the time series of dose adminstrated and its forecasts:
+Complete the following code to see the time series of dose administered and its forecasts:
 
 ```{r}
 ??? |> autoplot(???, level=NULL)

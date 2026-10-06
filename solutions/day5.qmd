@@ -114,19 +114,19 @@ library(tidyverse)
 library(mixtime)
 library(ggtime)
 
-vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+vaccine_administered_tsb <- read_rds("data/vaccine_administered_tsb.rds")
 ```
 
 ## Basic of train/test forecast accuracy
 
 ### Split data
 
-We tart by splitting data into two sets to describe the modeling process. We leave out 12 periods (equal to forecast horizon) as test set, and we pretend this is the future we want to forecast.
+We start by splitting data into two sets to describe the modelling process. We leave out 12 periods (equal to forecast horizon) as test set, and we pretend this is the future we want to forecast.
 
 ```{r}
 forecast_horizon <- 12L# forecast horizon
-test <- vaccine_administrated_tsb |> filter(month >= (max(month)-forecast_horizon+1L))
-train <- vaccine_administrated_tsb |> filter(month < (max(month)-forecast_horizon+1L))
+test <- vaccine_administered_tsb |> filter(month >= (max(month)-forecast_horizon+1L))
+train <- vaccine_administered_tsb |> filter(month < (max(month)-forecast_horizon+1L))
 ```
 
 ### Specify and train models
@@ -136,14 +136,14 @@ We specify four models with different components and train them on the train par
 ```{r}
 fit_vaccine <- train |>
   model(
-    mean = MEAN(dose_adminstrated),
-    naive = NAIVE(dose_adminstrated),
-    snaive = SNAIVE(dose_adminstrated),
-    automatic_ets = ETS(dose_adminstrated),
-    automatic_arima = ARIMA(dose_adminstrated),
-  regression1 = TSLM(dose_adminstrated ~ trend() + season()),
-  regression_population = TSLM(dose_adminstrated ~ trend() + season() + population_under1),
-  regression_population_strike = TSLM(dose_adminstrated ~ trend() + season() + population_under1+strike)) |> 
+    mean = MEAN(dose_administered),
+    naive = NAIVE(dose_administered),
+    snaive = SNAIVE(dose_administered),
+    automatic_ets = ETS(dose_administered),
+    automatic_arima = ARIMA(dose_administered),
+  regression1 = TSLM(dose_administered ~ trend() + season()),
+  regression_population = TSLM(dose_administered ~ trend() + season() + population_under1),
+  regression_population_strike = TSLM(dose_administered ~ trend() + season() + population_under1+strike)) |> 
   mutate(combination = (automatic_ets+automatic_arima+regression_population_strike)/3
 )
 ```
@@ -161,11 +161,11 @@ fcs_ets_population <- train |> model(ets=ETS(population_under1)) |> forecast(h=f
 population_forecast <- fcs_ets_population |> as_tibble() |> select(.mean)
 
 test_future <- bind_cols(test,population_forecast) |>
-  mutate(dose_adminstrated=.mean) |> 
-  select(-.mean,-dose_adminstrated)
+  mutate(dose_administered=.mean) |> 
+  select(-.mean,-dose_administered)
 ```
 
-#### Produce forecasts for dose adminstrated
+#### Produce forecasts for dose administered
 
 ```{r}
 forecast_vaccine <- fit_vaccine |> 
@@ -185,7 +185,7 @@ Let's compare the forecast accuracy of all models. Complete the R code to comput
 
 ```{r}
 forecast_vaccine |> 
-  accuracy(vaccine_administrated_tsb,
+  accuracy(vaccine_administered_tsb,
            measures = list(point_accuracy_measures,
                            interval_accuracy_measures, 
                            distribution_accuracy_measures)
@@ -221,11 +221,11 @@ We initially split the data into test and train. We defined a new variable, `per
 forecast_horizon <- 12L# forecast horizon
 percentage_test <- 0.2 #20% of time series for test set
 
-test <- vaccine_administrated_tsb |> 
-  filter_index(as.character(max(vaccine_administrated_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administrated_tsb$month))))+1L) ~ .)
+test <- vaccine_administered_tsb |> 
+  filter_index(as.character(max(vaccine_administered_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administered_tsb$month))))+1L) ~ .)
 
-train <- vaccine_administrated_tsb |>
-  filter_index(. ~ as.character(max(vaccine_administrated_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administrated_tsb$month))))))
+train <- vaccine_administered_tsb |>
+  filter_index(. ~ as.character(max(vaccine_administered_tsb$month)-as.integer(round(percentage_test*length(unique(vaccine_administered_tsb$month))))))
 ```
 
 #### Time series cross validation
@@ -235,13 +235,13 @@ Before fitting the models, we need to create the time series origins in both tra
 Next, we apply time series cross validation on the test data. We create slides in the test set that corresponds to each origin created using train data, equal to the length of the forecast horizon.
 
 ```{r}
-train_tscv <- vaccine_administrated_tsb |> 
-  filter_index(. ~ as.character(max(vaccine_administrated_tsb$month)-(forecast_horizon))) |>
+train_tscv <- vaccine_administered_tsb |> 
+  filter_index(. ~ as.character(max(vaccine_administered_tsb$month)-(forecast_horizon))) |>
   stretch_tsibble(.init = length(unique(train$month)), .step = 1) # split data into different time series (i.e. origin or id) with increasing size
 
 # you need also to get future values that correspond to each .id, because you need them in the forecast model:
 test_tscv <- test |> 
-  slide_tsibble(.size = forecast_horizon, .step = 1, .id = ".id") |> select(-dose_adminstrated)
+  slide_tsibble(.size = forecast_horizon, .step = 1, .id = ".id") |> select(-dose_administered)
 ```
 
 > `.init` is the size of first origin, `.step` is the increment step, this can correspond to the forecasting frequency, i.e. how often you generate the forecast. If .step = 1 in a monthly time series, it means we generate forecasts very month for the given forecast horizon.
@@ -282,14 +282,14 @@ Complete the R code to train all models on the TSCV data:
 ```{r}
 fit_tscv <-  train_tscv |> 
   model(
-    mean = MEAN(dose_adminstrated),
-    naive = NAIVE(dose_adminstrated),
-    snaive = SNAIVE(dose_adminstrated),
-    automatic_ets = ETS(dose_adminstrated),
-    automatic_arima = ARIMA(dose_adminstrated),
-  regression1 = TSLM(dose_adminstrated ~ trend() + season()),
-  regression_population = TSLM(dose_adminstrated ~ trend() + season() + population_under1),
-  regression_population_strike = TSLM(dose_adminstrated ~ trend() + season() + population_under1+strike)) |> 
+    mean = MEAN(dose_administered),
+    naive = NAIVE(dose_administered),
+    snaive = SNAIVE(dose_administered),
+    automatic_ets = ETS(dose_administered),
+    automatic_arima = ARIMA(dose_administered),
+  regression1 = TSLM(dose_administered ~ trend() + season()),
+  regression_population = TSLM(dose_administered ~ trend() + season() + population_under1),
+  regression_population_strike = TSLM(dose_administered ~ trend() + season() + population_under1+strike)) |> 
   mutate(combination = (automatic_ets+automatic_arima+regression_population_strike)/3
 )
 fit_tscv
@@ -319,7 +319,7 @@ Let's compare the forecast accuracy of all models. Complete the R code to comput
 
 ```{r}
 fcst_accuracy <- fcst_tscv |> 
-  accuracy(vaccine_administrated_tsb,
+  accuracy(vaccine_administered_tsb,
            measures = list(point_accuracy_measures,
                            interval_accuracy_measures, 
                            distribution_accuracy_measures)
@@ -354,7 +354,7 @@ Now let's see how we can get the accuracy measure for each origin (i.e. .id) sep
 
 ```{r}
 fc_accuracy_by_id <- fcst_tscv |> 
-  accuracy(vaccine_administrated_tsb, by = c(".model", ".id","region"))
+  accuracy(vaccine_administered_tsb, by = c(".model", ".id","region"))
 ```
 
 We can now create some insightful visualisations. Complete the following code to generate a density plot and a box plot that highlights the distribution of the error metrics. You can choose any error metric:
@@ -403,8 +403,8 @@ To calculate the accuracy measures for each horizon and model, complete the foll
 
 ```{r}
 fc_accuracy_h <- fc_h |> 
-  as_fable(response = "dose_adminstrated", distribution = "dose_adminstrated") |> 
-accuracy(vaccine_administrated_tsb, 
+  as_fable(response = "dose_administered", distribution = "dose_administered") |> 
+accuracy(vaccine_administered_tsb, 
            measures = list(point_accuracy_measures, 
                            interval_accuracy_measures, 
                            distribution_accuracy_measures),
@@ -434,7 +434,7 @@ Now, we need to generate forecast for the future of the time series using the be
 You first need to produce the future months. Complete the following code todo that:
 
 ```{r}
-future_month <- new_data(vaccine_administrated_tsb, n=forecast_horizon)
+future_month <- new_data(vaccine_administered_tsb, n=forecast_horizon)
 ```
 
 We assume that we know that in March the country will face strikes. Add a new column, *strike* by completing the R code:
@@ -447,7 +447,7 @@ future_month_strike <- future_month |>
 Add a new column, `population_under1`, to include the estimated population under 1, by completing the R code:
 
 ```{r}
-forecast_population <- vaccine_administrated_tsb |> model(regression_population=ETS(dose_adminstrated)) |> forecast(h=forecast_horizon)
+forecast_population <- vaccine_administered_tsb |> model(regression_population=ETS(dose_administered)) |> forecast(h=forecast_horizon)
 
 population_point_forecast <- forecast_population |> as_tibble() |> select(.mean)
 ```
@@ -460,11 +460,11 @@ test_future <- bind_cols(future_month_strike, population_point_forecast) |>
 Train the combination approach on the entire time series data:
 
 ```{r}
-fit_future <- vaccine_administrated_tsb |> 
+fit_future <- vaccine_administered_tsb |> 
   model(
-    automatic_ets = ETS(dose_adminstrated),
-    automatic_arima = ARIMA(dose_adminstrated),
-  regression_population_strike = TSLM(dose_adminstrated ~ trend() + season() + population_under1+strike)) |> 
+    automatic_ets = ETS(dose_administered),
+    automatic_arima = ARIMA(dose_administered),
+  regression_population_strike = TSLM(dose_administered ~ trend() + season() + population_under1+strike)) |> 
   mutate(combination = (automatic_ets+automatic_arima+regression_population_strike)/3
 ) |> select(combination)
 ```
@@ -478,7 +478,7 @@ fcst_future <- fit_future |>
 
 ```{r}
 fcst_future |> 
-  autoplot(filter_index(vaccine_administrated_tsb, "2020" ~ .))# visualise it
+  autoplot(filter_index(vaccine_administered_tsb, "2020" ~ .))# visualise it
 ```
 
 ### Residual diagnostics

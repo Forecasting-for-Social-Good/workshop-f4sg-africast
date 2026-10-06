@@ -1,5 +1,5 @@
 library(fpp3) # for forecast and tsibble)
-library(ggdist)# for visualizing distributions
+library(ggdist)# for visualising distributions
 #
 
 tourism_holiday <- tourism |> filter(Purpose == "Holiday") |> summarise(Trips = sum(Trips)) #

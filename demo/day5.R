@@ -5,7 +5,7 @@ library(fpp3)
 cafe_retail <- aus_retail |>
   filter(Industry == "Cafes, restaurants and catering services") |>
   summarise(Turnover = sum(Turnover))
-# visualize the data
+# visualise the data
 cafe_retail |> autoplot(Turnover)
 
 ## Basic accuracy- split to Test and Train
@@ -88,7 +88,7 @@ accuracy_by_id <- fcst |> accuracy(cafe_retail,
                                                    interval_accuracy_measures,
                                                    distribution_accuracy_measures),
                                    by = c(".model", ".id"))
-# visualize the variation of RMSE across different .id for each model
+# visualise the variation of RMSE across different .id for each model
 ggplot(data = accuracy_by_id, mapping = aes( x = RMSE, y = fct_reorder(.model, RMSE)))+
   geom_boxplot()+
   ggthemes::theme_few()

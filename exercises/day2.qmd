@@ -90,15 +90,15 @@ tourism_features |>
 # Apply
 
 ```{r}
-vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+vaccine_administered_tsb <- read_rds("data/vaccine_administered_tsb.rds")
 ```
 
 ## Decomposition
 
-Complete the following code to decompose `dose_adminstrated` into its components:
+Complete the following code to decompose `dose_administered` into its components:
 
 ```{r}
-stl_decom <- vaccine_administrated_tsb |>
+stl_decom <- vaccine_administered_tsb |>
   filter(region == "") |> 
   ???(
     ???(??? ~ ???(window = ???) +
@@ -125,7 +125,7 @@ stl_decom |>
                 colour = "Seasonally Adjusted")) +
   geom_line(aes(y = ???, colour = "Trend")) +
   labs(y = "Month",
-       title = "Vaccine dose adminstrated") +
+       title = "Vaccine dose administered") +
   scale_colour_manual(
     values = c("gray", "#0072B2", "#D55E00"),
     breaks = c("Data", "Seasonally Adjusted", "Trend")
@@ -137,35 +137,35 @@ stl_decom |>
 You can start by calculating some simple features including average (`mean`) and standard deviation (`sd`). You also need to know how to calculate the coefficient of variation. Complete the following code to do that:
 
 ```{r}
-vaccine_administrated_tsb |>
+vaccine_administered_tsb |>
   ???(???, list(average = ???, standard_deviation = ???)) |> 
   mutate(coefficient_of_variation = ???/???)
 ```
 
-You can also use *feasts* package to include about 48 different features providing various numerical summaries of time series. Complete the following code to compute those features for the monthly vaccine dose adminstrated:
+You can also use *feasts* package to include about 48 different features providing various numerical summaries of time series. Complete the following code to compute those features for the monthly vaccine dose administered:
 
 ```{r}
-vaccine_administrated_features <- vaccine_administrated_tsb |>
+vaccine_administered_features <- vaccine_administered_tsb |>
   ???(???,???(pkgs = ???))
-vaccine_administrated_features
+vaccine_administered_features
 ```
 
 > The dataset of administered vaccine doses currently comprises only nine time series. Nevertheless, there are cases where datasets may includes hundreds or even thousands of time series. The method applied here can be replicated with datasets of varying sizes, including those with thousands of time series.
 
-## Visualizing features
+## Visualising features
 
 Create a scatterplot to show the strength of trend and seasonality features:
 
 ```{r}
-ggplot(data = vaccine_administrated_features, 
+ggplot(data = vaccine_administered_features, 
        mapping = aes(x = ???, y = ???)) +
   geom_point()
 ```
 
-Using a feature indicating the level of forecast difficulty or ease for a given time series, generate a histogram to visualize the distribution of forecastability within the dataset.
+Using a feature indicating the level of forecast difficulty or ease for a given time series, generate a histogram to visualise the distribution of forecastability within the dataset.
 
 ```{r}
-ggplot(data = vaccine_administrated_features, 
+ggplot(data = vaccine_administered_features, 
        mapping = aes(???)) +
   geom_density()
 ```

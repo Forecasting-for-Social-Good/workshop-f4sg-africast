@@ -55,12 +55,12 @@ fit |>
 # Apply
 
 ```{r}
-vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
+vaccine_administered_tsb <- read_rds("data/vaccine_administered_tsb.rds")
 ```
 
 ## Specify and traing ETS models
 
-We now want to apply the Exponential Smoothing family of models to forecast dose administrated.
+We now want to apply the Exponential Smoothing family of models to forecast dose administered.
 
 > Remember the following from ETS (E: Error, T:Trend, S: Seasonality) function:
 >
@@ -69,10 +69,10 @@ We now want to apply the Exponential Smoothing family of models to forecast dose
 > -   Ad: additive damped
 > -   M: multiplicative
 
-Complete the R code to train exponential smoothing models on the `vaccine_administrated_tsb`:
+Complete the R code to train exponential smoothing models on the `vaccine_administered_tsb`:
 
 ```{r}
-fit_ets <- vaccine_administrated_tsb |>
+fit_ets <- vaccine_administered_tsb |>
   model(
     ??? = ???(???)
   )
@@ -131,7 +131,7 @@ What type of data structure is it? What each row and column represent?
 
 ## Visualise forecasts:
 
-You can also visualize forecasts:
+You can also visualise forecasts:
 
 ```{r}
 forecast_ets |>
@@ -145,7 +145,7 @@ You can use the following specific functions: `error()`, `trend()`, `season()` t
 In the following R-chunk, you can change parameters and the type of pattern to see their impact on fitting and forecast:
 
 ```{r alpha}
-vaccine_ets <- vaccine_administrated_tsb |> filter(region == "") |> 
+vaccine_ets <- vaccine_administered_tsb |> filter(region == "") |> 
   model(
     `alpha = 0.05` = ETS(??? ~ error("A") + trend("A", alpha = .05) + season("N")),
     `alpha = 0.15` = ETS(??? ~ error("A") + trend("A", alpha = .15) + season("N")),
@@ -155,7 +155,7 @@ vaccine_ets <- vaccine_administrated_tsb |> filter(region == "") |>
 
 vaccine_ets |> augment() |> filter_index("2020" ~ .) |> 
   ggplot(aes(x=month))+
-  geom_line(aes(y=dose_adminstrated, colour= "Actual"))+
+  geom_line(aes(y=dose_administered, colour= "Actual"))+
   geom_line(aes(y=.fitted, colour= factor(.model)))+
   ggthemes::scale_color_colorblind()+
   labs(colour ="")
@@ -172,7 +172,7 @@ Could you describe how the value of smoothing constant , alpha affects the forec
 Complete the following code to train an automatic ARIMA model on the data:
 
 ```{r}
-fit_arima <- vaccine_administrated_tsb |>
+fit_arima <- vaccine_administered_tsb |>
   model(
     ??? = ???(???)
   )
@@ -228,9 +228,9 @@ vaccine_fcst_arima
 
 What type of data structure is it? What each row and column represent?
 
-## Visualize forecasts
+## Visualise forecasts
 
-You can visualize your forecast:
+You can visualise your forecast:
 
 ```{r}
 vaccine_fcst_arima |> 

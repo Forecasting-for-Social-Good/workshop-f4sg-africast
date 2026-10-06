@@ -1,5 +1,5 @@
 library(fpp3) # for forecast and tsibble
-library(ggdist)# for visualizing distributions
+library(ggdist)# for visualising distributions
 library(distributional)# for working with distributions
 
 #---------------use one model----------
@@ -27,7 +27,7 @@ ggplot(data = fcst, mapping = aes(x = Quarter, ydist = Beer))+ # Plot for multip
   geom_point(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+# Plot the actual data points
   scale_color_manual(name=NULL,
                      breaks=c('Fitted', 'Data',"Point Forecast"),
-                     values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))# Customize colors
+                     values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))# Customise colours
 
   #---------------use multiple models------------------------
 # Fit multiple models to the data up to 2009 Q1
@@ -51,7 +51,7 @@ ggplot(data = fcst, mapping = aes(x = Quarter, ydist = Beer))+ # Plot for multip
   geom_point(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+# Plot the actual data points
   scale_color_manual(name=NULL,
                      breaks=c('Fitted', 'Data',"Point Forecast"),
-                     values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))+# Customize colors
+                     values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))+# Customise colours
   facet_wrap(~.model, ncol = 1) # Facet the plot by model
 
 

@@ -82,7 +82,7 @@ tourism |>
 
 # Apply
 
-## Import `vaccine_administrated.csv` data into R
+## Import `vaccine_administered.csv` data into R
 
 Let's first import data and observe it. This dataset is located in`data` directory in the working directory:
 
@@ -91,8 +91,8 @@ library(tidyverse)
 library(tsibble)
 library(mixtime)
 library(ggtime)
-vaccine_administrated <- read_csv("data/vaccine_administrated.csv")
-vaccine_administrated
+vaccine_administered <- read_csv("data/vaccine_administered.csv")
+vaccine_administered
 ```
 
 After importing your data, it's important to double-check the structure of the data and the data types of the variables. The structure of the data you import into R must be a tibble/data frame.
@@ -100,9 +100,9 @@ After importing your data, it's important to double-check the structure of the d
 Verify the data type of each variable in `vaccine_administered`. We may need to modify the data type of `month`, and `strike`. Could you explain why?
 
 ```{r}
-vaccine_administrated <- vaccine_administrated |> 
+vaccine_administered <- vaccine_administered |> 
   mutate(month = ???(month), strike = ???(strike))
-vaccine_administrated
+vaccine_administered
 ```
 
 ## Prepare your data
@@ -114,7 +114,7 @@ Preparing your temporal data for time series analysis and forecasting may involv
 It's essential to always check for any missing values and address them before creating a tsibble. The easiest way to know if there is a missing values is to use `anyNA()`.
 
 ```{r}
-anyNA(vaccine_administrated)
+anyNA(vaccine_administered)
 ```
 
 The dataset you use may contain missing values (`NA` in R) and other data quality issues. While checking and fixing data quality issues are crucial for any project, addressing such issues goes beyond the scope of this training. For further information, you may read more about data quality issues [here](https://bookdown.org/martin_shepperd/ModernDataBook/Chap5DataCleaning.html)
@@ -140,9 +140,9 @@ You can store your data in a `tsibble` format, which is suitable for time series
 Complete the following R chunk to create a tsibble.
 
 ```{r}
-vaccine_administrated_tsb <- vaccine_administrated |> 
+vaccine_administered_tsb <- vaccine_administered |> 
   ???(index = ???, key=???)
-vaccine_administrated_tsb
+vaccine_administered_tsb
 ```
 
 ### Check for temporal gaps in time and fill gaps
@@ -152,9 +152,9 @@ After creating a tsibble, it's important to check for any temporal gaps. If gaps
 Complete the following R chunk to check if there is any temporal gap in the data:
 
 ```{r}
-???(vaccine_administrated_tsb)#check gaps
-##???(vaccine_administrated_tsb)# show me gaps
-##???(vaccine_administrated_tsb)# count gaps
+???(vaccine_administered_tsb)#check gaps
+##???(vaccine_administered_tsb)# show me gaps
+##???(vaccine_administered_tsb)# count gaps
 ```
 
 ### Are there any temporal gaps in the data?
@@ -163,7 +163,7 @@ Complete the following R chunk to check if there is any temporal gap in the data
 
 ```{r}
 #If there is any gap, then fill it using fill_gaps.
-#vaccine_administrated_tsb <- vaccine_administrated_tsb |> fill_gaps(???)
+#vaccine_administered_tsb <- vaccine_administered_tsb |> fill_gaps(???)
 ```
 
 ## Manipulating time series
@@ -172,28 +172,28 @@ Depending on the decision your forecast will inform, you may need to manipulate 
 
 > Remember, you can use `index_by()`, `group_by()` or `group_by_key()`, and `summarise()` to create different temporal granularity.
 
-Complete the following code to create total dose administrated in the country.
+Complete the following code to create total dose administered in the country.
 
 ```{r}
-vaccine_administrated_total <- vaccine_administrated_tsb |> 
+vaccine_administered_total <- vaccine_administered_tsb |> 
   ???(???) |>
-  summarise(dose_adminstrated = ???(???))
-vaccine_administrated_total
+  summarise(dose_administered = ???(???))
+vaccine_administered_total
 ```
 
 Depending on the forecasting task on hand, you may need to work with other time granularities such as quarterly time series.
 
-Complete the following code to create total dose administrated in the country.
+Complete the following code to create total dose administered in the country.
 
 ```{r}
 #| label: quarterly
-quarterly_vaccine_administrated <- vaccine_administrated_tsb |>
+quarterly_vaccine_administered <- vaccine_administered_tsb |>
   ???(quarter = ???(???)) |>
-  summarise(dose_adminstrated = ???(???))
-quarterly_vaccine_administrated
+  summarise(dose_administered = ???(???))
+quarterly_vaccine_administered
 ```
 
-What if you need to create quarterly dose administrated in each region, write the R to achieve that.
+What if you need to create quarterly dose administered in each region, write the R to achieve that.
 
 ```{r}
 
@@ -204,17 +204,17 @@ What if you need to create quarterly dose administrated in each region, write th
 
 ### Time plots
 
-To understand your data, you can start by producing time plot of dose administrated in 9 regions.
+To understand your data, you can start by producing time plot of dose administered in 9 regions.
 
 ```{r}
-vaccine_administrated_tsb |> 
+vaccine_administered_tsb |> 
   ???(???)
 ```
 
 You can also focus on any region by filtering the region:
 
 ```{r}
-vaccine_administrated_tsb |> 
+vaccine_administered_tsb |> 
   filter(region == "???") |> 
   ???(???)
 ```
@@ -226,14 +226,14 @@ Do you observe any systematic pattern in time series plots?
 In time series analysis, we are looking for consistent pattern. Complete the following code to create seasonal plot to see if there is any obvious monthly consistent pattern.
 
 ```{r}
-vaccine_administrated_tsb |> 
+vaccine_administered_tsb |> 
   ???(???)
 ```
 
 It might not be easy to see the systematic pattern when you plot many time series together,instead you can first filter the time series of interest and then plot it:
 
 ```{r}
-vaccine_administrated_tsb |> 
+vaccine_administered_tsb |> 
   filter(??? == "???") |> 
   ???(???)
 ```
@@ -242,10 +242,10 @@ Do you observe any consistent pattern? How different the pattern is across regio
 
 ### Seasonal subseries plot
 
-You might be also interested in observing how doses administrated within each month/quarter change over time, as well as understanding the dose administrated changes across different season. This could be plotted for each region separately . Complete the following code to create the plot for your region of interest:
+You might be also interested in observing how doses administered within each month/quarter change over time, as well as understanding the dose administered changes across different season. This could be plotted for each region separately . Complete the following code to create the plot for your region of interest:
 
 ```{r}
-vaccine_administrated_tsb |> 
+vaccine_administered_tsb |> 
   filter(??? == "???") |> 
   ???(???)
 ```
@@ -257,7 +257,7 @@ Do you see any pattern that has not been obvious with time plot and seasonal plo
 In forecasting, we would be interested in understanding how similar a time series is to the lags of itself. We often measure this similarity by calculating the correlation (i.e. the linear association) between a time series and its lags and then plot it.
 
 ```{r}
-vaccine_administrated_tsb |> 
+vaccine_administered_tsb |> 
   ACF(???, lag_max = ???) |> 
   ???()
 ```
@@ -265,10 +265,10 @@ vaccine_administrated_tsb |>
 You can also focus on any time series of interest by filtering the region:
 
 ```{r}
-vaccine_administrated_tsb |> 
+vaccine_administered_tsb |> 
   filter(??? == "???") |> 
   ACF(???, lag_max = ???) |> 
   autoplot()
 ```
 
-What can you say about the correlation between dose administrated with its lags?
+What can you say about the correlation between dose administered with its lags?
