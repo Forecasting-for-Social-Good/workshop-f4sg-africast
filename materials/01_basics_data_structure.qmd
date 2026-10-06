@@ -23,8 +23,8 @@ library(mixtime)
 
 ## What is a forecast?
 
-\fontsize{10}{11.2}\sf
-Forecasting  is estimating how the sequence of observations will continue into the future based on all of the information available at the time when we generate the forecast.
+\fontsize{12}{13}\sf
+Estimating how a sequence of observations will continue into the future, using all information available now.
 
 ```{r forecasting,echo=FALSE, out.width="90%", fig.align='center'}
 ausbeer %>% model(ETS(Production)) %>% forecast(h=20) %>% autoplot(tail(ausbeer, 60), level=NULL, alpha=.01)+
@@ -32,53 +32,80 @@ ausbeer %>% model(ETS(Production)) %>% forecast(h=20) %>% autoplot(tail(ausbeer,
   labs(x ="Time",y="Observation",title = "Forecasting")
 ```
 
+## What data do we need?
 
-## What data do we need for forecasting?
-
-\fontsize{10}{11.2}\sf
-Forecasting is estimating how the sequence of observations will continue into the future based on all of the information available at the time when we generate the forecast:
-
-1. Past/historical time series data on the variable we intend to forecast
-2. Past and future data about deterministic predictors/regressors
-3. Past and future data about stochastic predictors/regressors
-4. Expertise of individuals in an organization and any contextual information that may affect the forecast variable
+1. Historical data on the variable to forecast
+2. Past and future values of predictors
+    + Deterministic (e.g. holidays)
+    + Stochastic (e.g. temperature)
+3. Expert knowledge and context
     + New information
 
+## Why forecast?
 
-## Why does an organisation need forecast?
-
-Why do you use forecast?
+Why do you use forecasts?
 
 \pause
 
 \fontsize{12}{13}\sf
 
-| Forecasting required in many situation                | Forecast  |
+| Decision                                              | Forecast  |
 | ----------------------------------------------------- |:---------:|
-| Whether to build a new hospital in next 10 years?     |      ?    |
-| How many staff does a call center need next week?     |      ?    |
-| How many dose of vaccine is required next month?      |      ?    |
+| Build a new hospital in the next 10 years?            |      ?    |
+| Call centre staff needed next week?                   |      ?    |
+| Vaccine doses needed next month?                      |      ?    |
 
-- An important aid to planning and decision making
-  * To inform decisions
-  * To provide evidences
-  
+- Supports planning
+- Informs decisions
+- Provides evidence
+
 ## Forecasting workflow
 
 ```{r forecastingworkflow,echo=FALSE, fig.align='center', out.width="32%"}
 knitr::include_graphics("figs/forecasting_workflow.png")
 ```
 
-# Time series data and tsibbles
 
-## Tidyverts packages
+## Packages for this course
 
-\begin{textblock}{4.2}(8,0)\begin{alertblock}{}\Large\textbf{tidyverts.org}\end{alertblock}\end{textblock}
+\begin{textblock}{4.2}(10.8,0.3)\begin{alertblock}{}\Large\textbf{tidyverts.org}\end{alertblock}\end{textblock}
 
-\placefig{1}{1.4}{width=3.5cm}{tsibble.png}
-\placefig{5}{1.4}{width=3.5cm}{tsibbledata.png}
-\placefig{3}{4.85}{width=3.5cm}{feasts.png}
-\placefig{7}{4.85}{width=3.5cm}{fable.png}
+\placefig{1.8}{1.3}{width=3cm}{tsibble.png}
+\placefig{5.2}{1.3}{width=3cm}{mixtime.png}
+\placefig{8.6}{1.3}{width=3cm}{tsibbledata.png}
+\placefig{3.5}{4.6}{width=3cm}{feasts.png}
+\placefig{6.9}{4.6}{width=3cm}{ggtime.png}
+\placefig{10.3}{4.6}{width=3cm}{fable.png}
+
+## Packages for this course
+\fontsize{11}{12}\sf
+
+```r
+# Data, graphics and forecasting
+library(fpp3)
+```
+
+```{r fpp3-attach, echo=FALSE, message=TRUE, comment=""}
+local({
+  op <- options(cli.width = 66, cli.unicode = FALSE)
+  on.exit(options(op))
+  ns <- asNamespace("fpp3")
+  attach_msg <- ns$fpp3_attach
+  environment(attach_msg) <- list2env(
+    list(core_unloaded = function() ns$core), parent = ns
+  )
+  attach_msg()
+})
+```
+
+\pause
+
+```r
+# Time classes for the index (load after fpp3)
+library(mixtime)
+```
+
+# Time series data
 
 ## Time series data
 
@@ -92,41 +119,43 @@ knitr::include_graphics("figs/forecasting_workflow.png")
   - 5-minute freeway traffic counts
   - Time-stamped stock transaction data
 
-## Class packages
-\fontsize{13}{14}\sf
+## Your time series
 
-```r
-# Data manipulation
-library(dplyr)
-# Plotting functions
-library(ggplot2)
-# Time and date manipulation
-library(lubridate)
-# Time series class
-library(tsibble)
-# Tidy time series data
-library(tsibbledata)
-# Time series graphics and statistics
-library(feasts)
-# Forecasting functions
-library(fable)
-```
+\begin{block}{}\Large
+What time series do you work with?
+\end{block}
 
 \pause
 
-```r
-# All of the above
-library(fpp3)
-```
+* What is measured?
+* How often?
+* One series, or many?
 
-\pause
+## What makes it a time series?
 
-```r
-# Flexible, mixed-granularity time classes for the tsibble index
-library(mixtime)
-```
+\begin{block}{}
+Observations + \alert{when} they happened.
+\end{block}
 
+* The time column is the \alert{index}
+* Observations are ordered in time
+* The frequency matters
 
+# tsibble objects
+
+## A `tsibble` has three parts
+
+\begin{block}{}
+A \alert{tsibble} stores one or more time series in a table.
+\end{block}
+
+* **Index**: when
+* **Key**: which series (optional)
+* **Measures**: what was observed
+
+\vspace*{0.3cm}
+
+Works with tidyverse functions.
 
 ## `tsibble` objects
 
@@ -136,14 +165,14 @@ library(mixtime)
 global_economy
 ```
 
-\only<2->{\begin{textblock}{.75}(1.65,3.2)
-\begin{alertblock}{}\fontsize{10}{10}\sf Index\phantom{dg}\end{alertblock}
+\only<2->{\begin{textblock}{1.05}(1.5,3.2)
+\begin{alertblock}{}\fontsize{10}{10}\sf\mbox{Index}\phantom{dg}\end{alertblock}
 \end{textblock}}
 \only<3->{\begin{textblock}{1.6}(2.72,3.2)
 \begin{alertblock}{}\fontsize{10}{10}\sf Key\phantom{dg}\end{alertblock}
 \end{textblock}}
 \only<4>{\begin{textblock}{6.3}(5.2,3.2)
-\begin{alertblock}{}\fontsize{10}{10}\sf Measured variables\phantom{dg}\end{alertblock}
+\begin{alertblock}{}\fontsize{10}{10}\sf Measures\phantom{dg}\end{alertblock}
 \end{textblock}}
 
 ## `tsibble` objects
@@ -154,105 +183,63 @@ global_economy
 tourism
 ```
 
-\only<2->{\begin{textblock}{1.1}(1.6,3.13)
-\begin{alertblock}{}\fontsize{10}{10}\sf Index\phantom{dg}\end{alertblock}
+\only<2->{\begin{textblock}{1.3}(1.6,3.13)
+\begin{alertblock}{}\fontsize{10}{10}\sf\mbox{Index}\phantom{dg}\end{alertblock}
 \end{textblock}}
 \only<3->{\begin{textblock}{3.8}(3.05,3.13)
 \begin{alertblock}{}\fontsize{10}{10}\sf Keys\phantom{dg}\end{alertblock}
 \end{textblock}}
-\only<4>{\begin{textblock}{1.5}(7.15,3.13)
-\begin{alertblock}{}\fontsize{10}{10}\sf Measure\phantom{dg}\end{alertblock}
+\only<4>{\begin{textblock}{1.8}(7.15,3.13)
+\begin{alertblock}{}\fontsize{10}{10}\sf\mbox{Measure}\phantom{dg}\end{alertblock}
 \end{textblock}}
 
 \begin{textblock}{3}(9,5)
-\begin{block}{}\fontsize{10}{10}\sf Domestic visitor nights in thousands by state/region and purpose.\phantom{dg}\end{block}
+\begin{block}{}\fontsize{10}{10}\sf Domestic visitor nights (thousands).\phantom{dg}\end{block}
 \end{textblock}
 
-## `tsibble` objects
-
-* A `tsibble` allows storage and manipulation of multiple time series in R.
-
-* It contains:
-
-  + An index: time information about the observation
-  + Measured variable(s): numbers of interest
-  + Key variable(s): optional unique identifiers for each series
-
-* It works with tidyverse functions.
-
-## Introducing `mixtime`
-
-\begin{block}{}
-The \alert{mixtime} package provides flexible time classes for time series with mixed temporal granularities, and is a great fit for the tsibble index.
-\end{block}
-\fontsize{12}{13}\sf
-
-* One consistent family of time classes, instead of a different type for each frequency
-* Supports every calendar granularity, not just the common ones
-* Handles changing observation frequency, multiple resolutions, and timezones
-* \url{https://pkg.mitchelloharawild.com/mixtime/}
-
-```r
-library(mixtime)
-```
-
-## The `tsibble` index
-
-\begin{block}{}
-A time class on the index tells the tsibble what frequency the data is observed at.
-\end{block}
-
-### Example
-\fontsize{11}{12}\sf
-
-```{r tstable}
-mydata <- tsibble(
-  year = mixtime::year(2012:2016),
-  y = c(123, 39, 78, 52, 110),
-  index = year
-)
-mydata
-```
-
-## The `tsibble` index
-
-\begin{block}{}
-The same idea extends to any frequency -- here monthly data as plain text needs converting to a time class.
-\end{block}
-\fontsize{12}{13}\sf
+## The index needs a time class
 
 ```{r tstablemonth, echo=FALSE}
 z <- tibble(Month = paste(2019, month.abb[1:5]), Observation = c(50, 23, 34, 30, 25))
-# knitr::kable(z, booktabs=TRUE)
 ```
+
+\fontsize{12}{13}\sf
 
 ```{r tstablemonth2}
 z
 ```
 
-\vspace*{10cm}
+\pause
 
-## The `tsibble` index
+* `"2019 Jan"` is just text
+* A time class knows the frequency
 
-\begin{block}{}
-The same idea extends to any frequency -- here monthly data as plain text needs converting to a time class.
-\end{block}
+## Time classes with `mixtime`
+
+\placefig{12.9}{5.6}{width=2.2cm}{mixtime.png}
+
 \fontsize{12}{13}\sf
 
-```{r month-tsibble}
-z |>
-  mutate(Month = mixtime::yearmonth(Month)) |>
-  as_tsibble(index = Month)
-```
+Three kinds of time:
 
-\vspace*{10cm}
+| Kind     | Meaning                | Function          | Example    |
+| -------- | ---------------------- | ----------------- | ---------- |
+| Linear   | Point on a timeline    | `linear_time()`   | 2026 Oct   |
+| Cyclical | Position in a cycle    | `cyclical_time()` | Mon        |
+| Duration | Length of time         | `duration()`      | 3 months   |
 
-## The `tsibble` index
-\vspace*{-0.2cm}
+\pause
 
-Common `mixtime` index variables can be created with these functions:
+\vspace*{0.3cm}
 
-###
+The time index for a tsibble is typically \alert{linear time}.
+
+## Linear time
+
+\fontsize{12}{13}\sf
+
+Common frequencies have convenient functions:
+
 ```{r tstable2, echo=FALSE}
 tribble(
   ~`Frequency`, ~Function,
@@ -261,72 +248,128 @@ tribble(
   "Monthly", "`yearmonth()`",
   "Weekly", "`yearweek()`",
   "Daily", "`date()`",
-  "Sub-daily", "`datetime()`"
+  "Seconds", "`datetime()`"
 ) |>
   knitr::kable(booktabs = TRUE)
 ```
 
-\begin{alertblock}{}
-\fontsize{10}{11}\sf These names also exist in \texttt{lubridate}/\texttt{tsibble} --- load \texttt{mixtime} last (as in \texttt{fpp3}'s package list) or call them as \texttt{mixtime::yearmonth()} to be explicit.
+## Linear time
+
+\fontsize{11}{12}\sf
+
+Often data is provided in a date format, even if it isn't daily.
+
+```{r linear-helpers, collapse=TRUE}
+d <- as.Date("2026-10-01")
+yearquarter(d)
+yearmonth(d) + 0:2
+```
+
+\pause
+
+Multiple granularities can share one vector:
+
+```{r linear-mixed, collapse=TRUE}
+c(yearquarter(d), yearmonth(d), date(d))
+```
+
+## Making a `tsibble`
+
+\fontsize{12}{13}\sf
+
+```{r month-tsibble}
+z |>
+  mutate(Month = yearmonth(Month)) |>
+  as_tsibble(index = Month)
+```
+
+## Custom granularity
+
+```{r mt-narrow, include=FALSE}
+options(width = 60)
+```
+
+\fontsize{11}{12}\sf
+
+Any time step with `linear_time()`:
+
+```{r chronon-minute, collapse=TRUE}
+x <- datetime("2024-01-01 00:00:00") + minutes(0:5) * 15L
+linear_time(x, chronon = cal_gregorian$minute(15L))
+```
+
+\pause
+
+* `chronon`: the size of one time step
+* `cal_gregorian$minute(15L)`: 15 minutes
+* `cal_gregorian$hour(6L)`: 6 hours
+
+## Timezones
+
+\fontsize{11}{12}\sf
+
+```{r timezones, collapse=TRUE}
+t <- as.POSIXct("2026-10-05 22:30:00", tz = "UTC")
+datetime(t, tz = "Africa/Lagos")
+datetime(t, tz = "Africa/Nairobi")
+date(t, tz = "Africa/Nairobi")
+```
+
+\pause
+
+* Same moment, different local time zone.
+* The date can change!
+
+## Cyclical time
+
+\fontsize{11}{12}\sf
+
+\alert{Cyclical time} describes positions within a cycle:
+
+```{r cyclical, collapse=TRUE}
+month_of_year(d)
+day_of_week(d)
+time_of_day(t)
+```
+
+\pause
+
+* Also `week_of_year()`, `day_of_month()`, `day_of_year()`
+* Useful for seasonal patterns
+
+\pause
+
+\begin{textblock}{4.5}(10,2.2)
+\begin{alertblock}{Your turn}
+What day of the week were you born on?
 \end{alertblock}
+\end{textblock}
 
-# Chronons: any granularity you like
+## Durations
 
-## What is a chronon?
+\fontsize{11}{12}\sf
 
-\begin{block}{}
-A \alert{chronon} is the smallest indivisible time granule underlying a \texttt{mixtime} vector.
-\end{block}
-\fontsize{12}{13}\sf
+\alert{Durations} describe a length of time:
 
-* A chronon is built from a **calendar** and a **count** of one of its units
-* `yearmonth()`, `yearquarter()`, `date()`, etc. are just convenient shortcuts for common chronons
-* Under the hood, `yearmonth(x)` is `linear_time(x, chronon = cal_gregorian$month(1L))`
-* `date(x)` is `linear_time(x, chronon = cal_gregorian$day(1L))`
+```{r durations, collapse=TRUE}
+months(3)
+```
+
+* Also `years()`, `quarters()`, `weeks()`, `days()`, `hours()`, `minutes()`, `seconds()`
 
 \pause
 
-So what about a time series that doesn't fit any of these standard frequencies?
+They are useful for arithmetic.
 
-## Custom granularity with `linear_time()`
-
-\begin{block}{}
-Use \texttt{linear\_time(x, chronon = ...)} to build an index at \alert{any} granularity.
-\end{block}
-\fontsize{10}{11.2}\sf
-
-```{r chronon-minute, echo = TRUE}
-timestamps <- datetime("2024-01-01 00:00:00") + minutes(0:8) * 5
-linear_time(timestamps, chronon = cal_gregorian$minute(15L))
+```{r duration-arith, collapse=TRUE}
+yearmonth(d) + months(0:2)
+yearmonth("2026 Oct") - yearmonth("2025 Jan")
 ```
 
 \pause
 
-* `cal_gregorian$minute(15L)` is a 15-minute granule
-* Several other counts also make useful chronons:
-
-```{r chronon-examples, echo = TRUE, eval = FALSE}
-cal_gregorian$minute(5L)  # 5-minute freeway traffic counts
-cal_gregorian$hour(6L)    # 6-hourly weather observations
-cal_gregorian$day(5L)     # 5-day (business week) reporting
-cal_gregorian$month(4L)   # 4-monthly (tri-annual) reporting
-```
-
-## Other calendars
-
-\fontsize{12}{13}\sf
-
-`linear_time()` isn't limited to the Gregorian calendar:
-
-* `cal_gregorian` -- everyday calendar (year/quarter/month/week/day/hour/...)
-* `cal_isoweek` -- ISO 8601 week-based years (`yearweek()` uses this)
-* `cal_sym454` -- Symmetry454 fixed 4-5-4 fiscal calendar
-* `new_calendar()` -- define your own calendar and units
-
-\pause
-
-```{r chronon-calendar, echo = TRUE}
-linear_time(as.Date("2024-01-01"), chronon = cal_isoweek$week(1L))
+```{r mt-wide, include=FALSE}
+options(width = 88)
 ```
 
 # Example: Australian prison population
@@ -335,7 +378,7 @@ linear_time(as.Date("2024-01-01"), chronon = cal_isoweek$week(1L))
 
 \full{Beechworth_prison}
 
-## Read a csv file and convert to a tsibble {-}
+## Read a csv file {-}
 \fontsize{10}{11}\sf
 
 ```{r prison}
@@ -344,24 +387,25 @@ prison <- readr::read_csv("data/prison_population.csv")
 ```{r prison2a, dependson="prison", echo=FALSE}
 prison
 ```
-## Read a csv file and convert to a tsibble {-}
+
+## Convert to a time class {-}
 \fontsize{10}{11}\sf
 
 ```{r prison3}
 prison <- readr::read_csv("data/prison_population.csv") |>
-  mutate(Quarter = mixtime::yearquarter(date))
+  mutate(quarter = yearquarter(date))
 ```
 
 ```{r prison3a, dependson="prison3", echo=FALSE}
 prison
 ```
 
-## Read a csv file and convert to a tsibble {-}
+## Remove the old date column {-}
 \fontsize{10}{11}\sf
 
 ```{r prison4}
 prison <- readr::read_csv("data/prison_population.csv") |>
-  mutate(Quarter = mixtime::yearquarter(date)) |>
+  mutate(quarter = yearquarter(date)) |>
   select(-date)
 ```
 
@@ -369,15 +413,15 @@ prison <- readr::read_csv("data/prison_population.csv") |>
 prison
 ```
 
-## Read a csv file and convert to a tsibble {-}
+## Declare the index and keys {-}
 \fontsize{10}{11}\sf
 
 ```{r prison5}
 prison <- readr::read_csv("data/prison_population.csv") |>
-  mutate(Quarter = mixtime::yearquarter(date)) |>
+  mutate(quarter = yearquarter(date)) |>
   select(-date) |>
   as_tsibble(
-    index = Quarter,
+    index = quarter,
     key = c(state, gender, legal, indigenous)
   )
 ```
@@ -394,14 +438,14 @@ prison
 
 ## Australian Pharmaceutical Benefits Scheme
 \begin{block}{}
-The \alert{Pharmaceutical Benefits Scheme} (PBS) is the Australian government drugs subsidy scheme.
+The \alert{PBS} is the Australian government drug subsidy scheme.
 \end{block}
 \pause\fontsize{13.3}{15}\sf
 
-  * Many drugs bought from pharmacies are subsidised to allow more equitable access to modern drugs.
-  * The cost to government is determined by the number and types of drugs purchased. Currently nearly 1\% of GDP.
-  * The total cost is budgeted based on forecasts of drug usage.
-  * Costs are disaggregated by drug type (ATC1 x`r length(unique(PBS$ATC1))` / ATC2 `r length(unique(PBS$ATC2))`), concession category (x`r length(unique(PBS$Concession))`) and patient type (x`r length(unique(PBS$Type))`), giving $84\times2\times2=`r 84*2*2`$ time series.
+  * Subsidises many pharmacy drugs
+  * Costs nearly 1\% of GDP
+  * Budget relies on forecasts of drug usage
+  * Split by drug type (ATC2 x`r length(unique(PBS$ATC2))`), concession (x`r length(unique(PBS$Concession))`) and patient type (x`r length(unique(PBS$Type))`)
 
 ## Working with `tsibble` objects {-}
 \fontsize{8}{10}\sf
@@ -414,11 +458,7 @@ options(width = 78)
 PBS
 ```
 
-## Working with `tsibble` objects {-}
-\fontsize{12}{14}\sf
-
-We can use the `filter()` function to select rows.
-
+## `filter()`: choose rows {-}
 \fontsize{8}{10}\sf
 
 ```{r pbs2}
@@ -426,11 +466,7 @@ PBS |>
   filter(ATC2 == "A10")
 ```
 
-## Working with `tsibble` objects {-}
-\fontsize{12}{14}\sf
-
-We can use the `select()` function to select columns.
-
+## `select()`: choose columns {-}
 \fontsize{8}{10}\sf
 
 ```{r pbs3}
@@ -439,11 +475,7 @@ PBS |>
   select(Month, Concession, Type, Cost)
 ```
 
-## Working with `tsibble` objects {-}
-\fontsize{12}{14}\sf
-
-We can use the `summarise()` function to summarise over keys.
-
+## `summarise()`: combine over keys {-}
 \fontsize{8}{10}\sf
 
 ```{r pbs4}
@@ -453,11 +485,7 @@ PBS |>
   summarise(total_cost = sum(Cost))
 ```
 
-## Working with `tsibble` objects {-}
-\fontsize{12}{14}\sf
-
-We can use the `mutate()` function to create new variables.
-
+## `mutate()`: create variables {-}
 \fontsize{8}{10}\sf
 
 ```{r pbs5}
@@ -468,11 +496,7 @@ PBS |>
   mutate(total_cost = total_cost / 1e6)
 ```
 
-## Working with `tsibble` objects {-}
-\fontsize{12}{14}\sf
-
-We can use the `mutate()` function to create new variables.
-
+## Save the result {-}
 \fontsize{8}{10}\sf
 
 ```{r pbs6}
@@ -491,7 +515,30 @@ a10
 options(width = 60)
 ```
 
+## Your turn
 
+\fontsize{12}{13}\sf
 
+### Using `tourism`
 
+1. Find the quarterly total `Trips` for each `State`
+2. **Challenge:** Which `State` had the most `Trips` over the whole period?
 
+### Using `PBS`
+
+3. Find the total monthly `Scripts` for ATC2 `"H02"`
+
+\pause
+
+### Hints
+
+* `summarise()` always keeps the index
+* `group_by()` the keys you want to keep
+* `as_tibble()` drops the index, to summarise over time
+
+## Recap
+
+* A tsibble has an **index**, **keys** and **measures**
+* The index needs a time class (`mixtime`)
+* Time can be linear, cyclical or a duration
+* Use dplyr verbs to wrangle tsibbles
