@@ -1,6 +1,6 @@
 ---
 title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "6. Forecasting with regression, how to represent temporal structure with regressors"
+subtitle: "5. Forecasting with regression, how to represent temporal structure with regressors"
 ---
 
 ## Outline
@@ -76,7 +76,7 @@ knitr::include_graphics("figs/SLRpop1-1.png")
 
 ## Estimation of the model
 
-That is, we find the values of $\beta_0$ and $\beta_1$ which minimize
+That is, we find the values of $\beta_0$ and $\beta_1$ which minimise
 
 \begin{block}{}\vspace*{-0.3cm}
 $$
@@ -156,7 +156,7 @@ That is, the coefficients measure the **marginal effects**.
 
 ## Estimation of the model
 
-We find the values of $\hat\beta_{0},\dots,\hat\beta_{k}$ which minimize
+We find the values of $\hat\beta_{0},\dots,\hat\beta_{k}$ which minimise
 
 $$ 
 \sum_{i=1}^N e_{i}^2 = \sum_{i=1}^N (y_{i} - \beta_{0} - \beta_{1}x_{1,i} - \cdots - \beta_{k} x_{k,i})^2. 
@@ -334,7 +334,7 @@ where $k=$ no.\ predictors and $T=$ no.\ observations.
 
 \pause
 
-\begin{alertblock}{Maximizing $\bar{R}^2$ is equivalent to minimizing $\hat\sigma^2$.}
+\begin{alertblock}{Maximising $\bar{R}^2$ is equivalent to minimising $\hat\sigma^2$.}
 \centerline{$\displaystyle
 \hat{\sigma}^2 = \frac{1}{T-k-1}\sum_{t=1}^T \varepsilon_t^2$
 }
@@ -357,10 +357,10 @@ $$
 \end{block}
 where $L$ is the likelihood and $k$ is the number of predictors in the model.
 
-* This is a \emph{penalized likelihood} approach.
-* \emph{Minimizing} the AIC gives the best model for prediction.
-* AIC penalizes terms more heavily than $\bar{R}^2$.
-* Minimizing the AIC is asymptotically equivalent to minimizing MSE via leave-one-out cross-validation.
+* This is a \emph{penalised likelihood} approach.
+* \emph{Minimising} the AIC gives the best model for prediction.
+* AIC penalises terms more heavily than $\bar{R}^2$.
+* Minimising the AIC is asymptotically equivalent to minimising MSE via leave-one-out cross-validation.
 
 ## Corrected AIC
 
@@ -372,7 +372,7 @@ $$
 $$
 \end{block}
 
-As with the AIC, the AIC$_{\text{C}}$ should be minimized.
+As with the AIC, the AIC$_{\text{C}}$ should be minimised.
 
 ## Comparing regression models
 \fontsize{12}{14}\sf

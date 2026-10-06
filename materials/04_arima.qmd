@@ -1,6 +1,6 @@
 ---
 title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "8. ARIMA models"
+subtitle: "6. ARIMA models"
 ---
 
 ## Outline
@@ -65,7 +65,7 @@ gafa_stock |>
 ## Differencing
 \fontsize{13}{15}\sf
 
-* Differencing helps to **stabilize the mean**.
+* Differencing helps to **stabilise the mean**.
 * The differenced series is the *change* between each observation in the original series.
 * Occasionally the differenced data will not appear stationary and it may be necessary to difference the data a second time.
 * In practice, it is almost never necessary to go beyond second-order differences.

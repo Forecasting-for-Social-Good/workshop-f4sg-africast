@@ -34,7 +34,7 @@ library(mixtime)
 ## Time series patterns
 
 Level
-  : The *level* of a time series describes the center of the series.
+  : The *level* of a time series describes the centre of the series.
   
 Trend
   : A *trend* describes predictable increases or decreases in the level of a series.
@@ -201,7 +201,7 @@ vic_elec |> gg_season(Demand, period = "day")
 ## Seasonal subseries plots
 
   * Data for each season collected together in time plot as separate time series.
-  * Enables the underlying seasonal pattern to be seen clearly, and changes in seasonality over time to be visualized.
+  * Enables the underlying seasonal pattern to be seen clearly, and changes in seasonality over time to be visualised.
   * In R: `gg_subseries()` (ggtime)
 
 ## Quarterly Australian Beer Production

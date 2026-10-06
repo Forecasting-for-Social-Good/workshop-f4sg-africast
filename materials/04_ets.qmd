@@ -392,7 +392,7 @@ which is the AIC corrected (for small sample bias).
 \Large
 
 \begin{alertblock}{}
-Minimizing the AIC assuming Gaussian residuals is asymptotically equivalent to minimizing one-step time series cross validation MSE.
+Minimising the AIC assuming Gaussian residuals is asymptotically equivalent to minimising one-step time series cross validation MSE.
 \end{alertblock}
 
 ## Automatic forecasting
@@ -400,7 +400,7 @@ Minimizing the AIC assuming Gaussian residuals is asymptotically equivalent to m
 **From Hyndman et al.\ (IJF, 2002):**
 
 1. Apply each model that is appropriate to the data.
-Optimize parameters and initial values using MLE.
+Optimise parameters and initial values using MLE.
 1. Select best method using AICc.
 1. Produce forecasts using best method.
 1. Obtain forecast intervals using underlying state space model.

@@ -1,6 +1,6 @@
 ---
 title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "9. Basic training and test accuracy"
+subtitle: "8. Basic training and test accuracy"
 ---
 
 ## Outline
