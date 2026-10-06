@@ -335,11 +335,11 @@ Simulated futures from an ETS model
 
 \title{\texorpdfstring{Africast-Time Series Analysis \& Forecasting
 Using R}{Africast-Time Series Analysis \& Forecasting Using R}}
-\subtitle{\texorpdfstring{6. Forecasting with regression, how to
+\subtitle{\texorpdfstring{5. Forecasting with regression, how to
 represent temporal structure with
-regressors}{6. Forecasting with regression, how to represent temporal structure with regressors}}
+regressors}{5. Forecasting with regression, how to represent temporal structure with regressors}}
 \author{}
-\date{27 November 2025}
+\date{7 October 2026}
 
 \begin{document}
 \frame{\titlepage}
@@ -446,7 +446,7 @@ $$
 \begin{frame}{Estimation of the model}
 \protect\phantomsection\label{estimation-of-the-model}
 That is, we find the values of \(\beta_0\) and \(\beta_1\) which
-minimize
+minimise
 
 \begin{block}{}\vspace*{-0.3cm}
 $$
@@ -588,7 +588,7 @@ That is, the coefficients measure the \textbf{marginal effects}.
 \begin{frame}{Estimation of the model}
 \protect\phantomsection\label{estimation-of-the-model-1}
 We find the values of \(\hat\beta_{0},\dots,\hat\beta_{k}\) which
-minimize
+minimise
 
 \[ 
 \sum_{i=1}^N e_{i}^2 = \sum_{i=1}^N (y_{i} - \beta_{0} - \beta_{1}x_{1,i} - \cdots - \beta_{k} x_{k,i})^2. 
@@ -837,7 +837,7 @@ where $k=$ no.\ predictors and $T=$ no.\ observations.
 
 \pause
 
-\begin{alertblock}{Maximizing $\bar{R}^2$ is equivalent to minimizing $\hat\sigma^2$.}
+\begin{alertblock}{Maximising $\bar{R}^2$ is equivalent to minimising $\hat\sigma^2$.}
 \centerline{$\displaystyle
 \hat{\sigma}^2 = \frac{1}{T-k-1}\sum_{t=1}^T \varepsilon_t^2$
 }
@@ -871,13 +871,13 @@ the model.
 \begin{itemize}
 \tightlist
 \item
-  This is a \emph{penalized likelihood} approach.
+  This is a \emph{penalised likelihood} approach.
 \item
-  \emph{Minimizing} the AIC gives the best model for prediction.
+  \emph{Minimising} the AIC gives the best model for prediction.
 \item
-  AIC penalizes terms more heavily than \(\bar{R}^2\).
+  AIC penalises terms more heavily than \(\bar{R}^2\).
 \item
-  Minimizing the AIC is asymptotically equivalent to minimizing MSE via
+  Minimising the AIC is asymptotically equivalent to minimising MSE via
   leave-one-out cross-validation.
 \end{itemize}
 \end{frame}
@@ -893,7 +893,7 @@ $$
 $$
 \end{block}
 
-As with the AIC, the AIC\(_{\text{C}}\) should be minimized.
+As with the AIC, the AIC\(_{\text{C}}\) should be minimised.
 \end{frame}
 
 \begin{frame}[fragile]{Comparing regression models}

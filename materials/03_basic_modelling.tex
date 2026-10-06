@@ -335,10 +335,10 @@ Simulated futures from an ETS model
 
 \title{\texorpdfstring{Africast-Time Series Analysis \& Forecasting
 Using R}{Africast-Time Series Analysis \& Forecasting Using R}}
-\subtitle{\texorpdfstring{5. Basic modeling and
-forecasting}{5. Basic modeling and forecasting}}
+\subtitle{\texorpdfstring{4. Basic modelling and
+forecasting}{4. Basic modelling and forecasting}}
 \author{}
-\date{27 November 2025}
+\date{7 October 2026}
 
 \begin{document}
 \frame{\titlepage}
@@ -864,12 +864,12 @@ performed on the data. I come back to this latter.
 \begin{verbatim}
 # A fable: 80 x 4 [1Q]
 # Key:     .model [4]
-  .model         Quarter        Beer .mean
-  <chr>            <qtr>      <dist> <dbl>
-1 Seasonal_naïve 2010 Q3 N(419, 373)   419
-2 Seasonal_naïve 2010 Q4 N(488, 373)   488
-3 Seasonal_naïve 2011 Q1 N(414, 373)   414
-4 Seasonal_naïve 2011 Q2 N(374, 373)   374
+  .model Quarter        Beer .mean
+  <chr>    <qtr>      <dist> <dbl>
+1 Seaso~ 2010 Q3 N(419, 373)   419
+2 Seaso~ 2010 Q4 N(488, 373)   488
+3 Seaso~ 2011 Q1 N(414, 373)   414
+4 Seaso~ 2011 Q2 N(374, 373)   374
 # i 76 more rows
 \end{verbatim}
 
@@ -966,20 +966,20 @@ that the residuals are uncorrelated with constant variance.
 \end{Shaded}
 
 \begin{verbatim}
-# A tsibble: 60 x 5 [1Q]
+# A tsibble: 60 x 4 [1Q]
 # Key:       .model, .rep [5]
-   .model      .rep  Quarter .innov  .sim
-   <chr>       <chr>   <qtr>  <dbl> <dbl>
- 1 NAIVE(Beer) 1     2001 Q1  -45.3  455.
- 2 NAIVE(Beer) 1     2001 Q2  -45.3  409.
- 3 NAIVE(Beer) 1     2001 Q3  -14.3  395 
- 4 NAIVE(Beer) 1     2001 Q4  -14.3  381.
- 5 NAIVE(Beer) 1     2002 Q1  -45.3  335.
- 6 NAIVE(Beer) 1     2002 Q2  -14.3  321 
- 7 NAIVE(Beer) 1     2002 Q3   59.7  381.
- 8 NAIVE(Beer) 1     2002 Q4   59.7  440.
- 9 NAIVE(Beer) 1     2003 Q1  -14.3  426 
-10 NAIVE(Beer) 1     2003 Q2  -45.3  381.
+   .model      Quarter .rep   .sim
+   <chr>         <qtr> <chr> <dbl>
+ 1 NAIVE(Beer) 2001 Q1 1      455.
+ 2 NAIVE(Beer) 2001 Q2 1      409.
+ 3 NAIVE(Beer) 2001 Q3 1      395 
+ 4 NAIVE(Beer) 2001 Q4 1      381.
+ 5 NAIVE(Beer) 2002 Q1 1      335.
+ 6 NAIVE(Beer) 2002 Q2 1      321 
+ 7 NAIVE(Beer) 2002 Q3 1      381.
+ 8 NAIVE(Beer) 2002 Q4 1      440.
+ 9 NAIVE(Beer) 2003 Q1 1      426 
+10 NAIVE(Beer) 2003 Q2 1      381.
 # i 50 more rows
 \end{verbatim}
 \end{frame}
@@ -1044,16 +1044,17 @@ probabilistic forecasts}
 \begin{verbatim}
 # A tsibble: 8 x 6 [1Q]
 # Key:       .model [1]
-  .model      Quarter          Beer .mean `95%_lower` `95%_upper`
-  <chr>         <qtr>        <dist> <dbl>       <dbl>       <dbl>
-1 NAIVE(Beer) 2010 Q3  N(374, 4580)   374      241.          507.
-2 NAIVE(Beer) 2010 Q4  N(374, 9159)   374      186.          562.
-3 NAIVE(Beer) 2011 Q1 N(374, 13739)   374      144.          604.
-4 NAIVE(Beer) 2011 Q2 N(374, 18319)   374      109.          639.
-5 NAIVE(Beer) 2011 Q3 N(374, 22898)   374       77.4         671.
-6 NAIVE(Beer) 2011 Q4 N(374, 27478)   374       49.1         699.
-7 NAIVE(Beer) 2012 Q1 N(374, 32057)   374       23.1         725.
-8 NAIVE(Beer) 2012 Q2 N(374, 36637)   374       -1.15        749.
+  .model Quarter          Beer .mean
+  <chr>    <qtr>        <dist> <dbl>
+1 NAIVE~ 2010 Q3  N(374, 4580)   374
+2 NAIVE~ 2010 Q4  N(374, 9159)   374
+3 NAIVE~ 2011 Q1 N(374, 13739)   374
+4 NAIVE~ 2011 Q2 N(374, 18319)   374
+5 NAIVE~ 2011 Q3 N(374, 22898)   374
+6 NAIVE~ 2011 Q4 N(374, 27478)   374
+7 NAIVE~ 2012 Q1 N(374, 32057)   374
+8 NAIVE~ 2012 Q2 N(374, 36637)   374
+# i 2 more variables: `95%_lower` <dbl>, `95%_upper` <dbl>
 \end{verbatim}
 \end{frame}
 
@@ -1071,19 +1072,20 @@ probabilistic forecasts}
 \begin{verbatim}
 # A tsibble: 80 x 6 [1Q]
 # Key:       .model [4]
-   .model         Quarter         Beer .mean        `50%`        `75%`
-   <chr>            <qtr>       <dist> <dbl>       <hilo>       <hilo>
- 1 Seasonal_naïve 2010 Q3  N(419, 373)   419 [406, 432]50 [397, 441]75
- 2 Seasonal_naïve 2010 Q4  N(488, 373)   488 [475, 501]50 [466, 510]75
- 3 Seasonal_naïve 2011 Q1  N(414, 373)   414 [401, 427]50 [392, 436]75
- 4 Seasonal_naïve 2011 Q2  N(374, 373)   374 [361, 387]50 [352, 396]75
- 5 Seasonal_naïve 2011 Q3  N(419, 747)   419 [401, 437]50 [388, 450]75
- 6 Seasonal_naïve 2011 Q4  N(488, 747)   488 [470, 506]50 [457, 519]75
- 7 Seasonal_naïve 2012 Q1  N(414, 747)   414 [396, 432]50 [383, 445]75
- 8 Seasonal_naïve 2012 Q2  N(374, 747)   374 [356, 392]50 [343, 405]75
- 9 Seasonal_naïve 2012 Q3 N(419, 1120)   419 [396, 442]50 [380, 458]75
-10 Seasonal_naïve 2012 Q4 N(488, 1120)   488 [465, 511]50 [449, 527]75
+   .model      Quarter         Beer
+   <chr>         <qtr>       <dist>
+ 1 Seasonal_n~ 2010 Q3  N(419, 373)
+ 2 Seasonal_n~ 2010 Q4  N(488, 373)
+ 3 Seasonal_n~ 2011 Q1  N(414, 373)
+ 4 Seasonal_n~ 2011 Q2  N(374, 373)
+ 5 Seasonal_n~ 2011 Q3  N(419, 747)
+ 6 Seasonal_n~ 2011 Q4  N(488, 747)
+ 7 Seasonal_n~ 2012 Q1  N(414, 747)
+ 8 Seasonal_n~ 2012 Q2  N(374, 747)
+ 9 Seasonal_n~ 2012 Q3 N(419, 1120)
+10 Seasonal_n~ 2012 Q4 N(488, 1120)
 # i 70 more rows
+# i 3 more variables: .mean <dbl>, `50%` <hilo>, `75%` <hilo>
 \end{verbatim}
 \end{frame}
 
@@ -1102,19 +1104,20 @@ probabilistic forecasts}
 \begin{verbatim}
 # A tsibble: 80 x 8 [1Q]
 # Key:       .model [4]
-   .model         Quarter         Beer .mean        `50%`        `75%` lower upper
-   <chr>            <qtr>       <dist> <dbl>       <hilo>       <hilo> <dbl> <dbl>
- 1 Seasonal_naïve 2010 Q3  N(419, 373)   419 [406, 432]50 [397, 441]75  406.  432.
- 2 Seasonal_naïve 2010 Q4  N(488, 373)   488 [475, 501]50 [466, 510]75  475.  501.
- 3 Seasonal_naïve 2011 Q1  N(414, 373)   414 [401, 427]50 [392, 436]75  401.  427.
- 4 Seasonal_naïve 2011 Q2  N(374, 373)   374 [361, 387]50 [352, 396]75  361.  387.
- 5 Seasonal_naïve 2011 Q3  N(419, 747)   419 [401, 437]50 [388, 450]75  401.  437.
- 6 Seasonal_naïve 2011 Q4  N(488, 747)   488 [470, 506]50 [457, 519]75  470.  506.
- 7 Seasonal_naïve 2012 Q1  N(414, 747)   414 [396, 432]50 [383, 445]75  396.  432.
- 8 Seasonal_naïve 2012 Q2  N(374, 747)   374 [356, 392]50 [343, 405]75  356.  392.
- 9 Seasonal_naïve 2012 Q3 N(419, 1120)   419 [396, 442]50 [380, 458]75  396.  442.
-10 Seasonal_naïve 2012 Q4 N(488, 1120)   488 [465, 511]50 [449, 527]75  465.  511.
+   .model      Quarter         Beer
+   <chr>         <qtr>       <dist>
+ 1 Seasonal_n~ 2010 Q3  N(419, 373)
+ 2 Seasonal_n~ 2010 Q4  N(488, 373)
+ 3 Seasonal_n~ 2011 Q1  N(414, 373)
+ 4 Seasonal_n~ 2011 Q2  N(374, 373)
+ 5 Seasonal_n~ 2011 Q3  N(419, 747)
+ 6 Seasonal_n~ 2011 Q4  N(488, 747)
+ 7 Seasonal_n~ 2012 Q1  N(414, 747)
+ 8 Seasonal_n~ 2012 Q2  N(374, 747)
+ 9 Seasonal_n~ 2012 Q3 N(419, 1120)
+10 Seasonal_n~ 2012 Q4 N(488, 1120)
 # i 70 more rows
+# i 5 more variables: .mean <dbl>, `50%` <hilo>, `75%` <hilo>, lower <dbl>, upper <dbl>
 \end{verbatim}
 \end{frame}
 
