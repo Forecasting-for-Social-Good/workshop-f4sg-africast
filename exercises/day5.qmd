@@ -21,7 +21,8 @@ Compare the in-sample accuracy statistics for all models used to forecast Austra
 ```{r}
 aus_print <- aus_retail |> 
   filter(Industry == "Newspaper and book retailing") |> 
-  summarise(Turnover = sum(Turnover))
+  summarise(Turnover = sum(Turnover)) |> 
+  mutate(Month = yearmonth(Month))
 
 aus_print |> 
   autoplot(Turnover)

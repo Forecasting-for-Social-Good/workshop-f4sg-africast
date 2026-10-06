@@ -19,7 +19,10 @@ Let's look at the turnover of print media in Australia.
 #| message: false
 library(tsibbledata)
 library(fable)
+library(feasts)
 library(dplyr)
+library(mixtime)
+library(ggtime)
 aus_print <- aus_retail |> 
   filter(Industry == "Newspaper and book retailing") |> 
   summarise(Turnover = sum(Turnover))
@@ -36,9 +39,9 @@ It can be useful to use other datasets that contain information for the transfor
 :::
 
 ```{r}
-library(lubridate)
 aus_economy <- global_economy |> 
-  filter(Country == "Australia")
+  filter(Country == "Australia") |> 
+  mutate(Year = year(as.integer(Year)))
 aus_print |> 
   mutate(Year = year(Month)) |> 
   left_join(aus_economy, by = "Year") |> 
@@ -62,11 +65,10 @@ While transformations help to make the patterns simpler to forecast, if addition
 Another useful transformation is calendar adjustments. This adjusts the observations in the time series to represent an equivalent time period, and can simplify seasonal patterns which result from these different lengths. This is particularly useful for monthly data, since the number of days in each month varies substantially.
 
 ```{r}
-library(feasts)
 aus_print |> 
-  autoplot(Turnover / days_in_month(Month))
+  autoplot(Turnover / lubridate::days_in_month(Month))
 aus_print |> 
-  gg_subseries(Turnover / days_in_month(Month))
+  gg_subseries(Turnover / lubridate::days_in_month(Month))
 ```
 
 :::{.callout-caution}

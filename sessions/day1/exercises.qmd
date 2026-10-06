@@ -14,9 +14,11 @@ execute:
 library(readr)
 library(tsibble)
 library(dplyr)
-library(lubridate)
 library(fable)
+library(feasts)
 library(ggplot2)
+library(mixtime)
+library(ggtime)
 
 knitr::opts_knit$set(root.dir = "../../exercises")
 ```
@@ -119,7 +121,7 @@ Looking at the index column (`Date`), we can see that each point in time is thre
 
 Temporal granularity is the resolution in time. The time variable needs to match this resolution.
 
-In this example, a date was used to represent quarters, but instead we must use `yearquarter()` to match the temporal granularity.
+In this example, a date was used to represent quarters, but instead we must use `yearquarter()` from the `{mixtime}` package to match the temporal granularity.
 
 Here's a helpful list of common granularities:
 
@@ -128,7 +130,7 @@ Here's a helpful list of common granularities:
 * `yearmonth()`: Monthly data
 * `yearweek()`: Weekly data
 * `as.Date()`: Daily data
-* `as.POSIXct()`: Sub-daily data
+* `datetime()`: Sub-daily data
 :::
 
 To use the appropriate temporal granularity, we first must change our `Date` column before creating the tsibble.
@@ -198,7 +200,6 @@ We still have our `Date` variable as it is automatically grouped when working wi
 What about calculating the annual takings, not quarterly? For this we use a special grouping function called `index_by()`.
 
 ```{r}
-library(lubridate)
 aus_accommodation |> 
   index_by(Year = year(Date)) |> 
   summarise(Takings = sum(Takings), Occupancy = sum(Occupancy))
@@ -217,7 +218,6 @@ Some starter code has been provided for you in the day 1 exercises.
 What if we didn't want a time series at all? To calculate the total takings over all of time, we convert back to an ordinary data frame with `as_tibble()` and then `summarise()`.
 
 ```{r}
-library(lubridate)
 aus_accommodation |> 
   as_tibble() |> 
   summarise(Takings = sum(Takings), Occupancy = sum(Occupancy))
@@ -227,7 +227,7 @@ Which state has had the most accommodation takings in 2010? Let's calculate tota
 
 ```{r}
 aus_accommodation |> 
-  filter(year(Date) == 2010) |> 
+  filter(year(Date) == year(2010L)) |> 
   as_tibble() |> 
   group_by(State) |> 
   summarise(Takings = sum(Takings), Occupancy = sum(Occupancy)) |> 
@@ -250,11 +250,9 @@ There are a few common visualisation techniques specific to time series, however
 
 ### Time plots
 
-The simplest graphic for time series is the time series plot, which shows the variable of interest (on the y-axis) against time (on the x-axis). This plot can be created manually with `ggplot2`, or automatically plotted from the `tsibble` with `autoplot()`.
+The simplest graphic for time series is the time series plot, which shows the variable of interest (on the y-axis) against time (on the x-axis). This plot can be created manually with `ggplot2`, or automatically plotted from the `tsibble` with `autoplot()` from `{ggtime}`.
 
 ```{r}
-library(fable)
-library(ggplot2)
 guinea_rice |> 
   autoplot(Production)
 ```
@@ -297,10 +295,9 @@ Some starter code has been provided for you in the day 1 exercises.
 
 ### Seasonal plots
 
-It can be tricky to see which quarter has maximum accommodation takings from a time plot. Instead, it is better to use a seasonal plot with `gg_season()` from feasts.
+It can be tricky to see which quarter has maximum accommodation takings from a time plot. Instead, it is better to use a seasonal plot with `gg_season()` from `{ggtime}`.
 
 ```{r}
-library(feasts)
 aus_accommodation |> 
   filter(State == "Queensland") |> 
   gg_season(Takings)
@@ -469,7 +466,7 @@ In this exercise, you will apply what you have learned about different steps in 
 
 :::{.callout-caution}
 ## Your turn!
-1. Import `vaccine_adminstrated.csv` data into R
+1. Import `vaccine_administrated.csv` data into R
 
     - Check and modify the data types of variables as needed
     

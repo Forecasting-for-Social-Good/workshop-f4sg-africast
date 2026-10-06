@@ -13,6 +13,8 @@ library(tsibble)
 library(tsibbledata)
 library(tidyverse)
 library(fable)
+library(mixtime)
+library(ggtime)
 ```
 
 # Learn
@@ -25,7 +27,8 @@ In the previous exercise we looked at forecasting the total Australian retail tu
 
 ```{r}
 aus_turnover <- aus_retail |> 
-  summarise(Turnover = sum(Turnover))
+  summarise(Turnover = sum(Turnover)) |> 
+  mutate(Month = yearmonth(Month))
 fit <- aus_turnover |> 
   model(
     ets = ETS(Turnover),

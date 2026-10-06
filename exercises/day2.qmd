@@ -90,10 +90,6 @@ tourism_features |>
 # Apply
 
 ```{r}
-library(tsibble)
-library(feasts)
-library(tidyverse)
-library(fable)
 vaccine_administrated_tsb <- read_rds("data/vaccine_administrated_tsb.rds")
 ```
 
