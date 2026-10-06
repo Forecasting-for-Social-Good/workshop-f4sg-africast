@@ -63,9 +63,9 @@
     "text": "Code demonstrated in workshop sessions\nClick here to download the demo code from this session\nClick here to download the exponential smoothing spreadsheet from this session"
   },
   {
-    "objectID": "sessions/day4/arima.html",
-    "href": "sessions/day4/arima.html",
-    "title": "ARIMA",
+    "objectID": "sessions/day4/ets.html",
+    "href": "sessions/day4/ets.html",
+    "title": "ETS",
     "section": "",
     "text": "View slides in full screen"
   },
@@ -298,35 +298,35 @@
     "href": "schedule.html#day-1",
     "title": "Schedule",
     "section": "Day 1",
-    "text": "Day 1\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30 · Mitchell O’Hara-Wild\n\n\nBasics of time series and data structures\n\n\n\n\n\n\n11:45-13:15 · Abiodun Egwuenu\n\n\nTime series patterns and basic graphics\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 1\n\n\n\n\n\n\nTime\n\n\n\nInstructor\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nMitchell O’Hara-Wild\n\n\nBasics of time series and data structures\n\n\n\n\n\n\n11:45-13:15\n\n\nAbiodun Egwuenu\n\n\nTime series patterns and basic graphics\n\n\n\n\n\n\n17:00-18:00\n\n\n \n\n\nExercises\n\n\n\n\n\n\n \n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-2",
     "href": "schedule.html#day-2",
     "title": "Schedule",
     "section": "Day 2",
-    "text": "Day 2\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30 · Mitchell O’Hara-Wild\n\n\nComputing and visualizing features\n\n\n\n\n\n\n11:45-13:15 · Mitchell O’Hara-Wild\n\n\nBasic modeling / forecasting\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 2\n\n\n\n\n\n\nTime\n\n\n\nInstructor\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nMitchell O’Hara-Wild\n\n\nComputing and visualizing features\n\n\n\n\n\n\n11:45-13:15\n\n\nMitchell O’Hara-Wild\n\n\nBasic modeling / forecasting\n\n\n\n\n\n\n17:00-18:00\n\n\n \n\n\nExercises\n\n\n\n\n\n\n \n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-3",
     "href": "schedule.html#day-3",
     "title": "Schedule",
     "section": "Day 3",
-    "text": "Day 3\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30 · Mitchell O’Hara-Wild\n\n\nForecasting with regression, how to represent temporal structure with regressors\n\n\n\n\n\n\n11:45-13:15 · Bahman Rostami-Tabar\n\n\nETS\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 3\n\n\n\n\n\n\nTime\n\n\n\nInstructor\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nMitchell O’Hara-Wild\n\n\nForecasting with regression, how to represent temporal structure with regressors\n\n\n\n\n\n\n11:45-13:15\n\n\nMustafa Aslan\n\n\nARIMA\n\n\n\n\n\n\n17:00-18:00\n\n\n \n\n\nExercises\n\n\n\n\n\n\n \n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-4",
     "href": "schedule.html#day-4",
     "title": "Schedule",
     "section": "Day 4",
-    "text": "Day 4\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30 · Bahman Rostami-Tabar / Mustafa\n\n\nARIMA\n\n\n\n\n\n\n11:45-13:15 · Bahman Rostami-Tabar\n\n\nBasic training and test accuracy\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 4\n\n\n\n\n\n\nTime\n\n\n\nInstructor\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nBahman Rostami-Tabar\n\n\nETS\n\n\n\n\n\n\n11:45-13:15\n\n\nBahman Rostami-Tabar\n\n\nBasic training and test accuracy\n\n\n\n\n\n\n17:00-18:00\n\n\n \n\n\nExercises\n\n\n\n\n\n\n \n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-5",
     "href": "schedule.html#day-5",
     "title": "Schedule",
     "section": "Day 5",
-    "text": "Day 5\n\n\n\n\n\n\nTime\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30 · Bahman Rostami-Tabar\n\n\nResidual diagnostics and cross validation\n\n\n\n\n\n\n11:45-13:15 · Harsha Halgamuwe Hewage\n\n\nTime series foundation models\n\n\n\n\n\n\n17:00-18:00\n\n\nExercises\n\n\n\n\n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 5\n\n\n\n\n\n\nTime\n\n\n\nInstructor\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nBahman Rostami-Tabar\n\n\nResidual diagnostics and cross validation\n\n\n\n\n\n\n11:45-13:15\n\n\nHarsha Halgamuwe Hewage\n\n\nTime series foundation models\n\n\n\n\n\n\n17:00-18:00\n\n\n \n\n\nExercises\n\n\n\n\n\n\n \n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "sessions/day1/basics.html",
@@ -378,9 +378,9 @@
     "text": "View slides in full screen"
   },
   {
-    "objectID": "sessions/day3/ets.html",
-    "href": "sessions/day3/ets.html",
-    "title": "ETS",
+    "objectID": "sessions/day3/arima.html",
+    "href": "sessions/day3/arima.html",
+    "title": "ARIMA",
     "section": "",
     "text": "View slides in full screen"
   },

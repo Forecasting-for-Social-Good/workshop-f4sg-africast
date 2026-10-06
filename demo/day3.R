@@ -27,7 +27,7 @@ ggplot(data = fcst, mapping = aes(x = Quarter, ydist = Beer))+ # Plot for multip
   geom_point(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+# Plot the actual data points
   scale_color_manual(name=NULL,
                      breaks=c('Fitted', 'Data',"Point Forecast"),
-                     values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))+# Customize colors
+                     values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))# Customize colors
 
   #---------------use multiple models------------------------
 # Fit multiple models to the data up to 2009 Q1

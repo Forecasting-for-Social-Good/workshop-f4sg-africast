@@ -9,11 +9,11 @@ cafe_retail <- aus_retail |>
 cafe_retail |> autoplot(Turnover)
 
 ## Basic accuracy- split to Test and Train
-forecast_horizon <- 12 # 12 months forecast horizon
+forecast_horizon <- 12L # 12 months forecast horizon
 
 # split data to train and test
 test <- cafe_retail |>
-  filter_index(as.character(max(cafe_retail$Month)-forecast_horizon +1) ~ .)
+  filter_index(as.character(max(cafe_retail$Month)-forecast_horizon + 1L) ~ .)
 
 train <- cafe_retail |> filter_index(. ~ as.character(max(cafe_retail$Month)-forecast_horizon))
 
@@ -44,10 +44,10 @@ fcst_accuracy |> select(.model,ME, RMSE, MAE, winkler, pinball, CRPS)
 percentage_test <- 0.3
 # split data to train and test, 30 percent of data for test
 test <- cafe_retail |> filter_index(as.character(max(cafe_retail$Month) -
-                                                   round(percentage_test*length(unique(cafe_retail$Month)))+1) ~ .)
+                                                   as.integer(round(percentage_test*length(unique(cafe_retail$Month))))+1L) ~ .)
 # 70% of data for train
 train <- cafe_retail |> filter_index(. ~ as.character(max(cafe_retail$Month) -
-                                                        round(percentage_test*length(unique(cafe_retail$Month)))))
+                                                        as.integer(round(percentage_test*length(unique(cafe_retail$Month))))))
 # create time series cross validation sets
 tscv_cafe_retail <- cafe_retail |>
   filter_index(. ~ as.character(max(cafe_retail$Month)-forecast_horizon)) |>
