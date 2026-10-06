@@ -1,5 +1,5 @@
 ---
-title: "Forecasting with regression, how to represent temporal structure with regressors"
+title: "Time series regression"
 subtitle: "<span class='code'>10:00-11:30</span>"
 author: "Mitchell O'Hara-Wild"
 date: "2026-10-21"

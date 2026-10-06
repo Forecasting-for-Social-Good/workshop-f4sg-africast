@@ -64,7 +64,7 @@ website:
             href: sessions/day2/features.qmd
           - text: Basic modeling / forecasting
             href: sessions/day2/forecasting.qmd
-          - text: Forecasting with regression, how to represent temporal structure with regressors
+          - text: Time series regression
             href: sessions/day3/regressors.qmd
           - text: ARIMA
             href: sessions/day3/arima.qmd

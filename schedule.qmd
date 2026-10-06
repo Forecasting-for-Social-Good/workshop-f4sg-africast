@@ -110,7 +110,7 @@ All times are listed in Africa/Nairobi time (UTC+3).
 <!-- Session 1. Computing and visualizing features (Mitch) -->
 <!-- Session 2. Basic modeling / forecasting (Mitch) -->
 <!-- Day 3: Forecasting temporal patterns (regression and ARIMA) -->
-<!-- Session 1. Forecasting with regression, how to represent temporal structure with regressors (Mitch) -->
+<!-- Session 1. Time series regression (Mitch) -->
 <!-- Session 2. ARIMA (Mustafa) -->
 <!-- Day 4: ETS and forecast accuracy -->
 <!-- Session 1. ETS (Bahman) -->
