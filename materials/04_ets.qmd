@@ -31,7 +31,7 @@ melsyd <- tsibbledata::ansett |> filter(Airports == "MEL-SYD")
 ## Pegel's classification
 
 ```{r pegel1,echo=FALSE, out.width='90%', fig.align='center'}
-knitr::include_graphics("figs/pegel1.PNG")
+knitr::include_graphics("figs/pegel1.png")
 ```
 
 ## Historical perspective
