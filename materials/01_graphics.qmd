@@ -16,6 +16,7 @@ source("setup.R")
 # gg_lag(), and autoplot() for tsibbles/ACF); feasts is reserved for
 # decomposition and feature extraction.
 library(ggtime)
+library(mixtime)
 ```
 
 # Time series Patterns
@@ -162,7 +163,7 @@ PBS %>% filter(ATC2 == "A10") %>%
 ```{r, fig.height=2.7}
 beer <- aus_production |>
   select(Quarter, Beer) |>
-  filter(year(Quarter) >= 1992)
+  filter(year(Quarter) >= year(1992L))
 beer |> autoplot(Beer)
 ```
 
@@ -253,7 +254,7 @@ holidays |> gg_subseries(Trips) +
 library(ggtime)
 library(mixtime)
 vic_elec |>
-  filter(lubridate::year(Date) == 2014) |>
+  filter(year(Date) == year(2014L)) |>
   as_tibble() |>
   mutate(Time = datetime(Time)) |>
   ggplot(aes(x = Time, y = Demand)) +
@@ -301,7 +302,7 @@ Cyclic
 
 ```{r, fig.height=2.7}
 aus_production |>
-  filter(year(Quarter) >= 1980) |>
+  filter(year(Quarter) >= year(1980L)) |>
   autoplot(Electricity) +
   labs(y = "GWh", title = "Australian electricity production")
 ```
@@ -321,7 +322,7 @@ aus_production |>
 
 ```{r, fig.height=2.7}
 us_employment |>
-  filter(Title == "Retail Trade", year(Month) >= 1980) |>
+  filter(Title == "Retail Trade", year(Month) >= year(1980L)) |>
   autoplot(Employed / 1e3) +
   labs(title = "Retail employment, USA", y = "Million people")
 ```
@@ -331,7 +332,7 @@ us_employment |>
 
 ```{r, fig.height=2.7}
 gafa_stock |>
-  filter(Symbol == "AMZN", year(Date) >= 2018) |>
+  filter(Symbol == "AMZN", year(Date) >= year(2018L)) |>
   autoplot(Close) +
   labs(title = "Amazon closing stock price", x = "Day", y = "$")
 ```
@@ -367,7 +368,7 @@ The timing of peaks and troughs is predictable with seasonal data, but unpredict
 
 ```{r}
 new_production <- aus_production |>
-  filter(year(Quarter) >= 1992)
+  filter(year(Quarter) >= year(1992L))
 new_production
 ```
 
@@ -449,7 +450,7 @@ holidays |> ACF(Trips) |> autoplot()
 
 ```{r}
 retail <- us_employment |>
-  filter(Title == "Retail Trade", year(Month) >= 1980)
+  filter(Title == "Retail Trade", year(Month) >= year(1980L))
 retail |> autoplot(Employed)
 ```
 
@@ -466,7 +467,7 @@ retail |>
 
 ```{r google-2015}
 google_2015 <- gafa_stock |>
-  filter(Symbol == "GOOG", year(Date) == 2015) |>
+  filter(Symbol == "GOOG", year(Date) == year(2015L)) |>
   select(Date, Close)
 google_2015
 ```
@@ -572,7 +573,7 @@ wn |>
 
 ```{r, fig.height=2.5}
 pigs <- aus_livestock |>
-  filter(State == "Victoria", Animal == "Pigs", year(Month) >= 2014)
+  filter(State == "Victoria", Animal == "Pigs", year(Month) >= year(2014L))
 pigs |> autoplot(Count / 1e3) +
   labs(x = "Year", y = "Thousands",
        title = "Number of pigs slaughtered in Victoria")
