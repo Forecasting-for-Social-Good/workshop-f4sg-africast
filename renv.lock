@@ -6133,8 +6133,8 @@
     },
     "vecvec": {
       "Package": "vecvec",
-      "Version": "1.3.0",
-      "Source": "Repository",
+      "Version": "1.3.0.9000",
+      "Source": "GitHub",
       "Title": "Construct Mixed Type Data Structures with Vectors of Vectors",
       "Authors@R": "c( person( given = \"Mitchell\", family = \"O'Hara-Wild\", role = c(\"aut\", \"cre\"), email = \"mail@mitchelloharawild.com\", comment = c(ORCID = \"0000-0001-6729-7695\") ))",
       "Description": "Mixed type vectors are useful for combining semantically similar  classes. Some examples of semantically related classes include time across  different granularities (e.g. daily, monthly, annual) and probability  distributions (e.g. Normal, Uniform, Poisson). These groups of vector types  typically share common statistical operations which vary in results with the  attributes of each vector. The 'vecvec' data structure facilitates efficient  storage and computation across multiple vectors within the same object.",
@@ -6158,7 +6158,12 @@
       "NeedsCompilation": "yes",
       "Author": "Mitchell O'Hara-Wild [aut, cre] (ORCID: <https://orcid.org/0000-0001-6729-7695>)",
       "Maintainer": "Mitchell O'Hara-Wild <mail@mitchelloharawild.com>",
-      "Repository": "P3M"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "mitchelloharawild",
+      "RemoteRepo": "vecvec",
+      "RemoteRef": "main",
+      "RemoteSha": "07354ff2c3f7c9489380ce51e144e2d495fc089e"
     },
     "viridisLite": {
       "Package": "viridisLite",
