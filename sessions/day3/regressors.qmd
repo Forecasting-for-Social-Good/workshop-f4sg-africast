@@ -1,6 +1,7 @@
 ---
 title: "Forecasting with regression, how to represent temporal structure with regressors"
-subtitle: "<span class='code'>10:00-11:30</span> · Mitchell O'Hara-Wild"
+subtitle: "<span class='code'>10:00-11:30</span>"
+author: "Mitchell O'Hara-Wild"
 date: "2026-10-21"
 order: 1
 ---

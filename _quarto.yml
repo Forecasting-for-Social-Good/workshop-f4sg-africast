@@ -66,10 +66,10 @@ website:
             href: sessions/day2/forecasting.qmd
           - text: Forecasting with regression, how to represent temporal structure with regressors
             href: sessions/day3/regressors.qmd
-          - text: ETS, building on recap of temporal regressors.
-            href: sessions/day3/ets.qmd
           - text: ARIMA
-            href: sessions/day4/arima.qmd
+            href: sessions/day3/arima.qmd
+          - text: ETS
+            href: sessions/day4/ets.qmd
           - text: Basic training and test accuracy
             href: sessions/day4/accuracy.qmd
           - text: "Residual diagnostics and cross validation"

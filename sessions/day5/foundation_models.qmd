@@ -1,6 +1,7 @@
 ---
 title: "Time series foundation models"
-subtitle: "<span class='code'>11:45-13:15</span> · Harsha Halgamuwe Hewage"
+subtitle: "<span class='code'>11:45-13:15</span>"
+author: "Harsha Halgamuwe Hewage"
 date: "2026-10-23"
 order: 2
 ---

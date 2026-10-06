@@ -5,9 +5,10 @@ listing:
     contents:
       - sessions/day1/*.qmd
     type: table
-    fields: [subtitle, title]
+    fields: [subtitle, author, title]
     field-display-names:
       subtitle: "Time"
+      author: "Instructor"
       title: "Session"
     table-hover: true
     sort: [order]
@@ -18,9 +19,10 @@ listing:
     contents:
       - sessions/day2/*.qmd
     type: table
-    fields: [subtitle, title]
+    fields: [subtitle, author, title]
     field-display-names:
       subtitle: "Time"
+      author: "Instructor"
       title: "Session"
     table-hover: true
     sort: [order]
@@ -31,9 +33,10 @@ listing:
     contents:
       - sessions/day3/*.qmd
     type: table
-    fields: [subtitle, title]
+    fields: [subtitle, author, title]
     field-display-names:
       subtitle: "Time"
+      author: "Instructor"
       title: "Session"
     table-hover: true
     sort: [order]
@@ -44,9 +47,10 @@ listing:
     contents:
       - sessions/day4/*.qmd
     type: table
-    fields: [subtitle, title]
+    fields: [subtitle, author, title]
     field-display-names:
       subtitle: "Time"
+      author: "Instructor"
       title: "Session"
     table-hover: true
     sort: [order]
@@ -57,16 +61,17 @@ listing:
     contents:
       - sessions/day5/*.qmd
     type: table
-    fields: [subtitle, title]
+    fields: [subtitle, author, title]
     field-display-names:
       subtitle: "Time"
+      author: "Instructor"
       title: "Session"
     table-hover: true
     sort: [order]
     sort-ui: false
     filter-ui: false
     image-height: 75px
-tbl-colwidths: [5,20,50,25]
+tbl-colwidths: [5,15,20,60]
 editor: source
 ---
 
@@ -104,11 +109,11 @@ All times are listed in Africa/Nairobi time (UTC+3).
 <!-- Day 2: Time series exploration and basic forecasting -->
 <!-- Session 1. Computing and visualizing features (Mitch) -->
 <!-- Session 2. Basic modeling / forecasting (Mitch) -->
-<!-- Day 3: Forecasting temporal patterns -->
+<!-- Day 3: Forecasting temporal patterns (regression and ARIMA) -->
 <!-- Session 1. Forecasting with regression, how to represent temporal structure with regressors (Mitch) -->
-<!-- Session 2. ETS (Bahman) -->
-<!-- Day 4: ARIMA and forecast accuracy -->
-<!-- Session 1. ARIMA (Bahman/Mustafa) -->
+<!-- Session 2. ARIMA (Mustafa) -->
+<!-- Day 4: ETS and forecast accuracy -->
+<!-- Session 1. ETS (Bahman) -->
 <!-- Session 2. Basic training and test accuracy (Bahman) -->
 <!-- Day 5: Evaluating model performance and foundation models -->
 <!-- Session 1. Residual diagnostics and cross validation (Bahman) -->
