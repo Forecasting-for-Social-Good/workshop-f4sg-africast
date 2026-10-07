@@ -135,7 +135,7 @@
   {
     "objectID": "sessions/day2/features.html",
     "href": "sessions/day2/features.html",
-    "title": "Computing and visualizing features",
+    "title": "Computing and visualising features",
     "section": "",
     "text": "View slides in full screen"
   },
@@ -214,14 +214,14 @@
     "href": "index.html#course-overview",
     "title": "Tidy time series & forecasting in R",
     "section": "Course Overview",
-    "text": "Course Overview\nForecasting is a valuable tool that allows organizations to make informed decisions about the future. Time series forecasting, in particular, uses historical data to predict future trends over time. This technique has extensive applications across a wide range of fields, including finance and economics, health and humanitarian operations, supply chain management, and more. By analyzing trends and patterns in data, time series forecasting can help decision-makers identify potential challenges and opportunities, and plan accordingly.\nIt is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyze data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.\nThis workshop is part of the Forecasting for Social Good (F4SG) initiative, and will run online from the 19th-23rd October 2026."
+    "text": "Course Overview\nForecasting is a valuable tool that allows organisations to make informed decisions about the future. Time series forecasting, in particular, uses historical data to predict future trends over time. This technique has extensive applications across a wide range of fields, including finance and economics, health and humanitarian operations, supply chain management, and more. By analysing trends and patterns in data, time series forecasting can help decision-makers identify potential challenges and opportunities, and plan accordingly.\nIt is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyse data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.\nThis workshop is part of the Forecasting for Social Good (F4SG) initiative, and will run online from the 19th-23rd October 2026."
   },
   {
     "objectID": "index.html#learning-objectives",
     "href": "index.html#learning-objectives",
     "title": "Tidy time series & forecasting in R",
     "section": "Learning objectives",
-    "text": "Learning objectives\nDuring the training, participants will gain knowledge and skills in:\n\nPreparing time series data for analysis and exploration.\nExtracting and computing useful features from time series data and effectively visualizing it.\nIdentifying appropriate forecasting algorithms for time series and selecting the best approach for the data at hand."
+    "text": "Learning objectives\nDuring the training, participants will gain knowledge and skills in:\n\nPreparing time series data for analysis and exploration.\nExtracting and computing useful features from time series data and effectively visualising it.\nIdentifying appropriate forecasting algorithms for time series and selecting the best approach for the data at hand."
   },
   {
     "objectID": "index.html#instructor",
@@ -235,7 +235,7 @@
     "href": "index.html#instructor-1",
     "title": "Tidy time series & forecasting in R",
     "section": "Instructor",
-    "text": "Instructor\n Bahman is the Professor of Data-Driven Decision Science at Cardiff Business School, Cardiff University, UK. He is interested in transforming data into insights for making smart decisions. Bahman is the founder and director of Data Lab for Social Good Research Group at Cardiff University and the founder of Forecasting for Social Good committee initiatives sponsored by the International Institute of Forecasters. He is also leading the “Uncertainty & the Future” theme at the Digital Transformation Innovation Institute.\nBahman specializes in the development and application of modelling, forecasting and management science tools and techniques providing informed insights for planning & decision-making processes in sectors contributing to social good, including healthcare operations, global health and humanitarian supply chains. His collaborative efforts have spanned a multitude of organisations, including notable bodies such as the National Health Service (NHS), Welsh Ambulance Service Trusts (WAST), United States Agency for International Developments (USAID), the International Committee of the Red Cross (ICRC), and John Snow Inc. (JSI). A remarkable highlight of his contributions is his pivotal role in disseminating forecasting knowledge especially in low and lower-middle income countries through the democratizing forecasting project sponsored by International Institute of Forecasters."
+    "text": "Instructor\n Bahman is the Professor of Data-Driven Decision Science at Cardiff Business School, Cardiff University, UK. He is interested in transforming data into insights for making smart decisions. Bahman is the founder and director of Data Lab for Social Good Research Group at Cardiff University and the founder of Forecasting for Social Good committee initiatives sponsored by the International Institute of Forecasters. He is also leading the “Uncertainty & the Future” theme at the Digital Transformation Innovation Institute.\nBahman specialises in the development and application of modelling, forecasting and management science tools and techniques providing informed insights for planning & decision-making processes in sectors contributing to social good, including healthcare operations, global health and humanitarian supply chains. His collaborative efforts have spanned a multitude of organisations, including notable bodies such as the National Health Service (NHS), Welsh Ambulance Service Trusts (WAST), United States Agency for International Development (USAID), the International Committee of the Red Cross (ICRC), and John Snow Inc. (JSI). A remarkable highlight of his contributions is his pivotal role in disseminating forecasting knowledge especially in low and lower-middle income countries through the democratising forecasting project sponsored by International Institute of Forecasters."
   },
   {
     "objectID": "index.html#instructor-2",
@@ -256,7 +256,7 @@
     "href": "index.html#instructor-4",
     "title": "Tidy time series & forecasting in R",
     "section": "Instructor",
-    "text": "Instructor\n Mustafa Aslan is a third-year PhD researcher in the Data Lab for Social Good Research Group at Cardiff University, UK. His research focuses on reducing delays and inefficiencies in hospital discharge processes and patient flow. Specifically, he works to improve discharge care coordination and operational effectiveness, including workforce planning and patient care delivery. To achieve this, he develops decision-making frameworks that integrate probabilistic forecasting models with sequential optimization techniques. His work also leverages machine learning-based causal inference methods to provide actionable insights for healthcare providers and administrators on the factors contributing to discharge delays and inefficiencies.\nIn addition to his PhD work, he is passionate about mathematical modeling and uncertainty quantification to address complex real-world challenges. He also builds reusable Python packages and is the developer of peshbeen, an open-source forecasting package that helps users forecast using both statistical and machine learning models within a single pipeline, as well as generate probabilistic forecasts using various techniques. Furthermore, he is part of the Data Lab for Social Good team working on forecasting avoidable patient harm with the NHS, following the team’s joint first-place result in the 2026 NHS SPHERE-PPL forecasting challenge."
+    "text": "Instructor\n Mustafa Aslan is a third-year PhD researcher in the Data Lab for Social Good Research Group at Cardiff University, UK. His research focuses on reducing delays and inefficiencies in hospital discharge processes and patient flow. Specifically, he works to improve discharge care coordination and operational effectiveness, including workforce planning and patient care delivery. To achieve this, he develops decision-making frameworks that integrate probabilistic forecasting models with sequential optimisation techniques. His work also leverages machine learning-based causal inference methods to provide actionable insights for healthcare providers and administrators on the factors contributing to discharge delays and inefficiencies.\nIn addition to his PhD work, he is passionate about mathematical modelling and uncertainty quantification to address complex real-world challenges. He also builds reusable Python packages and is the developer of peshbeen, an open-source forecasting package that helps users forecast using both statistical and machine learning models within a single pipeline, as well as generate probabilistic forecasts using various techniques. Furthermore, he is part of the Data Lab for Social Good team working on forecasting avoidable patient harm with the NHS, following the team’s joint first-place result in the 2026 NHS SPHERE-PPL forecasting challenge."
   },
   {
     "objectID": "index.html#planning-team",
@@ -291,7 +291,7 @@
     "href": "index.html#required-software",
     "title": "Tidy time series & forecasting in R",
     "section": "Required software",
-    "text": "Required software\nTo be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.\n\nTime series packages and extensions\n\nfpp3, mixtime, ggtime\n\ntidyverse packages and friends\n\ntidyverse, fpp3\n\n\nThe following code will install the main packages needed for the workshop.\ninstall.packages(c(\"tidyverse\",\"fpp3\", \"GGally\", \"mixtime\", \"ggtime\", \"astsa\", \"usethis\"))\nAfter installing these packages, you can create download the exercises and data for the course using the following code:\nusethis::use_course(\"https://workshop.f4sg.org/africast/exercises.zip\")\nPlease have the required software installed and pre-work completed before attending the workshop."
+    "text": "Required software\nTo be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.\n\nTime series packages and extensions\n\nfpp3, mixtime, ggtime\n\ntidyverse packages and friends\n\ntidyverse\n\n\nThe following code will install the main packages needed for the workshop.\ninstall.packages(c(\"tidyverse\",\"fpp3\", \"GGally\", \"mixtime\", \"ggtime\", \"astsa\", \"usethis\"))\nAfter installing these packages, you can download the exercises and data for the course using the following code:\nusethis::use_course(\"https://workshop.f4sg.org/africast/exercises.zip\")\nPlease have the required software installed and pre-work completed before attending the workshop."
   },
   {
     "objectID": "schedule.html",
@@ -312,7 +312,7 @@
     "href": "schedule.html#day-2",
     "title": "Schedule",
     "section": "Day 2",
-    "text": "Day 2\n\n\n\n\n\n\nTime\n\n\n\nInstructor\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nMitchell O’Hara-Wild\n\n\nComputing and visualizing features\n\n\n\n\n\n\n11:45-13:15\n\n\nMitchell O’Hara-Wild\n\n\nBasic modeling / forecasting\n\n\n\n\n\n\n17:00-18:00\n\n\n \n\n\nExercises\n\n\n\n\n\n\n \n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
+    "text": "Day 2\n\n\n\n\n\n\nTime\n\n\n\nInstructor\n\n\n\nSession\n\n\n\n\n\n\n\n\n10:00-11:30\n\n\nMitchell O’Hara-Wild\n\n\nComputing and visualising features\n\n\n\n\n\n\n11:45-13:15\n\n\nMitchell O’Hara-Wild\n\n\nBasic modelling / forecasting\n\n\n\n\n\n\n17:00-18:00\n\n\n \n\n\nExercises\n\n\n\n\n\n\n \n\n\n \n\n\nResources (recording and code)\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "schedule.html#day-3",
@@ -380,7 +380,7 @@
   {
     "objectID": "sessions/day2/forecasting.html",
     "href": "sessions/day2/forecasting.html",
-    "title": "Basic modeling / forecasting",
+    "title": "Basic modelling / forecasting",
     "section": "",
     "text": "View slides in full screen"
   },
