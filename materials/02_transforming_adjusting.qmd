@@ -112,7 +112,7 @@ $$
 library(rlang)
 library(gganimate)
 library(latex2exp)
-food |>
+p <- food |>
   mutate(!!!set_names(map(seq(0, 1, 0.01), ~ expr(fabletools::box_cox(Turnover, !!.x))), seq(0, 1, 0.01))) |>
   select(-Turnover) |>
   pivot_longer(-Month, names_to = "lambda", values_to = "Turnover") |>
@@ -122,6 +122,7 @@ food |>
   transition_states(1 - lambda, state_length = 0) +
   view_follow() +
   labs(title = "Box-Cox transformed food retailing turnover (lambda = {format(1 - as.numeric(closest_state), digits = 2)})")
+anim_video(p)
 ```
 
 ## Box-Cox transformations
@@ -346,7 +347,7 @@ stl_defs <- purrr::map(s_windows, function(s_window) {
 })
 names(stl_defs) <- sprintf("season(window=%02d)", s_windows)
 
-us_retail_employment |>
+p <- us_retail_employment |>
   model(!!!stl_defs) |>
   components() |>
   as_tibble() |>
@@ -362,6 +363,7 @@ us_retail_employment |>
     subtitle = "{closest_state}"
   ) +
   transition_states(.model)
+anim_video(p)
 ```
 
 

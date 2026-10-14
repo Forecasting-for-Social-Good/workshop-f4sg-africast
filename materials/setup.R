@@ -36,6 +36,24 @@ ggplot2::theme_set(
       plot.background = ggplot2::element_rect(fill = "#fafafa", color = "#fafafa")
     )
 )
+# Render a gganimate animation to an MP4 video that reveal.js autoplays (and
+# loops) when its slide is shown. Much smaller than the equivalent GIF.
+anim_video <- function(p, width = knitr::opts_current$get("fig.width"),
+                       height = knitr::opts_current$get("fig.height"),
+                       res = 144, ...) {
+  path <- paste0(knitr::fig_path(".mp4"))
+  dir.create(dirname(path), showWarnings = FALSE, recursive = TRUE)
+  gganimate::animate(
+    p, width = width, height = height, units = "in", res = res,
+    device = "ragg_png", renderer = gganimate::ffmpeg_renderer(), ...
+  ) |>
+    gganimate::anim_save(filename = path)
+  knitr::asis_output(sprintf(
+    '<video data-autoplay loop muted playsinline style="display: block; margin: 0 auto; max-width: 100%%; max-height: 600px;" src="%s"></video>',
+    path
+  ))
+}
+
 # Make Fira Sans available to the ragg graphics device
 try(systemfonts::require_font("Fira Sans"), silent = TRUE)
 
