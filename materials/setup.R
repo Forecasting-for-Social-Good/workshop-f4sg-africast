@@ -9,7 +9,14 @@ options(
   ggplot2.discrete.fill = c("#D55E00", "#0072B2", "#009E73", "#CC79A7", "#E69F00", "#56B4E9", "#F0E442")
 )
 knitr::opts_chunk$set(
-  dev.args = list(pointsize = 11)
+  dev.args = list(pointsize = 11),
+  # Keep figures outside *_files/, which is removed after embedding resources,
+  # so cached chunks still have their figures on re-render
+  fig.path = file.path(
+    "_figures",
+    tools::file_path_sans_ext(knitr::current_input()),
+    ""
+  )
 )
 
 # Font for graphics to be Fira Sans

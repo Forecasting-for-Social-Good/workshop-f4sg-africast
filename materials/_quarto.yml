@@ -23,6 +23,7 @@ format:
     background-transition: none
     callout-icon: false
     code-line-numbers: false
+    embed-resources: true
     template-partials:
       - title-slide.html
     title-slide-attributes:

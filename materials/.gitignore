@@ -4,3 +4,4 @@
 _freeze
 
 **/*.quarto_ipynb
+_figures/
