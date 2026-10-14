@@ -28,7 +28,7 @@ format:
     template-partials:
       - title-slide.html
     title-slide-attributes:
-      data-background-image: figs/africa1.jpg
+      data-background-image: figs/africa1-title.jpg
       data-background-size: cover
     include-in-header:
       - macros.html
