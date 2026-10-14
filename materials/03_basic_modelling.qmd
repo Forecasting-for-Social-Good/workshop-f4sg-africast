@@ -5,8 +5,12 @@ subtitle: "4. Basic modelling and forecasting"
 
 ## Outline
 
-\vspace*{0.7cm}\tableofcontents
-
+* Statistical forecasting
+* What can we forecast?
+* Benchmark methods
+* Specify and estimate
+* Produce forecasts
+* Fitted values and residuals
 
 ```{r}
 #| label: setup
@@ -140,91 +144,127 @@ p9 <- p8 + coord_cartesian(xlim = as.Date(c("2014-01-01", "2021-08-01"))) +
 aligned_plots <- align_patches(p1, p2, p3, p4, p5, p6, p7, p8, p9)
 ```
 
-\forecast\pause
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
+::: {.fragment}
 ```{r austa1, dependson="austa", echo=FALSE}
 aligned_plots[[1]]
 ```
+:::
 
 ## What is a forecast?
 
-\forecast
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
 ```{r austa2, dependson='austa', echo=FALSE}
 aligned_plots[[2]]
 ```
 
-\simfutures
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
 
 ## What is a forecast?
 
-\forecast
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
 ```{r austa3, dependson='austa', echo=FALSE}
 aligned_plots[[3]]
 ```
 
-\simfutures
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
 
 ## What is a forecast?
 
-\forecast
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
 ```{r austa4, dependson='austa', echo=FALSE}
 aligned_plots[[4]]
 ```
 
-\simfutures
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
 
 ## What is a forecast?
 
-\forecast
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
 ```{r austa5, dependson='austa', echo=FALSE}
 aligned_plots[[5]]
 ```
 
-\simfutures
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
 
 ## What is a forecast?
 
-\forecast
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
 ```{r austa6, dependson='austa', echo=FALSE}
 aligned_plots[[6]]
 ```
 
-\simfutures
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
 
 ## What is a forecast?
 
-\forecast
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
 ```{r austa7, dependson='austa', echo=FALSE}
 aligned_plots[[7]]
 ```
 
-\simfutures
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
 
 ## What is a forecast?
 
-\forecast
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
 ```{r austa8, dependson='austa', echo=FALSE}
 aligned_plots[[8]]
 ```
 
-\simfutures
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
 
 ## Prediction interval
 
-\forecast
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
 ```{r austa9, dependson='austa', echo=FALSE}
 aligned_plots[[9]]
 ```
 
-\simfutures
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
 
 ## Visualising forecast distributions
 
@@ -252,7 +292,9 @@ knitr::include_graphics("figs/forecasts_probabilistic_perspective.png")
 
 ## What can we forecast?
 
-\forecast
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
 
 ```{r austa9b, dependson='austa', echo=FALSE}
 aligned_plots[[9]] +
@@ -262,35 +304,37 @@ aligned_plots[[9]] +
   )
 ```
 
-\simfutures
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
 
 ## What can we forecast?
 
-\full{nasdaq-stock-market}
+![](figs/nasdaq-stock-market.jpg){.photo}
 
 ## What can we forecast?
 
-\full{Forex2}
+![](figs/Forex2.png){.photo}
 
 ## What can we forecast?
 
-\full{pills}
+![](figs/pills.jpg){.photo}
 
 ## What can we forecast?
 
-\full{elecwires2}
+![](figs/elecwires2.jpg){.photo}
 
 ## What can we forecast?
 
-\full{AusBOM}
+![](figs/AusBOM.png){.photo}
 
 ## What can we forecast?
 
-\full{ts22015}
+![](figs/ts22015.jpg){.photo}
 
 ## What can we forecast?
 
-\full{comet}
+![](figs/comet.jpg){.photo}
 
 ## Which is easiest to forecast?
 
@@ -303,10 +347,10 @@ aligned_plots[[9]] +
  7. exchange rate of \$US/AUS next week
  8. total sales of drugs in Australian pharmacies next month
 
-\pause
-
+::: {.fragment}
  - how do we measure "easiest"?
  - what makes something easy/difficult to forecast?
+:::
 
 ## Factors affecting forecastability
 
@@ -333,11 +377,9 @@ new_production |> autoplot(Beer) +
   )
 ```
 
-\begin{textblock}{7}(0.4,6.9)
-\begin{alertblock}{}
-\small{How would you forecast these series?}
-\end{alertblock}
-\end{textblock}
+::: {.alertblock .absolute bottom="20px" left="30px" width="560px"}
+How would you forecast these series?
+:::
 
 ## Some simple forecasting methods
 
@@ -354,11 +396,9 @@ aus_livestock |>
   )
 ```
 
-\begin{textblock}{7}(0.4,6.9)
-\begin{alertblock}{}
-\small{How would you forecast these series?}
-\end{alertblock}
-\end{textblock}
+::: {.alertblock .absolute bottom="20px" left="30px" width="560px"}
+How would you forecast these series?
+:::
 
 ## Some simple forecasting methods
 
@@ -372,14 +412,11 @@ gafa_stock |>
   )
 ```
 
-\begin{textblock}{7}(0.4,6.9)
-\begin{alertblock}{}
-\small{How would you forecast these series?}
-\end{alertblock}
-\end{textblock}
+::: {.alertblock .absolute bottom="20px" left="30px" width="560px"}
+How would you forecast these series?
+:::
 
-## Some simple forecasting methods
-\fontsize{13}{14}\sf
+## Some simple forecasting methods {.code-small}
 
 ### `MEAN(y)`: Average method
 
@@ -403,8 +440,7 @@ bricks |>
   labs(title = "Clay brick production in Australia")
 ```
 
-## Some simple forecasting methods
-\fontsize{13}{14}\sf
+## Some simple forecasting methods {.code-small}
 
 ### `NAIVE(y)`: Naïve method
 
@@ -422,8 +458,7 @@ bricks |>
   labs(title = "Clay brick production in Australia")
 ```
 
-## Some simple forecasting methods
-\fontsize{13}{14}\sf
+## Some simple forecasting methods {.code-small}
 
 ### `SNAIVE(y ~ lag(m))`: Seasonal naïve method
 
@@ -439,18 +474,17 @@ bricks |>
   labs(title = "Clay brick production in Australia")
 ```
 
-## Some simple forecasting methods
-\fontsize{13}{14}\sf
+## Some simple forecasting methods {.code-small}
 
 ### `RW(y ~ drift())`: Drift method
 
  * Forecasts equal to last value plus average change.
- * Forecasts:\vspace*{-.7cm}
+ * Forecasts:
 
- \begin{align*}
- \hat{y}_{T+h|T} & =  y_{T} + \frac{h}{T-1}\sum_{t=2}^T (y_t-y_{t-1})\\
-                 & = y_T + \frac{h}{T-1}(y_T -y_1).
- \end{align*}\vspace*{-0.2cm}
+$$\begin{aligned}
+\hat{y}_{T+h|T} & =  y_{T} + \frac{h}{T-1}\sum_{t=2}^T (y_t-y_{t-1})\\
+                & = y_T + \frac{h}{T-1}(y_T -y_1).
+\end{aligned}$$
 
    * Equivalent to extrapolating a line drawn between first and last observations.
 
@@ -482,12 +516,12 @@ aus_production |>
     - the right describes terms used to model the response.
 - `Attention`: MODEL name is in capital letters, e.g. `SNAIVE`
 
-## Model estimation
+## Model estimation {.code-small}
 
 The `model()` function trains models on data.
+
 - It returns a `mable` object.
 
-\fontsize{10}{13}\sf
 
 ```{r model_template, eval=FALSE, echo=TRUE}
 # Fit the models
@@ -501,11 +535,11 @@ my_mable <- my_data %>%
 ```
 
 
-## Model fitting- example
+## Model fitting- example {.code-small}
 
 The `model()` function trains models on data.
 
-\fontsize{10}{11}\sf
+
 
 ```{r beer-model}
 beer_fit <- aus_production |>
@@ -521,13 +555,12 @@ beer_fit <- aus_production |>
 beer_fit
 ```
 
-\vspace*{0.2cm}\begin{alertblock}{}
-A \texttt{mable} is a model table, each cell corresponds to a fitted model.
-\end{alertblock}
+::: {.alertblock}
+A `mable` is a model table, each cell corresponds to a fitted model.
+:::
 
 ## Extract information from `mable`
 
-\fontsize{10}{12}\sf
 ```{r beer-mablea, eval= FALSE, dependson='beer-model'}
 beer_fit %>% select(snaive) %>% report()
 beer_fit %>% tidy()
@@ -554,7 +587,6 @@ Once a model has been fitted, it is important to check  how well it has performe
     
 ## Producing forecasts
 
-\fontsize{10}{13}\sf
 
 ```{r beer-fc, echo = TRUE, dependson='beer-model'}
 beer_fc <- beer_fit |>
@@ -565,13 +597,11 @@ beer_fc <- beer_fit |>
 print(beer_fc, n = 4)
 ```
 
-\vspace*{0.2cm}\begin{alertblock}{}
-A \texttt{fable} is a forecast table with point forecasts and distributions.
-\end{alertblock}
+::: {.alertblock}
+A `fable` is a forecast table with point forecasts and distributions.
+:::
 
 ## Visualising forecasts
-
-\footnotesize
 
 ```{r beer-fc-plot, warning=FALSE, message=FALSE, fig.height=3.4, dependson='brick-fc'}
 beer_fc |>
@@ -590,18 +620,16 @@ beer_fc |>
 
 ## Forecast distributions - normal distribution
 
-\fontsize{14}{18}\sf
-
 Assuming residuals are normal, uncorrelated, sd = $\hat\sigma$:
 
-\begin{block}{}
-\begin{tabular}{ll}
-\bf Mean: & $\hat{y}_{T+h|T} \sim N(\bar{y}, (1 + 1/T)\hat{\sigma}^2)$\\[0.2cm]
-\bf Naïve: & $\hat{y}_{T+h|T} \sim N(y_T, h\hat{\sigma}^2)$\\[0.2cm]
-\bf Seasonal naïve: & $\hat{y}_{T+h|T} \sim N(y_{T+h-m(k+1)}, (k+1)\hat{\sigma}^2)$\\[0.2cm]
-\bf Drift: & $\hat{y}_{T+h|T} \sim N(y_T + \frac{h}{T-1}(y_T - y_1),h\frac{T+h}{T}\hat{\sigma}^2)$
-\end{tabular}
-\end{block}
+::: {.block}
+| | |
+|:--|:--|
+| **Mean:** | $\hat{y}_{T+h|T} \sim N(\bar{y}, (1 + 1/T)\hat{\sigma}^2)$ |
+| **Naïve:** | $\hat{y}_{T+h|T} \sim N(y_T, h\hat{\sigma}^2)$ |
+| **Seasonal naïve:** | $\hat{y}_{T+h|T} \sim N(y_{T+h-m(k+1)}, (k+1)\hat{\sigma}^2)$ |
+| **Drift:** | $\hat{y}_{T+h|T} \sim N(y_T + \frac{h}{T-1}(y_T - y_1),h\frac{T+h}{T}\hat{\sigma}^2)$ |
+:::
 
 where $k$ is the integer part of $(h-1)/m$.
 
@@ -617,8 +645,7 @@ When a normal distribution for the residuals is an unreasonable assumption, one 
 
 - Adding the new simulated observation to our data set, we can repeat the process to obtain $y_{T+2} = \hat{y}_{T+2|T+1} + e_{T+2}$
 
-## Generate many possible future using `generate()`
-\fontsize{10}{13}\sf
+## Generate many possible future using `generate()` {.code-small}
 
 ```{r generate, echo=TRUE}
 beer_2000 <- aus_production |> filter(year(Quarter) == 2000) |> select(Beer)
@@ -629,7 +656,6 @@ sim
 ```
 
 ## Generate 5 different futures
-\fontsize{10}{13}\sf
 
 ```{r visualise-future, echo=FALSE}
 beer_2000 |> 
@@ -640,8 +666,7 @@ beer_2000 |>
   labs(colour="Future")
 ```
 
-## Use `forecast()` function to generate probabilistic forecasts
-\fontsize{10}{13}\sf
+## Use `forecast()` function to generate probabilistic forecasts {.code-small}
 
 ```{r probabilistic-forecast, echo=TRUE}
 fc <- fit |> forecast(h = 12, bootstrap = TRUE)
@@ -649,26 +674,23 @@ fc
 ```
 
 
-## Prediction intervals
+## Prediction intervals {.code-small}
 
 - Forecast intervals can be extracted using the `hilo()` function.
 
-\fontsize{10}{13}\sf
 ```{r fb-fc, echo=TRUE}
 fit <- aus_production |> select(Beer) %>% model(NAIVE(Beer))
 forecast(fit) %>% hilo(level = 95) %>% unpack_hilo("95%")
 ```
 
-## Prediction intervals
-\fontsize{10}{12}\sf
+## Prediction intervals {.code-small}
 
 ```{r beer-fc-interval, dependson='beer-fc'}
 beer_fc |>
   hilo(level = c(50, 75))
 ```
 
-## Prediction intervals
-\fontsize{10}{12}\sf
+## Prediction intervals {.code-small}
 
 ```{r beer-fc-interval2, dependson='beer-fc'}
 beer_fc |>
@@ -692,14 +714,13 @@ beer_fc |>
 
 ## Forecasting residuals
 
-\begin{block}{}
-\textbf{Residuals in forecasting:} difference between observed value and its fitted value: $e_t = y_t-\hat{y}_{t|t-1}$.
-\end{block}
+::: {.block}
+**Residuals in forecasting:** difference between observed value and its fitted value: $e_t = y_t-\hat{y}_{t|t-1}$.
+:::
 
 
 
-## Beer production - augment
-\fontsize{10}{10}\sf
+## Beer production - augment {.code-small}
 
 ```{r augment}
 fit <- aus_production |> select(Beer) %>% model(SNAIVE(Beer))
@@ -707,7 +728,6 @@ augment(fit)
 ```
 
 ## Beer production - fitted values
-\fontsize{10}{10}\sf
 
 ```{r dj4, echo=TRUE, warning=FALSE, fig.height=3.4, dependson="augment"}
 augment(fit) |>
@@ -717,7 +737,6 @@ augment(fit) |>
 ```
 
 ## Beer production - residuals
-\fontsize{10}{10}\sf
 
 ```{r dj5, echo=TRUE, warning = FALSE, dependson="augment"}
 augment(fit) |>
