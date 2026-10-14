@@ -314,7 +314,7 @@ Simulated futures from an ETS model
 
 ## What can we forecast?
 
-![](figs/Forex2.png){.photo}
+![](figs/Forex2.jpg){.photo}
 
 ## What can we forecast?
 
