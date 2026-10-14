@@ -5,7 +5,11 @@ subtitle: "Transforming / adjusting time series"
 
 ## Outline
 
-\vspace*{0.7cm}\tableofcontents
+* Transforming time series
+* Adjusting time series
+* Time series decompositions
+* Multiple seasonality
+* The ABS stuff-up
 
 ```{r}
 #| label: setup
@@ -20,29 +24,30 @@ library(purrr)
 
 ## Variance stabilisation
 
-\fontsize{13}{15}\sf
-
 If the data show different variation at different levels of the series, then a transformation can be useful.
-\pause
 
+::: {.fragment}
 Denote original observations as $y_1,\dots,y_n$ and transformed
 observations as $w_1, \dots, w_n$.
-\pause
+:::
 
-\begin{block}{\footnotesize Mathematical transformations for stabilising
-variation}
-\begin{tabular}{llc}
-Square root & $w_t = \sqrt{y_t}$ & $\downarrow$ \\[0.2cm]
-Cube root & $w_t = \sqrt[3]{y_t}$ & Increasing \\[0.2cm]
-Logarithm & $w_t = \text{log}(y_t)$  & strength
-\end{tabular}
-\end{block}
-\pause
+::: {.fragment}
+::: {.callout-note}
+## Mathematical transformations for stabilising variation
 
+$$\begin{array}{llc}
+\text{Square root} & w_t = \sqrt{y_t} & \downarrow \\
+\text{Cube root} & w_t = \sqrt[3]{y_t} & \text{Increasing} \\
+\text{Logarithm} & w_t = \text{log}(y_t) & \text{strength}
+\end{array}$$
+:::
+:::
+
+::: {.fragment}
 Logarithms, in particular, are useful because they are more interpretable: changes in a log value are **relative (percent) changes on the original scale**.
+:::
 
 ## Variance stabilisation
-\fontsize{12}{14}\sf
 
 ```{r food, echo=TRUE}
 food <- aus_retail |>
@@ -56,7 +61,6 @@ food |> autoplot(Turnover) +
 ```
 
 ## Variance stabilisation
-\fontsize{12}{14}\sf
 
 ```{r food-sqrt1, echo=TRUE, fig.height=3.8}
 food |> autoplot(sqrt(Turnover)) +
@@ -64,7 +68,6 @@ food |> autoplot(sqrt(Turnover)) +
 ```
 
 ## Variance stabilisation
-\fontsize{12}{14}\sf
 
 ```{r food-cbrt, echo=TRUE, fig.height=3.8}
 food |> autoplot(Turnover^(1 / 3)) +
@@ -72,7 +75,6 @@ food |> autoplot(Turnover^(1 / 3)) +
 ```
 
 ## Variance stabilisation
-\fontsize{12}{14}\sf
 
 ```{r food-log, echo=TRUE, fig.height=3.8}
 food |> autoplot(log(Turnover)) +
@@ -80,7 +82,6 @@ food |> autoplot(log(Turnover)) +
 ```
 
 ## Variance stabilisation
-\fontsize{12}{14}\sf
 
 ```{r food-inverse, echo=TRUE, fig.height=3.8}
 food |> autoplot(-1 / Turnover) +
@@ -88,25 +89,26 @@ food |> autoplot(-1 / Turnover) +
 ```
 
 ## Box-Cox transformations
-\fontsize{13}{15}\sf
 
 Each of these transformations is close to a member of the
-family of \textbf{Box-Cox transformations}:
+family of **Box-Cox transformations**:
 $$w_t = \left\{\begin{array}{ll}
         \text{log}(y_t),      & \quad \lambda = 0; \\
         (\text{sign}(y_t)|y_t|^\lambda-1)/\lambda ,         & \quad \lambda \ne 0.
 \end{array}\right.
-$$\pause\vspace*{-0.4cm}
+$$
 
+::: {.fragment}
 * Actually the Bickel-Doksum transformation (allowing for $y_t<0$)
 * $\lambda=1$: (No substantive transformation)
 * $\lambda=\frac12$: (Square root plus linear transformation)
 * $\lambda=0$: (Natural logarithm)
 * $\lambda=-1$: (Inverse plus 1)
+:::
 
 ## Box-Cox transformations
 
-```{r food-anim, echo=FALSE, fig.show='animate', interval=1/10, message=FALSE, fig.height=5, fig.width=8, aniopts='controls,buttonsize=0.3cm,width=11.5cm'}
+```{r food-anim, echo=FALSE, message=FALSE, fig.height=5, fig.width=8}
 library(rlang)
 library(gganimate)
 library(latex2exp)
@@ -124,21 +126,19 @@ food |>
 
 ## Box-Cox transformations
 
-\fontsize{13}{15}\sf
 
 ```{r food-lambda, echo=TRUE}
 food |>
   features(Turnover, features = guerrero)
 ```
 
-\pause
-
+::: {.fragment}
 * This attempts to balance the seasonal fluctuations and random variation across the series.
 * Always check the results.
 * A low value of $\lambda$ can give extremely large prediction intervals.
+:::
 
 ## Box-Cox transformations
-\fontsize{13}{14}\sf
 
 ```{r food-bc, echo=TRUE,fig.height=3.8}
 food |> autoplot(box_cox(Turnover, 0.0895)) +
@@ -146,7 +146,6 @@ food |> autoplot(box_cox(Turnover, 0.0895)) +
 ```
 
 ## Transformations
-\fontsize{13}{15}\sf
 
 * Often no transformation needed.
 * Simple transformations are easier to explain and work well enough.
@@ -175,8 +174,7 @@ global_economy |>
   autoplot(GDP / Population)
 ```
 
-## Inflation adjustments
-\fontsize{10}{10}\sf
+## Inflation adjustments {.code-small}
 
 ```{r, eval=FALSE}
 print_retail <- aus_retail |>
@@ -199,9 +197,8 @@ print_retail |>
 ```
 
 ## Inflation adjustments
-\fontsize{10}{10}\sf
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE, fig.height=5, out.height="90%"}
+```{r, message=FALSE, warning=FALSE, echo=FALSE, fig.height=5, out.width="80%"}
 print_retail <- aus_retail |>
   filter(Industry == "Newspaper and book retailing") |>
   group_by(Industry) |>
@@ -234,19 +231,21 @@ Trend-Cycle
 Seasonal
 : (almost) periodic changes in level due to seasonal factors (e.g., the quarter of the year, the month, or day of the week).
 
-\begin{block}{Additive decomposition}\vspace*{-0.3cm}
-\[ y_t = S_t + T_t + R_t \]
-\end{block}
-\begin{tabular}{@{}llp{8cm}@{}}
-where & $y_t=$ & data at period $t$ \\
-      & $T_t=$ & trend-cycle component at period $t$\\
-      & $S_t=$ & seasonal component at period $t$ \\
-      & $R_t=$ & remainder component at period $t$
-\end{tabular}
+::: {.callout-note}
+## Additive decomposition
+
+$$ y_t = S_t + T_t + R_t $$
+:::
+
+$$\begin{aligned}
+\text{where}\quad & y_t = \text{ data at period } t \\
+& T_t = \text{ trend-cycle component at period } t \\
+& S_t = \text{ seasonal component at period } t \\
+& R_t = \text{ remainder component at period } t
+\end{aligned}$$
 
 ## STL decomposition
 
-\fontsize{13}{14}\sf
 
   *  STL: "Seasonal and Trend decomposition using Loess"
   *  Very versatile and robust.
@@ -258,8 +257,7 @@ where & $y_t=$ & data at period $t$ \\
   *  Take logs to get multiplicative decomposition.
   *  Use Box-Cox transformations to get other decompositions.
 
-## US Retail Employment
-\fontsize{11}{11}\sf
+## US Retail Employment {.code-small}
 
 ```{r usretail}
 us_retail_employment <- us_employment |>
@@ -268,7 +266,6 @@ us_retail_employment <- us_employment |>
 us_retail_employment
 ```
 
-\vspace*{10cm}
 
 ## US Retail Employment
 
@@ -278,10 +275,8 @@ us_retail_employment |>
   labs(y = "Persons (thousands)", title = "Total employment in US retail")
 ```
 
-\vspace*{10cm}
 
-## US Retail Employment
-\fontsize{11}{11}\sf
+## US Retail Employment {.code-small}
 
 ```{r dable2}
 dcmp <- us_retail_employment |>
@@ -289,16 +284,13 @@ dcmp <- us_retail_employment |>
 dcmp
 ```
 
-\vspace*{10cm}
 
-## US Retail Employment
-\fontsize{11}{11}\sf
+## US Retail Employment {.code-small}
 
 ```{r dable3}
 components(dcmp)
 ```
 
-\vspace*{10cm}
 
 ## US Retail Employment
 
@@ -315,7 +307,6 @@ us_retail_employment |>
   labs(y = "Persons (thousands)", title = "Total employment in US retail")
 ```
 
-\vspace*{10cm}
 
 ## US Retail Employment
 
@@ -348,7 +339,7 @@ us_retail_employment |>
 
 ## STL decomposition
 
-```{r stlwindowanim, echo=FALSE, warning=FALSE, message=FALSE, fig.show='animate', interval=1/10,  fig.height=5.35, fig.width=8, aniopts='controls,buttonsize=0.3cm,width=11.5cm', eval=TRUE}
+```{r stlwindowanim, echo=FALSE, warning=FALSE, message=FALSE, fig.height=5.35, fig.width=8, eval=TRUE}
 s_windows <- seq(5, 55, by = 2)
 stl_defs <- purrr::map(s_windows, function(s_window) {
   STL(Employed ~ season(window = s_window), robust = TRUE)
@@ -373,7 +364,6 @@ us_retail_employment |>
   transition_states(.model)
 ```
 
-\vspace*{10cm}
 
 ## STL decomposition
 
@@ -385,7 +375,6 @@ us_retail_employment |>
   components()
 ```
 
-\fontsize{12}{13}\sf
 
   *  `trend(window = ?)` controls wiggliness of trend component.
   *  `season(window = ?)` controls variation on seasonal component.
@@ -400,17 +389,14 @@ us_retail_employment |>
   autoplot()
 ```
 
-\only<2>{\begin{textblock}{7}(8,0.2)\fontsize{11}{11}\sf
-\begin{alertblock}{}
-\begin{itemize}\tightlist
-\item \texttt{STL()} chooses \texttt{season(window=13)} by default
-\item Can include transformations.
-\end{itemize}
-\end{alertblock}
-\end{textblock}}
+::: {.fragment}
+::: {.alertblock .absolute top="0px" right="0px" width="500px" style="font-size:0.7em;"}
+* `STL()` chooses `season(window=13)` by default
+* Can include transformations.
+:::
+:::
 
 ## STL decomposition
-\fontsize{13}{15}\sf
 
 * Algorithm that updates trend and seasonal components iteratively.
 * Starts with $\hat{T}_t=0$
@@ -419,7 +405,7 @@ us_retail_employment |>
 * season window controls loess bandwidth on detrended subseries.
 * Robustness weights based on remainder.
 * Default season: `window = 13`
-* Default trend:\newline\mbox{}\hfill `window = nextodd(ceiling((1.5*period)/(1-(1.5/s.window)))`
+* Default trend: `window = nextodd(ceiling((1.5*period)/(1-(1.5/s.window)))`
 * `window` values should be odd numbers for symmetry.
 
 ## Australian holidays
@@ -446,8 +432,7 @@ holidays |>
   autoplot()
 ```
 
-## Holidays decomposition
-\fontsize{9}{10}\sf
+## Holidays decomposition {.code-small}
 
 ```{r holidays2}
 dcmp <- holidays |>
@@ -457,16 +442,14 @@ dcmp
 ```
 
 ## Holidays decomposition
-\fontsize{9}{10}\sf
 
 ```{r holidays3, fig.height=4.6}
 dcmp |> gg_subseries(season_year)
 ```
 
 ## Holidays decomposition
-\fontsize{9}{10}\sf
 
-```{r holidays-trend, message=FALSE, warning=FALSE, fig.height=3.5, out.height="70%"}
+```{r holidays-trend, message=FALSE, warning=FALSE, fig.height=3.5}
 autoplot(dcmp, trend, scale_bars = FALSE) +
   autolayer(holidays, alpha = 0.4)
 ```
@@ -474,8 +457,7 @@ autoplot(dcmp, trend, scale_bars = FALSE) +
 
 # Multiple seasonality
 
-## Multiple seasonality
-\fontsize{9}{9}\sf
+## Multiple seasonality {.code-small}
 
 ```r
 vic_elec |>
@@ -493,25 +475,24 @@ vic_elec |>
 crop::dev.off.crop("figs/vic_elec_stl.png")
 ```
 
-\placefig{7}{0.2}{width=8.7cm, height=20cm}{vic_elec_stl}
+![](figs/vic_elec_stl.png){.absolute top="20px" right="40px" height="620px"}
 
-\vspace*{10cm}
 
 # The ABS stuff-up
 
 ## The ABS stuff-up
 
-\full{abs1}
+![](figs/abs1.png){.photo}
 
 ## The ABS stuff-up
 
-\full{abs2}
+![](figs/abs2.png){.photo}
 
 ## The ABS stuff-up
 
-\full{abs3}
+![](figs/abs3.png){.photo}
 
-## The ABS stuff-up
+## The ABS stuff-up {.code-small}
 
 ```{r abs1, echo=FALSE}
 employed <- tsibble(
@@ -565,7 +546,6 @@ employed <- tsibble(
   select(Time, Month, Year, Employed)
 ```
 
-\fontsize{11}{11}\sf
 
 ```{r abs2}
 employed
@@ -637,7 +617,6 @@ components(dcmp) |>
 ```
 
 ## The ABS stuff-up
-\fontsize{13}{15}\sf
 
   *  August 2014 employment numbers higher than expected.
   *  Supplementary survey usually conducted in August for employed people.
