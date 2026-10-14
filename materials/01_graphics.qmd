@@ -22,6 +22,9 @@ source("setup.R")
 # decomposition and feature extraction.
 library(ggtime)
 library(mixtime)
+for (f in c("common/morph.R", "horizon.R", "season.R", "subseries.R", "acf.R")) {
+  source(file.path("R", "morph", f))
+}
 ```
 
 # Time series Patterns
@@ -152,6 +155,54 @@ PBS %>% filter(ATC2 == "A10") %>%
 ```
 
 
+## Horizon plots
+
+::::: {.morph-slide}
+
+```{r}
+#| label: horizon-morph
+#| echo: false
+#| output: asis
+#| cache: false
+# setup.R drops Growth from global_economy, so use the original data
+growth <- tsibbledata::global_economy |>
+  filter(Code %in% c("AUS", "CAN", "FRA", "JPN", "GBR", "USA"), !is.na(Growth)) |>
+  select(Country, Year, Growth)
+horizon_morph(
+  growth, Growth,
+  focus = "United Kingdom",
+  origin = 0,
+  horizonscale = c(-7.5, -5, -2.5, 2.5, 5, 7.5),
+  alt = "Animation transforming a time plot of annual GDP growth in the United Kingdom into a horizon plot, alongside horizon plots of GDP growth in five other countries."
+)
+```
+
+:::: {.morph-captions}
+
+::: {.morph-step}
+Time plot of UK annual GDP growth.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Fill the area between the series and 0%, in bands 2.5 percentage points wide: blue above, red below, darker further away.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Mirror the negative bands above the origin. Red now means negative growth.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Collapse the bands onto the origin, darker over lighter. The plot is one band tall.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+So little vertical space that many series can be stacked and compared.
+:::
+
+::::
+
+:::::
+
 # Seasonal plots
 
 ## Seasonal plots
@@ -161,14 +212,52 @@ PBS %>% filter(ATC2 == "A10") %>%
   * Enables the underlying seasonal pattern to be seen more clearly, and also allows any substantial departures from the seasonal pattern to be easily identified.
   * In R: `gg_season()` (ggtime)
 
-## Quarterly Australian Beer Production
-
-```{r, fig.height=2.7}
+```{r}
+#| include: false
 beer <- aus_production |>
   select(Quarter, Beer) |>
   filter(year(Quarter) >= year(1992L))
-beer |> autoplot(Beer)
 ```
+
+## Building a seasonal plot
+
+::::: {.morph-slide}
+
+```{r}
+#| label: season-morph
+#| echo: false
+#| output: asis
+#| cache: false
+beer_morph <- aus_production |>
+  filter(year(Quarter) >= year(1992L)) |>
+  select(Quarter, Beer)
+season_morph(
+  beer_morph, Beer,
+  alt = "Animation transforming a time plot of quarterly beer production into a seasonal plot."
+)
+```
+
+:::: {.morph-captions}
+
+::: {.morph-step}
+Time plot of quarterly Australian beer production since 1992.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Each observation belongs to a year. Split the line between years, half-way between Q4 and the next Q1.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Move each year back to the start in turn, stacking them. The time axis narrows to a single year.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Remove the points: the seasonal plot, with one line per year.
+:::
+
+::::
+
+:::::
 
 ## Quarterly Australian Beer Production
 
@@ -206,11 +295,46 @@ vic_elec |> gg_season(Demand, period = "day")
   * Enables the underlying seasonal pattern to be seen clearly, and changes in seasonality over time to be visualised.
   * In R: `gg_subseries()` (ggtime)
 
-## Quarterly Australian Beer Production
+## Building a seasonal subseries plot
+
+::::: {.morph-slide}
 
 ```{r}
-beer |> gg_subseries(Beer)
+#| label: subseries-morph
+#| echo: false
+#| output: asis
+#| cache: false
+subseries_morph(
+  beer_morph, Beer,
+  alt = "Animation transforming a time plot of quarterly beer production into a seasonal subseries plot."
+)
 ```
+
+:::: {.morph-captions}
+
+::: {.morph-step}
+Time plot of quarterly Australian beer production since 1992.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Each observation belongs to a quarter of the year.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Join the observations from the same quarter: four subseries, each a time series in its own right.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Separate the subseries and place them side by side to compare the quarters.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Add the mean of each quarter: the seasonal subseries plot.
+:::
+
+::::
+
+:::::
 
 ## Australian holidays
 
@@ -387,6 +511,51 @@ with these scatterplots.
      * $r_3=\text{Correlation}(y_{t}, y_{t-3})$
      * etc.
   * If there is **seasonality**, the ACF at the seasonal lag (e.g., 12 for monthly data) will be **large and positive**.
+
+## From lag plots to the ACF
+
+::::: {.morph-slide}
+
+```{r}
+#| label: acf-morph
+#| echo: false
+#| output: asis
+#| cache: false
+acf_morph(
+  beer_morph, Beer,
+  alt = "Animation transforming a time plot of quarterly beer production into lag plots, and the autocorrelation of each lag plot into an ACF plot."
+)
+```
+
+:::: {.morph-captions}
+
+::: {.morph-step}
+Time plot of quarterly Australian beer production since 1992.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Shift the series by one quarter, pairing each observation with the one before it.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Each pair is a point in the lag plot: $y_t$ against $y_{t-1}$. The first observation has no pair, so it is dropped.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+The autocorrelation $r_1$ measures the linear relationship in this lag plot. It is small and negative: the first ACF bar.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Repeat for lags 2, 3, 4, ... Lags 4, 8, 12 and 16 are strongly positive: each quarter resembles the same quarter in earlier years.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+The ACF plot. Dashed blue lines: the range expected for white noise.
+:::
+
+::::
+
+:::::
 
 ## Autocorrelation
 
