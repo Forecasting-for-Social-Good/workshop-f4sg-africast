@@ -1,0 +1,83 @@
+{
+  "Live Questions Setup": {
+    "prefix": "setup",
+    "body": [
+      "filters:",
+      "  - live-questions",
+      "revealjs-plugins:",
+      "  - live-questions",
+      "extensions:",
+      "  live-questions:",
+      "    server: ${1:http://localhost:8787}",
+      "    session: ${2:my-talk}"
+    ],
+    "description": "Front matter that enables Live Questions and points the deck at a server."
+  },
+  "Live Questions Poll": {
+    "prefix": "poll",
+    "body": [
+      "::: {.poll #${1:question-id}}",
+      "- ${2:First option}",
+      "- ${3:Second option}",
+      "- ${4:Third option}",
+      ":::",
+      "$0"
+    ],
+    "description": "Multiple-choice poll shown as a live bar chart."
+  },
+  "Live Questions Quiz": {
+    "prefix": "quiz",
+    "body": [
+      "::: {.poll #${1:question-id}}",
+      "- [ ] ${2:Wrong answer}",
+      "- [x] ${3:Right answer}",
+      "- [ ] ${4:Wrong answer}",
+      ":::",
+      "$0"
+    ],
+    "description": "Poll with correct answers marked [x]; press A to reveal them and close voting."
+  },
+  "Live Questions Hidden Poll": {
+    "prefix": "poll-hidden",
+    "body": [
+      "::: {.poll #${1:question-id} results=\"hidden\"}",
+      "${2:Question text}",
+      "",
+      "- [ ] ${3:Wrong answer}",
+      "- [x] ${4:Right answer}",
+      ":::",
+      "$0"
+    ],
+    "description": "Poll whose results stay hidden until the presenter presses T."
+  },
+  "Live Questions Word Cloud": {
+    "prefix": "wordcloud",
+    "body": [
+      "::: {.wordcloud #${1:question-id} max-words=${2:2} max-answers=${3:3}}",
+      ":::",
+      "$0"
+    ],
+    "description": "Short free-text answers shown as a live word cloud; the prompt is the slide heading."
+  },
+  "Live Questions Likert": {
+    "prefix": "likert",
+    "body": [
+      "::: {.likert #${1:question-id} scale=\"${2|agree-5,agree-7|}\"}",
+      "- ${3:First statement}",
+      "- ${4:Second statement}",
+      ":::",
+      "$0"
+    ],
+    "description": "Statements rated on an agree/disagree scale."
+  },
+  "Live Questions Numeric Rating": {
+    "prefix": "rating",
+    "body": [
+      "::: {.likert #${1:question-id} scale=\"${2:0-10}\" low=\"${3:Not at all}\" high=\"${4:Extremely}\"}",
+      "${5:How likely are you to recommend this course?}",
+      ":::",
+      "$0"
+    ],
+    "description": "Numeric rating scale with labelled ends."
+  }
+}

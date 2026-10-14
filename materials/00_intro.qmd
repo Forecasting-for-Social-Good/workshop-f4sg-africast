@@ -1,5 +1,13 @@
 ---
 title: "Africast-Tidy Time Series & Forecasting Using R"
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  # TODO: set live-questions server
+  server: https://TODO-SET-LIVE-QUESTIONS-SERVER.example.workers.dev
+  session: africast-intro  # TODO: confirm/rename the session (one room per talk)
 ---
 
 ```{r}
@@ -149,26 +157,30 @@ Third-year PhD researcher, Data Lab for Social Good, Cardiff University. Researc
 * [Follow us on Twitter](https://twitter.com/FSG_forecast)
 * Use #AFRICAST, #F4SG if you post on social media about the workshop
 
-## Poll: [How proficient are you in using R?](https://www.menti.com/alfmobtvo9wb) {.smaller}
+## Poll: How proficient are you in using R? {.smaller}
 
-1. Guru: The R core team come to me for advice.
-1. Expert: I have written several packages on CRAN.
-1. Skilled: I use it regularly and it is an important part of my job.
-1. Comfortable: I use it often and am comfortable with the tool.
-1. User: I use it sometimes, but I am often searching around for the right function.
-1. Learner: I have used it a few times.
-1. Beginner: I've managed to download and install it.
-1. Unknown: Why are you speaking like a pirate?
+::: {.poll #r-proficiency}
+- Guru: The R core team come to me for advice.
+- Expert: I have written several packages on CRAN.
+- Skilled: I use it regularly and it is an important part of my job.
+- Comfortable: I use it often and am comfortable with the tool.
+- User: I use it sometimes, but I am often searching around for the right function.
+- Learner: I have used it a few times.
+- Beginner: I've managed to download and install it.
+- Unknown: Why are you speaking like a pirate?
+:::
 
-## Poll: [How experienced are you in forecasting](https://www.menti.com/alfmobtvo9wb) {.smaller}
+## Poll: How experienced are you in forecasting {.smaller}
 
-1. Guru: I wrote the book, done it for decades, now I do the conference circuit.
-1. Expert: It has been my full time job for more than a decade.
-1. Skilled: I have been doing it for years.
-1. Comfortable: I understand it and have done it.
-1. Learner: I am still learning.
-1. Beginner: I have heard of it and would like to learn more.
-1. Unknown: What is forecasting? Is that what the weather people do?
+::: {.poll #forecasting-experience}
+- Guru: I wrote the book, done it for decades, now I do the conference circuit.
+- Expert: It has been my full time job for more than a decade.
+- Skilled: I have been doing it for years.
+- Comfortable: I understand it and have done it.
+- Learner: I am still learning.
+- Beginner: I have heard of it and would like to learn more.
+- Unknown: What is forecasting? Is that what the weather people do?
+:::
 
 ## Install required packages
 
