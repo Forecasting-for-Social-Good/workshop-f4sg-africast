@@ -5,7 +5,12 @@ subtitle: "2. Time series patterns and basic graphics"
 
 ## Outline
 
-\vspace*{0.7cm}\tableofcontents
+* Time series patterns
+* Time plots
+* Seasonal plots
+* Seasonal or cyclic?
+* Lag plots and autocorrelation
+* White noise
 
 ```{r}
 #| label: setup
@@ -43,7 +48,7 @@ Seasonal
   : *Seasonality* is a consistent pattern that repeats over a fixed period of time. pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
 
 Cyclic
-  : pattern exists when data exhibit rises and falls that are \emph{not of fixed period} (duration usually of at least 2 years).
+  : pattern exists when data exhibit rises and falls that are *not of fixed period* (duration usually of at least 2 years).
 
 ## Level
 
@@ -129,7 +134,6 @@ abline(v=2009, lty=3)
 
 ## Time plots
 
-\small
 
 ```{r, echo=TRUE, fig.height=3}
 ansett %>%
@@ -139,7 +143,6 @@ ansett %>%
 
 ## Time plots
 
-\small
 
 ```{r a10-plot, echo=TRUE, dependson="a10", fig.height=2.5}
 PBS %>% filter(ATC2 == "A10") %>%
@@ -174,7 +177,6 @@ beer |> gg_season(Beer, labels = "right")
 ```
 
 ## Multiple seasonal periods
-\fontsize{10}{11}\sf
 
 ```{r}
 vic_elec
@@ -182,19 +184,19 @@ vic_elec
 
 ## Multiple seasonal periods
 
-```{r, dev = "ragg_png", dpi = 180}
+```{r}
 vic_elec |> gg_season(Demand)
 ```
 
 ## Multiple seasonal periods
 
-```{r, dev = "ragg_png", dpi = 180}
+```{r}
 vic_elec |> gg_season(Demand, period = "week")
 ```
 
 ## Multiple seasonal periods
 
-```{r, dev = "ragg_png", dpi = 180}
+```{r}
 vic_elec |> gg_season(Demand, period = "day")
 ```
 
@@ -211,7 +213,6 @@ beer |> gg_subseries(Beer)
 ```
 
 ## Australian holidays
-\fontsize{9}{10}\sf
 
 ```{r holidays}
 holidays <- tourism |>
@@ -225,7 +226,6 @@ holidays
 ```
 
 ## Australian holidays
-\fontsize{9}{10}\sf
 
 ```{r holidays-plot, echo=TRUE, dependson="holidays", fig.height=3.1}
 holidays |> autoplot(Trips) +
@@ -233,7 +233,6 @@ holidays |> autoplot(Trips) +
 ```
 
 ## Seasonal plots
-\fontsize{9}{10}\sf
 
 ```{r graphics1, fig.width=6, fig.height=6, out.width="42%"}
 holidays |> gg_season(Trips) +
@@ -241,9 +240,8 @@ holidays |> gg_season(Trips) +
 ```
 
 ## Seasonal subseries plots
-\fontsize{9}{10}\sf
 
-```{r graphics2, fig.height=5.5, fig.width=12.5, out.height="73%"}
+```{r graphics2, fig.height=5.5, fig.width=12.5}
 holidays |> gg_subseries(Trips) +
   labs(y = "thousands of trips", title = "Australian domestic holiday nights")
 ```
@@ -271,9 +269,8 @@ vic_elec |>
 * each row above is a month, and each cell within it a day
 
 ## Calendar plots
-\fontsize{10}{11}\sf
 
-```{r ggtime_calendar2, ref.label="ggtime_calendar", echo=FALSE, out.height="90%", fig.height=5.4, fig.width=9}
+```{r ggtime_calendar2, ref.label="ggtime_calendar", echo=FALSE, fig.height=5.4, fig.width=9}
 ```
 
 # Seasonal or cyclic?
@@ -287,18 +284,17 @@ Seasonal
   : pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
 
 Cyclic
-  : pattern exists when data exhibit rises and falls that are \emph{not of fixed period} (duration usually of at least 2 years).
+  : pattern exists when data exhibit rises and falls that are *not of fixed period* (duration usually of at least 2 years).
 
 ## Time series components
 
-### Differences between seasonal and cyclic patterns:
+**Differences between seasonal and cyclic patterns:**
 
 * seasonal pattern constant length; cyclic pattern variable length
 * average length of cycle longer than length of seasonal pattern
 * magnitude of cycle more variable than magnitude of seasonal pattern
 
 ## Time series patterns
-\fontsize{10}{10}\sf
 
 ```{r, fig.height=2.7}
 aus_production |>
@@ -308,7 +304,6 @@ aus_production |>
 ```
 
 ## Time series patterns
-\fontsize{10}{10}\sf
 
 ```{r, warning=FALSE, fig.height=2.7}
 aus_production |>
@@ -318,7 +313,6 @@ aus_production |>
 ```
 
 ## Time series patterns
-\fontsize{10}{10}\sf
 
 ```{r, fig.height=2.7}
 us_employment |>
@@ -328,7 +322,6 @@ us_employment |>
 ```
 
 ## Time series patterns
-\fontsize{10}{10}\sf
 
 ```{r, fig.height=2.7}
 gafa_stock |>
@@ -338,7 +331,6 @@ gafa_stock |>
 ```
 
 ## Time series patterns
-\fontsize{10}{10}\sf
 
 ```{r, fig.height=2.7}
 pelt |>
@@ -349,22 +341,21 @@ pelt |>
 
 ## Seasonal or cyclic?
 
-\alert{Differences between seasonal and cyclic patterns:}
+[Differences between seasonal and cyclic patterns:]{.alert}
 
   * seasonal pattern constant length; cyclic pattern variable length
   * average length of cycle longer than length of seasonal pattern
   * magnitude of cycle more variable than magnitude of seasonal pattern
 
-\pause
-
-\begin{alertblock}{}
+::: {.fragment}
+::: {.alertblock}
 The timing of peaks and troughs is predictable with seasonal data, but unpredictable in the long term with cyclic data.
-\end{alertblock}
+:::
+:::
 
 # Lag plots and autocorrelation
 
 ## Example: Beer production
-\fontsize{10}{11}\sf
 
 ```{r}
 new_production <- aus_production |>
@@ -373,16 +364,14 @@ new_production
 ```
 
 ## Example: Beer production
-\fontsize{13}{15}\sf
 
-```{r, fig.height=6.5, fig.width=6.5, out.width="7cm"}
+```{r, fig.height=6.5, fig.width=6.5, out.width="560px"}
 new_production |> gg_lag(Beer)
 ```
 
 ## Example: Beer production
-\fontsize{13}{15}\sf
 
-```{r, fig.height=6.5, fig.width=6.5, out.width="7cm"}
+```{r, fig.height=6.5, fig.width=6.5, out.width="560px"}
 new_production |> gg_lag(Beer, geom = "point")
 ```
 
@@ -402,7 +391,6 @@ with these scatterplots.
 ## Autocorrelation
 
 Results for first 9 lags for beer data:
-\fontsize{10}{11}\sf
 
 ```{r, echo=TRUE}
 new_production |> ACF(Beer, lag_max = 9)
@@ -411,7 +399,6 @@ new_production |> ACF(Beer, lag_max = 9)
 ## Autocorrelation
 
 Results for first 9 lags for beer data:
-\fontsize{10}{11}\sf
 
 ```{r beeracf, fig.height=2.5}
 new_production |>
@@ -428,7 +415,6 @@ new_production |>
 ```
 
 ## Australian holidays
-\fontsize{10}{11}\sf
 
 ```{r tourismacf}
 holidays |> ACF(Trips)
@@ -463,7 +449,6 @@ retail |>
 ```
 
 ## Google stock price
-\fontsize{10}{11}\sf
 
 ```{r google-2015}
 google_2015 <- gafa_stock |>
@@ -514,30 +499,23 @@ gridExtra::grid.arrange(tp1, tp2, tp3, tp4,
 # White noise
 
 ## Example: White noise
-\fontsize{11}{13}\sf
 
 ```{r, fig.height=3.3}
 wn <- tsibble(t = seq(36), y = rnorm(36), index = t)
 wn |> autoplot(y)
 ```
 
-\only<2>{
-\begin{textblock}{10}(1.4,6.7)\fontsize{13}{15}\sf
-\begin{alertblock}{}
+::: {.alertblock .absolute .fragment top="500px" left="112px" width="800px"}
 White noise data is uncorrelated across time with zero mean and constant variance.
 
 (Technically, we require independence as well.)
-\end{alertblock}
-\end{textblock}}
+:::
 
 ## Example: White noise
-\fontsize{10}{10}\sf
 
 ```r
 wn |> ACF(y)
 ```
-
-\fontsize{10}{10}\sf\tabcolsep=0.1cm
 
 ```{r wnacf, echo=FALSE, dependson="wn"}
 wn |>
@@ -549,7 +527,7 @@ wn |>
     paste("$r_{", x, "}$", sep = "")
   }) |>
   knitr::kable(
-    booktabs = TRUE,
+    format = "pipe",
     escape = FALSE, align = "c", digits = 3,
     format.args = list(nsmall = 3)
   )
@@ -561,15 +539,14 @@ wn |>
   autoplot()
 ```
 
-\pause\fontsize{13}{15}\sf
-
- * Sample autocorrelations for white noise series.
- * Expect each autocorrelation to be close to zero.
- * Blue lines show 95% critical values.
+::: {.fragment}
+* Sample autocorrelations for white noise series.
+* Expect each autocorrelation to be close to zero.
+* Blue lines show 95% critical values.
+:::
 
 ## Example: Pigs slaughtered
 
-\fontsize{11}{12}\sf
 
 ```{r, fig.height=2.5}
 pigs <- aus_livestock |>
@@ -591,13 +568,15 @@ pigs |>
 
 Monthly total number of pigs slaughtered
 in the state of Victoria, Australia, from January 2014 through December 2018
-(Source: Australian Bureau of Statistics.)\pause
+(Source: Australian Bureau of Statistics.)
 
-  * Difficult to detect pattern in time plot.
-  * ACF shows significant autocorrelation for lag 2 and 12.
-  * Indicate some slight seasonality.
+::: {.fragment}
+* Difficult to detect pattern in time plot.
+* ACF shows significant autocorrelation for lag 2 and 12.
+* Indicate some slight seasonality.
+:::
 
-\pause
-
+::: {.fragment}
 These show the series is **not a white noise series**.
+:::
 
