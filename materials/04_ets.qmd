@@ -5,7 +5,11 @@ subtitle: "7. Exponential smoothing"
 
 ## Outline
 
-\vspace*{0.7cm}\tableofcontents
+* Exponential smoothing
+* Trend methods
+* Seasonal methods
+* ETS taxonomy
+* Non-Gaussian forecast distributions
 
 
 ```{r}
@@ -43,106 +47,121 @@ knitr::include_graphics("figs/pegel1.png")
   * Equivalent ETS state space models developed in the 1990s and 2000s.
 
 ## A model for levels, trends, and seasonalities
-\fontsize{13}{13}\sf
 
-We want a model that captures the level ($\ell_t$), trend ($b_t$) and seasonality ($s_t$).\vspace*{-0.1cm}
+We want a model that captures the level ($\ell_t$), trend ($b_t$) and seasonality ($s_t$).
 
-\alert{How do we combine these elements?}
+[How do we combine these elements?]{.alert}
 
-\pause
-
-\begin{block}{Additively?}
+::: {.fragment}
+::: {.callout-note}
+## Additively?
 $y_t = \ell_{t-1} + b_{t-1} + s_{t-m} + \varepsilon_t$
-\end{block}\pause
-\begin{block}{Multiplicatively?}
-$y_t = \ell_{t-1}b_{t-1}s_{t-m}(1 + \varepsilon_t)$
-\end{block}\pause
-\begin{block}{Perhaps a mix of both?}
-$y_t = (\ell_{t-1} + b_{t-1}) s_{t-m} + \varepsilon_t$
-\end{block}\pause\vspace*{-0.1cm}
+:::
+:::
 
-\alert{How do the level, trend and seasonal components evolve over time?}
+::: {.fragment}
+::: {.callout-note}
+## Multiplicatively?
+$y_t = \ell_{t-1}b_{t-1}s_{t-m}(1 + \varepsilon_t)$
+:::
+:::
+
+::: {.fragment}
+::: {.callout-note}
+## Perhaps a mix of both?
+$y_t = (\ell_{t-1} + b_{t-1}) s_{t-m} + \varepsilon_t$
+:::
+:::
+
+::: {.fragment}
+[How do the level, trend and seasonal components evolve over time?]{.alert}
+:::
 
 ## ETS models
 
-\begin{block}{}
-\hspace*{-0.25cm}\begin{tabular}{l@{}p{2.3cm}@{}c@{}l}
-\structure{General n\rlap{otation}}
-    &       & ~E T S~  & ~:\hspace*{0.3cm}\textbf{E}xponen\textbf{T}ial \textbf{S}moothing               \\ [-0.2cm]
-    & \hfill{$\nearrow$\hspace*{-0.1cm}}        & {$\uparrow$} & {\hspace*{-0.2cm}$\nwarrow$} \\
-    & \hfill{\textbf{E}rror\hspace*{0.2cm}} & {\textbf{T}rend}      & {\hspace*{0.2cm}\textbf{S}eason}
-\end{tabular}
-\end{block}
+::: {.block .center-text}
+**General notation** &nbsp;&nbsp; E T S : &nbsp;**E**xpon**e**n**T**ial **S**moothing
 
-\alert{\textbf{E}rror:} Additive (`"A"`) or multiplicative (`"M"`)
-\pause
+| | | |
+|:---:|:---:|:---:|
+| $\nearrow$ | $\uparrow$ | $\nwarrow$ |
+| **E**rror | **T**rend | **S**eason |
+:::
 
-\alert{\textbf{T}rend:} None (`"N"`), additive (`"A"`), multiplicative (`"M"`), or damped (`"Ad"` or `"Md"`).
-\pause
+[**E**rror:]{.alert} Additive (`"A"`) or multiplicative (`"M"`)
 
-\alert{\textbf{S}easonality:} None (`"N"`), additive (`"A"`) or multiplicative (`"M"`)
+::: {.fragment}
+[**T**rend:]{.alert} None (`"N"`), additive (`"A"`), multiplicative (`"M"`), or damped (`"Ad"` or `"Md"`).
+:::
+
+::: {.fragment}
+[**S**easonality:]{.alert} None (`"N"`), additive (`"A"`) or multiplicative (`"M"`)
+:::
 
 ## ETS(A,N,N): SES with additive errors
 
-\begin{block}{}\vspace*{-0.7cm}
-\begin{align*}
+::: {.block}
+$$\begin{aligned}
 \text{Forecast equation}&& \hat{y}_{T+h|T} &= \ell_T \\
 \text{Measurement equation}&& y_t &= \ell_{t-1} + \varepsilon_t\\
 \text{State equation}&& \ell_t&=\ell_{t-1}+\alpha \varepsilon_t
-\end{align*}
-\end{block}\vspace*{-0.4cm}
+\end{aligned}$$
+:::
 
-where $\varepsilon_t\sim\text{NID}(0,\sigma^2)$.\pause
+where $\varepsilon_t\sim\text{NID}(0,\sigma^2)$.
 
+::: {.fragment}
   * "innovations" or "single source of error" because equations have the same error process, $\varepsilon_t$.
   * Measurement equation: relationship between observations and states.
   * Transition/state equation(s): evolution of state(s) over time.
+:::
 
-\vspace*{10cm}
 
 ## ETS(M,N,N): SES with multiplicative errors
 
-\begin{block}{}\vspace*{-0.7cm}
-\begin{align*}
+::: {.block}
+$$\begin{aligned}
 \text{Forecast equation}&& \hat{y}_{T+h|T} &= \ell_T \\
 \text{Measurement equation}&& y_t &= \ell_{t-1}(1 + \varepsilon_t)\\
 \text{State equation}&& \ell_t&=\ell_{t-1} (1+\alpha\varepsilon_t)
-\end{align*}
-\end{block}\vspace*{-0.4cm}
+\end{aligned}$$
+:::
 
-where $\varepsilon_t\sim\text{NID}(0,\sigma^2)$.\pause
+where $\varepsilon_t\sim\text{NID}(0,\sigma^2)$.
 
+::: {.fragment}
   * Models with additive and multiplicative errors with the same parameters generate the same point forecasts but different prediction intervals.
+:::
 
-\vspace*{10cm}
 
 # Trend methods
 
 ## Holt's linear trend
-\fontsize{13}{15}\sf
 
-\begin{block}{Additive errors: ETS(A,A,N)}\vspace*{-0.7cm}
-\begin{align*}
+::: {.callout-note}
+## Additive errors: ETS(A,A,N)
+$$\begin{aligned}
 \text{Forecast equation}&& \hat{y}_{T+h|T} &= \ell_T + hb_T\\
 \text{Measurement equation}&& y_t &= \ell_{t-1}+b_{t-1}+\varepsilon_t\\
 \text{State equations}&&       \ell_t&=\ell_{t-1}+b_{t-1}+\alpha \varepsilon_t\\
 &&      b_t&=b_{t-1}+\beta \varepsilon_t
-\end{align*}
-\end{block}
-\pause
+\end{aligned}$$
+:::
 
-\begin{block}{Multiplicative errors: ETS(M,A,N)}\vspace*{-0.7cm}
-\begin{align*}
+::: {.fragment}
+::: {.callout-note}
+## Multiplicative errors: ETS(M,A,N)
+$$\begin{aligned}
 \text{Forecast equation}&& \hat{y}_{T+h|T} &= \ell_T + hb_T\\
 \text{Measurement equation}&& y_t &= (\ell_{t-1}+b_{t-1})(1+\varepsilon_t)\\
 \text{State equations}&&       \ell_t&=(\ell_{t-1}+b_{t-1})(1+\alpha \varepsilon_t)\\
 &&      b_t&=b_{t-1}+\beta (\ell_{t-1}+b_{t-1})\varepsilon_t
-\end{align*}
-\end{block}
+\end{aligned}$$
+:::
+:::
 
 ## Example: Australian population
 
-\fontsize{9}{9}\sf
 
 ```{r holt-fit, echo=TRUE}
 aus_economy <- global_economy |>
@@ -154,7 +173,6 @@ report(fit)
 
 ## Example: Australian population
 
-\fontsize{10}{11}\sf
 
 ```{r holt-cmp, echo=TRUE, dependson='holt-fit'}
 components(fit)
@@ -162,7 +180,6 @@ components(fit)
 
 ## Example: Australian population
 
-\fontsize{10}{11}\sf
 
 ```{r holt-cmp-plot, echo=TRUE, dependson='holt-fit', fig.height=4.5}
 components(fit) |> autoplot()
@@ -170,7 +187,6 @@ components(fit) |> autoplot()
 
 ## Example: Australian population
 
-\fontsize{12}{12}\sf
 
 ```{r holt-fc, echo=TRUE, dependson='holt-fit', fig.height=3.4}
 fit |>
@@ -180,25 +196,25 @@ fit |>
 ```
 
 ## ETS(A,Ad,N): Damped trend method
-\fontsize{14}{16}\sf
 
-\begin{block}{Additive errors}\vspace*{-0.7cm}
-\begin{align*}
+::: {.callout-note}
+## Additive errors
+$$\begin{aligned}
 \text{Forecast equation}&& \hat{y}_{T+h|T} &= \ell_T + (\phi + \cdots + \phi^{h-1})b_T\\
 \text{Measurement equation}&& y_t &= (\ell_{t-1}+\phi b_{t-1})+\varepsilon_t\\
 \text{State equations}&&       \ell_t&=(\ell_{t-1}+\phi b_{t-1})+\alpha \varepsilon_t\\
 &&      b_t&=\phi b_{t-1}+\beta \varepsilon_t
-\end{align*}
-\end{block}
-\pause
+\end{aligned}$$
+:::
 
+::: {.fragment}
   * Damping parameter $0<\phi<1$.
   * If $\phi=1$, identical to Holt's linear trend.
   * As $h\rightarrow\infty$, $\pred{y}{T+h}{T}\rightarrow \ell_T+\phi b_T/(1-\phi)$.
   * Short-run forecasts trended, long-run forecasts constant.
+:::
 
 ## Example: Australian population
-\fontsize{12}{12}\sf
 
 ```{r, echo=TRUE, fig.height=3.4}
 aus_economy |>
@@ -209,7 +225,6 @@ aus_economy |>
 
 ## Example: National populations
 
-\fontsize{9}{9}\sf
 
 ```{r popfit, echo=TRUE}
 fit <- global_economy |>
@@ -218,8 +233,7 @@ fit <- global_economy |>
 fit
 ```
 
-## Example: National populations
-\fontsize{9}{9}\sf
+## Example: National populations {.code-small}
 
 ```{r popfc, echo=TRUE, dependson="popfit"}
 fit |>
@@ -229,33 +243,33 @@ fit |>
 
 # Seasonal methods
 
-## \fontsize{16}{16}\sf\bfseries ETS(A,A,A): Holt-Winters additive method
+## ETS(A,A,A): Holt-Winters additive method
 
-\begin{block}{}\vspace*{-0.7cm}
-\begin{align*}
+::: {.block}
+$$\begin{aligned}
 \text{Forecast equation} && \hat{y}_{t+h|t} &= \ell_{t} + hb_{t} + s_{t+h-m(k+1)}\\
 \text{Observation equation}&& y_t&=\ell_{t-1}+b_{t-1}+s_{t-m} + \varepsilon_t\\
 \text{State equations}&& \ell_t&=\ell_{t-1}+b_{t-1}+\alpha \varepsilon_t\\
 &&        b_t&=b_{t-1}+\beta \varepsilon_t \\
 &&s_t &= s_{t-m} + \gamma\varepsilon_t
-\end{align*}
-\end{block}
+\end{aligned}$$
+:::
 
 * $k=$ integer part of $(h-1)/m$.
 * $\sum_i s_i \approx 0$.
 * Parameters:&nbsp; $0\le \alpha\le 1$,&nbsp; $0\le \beta^*\le 1$,&nbsp; $0\le \gamma\le 1-\alpha$&nbsp;  and $m=$  period of seasonality (e.g. $m=4$ for quarterly data).
 
-## \fontsize{16}{16}\sf\bfseries ETS(M,A,M): Holt-Winters multiplicative method
+## ETS(M,A,M): Holt-Winters multiplicative method
 
-\begin{block}{}\vspace*{-0.7cm}
-\begin{align*}
+::: {.block}
+$$\begin{aligned}
 \text{Forecast equation} && \hat{y}_{t+h|t} &= (\ell_{t} + hb_{t}) s_{t+h-m(k+1)}\\
 \text{Observation equation}&& y_t&= (\ell_{t-1}+b_{t-1})s_{t-m}(1 + \varepsilon_t)\\
 \text{State equations}&& \ell_t&=(\ell_{t-1}+b_{t-1})(1+\alpha \varepsilon_t)\\
 &&        b_t&=b_{t-1}(1+\beta \varepsilon_t) \\
 &&s_t &= s_{t-m}(1 + \gamma\varepsilon_t)
-\end{align*}
-\end{block}
+\end{aligned}$$
+:::
 
 * $k$ is integer part of $(h-1)/m$.
 * $\sum_i s_i \approx m$.
@@ -263,7 +277,6 @@ fit |>
 
 ## Example: Australian holiday tourism
 
-\fontsize{9}{10}\sf
 
 ```{r ausholidays-fit, echo=TRUE}
 holidays <- tourism |>
@@ -274,7 +287,6 @@ fit
 
 ## Example: Australian holiday tourism
 
-\fontsize{9}{10}\sf
 
 ```{r ausholidays-report}
 fit |>
@@ -284,7 +296,6 @@ fit |>
 
 ## Example: Australian holiday tourism
 
-\fontsize{9}{10}\sf
 
 ```{r ausholidays-components}
 fit |>
@@ -294,7 +305,6 @@ fit |>
 
 ## Example: Australian holiday tourism
 
-\fontsize{9}{10}\sf
 
 ```{r ausholidays-components-plot}
 #| fig-height: 3.6
@@ -306,7 +316,6 @@ fit |>
 
 ## Example: Australian holiday tourism
 
-\fontsize{9}{10}\sf
 
 ```{r ausholidays-forecast}
 fit |> forecast()
@@ -314,7 +323,6 @@ fit |> forecast()
 
 ## Example: Australian holiday tourism
 
-\fontsize{9}{10}\sf
 
 ```{r ausholidays-forecast-plot, fig.height=3.4}
 fit |>
@@ -327,77 +335,65 @@ fit |>
 # ETS taxonomy
 
 ## Exponential smoothing models
-\fontsize{11}{11}\sf
 
-\begin{block}{}
-\begin{tabular}{ll|ccc}
-  \multicolumn{2}{l}{\alert{\bf Additive Error}} &        \multicolumn{3}{c}{\bf Seasonal Component}         \\
-          \multicolumn{2}{c|}{\bf Trend}         &         N         &         A         &         M         \\
-        \multicolumn{2}{c|}{\bf Component}       &     ~(None)~      &    (Additive)     & (Multiplicative)  \\ \cline{3-5}
-           &                                     &                   &                   &  \\[-0.3cm]
-  N        & (None)                              &       A,N,N       &       A,N,A       &    \st{A,N,M}     \\
-           &                                     &                   &                   &  \\[-0.3cm]
-  A        & (Additive)                          &       A,A,N       &       A,A,A       &    \st{A,A,M}     \\
-           &                                     &                   &                   &  \\[-0.3cm]
-  A\damped & (Additive damped)                   &   A,A\damped,N    &   A,A\damped,A    & \st{A,A\damped,M}
-\end{tabular}
-\end{block}
+::: {.block}
+| **Additive Error** | | N | A | M |
+|:--|:--|:-:|:-:|:-:|
+| **Trend Component** | | **(None)** | **(Additive)** | **(Multiplicative)** |
+| N | (None) | A,N,N | A,N,A | ~~A,N,M~~ |
+| A | (Additive) | A,A,N | A,A,A | ~~A,A,M~~ |
+| A$_\text{d}$ | (Additive damped) | A,A$_\text{d}$,N | A,A$_\text{d}$,A | ~~A,A$_\text{d}$,M~~ |
+:::
 
-\begin{block}{}
-\begin{tabular}{ll|ccc}
-  \multicolumn{2}{l}{\alert{\bf Multiplicative Error}} &     \multicolumn{3}{c}{\bf Seasonal Component}      \\
-             \multicolumn{2}{c|}{\bf Trend}            &      N       &         A         &        M         \\
-           \multicolumn{2}{c|}{\bf Component}          &   ~(None)~   &    (Additive)     & (Multiplicative) \\ \cline{3-5}
-           &                                           &              &                   &  \\[-0.3cm]
-  N        & (None)                                    &    M,N,N     &       M,N,A       &      M,N,M       \\
-           &                                           &              &                   &  \\[-0.3cm]
-  A        & (Additive)                                &    M,A,N     &       M,A,A       &      M,A,M       \\
-           &                                           &              &                   &  \\[-0.3cm]
-  A\damped & (Additive damped)                         & M,A\damped,N &   M,A\damped,A    &   M,A\damped,M
-\end{tabular}
-\end{block}
+::: {.block}
+| **Multiplicative Error** | | N | A | M |
+|:--|:--|:-:|:-:|:-:|
+| **Trend Component** | | **(None)** | **(Additive)** | **(Multiplicative)** |
+| N | (None) | M,N,N | M,N,A | M,N,M |
+| A | (Additive) | M,A,N | M,A,A | M,A,M |
+| A$_\text{d}$ | (Additive damped) | M,A$_\text{d}$,N | M,A$_\text{d}$,A | M,A$_\text{d}$,M |
+:::
 
 ## Estimating ETS models
 
   * Smoothing parameters $\alpha$, $\beta$, $\gamma$ and $\phi$, and the initial states $\ell_0$, $b_0$, $s_0,s_{-1},\dots,s_{-m+1}$ are estimated by maximising the "likelihood" = the probability of the data arising from the specified model.
   * For models with additive errors equivalent to minimising SSE.
-  * For models with multiplicative errors, \textbf{not} equivalent to minimising SSE.
+  * For models with multiplicative errors, **not** equivalent to minimising SSE.
 
-## Model selection
-\fontsize{13}{15}\sf
+## Model selection {.smaller}
 
-\begin{block}{Akaike's Information Criterion}
-\[
-\text{AIC} = -2\log(\text{L}) + 2k
-\]
-\end{block}\vspace*{-0.2cm}
-where $L$ is the likelihood and $k$ is the number of parameters & initial states estimated in the model.\pause
+::: {.callout-note}
+## Akaike's Information Criterion
+$$\text{AIC} = -2\log(\text{L}) + 2k$$
+:::
 
-\begin{block}{Corrected AIC}
-\[
-\text{AIC}_{\text{c}} = \text{AIC} + \frac{2k(k+1)}{T-k-1}
-\]
-\end{block}\vspace*{-0.4cm}
+where $L$ is the likelihood and $k$ is the number of parameters & initial states estimated in the model.
+
+::: {.fragment}
+::: {.callout-note}
+## Corrected AIC
+$$\text{AIC}_{\text{c}} = \text{AIC} + \frac{2k(k+1)}{T-k-1}$$
+:::
 
 which is the AIC corrected (for small sample bias).
-\pause
-\begin{block}{Bayesian Information Criterion}
-\[
-\text{BIC} = \text{AIC} + k(\log(T)-2).
-\]
-\end{block}
+:::
+
+::: {.fragment}
+::: {.callout-note}
+## Bayesian Information Criterion
+$$\text{BIC} = \text{AIC} + k(\log(T)-2).$$
+:::
+:::
 
 ## AIC and cross-validation
 
-\Large
-
-\begin{alertblock}{}
+::: {.alertblock style="font-size:1.3em"}
 Minimising the AIC assuming Gaussian residuals is asymptotically equivalent to minimising one-step time series cross validation MSE.
-\end{alertblock}
+:::
 
 ## Automatic forecasting
 
-**From Hyndman et al.\ (IJF, 2002):**
+**From Hyndman et al. (IJF, 2002):**
 
 1. Apply each model that is appropriate to the data.
 Optimise parameters and initial values using MLE.
@@ -411,8 +407,7 @@ Optimise parameters and initial values using MLE.
 
 # Non-Gaussian forecast distributions
 
-## Non-Gaussian forecast distributions
-\fontsize{8.8}{9}\sf
+## Non-Gaussian forecast distributions {.code-small}
 
 ```{r cafe, fig.height=3.1}
 vic_cafe <- tsibbledata::aus_retail |>
@@ -423,15 +418,13 @@ vic_cafe |>
   autoplot(Turnover) + labs(title = "Monthly turnover of Victorian cafes")
 ```
 
-## Forecasting with transformations
-\fontsize{8.8}{9}\sf
+## Forecasting with transformations {.code-small}
 
 ```{r}
 vic_cafe |> autoplot(box_cox(Turnover, lambda = 0.2))
 ```
 
-## Forecasting with transformations
-\fontsize{8.8}{9}\sf
+## Forecasting with transformations {.code-small}
 
 ```{r}
 fit <- vic_cafe |>
@@ -449,32 +442,25 @@ if (!identical(fabletools:::model_sum(fit$ets[[1]]), "ETS(A,A,A)")) {
 (fc <- fit |> forecast(h = "3 years"))
 ```
 
-\only<2>{\begin{textblock}{5.5}(9.8,2.8)\fontsize{13}{14}\sf
-\begin{alertblock}{}
-\begin{itemize}
-\item \texttt{t(N)} denotes a transformed normal distribution.
-\item back-transformation and bias adjustment is done automatically.
-\end{itemize}
-\end{alertblock}
-\end{textblock}}
+::: {.alertblock .fragment .absolute top="420px" right="0px" width="440px"}
+* `t(N)` denotes a transformed normal distribution.
+* back-transformation and bias adjustment is done automatically.
+:::
 
-## Forecasting with transformations
-\fontsize{8.8}{9}\sf
+## Forecasting with transformations {.code-small}
 
 ```{r}
 fc |> autoplot(vic_cafe)
 ```
 
-## Bootstrapped forecast distributions
-\fontsize{8.8}{9}\sf
+## Bootstrapped forecast distributions {.code-small}
 
 ```{r}
 sim <- fit |> generate(h = "3 years", times = 5, bootstrap = TRUE)
 sim
 ```
 
-## Bootstrapped forecast distributions
-\fontsize{8.8}{9}\sf
+## Bootstrapped forecast distributions {.code-small}
 
 ```{r, fig.height=2.7}
 vic_cafe |>
@@ -486,16 +472,14 @@ vic_cafe |>
   guides(col = FALSE)
 ```
 
-## Bootstrapped forecast distributions
-\fontsize{8.8}{9}\sf
+## Bootstrapped forecast distributions {.code-small}
 
 ```{r}
 fc <- fit |> forecast(h = "3 years", bootstrap = TRUE)
 fc
 ```
 
-## Bootstrapped forecast distributions
-\fontsize{8.8}{9}\sf
+## Bootstrapped forecast distributions {.code-small}
 
 ```{r}
 fc |> autoplot(vic_cafe) +
