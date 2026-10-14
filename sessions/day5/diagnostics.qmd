@@ -9,8 +9,8 @@ order: 1
 <!-- Materials will be distributed sooner to the event. -->
 
 ```{=html}
-<embed src="../../materials/05_accuracy_advance.pdf" type="application/pdf" width="750px" height="420px">
+<iframe class="slide-deck" src="../../materials/05_accuracy_advance.html" title="Slides" allowfullscreen></iframe>
 ```
 
-[View slides in full screen](../../materials/05_accuracy_advance.pdf)
+[View slides in full screen](../../materials/05_accuracy_advance.html)
 

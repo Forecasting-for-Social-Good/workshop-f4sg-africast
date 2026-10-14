@@ -2,7 +2,7 @@ project:
   type: website
   resources:
     - "images/twitter-card.png"
-    - "materials/*.pdf"
+    - "materials/[0-9]*.html"
     - "exercises.zip"
     - "demo"
   render:

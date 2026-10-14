@@ -9,7 +9,7 @@ order: 1
 <!-- Materials will be distributed sooner to the event. -->
 
 ```{=html}
-<embed src="../../materials/03_regression.pdf" type="application/pdf" width="750px" height="420px">
+<iframe class="slide-deck" src="../../materials/03_regression.html" title="Slides" allowfullscreen></iframe>
 ```
 
-[View slides in full screen](../../materials/03_regression.pdf)
+[View slides in full screen](../../materials/03_regression.html)

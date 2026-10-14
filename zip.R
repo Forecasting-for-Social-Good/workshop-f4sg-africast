@@ -1,6 +1,6 @@
 zip(
   "slides.zip",
-  list.files("materials", pattern = "\\.pdf$", full.names = TRUE),
+  list.files("materials", pattern = "^[0-9].*\\.html$", full.names = TRUE),
   flags = "-j"
 )
 
