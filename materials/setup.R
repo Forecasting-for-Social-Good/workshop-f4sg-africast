@@ -16,7 +16,16 @@ knitr::opts_chunk$set(
     "_figures",
     tools::file_path_sans_ext(knitr::current_input()),
     ""
-  )
+  ),
+  # Reduce plots to 256 colours (visually identical, about half the size)
+  fig.process = function(path) {
+    if (grepl("\\.png$", path)) {
+      magick::image_read(path) |>
+        magick::image_quantize(256, colorspace = "sRGB", dither = FALSE) |>
+        magick::image_write(path, format = "png")
+    }
+    path
+  }
 )
 
 # Font for graphics to be Fira Sans
