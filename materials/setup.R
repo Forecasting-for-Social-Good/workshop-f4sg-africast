@@ -20,14 +20,8 @@ ggplot2::theme_set(
       plot.background = ggplot2::element_rect(fill = "#fafafa", color = "#fafafa")
     )
 )
-# Also in base R plots
-quartzFonts(
-  sans = c("Fira Sans Regular", "Fira Sans Bold", "Fira Sans Italic", "Fira Sans Bold Italic")
-)
-# For when I need png
-ragg_png = function(..., res = 192) {
-  ragg::agg_png(..., res = res, units = "in")
-}
+# Make Fira Sans available to the ragg graphics device
+try(systemfonts::require_font("Fira Sans"), silent = TRUE)
 
 library(fpp3)
 library(patchwork)

@@ -5,20 +5,34 @@ project:
 
 date: last-modified
 date-format: D MMMM YYYY
+from: markdown+emoji
 fig-width: 9
 fig-height: 3.8
+fig-align: center
 format:
-  beamer:
-    theme: monash
-    aspectratio: 169
-    fontsize: 14pt
-    section-titles: false
+  letterbox-revealjs:
+    theme: [default, theme.scss]
+    width: 1280
+    height: 720
+    progress: true
+    slide-number: true
+    menu: false
+    navigation-mode: linear
+    center: false
+    transition: none
+    background-transition: none
+    callout-icon: false
+    code-line-numbers: false
+    template-partials:
+      - title-slide.html
+    title-slide-attributes:
+      data-background-image: figs/africa1.jpg
+      data-background-size: cover
+    include-in-header: macros.html
     knitr:
       opts_chunk:
-        dev: "CairoPDF"
-include-in-header: header.tex
-keep-tex: true
-toc: false
+        dev: "ragg_png"
+        out.width: "100%"
 highlight-style: tango
 execute:
   echo: true
