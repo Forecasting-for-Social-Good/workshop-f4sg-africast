@@ -2,6 +2,7 @@ project:
   title: "Forecasting workshop"
   render:
     - "*.qmd"
+  post-render: strip-unused-fonts.R
 
 date: last-modified
 date-format: D MMMM YYYY
