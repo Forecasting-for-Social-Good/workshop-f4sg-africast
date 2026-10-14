@@ -1,6 +1,5 @@
 ---
 title: "Africast-Tidy Time Series & Forecasting Using R"
-author: ""
 ---
 
 ```{r}
@@ -12,65 +11,79 @@ source("setup.R")
 
 ## Project lead and Instructors
 
-\placefig{0.5}{1.2}{width=2.5cm}{Bahman}
-\begin{textblock}{11.5}(3.5,1)
-  \begin{alertblock}{Bahman Rostami-Tabar}
-    {\small
-      \href{https://www.bahmanrt.com/}{\faIcon{home} bahmanrt.com}\\
-      \href{https://github.com/bahmanrostamitabar}{\faIcon{github} @bahmanrostamitabar}\\
-      \href{mailto:Rostami-TabarB@cardiff.ac.uk}{\faIcon{envelope} Rostami-TabarB@cardiff.ac.uk}
-    }
-  \end{alertblock}
-\end{textblock}
+::: {.instructor}
+![](figs/Bahman.png)
 
-\placefig{0.5}{3.2}{width=2.5cm}{Mitch}
-\begin{textblock}{11.5}(3.5,3.7)
-  \begin{alertblock}{Mitchell O'Hara-Wild}
-    {\small
-      \href{https://mitchelloharawild.com}{\faIcon{home} mitchelloharawild.com}\\
-      \href{https://github.com/mitchoharawild}{\faIcon{github} @mitchelloharawild}\\
-      \href{mailto:Mitch.OHara-Wild@monash.edu}{\faIcon{envelope} Mitch.OHara-Wild@monash.edu}
-    }
-  \end{alertblock}
-\end{textblock}
+::: {.callout-important}
+## Bahman Rostami-Tabar
 
-## Instructors
+[bahmanrt.com](https://www.bahmanrt.com/)\
+[github.com/bahmanrostamitabar](https://github.com/bahmanrostamitabar)\
+[Rostami-TabarB@cardiff.ac.uk](mailto:Rostami-TabarB@cardiff.ac.uk)
+:::
+:::
 
-\placefig{0.5}{1.2}{width=2.5cm}{Abiodun}
-\begin{textblock}{11.5}(3.5,1)
-  \begin{alertblock}{Abiodun Egwuenu}
-    {\footnotesize Medical doctor, field epidemiologist \& researcher specialising in antimicrobial resistance (AMR). National lead for Nigeria's mpox response (2022/23). PhD candidate at Charit\'e -- Universit\"atsmedizin Berlin, modelling the spatiotemporal dynamics of AMR. Vice Chair, Board of Members, Applied Epi.}
-  \end{alertblock}
-\end{textblock}
+::: {.instructor}
+![](figs/mitch.png)
 
-\placefig{0.5}{3.7}{width=2.5cm}{Harsha}
-\begin{textblock}{11.5}(3.5,3.5)
-  \begin{alertblock}{Harsha Halgamuwe Hewage}
-    {\footnotesize Researcher, Data Lab for Social Good, Cardiff Business School. Works on forecasting \& decision support under uncertainty for public health supply chains, with JSI, USAID and the HISP Centre, Oslo. Delivers F4SG training and researches time series foundation models.}
-  \end{alertblock}
-\end{textblock}
+::: {.callout-important}
+## Mitchell O'Hara-Wild
+
+[mitchelloharawild.com](https://mitchelloharawild.com)\
+[github.com/mitchelloharawild](https://github.com/mitchelloharawild)\
+[Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
+:::
+:::
 
 ## Instructors
 
-\placefig{0.5}{1.2}{width=2.5cm}{Mustafa}
-\begin{textblock}{11.5}(3.5,1)
-  \begin{alertblock}{Mustafa Aslan}
-    {\footnotesize Third-year PhD researcher, Data Lab for Social Good, Cardiff University. Researches hospital discharge delays and patient flow, combining probabilistic forecasting, sequential optimisation and ML-based causal inference. Developer of the \texttt{peshbeen} forecasting package. Part of the team placing joint first in the 2026 NHS SPHERE-PPL forecasting challenge.\\
-      \href{https://mustafaslancoto.github.io/}{\faIcon{home} mustafaslancoto.github.io}\\
-      \href{https://github.com/mustafaslanCoto}{\faIcon{github} @mustafaslanCoto}
-    }
-  \end{alertblock}
-\end{textblock}
+::: {.instructor}
+![](figs/Abiodun.jpg)
+
+::: {.callout-important}
+## Abiodun Egwuenu
+
+Medical doctor, field epidemiologist & researcher specialising in antimicrobial resistance (AMR). National lead for Nigeria's mpox response (2022/23). PhD candidate at Charité -- Universitätsmedizin Berlin, modelling the spatiotemporal dynamics of AMR. Vice Chair, Board of Members, Applied Epi.
+:::
+:::
+
+::: {.instructor}
+![](figs/Harsha.jpg)
+
+::: {.callout-important}
+## Harsha Halgamuwe Hewage
+
+Researcher, Data Lab for Social Good, Cardiff Business School. Works on forecasting & decision support under uncertainty for public health supply chains, with JSI, USAID and the HISP Centre, Oslo. Delivers F4SG training and researches time series foundation models.
+:::
+:::
+
+## Instructors
+
+::: {.instructor}
+![](figs/Mustafa.jpg)
+
+::: {.callout-important}
+## Mustafa Aslan
+
+Third-year PhD researcher, Data Lab for Social Good, Cardiff University. Researches hospital discharge delays and patient flow, combining probabilistic forecasting, sequential optimisation and ML-based causal inference. Developer of the `peshbeen` forecasting package. Part of the team placing joint first in the 2026 NHS SPHERE-PPL forecasting challenge.
+
+[mustafaslancoto.github.io](https://mustafaslancoto.github.io/)\
+[github.com/mustafaslanCoto](https://github.com/mustafaslanCoto)
+:::
+:::
 
 ## Facilitator
+
 * Abiodun Egwuenu
 
 ## Planning team
+
 * Mkajuma Charity
 * Kennedy Mung'are
 * José Thiéry Hagbe
 
 ## Mentors
+
 * Samson Oluwafemi
 * Oluchukwu Aghadi
 * Lumumba Victor
@@ -80,88 +93,82 @@ source("setup.R")
 
 ## Coordinator
 
-- Henry Kissinger Ochieng
+* Henry Kissinger Ochieng
 
 ## Assumptions
 
-  * This is not an introduction to R. We assume you are broadly comfortable with R code, the RStudio environment and the tidyverse.
-  * This is not a statistics course. We assume you are familiar with concepts such as the mean, standard deviation, quantiles, regression, normal distribution, likelihood, etc.
-  * This is not a theory course. We are not going to derive anything. We will teach you time series and forecasting tools, when to use them, and how to use them most effectively.
-
-
+* This is not an introduction to R. We assume you are broadly comfortable with R code, the RStudio environment and the tidyverse.
+* This is not a statistics course. We assume you are familiar with concepts such as the mean, standard deviation, quantiles, regression, normal distribution, likelihood, etc.
+* This is not a theory course. We are not going to derive anything. We will teach you time series and forecasting tools, when to use them, and how to use them most effectively.
 
 ## Key reference
 
-\large
+::: {.block}
+**Hyndman, R. J. & Athanasopoulos, G. (2021) *Forecasting: principles and practice*, 3rd ed.**
+:::
 
-\begin{block}{}\bf
-\hangafter=1\hangindent=.3cm
- {Hyndman, R.~J. \& Athanasopoulos, G. (2021) \emph{Forecasting: principles and practice}, 3rd ed.}
-\end{block}\pause
-\begin{alertblock}{}\Large
-\centerline{\bf OTexts.org/fpp3/}
-\end{alertblock}
+::: {.fragment}
+::: {.alertblock .center-text}
+**[OTexts.org/fpp3/](https://OTexts.org/fpp3/)**
+:::
+:::
 
-\pause
+::: {.fragment}
+* Free and online
+* Data sets in associated R package
+* R code for examples
+:::
 
-  * Free and online
-  * Data sets in associated R package
-  * R code for examples
-  
 ## Reference - Recommended
 
-\large
+::: {.block}
+**Kolassa S., Rostami-Tabar B., & Siemsen, E. (2023) *Demand forecasting for executives and professionals*, 1st ed.**
+:::
 
-\begin{block}{}\bf
-\hangafter=1\hangindent=.3cm
- {Kolassa S., Rostami-Tabar B., \& Siemsen, E. (2023) \emph{https://dfep.netlify.app/}, 1st ed.}
-\end{block}\pause
-\begin{alertblock}{}\Large
-\centerline{\bf https://dfep.netlify.app/}
-\end{alertblock}
+::: {.fragment}
+::: {.alertblock .center-text}
+**[dfep.netlify.app](https://dfep.netlify.app/)**
+:::
+:::
 
-\pause
-\fontsize{11}{11}\sf
-  
-  * Free and online
-  * Not an in-depth technical book
-  * Mindset behind forecasting
-  * Overview of forecasting methods and processes
+::: {.fragment}
+* Free and online
+* Not an in-depth technical book
+* Mindset behind forecasting
+* Overview of forecasting methods and processes
+:::
 
 ## International Institute of Forecasters (IIF)
 
-- Certificate will be provided by IIF. You need to attend all lectures and exercise sessions to get the certificate.
-
-- a nonprofit organisation founded in 1982, is dedicated to developing and furthering the generation, distribution, and use of knowledge on forecasting
+* Certificate will be provided by IIF. You need to attend all lectures and exercise sessions to get the certificate.
+* A nonprofit organisation founded in 1982, dedicated to developing and furthering the generation, distribution, and use of knowledge on forecasting.
 
 ## [Forecasting for Social Good committee](https://www.f4sg.org/)
 
-- [Follow us on Linkedin](https://www.linkedin.com/company/f4sg/)
-- [Follow us on Twitter](https://twitter.com/FSG_forecast)
-- Use #AFRICAST, #F4SG if you post on social media about the workshop
+* [Follow us on LinkedIn](https://www.linkedin.com/company/f4sg/)
+* [Follow us on Twitter](https://twitter.com/FSG_forecast)
+* Use #AFRICAST, #F4SG if you post on social media about the workshop
 
-## Poll: [How proficient are you in using R?](https://www.menti.com/alfmobtvo9wb)
+## Poll: [How proficient are you in using R?](https://www.menti.com/alfmobtvo9wb) {.smaller}
 
-\fontsize{14}{15}\sf
+1. Guru: The R core team come to me for advice.
+1. Expert: I have written several packages on CRAN.
+1. Skilled: I use it regularly and it is an important part of my job.
+1. Comfortable: I use it often and am comfortable with the tool.
+1. User: I use it sometimes, but I am often searching around for the right function.
+1. Learner: I have used it a few times.
+1. Beginner: I've managed to download and install it.
+1. Unknown: Why are you speaking like a pirate?
 
-  1. Guru: The R core team come to me for advice.
-  1. Expert: I have written several packages on CRAN.
-  1. Skilled: I use it regularly and it is an important part of my job.
-  1. Comfortable: I use it often and am comfortable with the tool.
-  1. User: I use it sometimes, but I am often searching around for the right function.
-  1. Learner: I have used it a few times.
-  1. Beginner: I've managed to download and install it.
-  1. Unknown: Why are you speaking like a pirate?
-  
-## Poll: [How experienced are you in forecasting](https://www.menti.com/alfmobtvo9wb)
+## Poll: [How experienced are you in forecasting](https://www.menti.com/alfmobtvo9wb) {.smaller}
 
-  1. Guru: I wrote the book, done it for decades, now I do the conference circuit.
-  2. Expert: It has been my full time job for more than a decade.
-  3. Skilled: I have been doing it for years.
-  1. Comfortable: I understand it and have done it.
-  1. Learner: I am still learning.
-  1. Beginner: I have heard of it and would like to learn more.
-  1. Unknown: What is forecasting? Is that what the weather people do?
+1. Guru: I wrote the book, done it for decades, now I do the conference circuit.
+1. Expert: It has been my full time job for more than a decade.
+1. Skilled: I have been doing it for years.
+1. Comfortable: I understand it and have done it.
+1. Learner: I am still learning.
+1. Beginner: I have heard of it and would like to learn more.
+1. Unknown: What is forecasting? Is that what the weather people do?
 
 ## Install required packages
 
@@ -176,39 +183,36 @@ install.packages(c(
 ))
 ```
 
-## Approximate outline
-\vspace*{-0.1cm}\centering\fontsize{12}{12}\sf
-\begin{tabular}{rp{8.6cm}l}
-  \bf Session & \bf Topic                   & \bf Chapter \\
-  \midrule
-  1       & 1. Basics of time series and data structures    & 2 \\
-  1       & 2. Time series patterns and basic graphics      & 2 \\
-  2       & 3. Computing and visualising features     & 4 \\
-  2       & 4. Basic modelling / forecasting & 1,3,5 \\
-  3       & 5. Forecasting with regression         & 7,10 \\
-  3       & 6. ARIMA models                & 9 \\
-  4       & 7. Exponential smoothing       & 8 \\
-  4       & 8. Basic training and test accuracy       & 5 \\
-  5       & 9. Residual diagnostics and cross validation                & 5 \\
-  5       & 10. Time series foundation models              & -- \\
-  \bottomrule
-\end{tabular}
+## Approximate outline {.smaller}
 
-\vspace*{.0cm}\begin{alertblock}{}{\centerline{\Large\textbf{https://workshop.f4sg.org/africast/}}}
-\end{alertblock}
+| Session | Topic                                           | Chapter |
+| ------: | ----------------------------------------------- | :-----: |
+| 1       | 1. Basics of time series and data structures    | 2       |
+| 1       | 2. Time series patterns and basic graphics      | 2       |
+| 2       | 3. Computing and visualising features           | 4       |
+| 2       | 4. Basic modelling / forecasting                | 1,3,5   |
+| 3       | 5. Forecasting with regression                  | 7,10    |
+| 3       | 6. ARIMA models                                 | 9       |
+| 4       | 7. Exponential smoothing                        | 8       |
+| 4       | 8. Basic training and test accuracy             | 5       |
+| 5       | 9. Residual diagnostics and cross validation    | 5       |
+| 5       | 10. Time series foundation models               | --      |
+
+::: {.alertblock .center-text}
+**[workshop.f4sg.org/africast](https://workshop.f4sg.org/africast/)**
+:::
 
 ## Schedule for each session (UTC+3)
 
-- Start at 10:00 a.m. 
-- Lecture 1: 10:00 - 11:30
-- Break: 11:30 - 11:45
-- Lecture 2:  11:45 - 13:15
-- Exercises: 14:00 - 17:00 (on your own)
-- Mentorship: 17:00 - 18:00
+* Start at 10:00 a.m.
+* Lecture 1: 10:00 - 11:30
+* Break: 11:30 - 11:45
+* Lecture 2: 11:45 - 13:15
+* Exercises: 14:00 - 17:00 (on your own)
+* Mentorship: 17:00 - 18:00
 
-## Access materials 
+## Access materials
 
 * AFRICAST workshop website
 * Mentorship sessions and Q/A
 * Google Classroom
-
