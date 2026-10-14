@@ -3,11 +3,13 @@ title: "Africast-Time Series Analysis & Forecasting Using R"
 subtitle: "10. Time series foundation models"
 ---
 
-<!-- STUB: content to be written. This slide deck has not yet been rendered to PDF. -->
-
 ## Outline
 
-\vspace*{0.7cm}\tableofcontents
+<!-- STUB: content to be written. This slide deck has not yet been rendered. -->
+
+* What is a time series foundation model?
+* How do they compare to classical methods?
+* When to use a foundation model
 
 ## What is a time series foundation model?
 
