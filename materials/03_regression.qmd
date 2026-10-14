@@ -5,7 +5,12 @@ subtitle: "5. Forecasting with regression, how to represent temporal structure w
 
 ## Outline
 
-\vspace*{0.7cm}\tableofcontents
+* The linear model with time series
+* Evaluating the regression model
+* Selecting predictors
+* Forecasting with regression
+* Correlation, causation and forecasting
+* Some useful predictors for regression models
 
 
 ```{r}
@@ -26,47 +31,41 @@ us_change <- readr::read_csv("data/uschange.csv") %>%
 * To **explain** 
 * To **forecast**
 
-\vspace*{0.3cm}
-
 * Simple linear regression model(SLR)
 * Multiple linear regression model (MLR)
 
-## SLR model in thoery
+## SLR model in theory
 
 Regression model allows for a linear relationship between the forecast variable $y$ and a single predictor variable $x$.
 
-\fontsize{13}{15}\sf
-
-\begin{block}{}\vspace*{-0.3cm}
+::: {.block}
 $$
   y_t = \beta_0 + \beta_1 x_{t} + \varepsilon_t.
 $$
-\end{block}
+:::
 
-* $y_t$ is the variable we want to predict: the ``response`` variable
-* Each $x_{t}$ is numerical and is called a ``predictor``
+* $y_t$ is the variable we want to predict: the "response" variable
+* Each $x_{t}$ is numerical and is called a "predictor"
 * $\beta_0$ and $\beta_1$ are regression coefficients
 
 ## SLR model in practice
-\fontsize{13}{15}\sf
 
 In practice, of course, we have a collection of observations but we do not know the values of the coefficients $\hat\beta_0$, $\hat\beta_1$. 
 These need to be estimated from the data.
 
-\begin{block}{}\vspace*{-0.3cm}
+::: {.block}
 $$
   y_t = \hat\beta_0 + \hat\beta_1 x_{t}.
 $$
-\end{block}
+:::
 
-* $y_t$ is the ``response`` variable
-* Each $x_{t}$ is a ``predictor``
+* $y_t$ is the "response" variable
+* Each $x_{t}$ is a "predictor"
 * $\hat\beta_0$ is the estimated intercept
 * $\hat\beta_1$ is the estimated slope
 
 ## What is the best fit
 
-\fontsize{11}{13}\sf
 * There are many ways that a straight line can be laid on the scatter
 * Best known criterion is called Ordinary Least Squares(OLS)
 
@@ -78,19 +77,17 @@ knitr::include_graphics("figs/SLRpop1-1.png")
 
 That is, we find the values of $\beta_0$ and $\beta_1$ which minimise
 
-\begin{block}{}\vspace*{-0.3cm}
+::: {.block}
 $$
   \sum_{i=1}^N e_{i}^2 = \sum_{i=1}^N (y_{i} - \beta_{0} - \beta_{1}x_{i})^2. 
 $$
-\end{block}
+:::
 
 * This is called *least squares* estimation because it gives the least value of the sum of squared errors. 
 * Finding the best estimates of the coefficients is often called *fitting* the model to the data. 
 * We refer to the *estimated* coefficients using the notation $\hat\beta_{0},\hat\beta_{1}$.
 
 ## Example: US consumption expenditure
-
-\fontsize{11}{13}\sf
 
 ```{r ConsInc, echo=TRUE, fig.height=3.5}
 us_change %>%
@@ -110,9 +107,7 @@ us_change %>%
     geom_smooth(method="lm", se=FALSE)
 ```
 
-## Example: US consumption expenditure
-
-\fontsize{9}{9}\sf
+## Example: US consumption expenditure {.code-small}
 
 ```{r, echo=TRUE}
 fit_cons <- us_change %>%
@@ -135,17 +130,15 @@ You can add as many as you want but be aware of:
 
 ## Multiple regression and forecasting
 
-\fontsize{13}{15}\sf
-
-\begin{block}{}\vspace*{-0.3cm}
+::: {.block}
 $$
   y_t = \beta_0 + \beta_1 x_{1,t} + \beta_2 x_{2,t} + \cdots + \beta_kx_{k,t} + \varepsilon_t.
 $$
 
-\end{block}
+:::
 
-* $y_t$ is the variable we want to predict: the ``response`` variable
-* Each $x_{j,t}$ is numerical and is called a ``predictor``.
+* $y_t$ is the variable we want to predict: the "response" variable
+* Each $x_{j,t}$ is numerical and is called a "predictor".
  They are usually assumed to be known for all past and future times.
 
 * The coefficients $\beta_1,\dots,\beta_k$ measure the effect of each predictor after taking account of the effect of all other predictors in the model.
@@ -158,7 +151,7 @@ That is, the coefficients measure the **marginal effects**.
 
 We find the values of $\hat\beta_{0},\dots,\hat\beta_{k}$ which minimise
 
-$$ 
+$$
 \sum_{i=1}^N e_{i}^2 = \sum_{i=1}^N (y_{i} - \beta_{0} - \beta_{1}x_{1,i} - \cdots - \beta_{k} x_{k,i})^2. 
 $$
 
@@ -203,9 +196,7 @@ us_change %>%
   GGally::ggpairs()
 ```
 
-## Example: US consumption expenditure
-
-\fontsize{7.4}{7.4}\sf
+## Example: US consumption expenditure {.code-tiny}
 
 ```{r usestim, echo=TRUE}
 fit_consMR <- us_change %>%
@@ -254,9 +245,10 @@ For forecasting purposes, we require the following assumptions:
 * $\varepsilon_t$ are uncorrelated and zero mean
 
 * $\varepsilon_t$ are uncorrelated with each $x_{j,t}$.
-\pause
 
+::: {.fragment}
 It is **useful** to also have $\varepsilon_t \sim \text{N}(0,\sigma^2)$ when producing prediction intervals or doing statistical tests.
+:::
 
 ## Residual diagnostics
 
@@ -277,9 +269,9 @@ appropriate.
 * Expect to see scatterplots resembling a horizontal band with
 no values too far from the band and no patterns such as curvature or increasing spread.
 
-## Example: US consumption expenditure
+## Example: US consumption expenditure {.code-small}
 
-```{r scatterplot-residuals, options}
+```{r scatterplot-residuals, fig.height=3.8}
 df <- left_join(us_change, residuals(fit_consMR), by = "Time")
 p1 <- ggplot(df, aes(x=Income, y=.resid)) +
   geom_point() + ylab("Residuals")
@@ -307,38 +299,41 @@ p4 <- ggplot(df, aes(x=Unemployment, y=.resid)) +
 Computer output for regression will always give the $R^2$ value. This is a useful summary of the model.
 
 * It is equal to the square of the correlation between $y$ and $\hat y$.
-* It is often called the ``coefficient of determination''.
+* It is often called the "coefficient of determination".
 * It can also be calculated as follows:
 $R^2 = \frac{\sum(\hat{y}_t - \bar{y})^2}{\sum(y_t-\bar{y})^2}$
 
 * It is the proportion of variance accounted for (explained) by the predictors.
 
-## Comparing regression models
-\fontsize{11}{13}\sf
+## Comparing regression models {style="font-size:0.78em"}
 
-However \dots
+However …
 
 * $R^2$  does not allow for `degrees of freedom`.
 
 * Adding *any* variable tends to increase the value of $R^2$, even if that variable is irrelevant.
-\pause
 
+::: {.fragment}
 To overcome this problem, we can use *adjusted $R^2$*:
 
-\begin{block}{}
+::: {.block}
 $$
 \bar{R}^2 = 1-(1-R^2)\frac{T-1}{T-k-1}
 $$
-where $k=$ no.\ predictors and $T=$ no.\ observations.
-\end{block}
+where $k=$ no. predictors and $T=$ no. observations.
+:::
+:::
 
-\pause
+::: {.fragment}
+::: {.callout-important}
+## Maximising $\bar{R}^2$ is equivalent to minimising $\hat\sigma^2$.
 
-\begin{alertblock}{Maximising $\bar{R}^2$ is equivalent to minimising $\hat\sigma^2$.}
-\centerline{$\displaystyle
+::: {.center-text}
+$\displaystyle
 \hat{\sigma}^2 = \frac{1}{T-k-1}\sum_{t=1}^T \varepsilon_t^2$
-}
-\end{alertblock}
+:::
+:::
+:::
 
 ## Cross-validation
 
@@ -350,15 +345,16 @@ where $k=$ no.\ predictors and $T=$ no.\ observations.
 
 ## Akaike's Information Criterion
 
-\begin{block}{}
+::: {.block}
 $$
 \text{AIC} = -2\log(L) + 2(k+2)
 $$
-\end{block}
+:::
+
 where $L$ is the likelihood and $k$ is the number of predictors in the model.
 
-* This is a \emph{penalised likelihood} approach.
-* \emph{Minimising} the AIC gives the best model for prediction.
+* This is a *penalised likelihood* approach.
+* *Minimising* the AIC gives the best model for prediction.
 * AIC penalises terms more heavily than $\bar{R}^2$.
 * Minimising the AIC is asymptotically equivalent to minimising MSE via leave-one-out cross-validation.
 
@@ -366,16 +362,15 @@ where $L$ is the likelihood and $k$ is the number of predictors in the model.
 
 For small values of $T$, the AIC tends to select too many predictors, and so a bias-corrected version of the AIC has been developed.
 
-\begin{block}{}
+::: {.block}
 $$
 \text{AIC}_{\text{C}} = \text{AIC} + \frac{2(k+2)(k+3)}{T-k-3}
 $$
-\end{block}
+:::
 
 As with the AIC, the AIC$_{\text{C}}$ should be minimised.
 
 ## Comparing regression models
-\fontsize{12}{14}\sf
 
 ```{r, echo=TRUE}
 glance(fit_consMR) %>%
@@ -404,32 +399,31 @@ has lower CV or AICc.
 
 ## Ex-ante versus ex-post forecasts
 
- * *Ex ante forecasts* are made using only information available in advance.
+* *Ex ante forecasts* are made using only information available in advance.
     - require forecasts of predictors
- * *Ex post forecasts* are made using later information on the predictors.
+* *Ex post forecasts* are made using later information on the predictors.
     - useful for studying behaviour of forecasting models.
 
- * trend, seasonal and calendar variables are all known in advance, so these don't need to be forecast.
+* trend, seasonal and calendar variables are all known in advance, so these don't need to be forecast.
 
 ## Scenario based forecasting
 
- * Assumes possible scenarios for the predictor variables
- * Prediction intervals for scenario based forecasts do not include the uncertainty associated with the future values of the predictor variables.
+* Assumes possible scenarios for the predictor variables
+* Prediction intervals for scenario based forecasts do not include the uncertainty associated with the future values of the predictor variables.
 
-## Building a predictive regression model {-}
+## Building a predictive regression model
 
- * If getting forecasts of predictors is difficult, you can use lagged predictors instead.
+* If getting forecasts of predictors is difficult, you can use lagged predictors instead.
 
- \begin{block}{}\vspace*{-0.3cm}
+::: {.block}
 $$
-  beta_0+\beta_1x_{1,t-h}+\dots+\beta_kx_{k,t-h}+\varepsilon_{t}.
+  y_t = \beta_0+\beta_1x_{1,t-h}+\dots+\beta_kx_{k,t-h}+\varepsilon_{t}.
 $$
-\end{block}
+:::
 
- * A different model for each forecast horizon $h$.
+* A different model for each forecast horizon $h$.
 
 ## US Consumption
-\fontsize{10}{11}\sf
 
 ```{r usconsumptionf, echo=TRUE}
 fit_consBest <- us_change %>%
@@ -447,7 +441,6 @@ fc_up <- forecast(fit_consBest, new_data = up_future)
 ```
 
 ## US Consumption
-\fontsize{10}{10}\sf
 
 ```{r usconsumptionf2, echo=TRUE, fig.height=3.5}
 us_change %>% autoplot(Consumption) +
@@ -488,7 +481,7 @@ In regression analysis, multicollinearity occurs when:
 
 ## Multicollinearity
 
-If multicollinearity exists\dots
+If multicollinearity exists…
 
 * the numerical estimates of coefficients may be wrong (worse in Excel than in a statistics package)
 * don't rely on the $p$-values to determine significance.
@@ -516,22 +509,27 @@ If multicollinearity exists\dots
 
 ## Dummy variables
 
-\begin{textblock}{6}(0.4,1.5)
-If a categorical variable takes only two values (e.g., `Yes'
-or `No'), then an equivalent numerical variable can be constructed taking value 1 if yes and 0 if no. This is called a \textbf{dummy variable}.
-\end{textblock}
+::: columns
+::: {.column width="50%"}
+If a categorical variable takes only two values (e.g., "Yes" or "No"), then an equivalent numerical variable can be constructed taking value 1 if yes and 0 if no. This is called a **dummy variable**.
+:::
 
-\placefig{7.7}{1.}{width=5cm}{dummy2}
+::: {.column width="50%"}
+![](figs/dummy2.jpg){height="600px"}
+:::
+:::
 
 ## Dummy variables
 
-\begin{textblock}{5}(0.4,1.5)
-If there are more than two categories, then the variable can
-be coded using several dummy variables (one fewer than the total number of categories).
+::: columns
+::: {.column width="40%"}
+If there are more than two categories, then the variable can be coded using several dummy variables (one fewer than the total number of categories).
+:::
 
-\end{textblock}
-
-\placefig{5.5}{1.5}{width=7.3cm}{dummy3}
+::: {.column width="60%"}
+![](figs/dummy3.jpg)
+:::
+:::
 
 ## Beware of the dummy variable trap!
 
@@ -545,43 +543,43 @@ be coded using several dummy variables (one fewer than the total number of categ
 
 ## Uses of dummy variables
 
-\fontsize{13}{15}\sf
-
 **Seasonal dummies**
 
 * For quarterly data: use 3 dummies
 * For monthly data: use 11 dummies
 * For daily data: use 6 dummies
 
-\pause
-
+::: {.fragment}
 **Outliers**
 
 * If there is an outlier, you can use a dummy variable to remove its effect.
+:::
 
-\pause
-
+::: {.fragment}
 **Public holidays**
 
 * For daily data: if it is a public holiday, dummy=1, otherwise dummy=0.
+:::
 
 ## Intervention variables
-\fontsize{12}{13}\sf
+
 **Spikes**
 
 * Equivalent to a dummy variable for handling an outlier.
-\pause
 
+::: {.fragment}
 **Steps**
 
 * Variable takes value 0 before the intervention and 1 afterwards.
-\pause
+:::
 
+::: {.fragment}
 **Change of slope**
 
 * Variables take values 0 before the intervention and values $\{1,2,3,\dots\}$ afterwards.
 
 * this could be also handled using `trend()`
+:::
 
 ##  Include special event using dummies
 
@@ -615,15 +613,14 @@ $$
 
 Example: $x$ is advertising which has a delayed effect
 
-\begin{align*}
+$$\begin{aligned}
   x_{1} &= \text{advertising for previous month;} \\
   x_{2} &= \text{advertising for two months previously;} \\
         & \vdots \\
   x_{m} &= \text{advertising for $m$ months previously.}
-\end{align*}
+\end{aligned}$$
 
 ## Example: Insurance quotes and TV adverts
-\fontsize{12}{12}\sf
 
 ```{r tvadvertdata2}
 insurance
@@ -658,8 +655,7 @@ insurance |>
   labs(title = "Insurance advertising and quotations")
 ```
 
-## Example: Insurance quotes and TV adverts
-\fontsize{10}{10}\sf
+## Example: Insurance quotes and TV adverts {.code-small}
 
 ```{r, echo=TRUE}
 fit <- insurance |>
@@ -680,7 +676,6 @@ fit <- insurance |>
 ```
 
 ## Example: Insurance quotes and TV adverts
-\fontsize{10}{10}\sf
 
 ```{r, echo=TRUE, results = 'hide'}
 glance(fit)
@@ -691,9 +686,7 @@ glance(fit) |>
   knitr::kable()
 ```
 
-## Example: Insurance quotes and TV adverts
-
-\fontsize{8}{9}\sf
+## Example: Insurance quotes and TV adverts {.code-small}
 
 ```{r tvadvertagain, echo=TRUE}
 # Re-fit to all data
@@ -701,8 +694,6 @@ fit <- insurance |>
   model(ARIMA(Quotes ~ TVadverts + lag(TVadverts) + pdq(d = 0)))
 report(fit)
 ```
-
-\pause
 
 ```{r tvadvertparam, echo=FALSE, dependson='tvadvertagain'}
 # Store coefficients
@@ -715,8 +706,8 @@ gamma0 <- coef["TVadverts"]
 gamma1 <- coef["lag(TVadverts)"]
 ```
 
-###
-\fontsize{13}{13}\sf\vspace*{-0.7cm}\begin{align*}
+::: {.fragment}
+$$\begin{aligned}
   y_t &= `r format(intercept, digits=3)` +
          `r format(gamma0, digits=3)` x_t +
          `r format(gamma1, digits=2)` x_{t-1} + \eta_t,\\
@@ -724,10 +715,10 @@ gamma1 <- coef["lag(TVadverts)"]
         \varepsilon_t +
         `r format(theta1, digits=2)` \varepsilon_{t-1} +
         `r format(theta2, digits=2)` \varepsilon_{t-2}.
-\end{align*}
+\end{aligned}$$
+:::
 
 ## Example: Insurance quotes and TV adverts
-\fontsize{11}{13}\sf
 
 ```{r, echo=TRUE, fig.height=3}
 advert_a <- new_data(insurance, 20) |>
@@ -736,7 +727,6 @@ forecast(fit, advert_a) |> autoplot(insurance)
 ```
 
 ## Example: Insurance quotes and TV adverts
-\fontsize{11}{13}\sf
 
 ```{r, echo=TRUE, fig.height=3}
 advert_b <- new_data(insurance, 20) |>
@@ -745,7 +735,6 @@ forecast(fit, advert_b) |> autoplot(insurance)
 ```
 
 ## Example: Insurance quotes and TV adverts
-\fontsize{11}{13}\sf
 
 ```{r, echo=TRUE, fig.height=3}
 advert_c <- new_data(insurance, 20) |>
@@ -760,12 +749,6 @@ Sometimes a change in the predictor $x_t$ that will happen in the future will af
 * Lead values of a predictor:
     * Create new variables by shifting the existing variable forwards
     
-\begin{block}{}
-\begin{itemize}
-  \item $y_t=$ sales, $x_t=$ tax policy announcement
-\end{itemize}
-\end{block}
-
-
-  
-  
+::: {.block}
+* $y_t=$ sales, $x_t=$ tax policy announcement
+:::
