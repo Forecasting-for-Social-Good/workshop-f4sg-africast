@@ -29,7 +29,9 @@ format:
     title-slide-attributes:
       data-background-image: figs/africa1.jpg
       data-background-size: cover
-    include-in-header: macros.html
+    include-in-header:
+      - macros.html
+      - fonts/fonts.html
     knitr:
       opts_chunk:
         dev: "ragg_png"
