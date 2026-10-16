@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-14",
+  "source_sha256": {
+    "fig-wp3_runtime_rmsse-1.pdf": "7f8d25b0e08968426ebf1e9500d7d1e05f9dd1683f7493e5ea87c51878bb3133",
+    "fig-wp3_runtime_full-1.pdf": "e1c21115100626b5ccf096f26f44e36b21446c0a4f2d85b8f8597e12fa9de690"
+  },
+  "main": "lao_runtime_rmsse.pdf: original top RMSSE row plus original runtime label and legend; sPIN removed",
+  "appendix": "fp_runtime_rmsse_display.pdf: original figure with display width expanded from 864 to 900 points to reveal clipped legend"
+}

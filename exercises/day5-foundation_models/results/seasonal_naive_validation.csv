@@ -1,0 +1,13 @@
+unique_id,ds,y,prediction,model,cutoff
+Snowy Mountains / Holiday,2014-01-01,83.0283194,107.3573294,Seasonal naive,2013-10-01
+Snowy Mountains / Holiday,2014-04-01,91.7978794,98.2834721,Seasonal naive,2013-10-01
+Snowy Mountains / Holiday,2014-07-01,285.7692138,256.5285694,Seasonal naive,2013-10-01
+Snowy Mountains / Holiday,2014-10-01,70.1244214,53.2547202,Seasonal naive,2013-10-01
+Snowy Mountains / Holiday,2015-01-01,92.6381718,83.0283194,Seasonal naive,2014-10-01
+Snowy Mountains / Holiday,2015-04-01,74.1609167,91.7978794,Seasonal naive,2014-10-01
+Snowy Mountains / Holiday,2015-07-01,293.4072878,285.7692138,Seasonal naive,2014-10-01
+Snowy Mountains / Holiday,2015-10-01,95.6204242,70.1244214,Seasonal naive,2014-10-01
+Snowy Mountains / Holiday,2016-01-01,99.2136451,92.6381718,Seasonal naive,2015-10-01
+Snowy Mountains / Holiday,2016-04-01,77.2130006,74.1609167,Seasonal naive,2015-10-01
+Snowy Mountains / Holiday,2016-07-01,330.9926395,293.4072878,Seasonal naive,2015-10-01
+Snowy Mountains / Holiday,2016-10-01,67.9491372,95.6204242,Seasonal naive,2015-10-01

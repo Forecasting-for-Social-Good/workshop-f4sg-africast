@@ -3,33 +3,694 @@ title: "Africast-Time Series Analysis & Forecasting Using R"
 subtitle: "10. Time series foundation models"
 ---
 
-<!-- STUB: content to be written. This slide deck has not yet been rendered to PDF. -->
+# Introduction
 
-## Outline
+## Can a pretrained model forecast our tourism series?
 
-\vspace*{0.7cm}\tableofcontents
+We want forecasts for the next four quarters of Snowy Mountains holiday travel.
 
-## What is a time series foundation model?
+\begin{block}{What changes in this session?}
+We start with a model that has already learned from many time series.
+\end{block}
 
-* Large, pre-trained models (e.g. Chronos, TimeGPT, Moirai) that forecast directly from
-  historical data
-* Trained once on huge, diverse collections of time series
-* Little or no task-specific training required to forecast a new series ("zero-shot")
+1. Supply the tourism history.
+2. Examine the forecasts and their errors.
+3. Try adapting the model to this history.
 
-## How do they compare to classical methods?
 
-* Classical methods (ETS, ARIMA, regression) are fit to *your* series
-* Foundation models are pre-trained on *many* series, then applied to yours
-* Trade-offs: convenience and speed vs. interpretability and control
+## ETS: same method, different fitted models
 
-## When to use a foundation model
+\small We use the same fitting method, but learn from each region's history separately.
 
-* Useful for quick baselines, and series with little historical data
-* Classical methods often still competitive, and more transparent, once tuned
-* Consider the operational context (compute, explainability, cost)
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{12}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.3cm,minimum height=1cm}]
+\node[box] (a) at (0,0) {Snowy Mountains\\Holiday trips};
+\node[box] (ma) at (4.5,0) {Fit ETS\\to this history};
+\node[box,fill=Orange!12] (fa) at (9,0) {Fitted ETS model\\for Snowy Mountains};
+\node[box] (b) at (0,-1.6) {Sydney\\Holiday trips};
+\node[box] (mb) at (4.5,-1.6) {Fit ETS\\to this history};
+\node[box,fill=Orange!12] (fb) at (9,-1.6) {Fitted ETS model\\for Sydney};
+\draw[->,thick](a)--(ma);\draw[->,thick](ma)--(fa);
+\draw[->,thick](b)--(mb);\draw[->,thick](mb)--(fb);
+\end{tikzpicture}
 
-## Summary
+\raggedright\small
+\begin{block}{What changes with a foundation model?}
+We can reuse a model already trained on many series, then supply our tourism history to obtain a forecast.
+\end{block}
 
-* Foundation models are a fast-moving area of forecasting research
-* A useful addition to the toolkit alongside ETS, ARIMA and regression
-* This session gives a high-level introduction; hands-on examples to follow
+
+## What is a foundation model?
+
+\begin{block}{Train broadly, then reuse}
+A foundation model is trained on large, varied data so that it can be reused for a range of tasks and settings.
+\end{block}
+
+* The initial training is called \textbf{pretraining}.
+* For forecasting, this training uses a collection of time series.
+* We supply our tourism history and ask the trained model for the next four quarters.
+
+
+## Four characteristics to remember
+
+\centering
+\begin{tikzpicture}[every node/.style={font=\fontsize{11}{13}\selectfont,align=left},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=5.6cm,minimum height=2.1cm,inner sep=9pt}]
+\node[box] at (0,0) {\textbf{1. Large, varied training data}\\Learn from many examples and settings.};
+\node[box] at (6.8,0) {\textbf{2. Often many parameters}\\Learned numbers store the model's behaviour.};
+\node[box,fill=Orange!12] at (0,-2.4) {\textbf{3. Reusable across tasks}\\Apply the trained model to different series.};
+\node[box,fill=Orange!12] at (6.8,-2.4) {\textbf{4. Can be adapted}\\Further training can tailor it to our data.};
+\end{tikzpicture}
+
+\raggedright\small
+These features make reuse possible. They do not guarantee the best forecast for every series.
+
+
+
+
+## Attention combines information from the history
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{11}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.3cm,minimum height=.9cm}]
+\node[box] (a) at (0,0) {An earlier part\\of the tourism history};
+\node[box] (b) at (4.5,0) {Another part\\of the history};
+\node[box] (c) at (9,0) {The most recent\\observations};
+\node[box,fill=Orange!12,text width=6cm] (out) at (4.5,-1.8) {Attention forms a weighted combination};
+\draw[->] (a)--(out);\draw[->] (b)--(out);\draw[->] (c)--(out);
+\end{tikzpicture}
+
+\raggedright
+\small
+* Different parts of the history can receive different weights.
+* A \textbf{transformer} uses attention and neural-network layers to process this information.
+
+
+## Two common routes to foundation-model forecasting
+
+\begin{block}{1. Models built for time series}
+Learn from collections of time series, then forecast a new series.
+\end{block}
+
+TimeGPT, Chronos-2, TimesFM and Moirai follow this route.
+
+\begin{block}{2. Language models adapted for forecasting}
+Start with a pretrained language model and adapt how time-series inputs and forecasts are represented.
+\end{block}
+
+Examples: PromptCast and Time-LLM. Our code uses the first route.
+
+
+## Advantages and disadvantages
+
+\fontsize{11}{13}\selectfont
+
+| Advantages | Disadvantages |
+|---|---|
+| Use out-of-the-box forecasting pipelines | Privacy concerns |
+| Can generate forecasts with few data points | No control of model's capabilities |
+| Require less forecasting expertise | May not be optimal for every use case |
+| Reusable across tasks | High resource requirements |
+
+\begin{block}{For our tourism example}
+Getting a forecast is easier. We still need to check whether it is useful.
+\end{block}
+
+
+# Transfer learning
+
+## Pretraining and forecasting are separate stages
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{11}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.2cm,minimum height=1.1cm}]
+\node[anchor=west,font=\fontsize{10}{11}\selectfont\bfseries] at (-1.7,1) {1. Developers train the model};
+\node[box] (s) at (0,0) {Many source series\\from different settings};
+\node[box] (p) at (4.6,0) {Learn patterns;\\adjust weights};
+\node[box] (m) at (9.2,0) {Save pretrained\\weights};
+\node[anchor=west,font=\fontsize{10}{11}\selectfont\bfseries] at (-1.7,-1.2) {2. We use those weights for tourism};
+\node[box,fill=Orange!12] (t) at (0,-2.3) {Tourism history\\through 2016 Q4};
+\node[box,fill=Orange!12] (i) at (4.6,-2.3) {Loaded model\\weights unchanged};
+\node[box,fill=Orange!12] (o) at (9.2,-2.3) {Forecast\\2017 Q1--Q4};
+\draw[->](s)--(p);\draw[->](p)--(m);
+\draw[->](t)--(i);\draw[->](m.south)--(i.north);\draw[->](i)--(o);
+\end{tikzpicture}
+
+\raggedright\small
+Using a model learned from other series is \textbf{transfer learning}.
+
+
+## What makes building a foundation model difficult?
+
+\fontsize{11}{13}\selectfont
+
+| Challenge | What the model developer must handle |
+|---|---|
+| Different frequencies and domains | Quarterly tourism and hourly energy demand have different patterns. |
+| Different forecast horizons | One week means 7 daily values or 168 hourly values. |
+| Training resources | Large-scale training takes time, memory and often GPUs. |
+| Enough varied training data | Open time-series data can be scarce; combining sources takes work. |
+
+\begin{block}{Why start with pretrained weights?}
+We can reuse that training effort, then test the model on our own task.
+\end{block}
+
+
+## Zero-shot or fine-tuning: what changes?
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{11}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.1cm,minimum height=1cm}]
+\node[anchor=west,font=\fontsize{10}{11}\selectfont\bfseries] at (-1.6,.9) {Zero-shot: use the pretrained weights};
+\node[box] (h1) at (0,0) {Tourism history\\through 2016};
+\node[box] (m1) at (4.6,0) {Pretrained model\\weights unchanged};
+\node[box] (f1) at (9.2,0) {Forecast 2017};
+\draw[->] (h1)--(m1);\draw[->] (m1)--(f1);
+\node[anchor=west,font=\fontsize{10}{11}\selectfont\bfseries] at (-1.6,-1.4) {Fine-tuning: start from those weights and adapt};
+\node[box,fill=Orange!12] (h2) at (0,-2.3) {Tourism history\\through 2016};
+\node[box,fill=Orange!12] (m2) at (4.6,-2.3) {Update weights\\or small adapters};
+\node[box,fill=Orange!12] (f2) at (9.2,-2.3) {Adapted model\\forecasts 2017};
+\draw[->] (h2)--(m2);\draw[->] (m2)--(f2);
+\end{tikzpicture}
+
+\raggedright\small
+Both use tourism history. Neither is allowed to learn from the 2017 test observations.
+
+
+# Overview of foundation models
+
+## Comparing foundation forecasting models
+
+\centering
+\fontsize{9.5}{11}\selectfont
+\renewcommand{\arraystretch}{1.05}
+\hyphenpenalty=10000
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{3.7cm}>{\raggedright\arraybackslash}p{2.7cm}@{}}
+\toprule
+\textbf{Model} & \textbf{Architecture} & \textbf{Input representation} & \textbf{Forecast output} \\
+\midrule
+TimeGPT-1 & Encoder--decoder & History and positions & Point and intervals (API) \\
+Chronos-2 & Encoder-only & Patches; optional predictors & Quantiles \\
+TimesFM 2.5 & Decoder-only & Historical patches & Point and quantiles \\
+Moirai 1.0 & Encoder-only & Patches; optional predictors & Distribution \\
+Lag-Llama & Decoder-only & Lags and time features & Distribution \\
+Tiny Time Mixers & MLP mixer & Patches; predictors when adapted & Point forecasts \\
+\bottomrule
+\end{tabular}
+
+
+## Foundation models can also work with tables
+
+\small Examples: \textbf{TabPFN} and \textbf{TabICL}.
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{12}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.2cm,minimum height=1.1cm}]
+\node[box] (known) at (0,0) {Example rows\\Features and\\known outcomes};
+\node[box] (new) at (0,-1.7) {New rows\\Features only\\Outcome: ?};
+\node[box,minimum height=1.5cm] (model) at (4.6,-.85) {Pretrained\\tabular model};
+\node[box,fill=Orange!12] (out) at (9.2,-.85) {Predict the outcomes\\for the new rows};
+\draw[->,thick](known)--(model);\draw[->,thick](new)--(model);\draw[->,thick](model)--(out);
+\end{tikzpicture}
+
+\raggedright\small
+* Pretrain on many tasks, often using simulated tables.
+* Use example rows as \textbf{context}; keep pretrained weights fixed.
+* For forecasting, turn time and calendar information into features.
+
+
+## TimeGPT: an encoder--decoder transformer
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{12}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.6cm,minimum height=1.8cm}]
+\node[box] (data) at (0,0) {\textbf{Tourism history}\\Past trips\\and time positions};
+\node[box] (enc) at (4.6,0) {\textbf{Encoder layers}\\Self-attention\\Feed-forward networks};
+\node[box] (dec) at (9.2,0) {\textbf{Decoder layers}\\Attention using the\\encoded history\\Feed-forward networks};
+\node[box,fill=Orange!12,minimum height=1.1cm] (linear) at (9.2,-2.4) {\textbf{Linear output layer}\\Map to four quarters};
+\node[box,fill=Orange!12,minimum height=1.1cm] (pred) at (4.6,-2.4) {\textbf{Four forecasts}\\2017 Q1--Q4};
+\draw[->,thick](data)--(enc);\draw[->,thick](enc)--(dec);
+\draw[->,thick](dec)--(linear);\draw[->,thick](linear)--(pred);
+\end{tikzpicture}
+
+\raggedright\small
+\textbf{Attention} combines information across positions. A \textbf{feed-forward network} refines the information at each position.
+
+\footnotesize Simplified TimeGPT-1 architecture (Garza et al.). Repeated layers and normalisation are omitted.
+
+
+## TimeGPT: the model runs on Nixtla's service
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{11}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.2cm,minimum height=1.2cm}]
+\node[box] (a) at (0,0) {Our Python code\\history and horizon};
+\node[box] (b) at (4.6,0) {Nixtla API\\runs TimeGPT};
+\node[box,fill=Orange!12] (c) at (9.2,0) {Forecast table\\values and intervals};
+\draw[->] (a)--node[above,font=\fontsize{7}{8}\selectfont]{Request}(b);\draw[->] (b)--node[above,font=\fontsize{7}{8}\selectfont]{Response}(c);
+\end{tikzpicture}
+
+\raggedright
+* For tourism, send the history and ask for four quarters.
+* Set fine-tuning arguments to adapt the model to that history.
+* The call needs an API key and available account quota.
+
+
+## Chronos-2: an encoder-only transformer
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{12}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.6cm,minimum height=1.8cm}]
+\node[box] (data) at (0,0) {\textbf{Tourism input}\\76 historical quarters\\4 future values\\are unknown};
+\node[box] (embed) at (4.6,0) {\textbf{Scale and form patches}\\Encode groups of values\\as numerical vectors};
+\node[box] (encoder) at (9.2,0) {\textbf{Encoder blocks}\\Time attention\\Group attention\\Feed-forward layers};
+\node[box,fill=Orange!12,minimum height=1.1cm] (head) at (9.2,-2.4) {\textbf{Quantile output layer}\\Return to trips units};
+\node[box,fill=Orange!12,minimum height=1.1cm] (forecast) at (4.6,-2.4) {\textbf{2017 Q1--Q4}\\Median and 80\% interval};
+\draw[->,thick](data)--(embed);\draw[->,thick](embed)--(encoder);
+\draw[->,thick](encoder)--(head);\draw[->,thick](head)--(forecast);
+\end{tikzpicture}
+
+\raggedright\small
+\textbf{Time attention}: share information across the history.
+\textbf{Group attention}: share information across related series or predictors, when supplied.
+
+
+## 10-minute break
+
+\vspace{1cm}
+\begin{alertblock}{After the break}
+Forecast quarterly tourism, examine outputs, and compare zero-shot forecasts with fine-tuned forecasts.
+\end{alertblock}
+
+
+# Example: forecasting Australian tourism
+
+## Our forecasting task
+
+* **Series:** Snowy Mountains, Holiday travel.
+* **Target:** quarterly overnight trips, in thousands.
+* **History:** 1998 Q1 to 2017 Q4, 80 observations.
+* **Task:** forecast the four quarters of 2017 using data available through 2016.
+
+\begin{block}{The steps we will follow}
+Prepare the history $\rightarrow$ forecast $\rightarrow$ evaluate $\rightarrow$ adapt $\rightarrow$ compare.
+\end{block}
+
+
+## From a tsibble to model input
+
+Select the same series in R. We will pass it to the models through their Python interfaces:
+
+~~~r
+tourism |>
+  filter(Region == "Snowy Mountains", Purpose == "Holiday")
+~~~
+
+The Python interface uses three columns:
+
+| Workshop column | Model column | Meaning |
+|---|---|---|
+| Region and Purpose | unique_id | Series identifier |
+| Quarter | ds | Quarter-start date |
+| Trips | y | Trips, thousands |
+
+
+## Prepare the tourism series in Python
+
+The model needs an identifier, a date and the number of trips.
+
+~~~python
+import pandas as pd
+import numpy as np
+tourism = pd.read_csv("data/tourism.csv", parse_dates=["Quarter"])
+keep = ((tourism.Region == "Snowy Mountains") &
+        (tourism.Purpose == "Holiday"))
+df = tourism.loc[keep].rename(columns={"Quarter": "ds", "Trips": "y"})
+df["unique_id"] = "Snowy Mountains / Holiday"
+df = df[["unique_id", "ds", "y"]].sort_values("ds")
+H = 4
+history, test = df.iloc[:-H], df.iloc[-H:]
+~~~
+
+\small Result: 76 historical observations and 4 test observations.
+
+
+## History, validation and the final test
+
+\centering
+\includegraphics[width=\textwidth,height=5.2cm,keepaspectratio]{foundation_models/tourism_history.pdf}
+
+\raggedright\small
+Validation uses three four-quarter forecasts covering 2014--2016. The 2017 observations are reserved for the final comparison.
+
+
+## Start with a seasonal-naive forecast
+
+For each quarter of 2017, repeat the corresponding observation from 2016.
+
+~~~python
+baseline = test[["unique_id", "ds"]].copy()
+baseline["prediction"] = history["y"].tail(H).to_numpy()
+baseline["prediction"].round(2).tolist()
+~~~
+
+~~~text
+[99.21, 77.21, 330.99, 67.95]
+~~~
+
+These are forecasts for Q1--Q4, in thousands of trips. Every model will be compared with this benchmark on the same dates.
+
+
+## Zero-shot forecasting with TimeGPT
+
+~~~python
+from nixtla import NixtlaClient
+
+client = NixtlaClient()  # reads NIXTLA_API_KEY
+timegpt = client.forecast(
+    df=history, h=H, freq="QS", level=[80],
+    finetune_steps=0,  # no update to model weights
+)
+~~~
+
+\small
+\texttt{h=4}: four quarters; \texttt{QS}: quarter-start dates; \texttt{level=[80]}: an 80\% interval.
+
+
+## Zero-shot forecasting with Chronos-2
+
+Load the model and request a median forecast with an 80\% interval.
+
+~~~python
+from chronos import Chronos2Pipeline
+
+pipeline = Chronos2Pipeline.from_pretrained(
+    "amazon/chronos-2", device_map="cpu"
+)
+chronos = pipeline.predict_df(
+    history, prediction_length=H,
+    quantile_levels=[0.1, 0.5, 0.9],
+    id_column="unique_id", timestamp_column="ds",
+    target="y",
+)
+~~~
+
+
+## What does the Chronos-2 output contain?
+
+~~~python
+chronos[["ds", "0.1", "0.5", "0.9"]].round(2)
+~~~
+
+{{< include figs/foundation_models/chronos_output_table.md >}}
+
+\small
+\texttt{0.5} is the median forecast. \texttt{0.1} and \texttt{0.9} are the lower and upper interval limits. Values are thousands of trips.
+
+
+## Chronos-2: forecasts and intervals
+
+\centering
+\includegraphics[width=\textwidth,height=5.4cm,keepaspectratio]{foundation_models/tourism_zero_shot.pdf}
+
+\raggedright\small
+The model misses the winter peak. Its 80\% interval contains 2 of the 4 observed quarters; four quarters are too few to assess long-run coverage.
+
+
+## MAE or RMSE?
+
+\small
+Let $e$ be the observed number of trips minus the forecast.
+
+| Measure | Calculation | How to read it |
+|---|---|---|
+| MAE | $\operatorname{mean}(\lvert e\rvert)$ | Average absolute miss |
+| RMSE | $\sqrt{\operatorname{mean}(e^2)}$ | Gives large misses more weight |
+
+* Both are in thousands of trips; smaller is better.
+* Keep MAE as the main measure for our median forecasts.
+* Also report RMSE to show the effect of large errors.
+
+
+## Calculate both errors on the same forecasts
+
+Match each forecast with the observation for that quarter.
+
+~~~python
+checked = test.merge(chronos, on=["unique_id", "ds"],
+                     validate="one_to_one")
+errors = checked["y"] - checked["0.5"]
+mae = errors.abs().mean()
+rmse = np.sqrt((errors ** 2).mean())
+print(f"MAE: {mae:.2f}; RMSE: {rmse:.2f}")
+~~~
+
+~~~text
+MAE: 39.27; RMSE: 53.75
+~~~
+
+\small
+Before changing the model, check its performance on earlier forecast periods as well.
+
+
+## Check earlier forecasts before choosing settings
+
+\fontsize{11}{12}\selectfont
+Forecast one year at a time, using only the history available then.
+
+| History ends | Forecast year |
+|---|---|
+| 2013 Q4 | 2014 |
+| 2014 Q4 | 2015 |
+| 2015 Q4 | 2016 |
+
+{{< include figs/foundation_models/validation_table.md >}}
+
+These scores cover 12 validation quarters. Keep 2017 for the final test.
+
+
+## Fine-tuning TimeGPT
+
+Use the same history and horizon, with ten training updates.
+
+~~~python
+timegpt_ft = client.forecast(
+    df=history, h=H, freq="QS", level=[80],
+    finetune_steps=10,
+    finetune_depth=1,
+    finetune_loss="mae",
+)
+~~~
+
+\small
+* \texttt{finetune\_steps} counts training updates; \texttt{h} counts future quarters.
+* \texttt{finetune\_loss="mae"} uses absolute errors during adaptation.
+* Compare on the same four quarters using both metrics.
+
+
+## Fine-tuning Chronos-2 with LoRA
+
+LoRA trains a small set of added weights while keeping the original weights fixed.
+
+~~~python
+adapted = pipeline.fit(
+    inputs=[history.y.to_numpy(dtype=np.float32)],
+    prediction_length=H,
+    finetune_mode="lora", num_steps=10,
+    **lora_settings,
+)
+~~~
+
+\small
+\texttt{lora\_settings} contains the fixed training settings listed in the notebook.
+
+\begin{block}{What changes?}
+We get an adapted model. The history and the four forecast dates stay the same.
+\end{block}
+
+
+## Forecast again with the adapted model
+
+~~~python
+chronos_ft = adapted.predict_df(
+    history, prediction_length=H, quantile_levels=[0.1, 0.5, 0.9],
+    id_column="unique_id", timestamp_column="ds", target="y",
+)
+~~~
+
+\centering
+\includegraphics[width=\textwidth,height=4cm,keepaspectratio]{foundation_models/tourism_finetuning.pdf}
+
+\raggedright\small
+The adapted model still misses the winter peak. Did its overall error improve?
+
+
+## Results on the held-out tourism year
+
+{{< include figs/foundation_models/results_table.md >}}
+
+\small
+Seasonal naive has the smallest error under both measures. Ten-step LoRA made both scores worse; this one year cannot establish a general ranking.
+
+
+## What other information is known when we forecast?
+
+\small
+Suppose we are forecasting in December 2016.
+
+| Information for 2017 | Available now? |
+|---|---|
+| Calendar quarter | Yes |
+| Actual weather | No |
+| Actual number of trips | No: our forecast target |
+
+Supply historical predictor values and any future values known at forecast time.
+
+The lab uses calendar features through \texttt{future\_df}. Check their value on earlier forecasts.
+
+
+# Evidence from public health forecasting
+
+## Beyond tourism: forecasts for health supplies
+
+* 20,736 monthly product-location series from Lao.
+* Five clinical domains; forecast horizons of 1, 3 and 6 months.
+* Compare pretrained and fine-tuned models with statistical and global forecasting benchmarks.
+
+\begin{block}{Why use RMSSE here?}
+RMSSE is RMSE divided by a scale based on historical seasonal changes. It lets us compare errors across series with different volumes. Smaller is better.
+\end{block}
+
+
+## Lao health supplies: accuracy and runtime
+
+\centering
+\includegraphics[width=\textwidth,height=5.55cm,keepaspectratio]{foundation_models/wp3/lao_runtime_rmsse.pdf}
+
+\raggedright\fontsize{10}{11}\selectfont
+Lower and further left is preferable. Chronos-2 fine-tuning improves accuracy here, but adds computation.
+
+\fontsize{8}{9}\selectfont
+Source: Hewage, Rostami-Tabar, Syntetos and Liberatore, \textit{Foundation models in low-resource settings}.
+
+
+# Further reading and lab notebook
+
+## Continue with the tourism lab
+
+* Read and reproduce saved outputs first.
+* Run models when credentials or weights are available.
+* Try another region and purpose, using earlier validation periods.
+* Record the version, data split, metrics and one limitation.
+
+\begin{block}{Independent lab}
+\texttt{exercises/foundation\_models/tourism\_lab.ipynb}
+\end{block}
+
+
+## Further reading
+
+\fontsize{11}{13}\selectfont
+
+* [FPP Python, Chapter 15](https://otexts.com/fpppy/15-foundation-models.html): foundation models and transfer learning.
+* Peixeiro, *Time Series Forecasting Using Foundation Models*, Chapters 1 and 2: concepts and the pretraining-to-adaptation flow.
+* [Nixtla](https://www.nixtla.io/docs) and [Chronos](https://github.com/amazon-science/chronos-forecasting): executable APIs.
+* Bergmeir, *Forecasting for Data Scientists*, Theory Session 2: global models and evaluation.
+* Molnar (2026), *Tabular Foundation Models*, Chapters 3--4 and 9: in-context prediction and forecasting.
+* [Tourism documentation](https://tsibble.tidyverts.org/reference/tourism.html). We use the workshop's CSV snapshot.
+* Harsha Chamara Hewage, Bahman Rostami-Tabar, Aris Syntetos and Federico Liberatore. \textit{Foundation models in low-resource settings: Evaluating AI-driven forecasting in global health supply chains}.
+
+
+## Optional: turn tourism forecasting into a table
+
+\fontsize{10}{12}\selectfont
+
+One row per quarter; predict trips from the feature columns.
+
+| Quarter | Time index | Quarter of year | Trips (thousands) |
+|---|---|---|---|
+| 2016 Q1 | 73 | 1 | 99.21 |
+| 2016 Q2 | 74 | 2 | 77.21 |
+| 2016 Q3 | 75 | 3 | 330.99 |
+| 2016 Q4 | 76 | 4 | 67.95 |
+| 2017 Q1 | 77 | 1 | ? |
+| 2017 Q2 | 78 | 2 | ? |
+| 2017 Q3 | 79 | 3 | ? |
+| 2017 Q4 | 80 | 4 | ? |
+
+\fontsize{10}{12}\selectfont
+Use historical rows as context. Supply future features; keep future trips unknown.
+
+
+## Optional: patches and embeddings
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{11}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.2cm,minimum height=.9cm}]
+\node at (0,0.75) {Quarterly observations};
+\node[box] (a) at (0,-.15) {$y_1,y_2,y_3,y_4$};
+\node[box] (b) at (0,-1.45) {$y_5,y_6,y_7,y_8$};
+\node[box] (e1) at (4.5,-.15) {Numerical vector $\mathbf{z}_1$};
+\node[box] (e2) at (4.5,-1.45) {Numerical vector $\mathbf{z}_2$};
+\node at (4.5,.75) {Learned encoding};
+\node[box,fill=Orange!12,minimum height=2.2cm] (m) at (9,-.8) {Transformer\\uses the vectors\\and their positions};
+\draw[->] (a)--(e1);
+\draw[->] (b)--(e2);
+\draw[->] (e1)--(m);
+\draw[->] (e2)--(m);
+\end{tikzpicture}
+
+\raggedright
+* A **patch** is a group of consecutive observations.
+* An **embedding** turns that patch into a list of numbers the model can process.
+* Position information preserves the order of the patches.
+
+\small Four-quarter patches are illustrative. Model patch sizes vary.
+
+
+## Optional: attention weights
+
+Attention combines information from past patches.
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{11}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,minimum width=2cm,minimum height=.65cm}]
+\node[box] (a) at (0,0) {$\mathbf{v}_1$};
+\node[box] (b) at (3.3,0) {$\mathbf{v}_2$};
+\node[box] (c) at (6.6,0) {$\mathbf{v}_3$};
+\node[box] (d) at (9.9,0) {$\mathbf{v}_4$};
+\node[draw=MonashBlue,fill=Orange!12,text width=7cm,minimum height=.85cm] (out) at (4.95,-2) {Combined information at one position};
+\draw[->,line width=.5pt] (a)--node[pos=.35,left]{0.1}(out);
+\draw[->,line width=.5pt] (b)--node[pos=.35,left]{0.1}(out);
+\draw[->,line width=2pt] (c)--node[pos=.35,right]{0.5}(out);
+\draw[->,line width=1.2pt] (d)--node[pos=.35,right]{0.3}(out);
+\end{tikzpicture}
+
+\raggedright
+\small
+* Here the combination is $0.1\mathbf{v}_1+0.1\mathbf{v}_2+0.5\mathbf{v}_3+0.3\mathbf{v}_4$.
+* Each attention head forms its own combination.
+
+\small These illustrative weights depend on the input. They are not stored model parameters.
+
+
+## Optional: historical training windows
+
+Use a past window to predict the observations immediately after it.
+
+\centering
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{10}{11}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.1cm,minimum height=.85cm}]
+\node[box] (x) at (0,0) {Input window\\$y_1,\ldots,y_{12}$};
+\node[box] (m) at (4.6,0) {Model with\\current weights};
+\node[box,fill=Orange!12] (p) at (9.2,0) {Four predictions\\$\hat y_{13},\ldots,\hat y_{16}$};
+\node[box] (y) at (0,-2) {Known next values\\$y_{13},\ldots,y_{16}$};
+\node[box,fill=Orange!12] (loss) at (9.2,-2) {Compare predictions\\with known values};
+\draw[->] (x)--(m);\draw[->] (m)--(p);\draw[->] (p)--(loss);
+\draw[->] (y)--node[below]{Compute a loss (forecast error)}(loss);
+\draw[->,thick] (loss.north west)--(4.6,-1.2)--node[left,font=\fontsize{9}{10}\selectfont]{Update weights}(m.south);
+\end{tikzpicture}
+
+\raggedright
+Repeat across windows and series. The training targets are already in the historical data.

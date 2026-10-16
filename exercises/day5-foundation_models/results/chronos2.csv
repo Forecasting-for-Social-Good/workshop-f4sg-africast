@@ -1,0 +1,5 @@
+unique_id,ds,prediction,lower80,upper80,y,model
+Snowy Mountains / Holiday,2017-01-01,110.229095,87.66519,136.41902,119.0177251,Chronos-2
+Snowy Mountains / Holiday,2017-04-01,85.737305,64.06683,110.65215,124.4655134,Chronos-2
+Snowy Mountains / Holiday,2017-07-01,278.77777,247.11713,311.7118,378.1434605,Chronos-2
+Snowy Mountains / Holiday,2017-10-01,74.47061,52.48581,97.19792,84.6557145,Chronos-2

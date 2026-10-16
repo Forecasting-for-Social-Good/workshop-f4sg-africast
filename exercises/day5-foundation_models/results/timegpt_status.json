@@ -1,0 +1,6 @@
+{
+  "status": "unavailable",
+  "error_type": "ApiError",
+  "http_429": true,
+  "note": "No generated output is claimed for failed calls."
+}
