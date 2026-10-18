@@ -70,17 +70,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../..//images/fable.svg" rel="icon" type="image/svg+xml">
+<link href="../..//images/africast-mark.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ba8acc719c2e99225dd7b16dfa8f5774.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-cc6d87c63f75e33b23f1e40b3bec5464.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0bed2887bcc57cc24f3e1c6da17be4e2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -126,8 +126,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/africast-mark.png" alt="AFRICAST logo" class="navbar-logo light-content">
+    <img src="../../images/africast-mark.png" alt="AFRICAST logo" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">F4SG: Africast</span>
+    <span class="navbar-title">AFRICAST</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -186,6 +190,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link" href="../../schedule.html"> 
 <span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About AFRICAST</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -314,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibble)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>guinea_rice <span class="ot">&lt;-</span> <span class="fu">as_tsibble</span>(guinea_rice, <span class="at">index =</span> Year)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>A <code>tsibble</code> enables time-aware data manipulation, which makes it easy to work with time series. It also has extra checks to prevent common errors, while these can be frustrating at first they are important in correctly analysing your data.</p>
+<p>A <code>tsibble</code> enables time-aware data manipulation, which makes it easy to work with time series. It also has extra checks to prevent common errors. While these can be frustrating at first, they are important in correctly analysing your data.</p>
 <p>There are two common mistakes when creating a <code>tsibble</code>, which we’ll see in the next example of Australian accommodation.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in the dataset using readr</span></span>
@@ -323,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Try to convert the dataset to a tsibble</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="ot">&lt;-</span> <span class="fu">as_tsibble</span>(aus_accommodation, <span class="at">index =</span> Date)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in `validate_tsibble()`:
+<pre><code>Error in `validate_tsibble()` at tsibble/R/as-tsibble.R:321:5:
 ! A valid tsibble must have distinct rows identified by key and index.
 ℹ Please use `duplicates()` to check the duplicated rows.</code></pre>
 </div>
@@ -424,7 +432,7 @@ Tip
 <p>In the first row of the output we see [1D] - this means that the frequency of the data is <strong>daily</strong>.</p>
 </div>
 </div>
-<p>Looking at the index column (<code>Date</code>), we can see that each point in time is three months apart - or <strong>quarterly</strong>. This is another common mistake when working with time series, you need to set the appropriate <em>temporal granularity</em>.</p>
+<p>Looking at the index column (<code>Date</code>), we can see that each point in time is three months apart - or <strong>quarterly</strong>. This is another common mistake when working with time series: you need to set the appropriate <em>temporal granularity</em>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -436,7 +444,7 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p>Temporal granularity is the resolution in time. The time variable needs to match this resolution.</p>
-<p>In this example, a date was used to represent quarters, but instead we must use <code>yearquarter()</code> to match the temporal granularity.</p>
+<p>In this example, a date was used to represent quarters, but instead we must use <code>yearquarter()</code> from the <code>{tsibble}</code> package to match the temporal granularity.</p>
 <p>Here’s a helpful list of common granularities:</p>
 <ul>
 <li><code>as.integer()</code>: annual data (as above)</li>
@@ -444,7 +452,7 @@ Tip
 <li><code>yearmonth()</code>: Monthly data</li>
 <li><code>yearweek()</code>: Weekly data</li>
 <li><code>as.Date()</code>: Daily data</li>
-<li><code>as.POSIXct()</code>: Sub-daily data</li>
+<li><code>as_datetime()</code>: Sub-daily data</li>
 </ul>
 </div>
 </div>
@@ -509,7 +517,7 @@ Tip
 </section>
 <section id="manipulating-time-series" class="level2">
 <h2 class="anchored" data-anchor-id="manipulating-time-series">Manipulating time series</h2>
-<p>Often you want to work with specific series, or perhaps the sum up the values across multiple series. We can use the same <code>dplyr</code> functions that are used in data analysis to explore our time series. Let’s focus on a single state from the Australian accommodation example - here we use <code>filter()</code> to keep only the Queensland data.</p>
+<p>Often you want to work with specific series, or perhaps sum up the values across multiple series. We can use the same <code>dplyr</code> functions that are used in data analysis to explore our time series. Let’s focus on a single state from the Australian accommodation example - here we use <code>filter()</code> to keep only the Queensland data.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Queensland"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -589,10 +597,9 @@ Tip
 </div>
 <p>What about calculating the annual takings, not quarterly? For this we use a special grouping function called <code>index_by()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Year =</span> <span class="fu">year</span>(Date)) <span class="sc">|&gt;</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Takings =</span> <span class="fu">sum</span>(Takings), <span class="at">Occupancy =</span> <span class="fu">sum</span>(Occupancy))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Year =</span> <span class="fu">year</span>(Date)) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Takings =</span> <span class="fu">sum</span>(Takings), <span class="at">Occupancy =</span> <span class="fu">sum</span>(Occupancy))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 19 x 3 [1Y]
     Year Takings Occupancy
@@ -635,10 +642,9 @@ Tip
 </div>
 <p>What if we didn’t want a time series at all? To calculate the total takings over all of time, we convert back to an ordinary data frame with <code>as_tibble()</code> and then <code>summarise()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Takings =</span> <span class="fu">sum</span>(Takings), <span class="at">Occupancy =</span> <span class="fu">sum</span>(Occupancy))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Takings =</span> <span class="fu">sum</span>(Takings), <span class="at">Occupancy =</span> <span class="fu">sum</span>(Occupancy))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   Takings Occupancy
@@ -689,12 +695,10 @@ Tip
 <p>There are a few common visualisation techniques specific to time series, however cross-sectional graphics also work well for time series data. The main difference is that we like to maintain the ordered and connected nature of time.</p>
 <section id="time-plots" class="level3">
 <h3 class="anchored" data-anchor-id="time-plots">Time plots</h3>
-<p>The simplest graphic for time series is the time series plot, which shows the variable of interest (on the y-axis) against time (on the x-axis). This plot can be created manually with <code>ggplot2</code>, or automatically plotted from the <code>tsibble</code> with <code>autoplot()</code>.</p>
+<p>The simplest graphic for time series is the time series plot, which shows the variable of interest (on the y-axis) against time (on the x-axis). This plot can be created manually with <code>ggplot2</code>, or automatically plotted from the <code>tsibble</code> with <code>autoplot()</code> from <code>{ggtime}</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fable)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>guinea_rice <span class="sc">|&gt;</span> </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Production)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>guinea_rice <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Production)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -703,7 +707,7 @@ Tip
 </div>
 </div>
 </div>
-<p>In this plot we can see that <code>Production</code> increases over time (known as <strong>trend</strong>). The increase is mostly smooth but there are a couple anomalies in 2001 and 2008.</p>
+<p>In this plot we can see that <code>Production</code> increases over time (known as <strong>trend</strong>). The increase is mostly smooth but there are a couple of anomalies in 2001 and 2008.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -761,12 +765,11 @@ Tip
 </section>
 <section id="seasonal-plots" class="level3">
 <h3 class="anchored" data-anchor-id="seasonal-plots">Seasonal plots</h3>
-<p>It can be tricky to see which quarter has maximum accommodation takings from a time plot. Instead, it is better to use a seasonal plot with <code>gg_season()</code> from feasts.</p>
+<p>It can be tricky to see which quarter has maximum accommodation takings from a time plot. Instead, it is better to use a seasonal plot with <code>gg_season()</code> from <code>{ggtime}</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(feasts)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span> </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Queensland"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_season</span>(Takings)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Queensland"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_season</span>(Takings)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -775,7 +778,7 @@ Tip
 </div>
 </div>
 </div>
-<p>Here we can see that the Q3 and Q4 takings are higher than Q1 and Q2, this is known as the seasonal peak and trough respectively.</p>
+<p>Here we can see that the Q3 and Q4 takings are higher than Q1 and Q2, which are known as the seasonal peak and trough respectively.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -806,7 +809,7 @@ Tip
 </section>
 <section id="seasonal-subseries-plot" class="level3">
 <h3 class="anchored" data-anchor-id="seasonal-subseries-plot">Seasonal subseries plot</h3>
-<p>Another useful plot to understand the seasonal pattern of a time series is the subseries plot, it can be created with <code>gg_subseries()</code>. This plot is splits each month / quarter into separate facets (mini-plots), which shows how the values within each season change over time. The blue lines represent the average, which is a useful way to see the overall seasonality at a glance.</p>
+<p>Another useful plot to understand the seasonal pattern of a time series is the subseries plot, it can be created with <code>gg_subseries()</code>. This plot splits each month / quarter into separate facets (mini-plots), which shows how the values within each season change over time. The blue lines represent the average, which is a useful way to see the overall seasonality at a glance.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span> </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Queensland"</span>) <span class="sc">|&gt;</span> </span>
@@ -848,7 +851,7 @@ Tip
 </div>
 </div>
 </div>
-<p>At a glance, this looks like the it is very seasonal and has a slight downward trend. However the seasonal subseries plot reveals that the trend is misleading!</p>
+<p>At a glance, this looks like it is very seasonal and has a slight downward trend. However the seasonal subseries plot reveals that the trend is misleading!</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>aus_beer <span class="sc">|&gt;</span> </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_subseries</span>(Beer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -860,7 +863,7 @@ Tip
 </div>
 </div>
 </div>
-<p>Here we see that only Q4 (the peak) has a downward trend, while the other quarters are staying roughly the same. The seasonality is changing shape over time.</p>
+<p>Here we see that only Q4 (the peak) has a downward trend, while the other quarters stay roughly the same. The seasonality is changing shape over time.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -871,7 +874,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Look back at the time plot and focus only on the Q4 peaks, can you see these values decreasing over time? Now look at the Q1-Q3 throughs, how do they change over time?</p>
+<p>Look back at the time plot and focus only on the Q4 peaks, can you see these values decreasing over time? Now look at the Q1-Q3 troughs, how do they change over time?</p>
 <p>This can be tricky to notice in the time plot, which is why seasonal subseries plots can be particularly helpful!</p>
 </div>
 </div>
@@ -956,11 +959,11 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Seasonality is a consistent repeating pattern, where the shape shape with similar peak and trough repeats at the same time interval.</p>
-<p>Cyclical patterns are less consistent, with varying peaks and troughs that repeats over a varied time period.</p>
+<p>Seasonality is a consistent repeating pattern, where the shape with similar peak and trough repeats at the same time interval.</p>
+<p>Cyclical patterns are less consistent, with varying peaks and troughs that repeat over a varied time period.</p>
 </div>
 </div>
-<p>Let’s see the ACF for this dataset</p>
+<p>Let’s see the ACF for this dataset.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tsibbledata<span class="sc">::</span>pelt <span class="sc">|&gt;</span> </span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ACF</span>(Hare) <span class="sc">|&gt;</span> </span>
@@ -1023,7 +1026,7 @@ Tip
 <h1>Apply</h1>
 <section id="about-the-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="about-the-dataset">About the dataset</h2>
-<p>In this exercise, we use a dataset containing dose of BCG (Cacille Calmette-Guérin), vaccine administrated in 9 regions of an African country from January 2013 until December 2021. BCG is a widely administered vaccine primarily used to protect against tuberculosis (TB), a serious infection that primarily affects the lungs but can also affect other parts of the body. BCG vaccination is recommended for newborn babies at risk of tuberculosis (TB) and is typically administered shortly after birth, usually within the first 28 days of life.</p>
+<p>In this exercise, we use a dataset containing dose of BCG (Bacille Calmette-Guérin) vaccine administered in 9 regions of an African country from January 2013 until December 2021. BCG is a widely administered vaccine primarily used to protect against tuberculosis (TB), a serious infection that primarily affects the lungs but can also affect other parts of the body. BCG vaccination is recommended for newborn babies at risk of tuberculosis (TB) and is typically administered shortly after birth, usually within the first 28 days of life.</p>
 <p>In addition to the administered dose, it also includes data on the population of children under one year old, and whether a strike occurred in a specific month and region.</p>
 <p>In this exercise, you will apply what you have learned about different steps in the forecasting workflow on this dataset.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -1037,28 +1040,28 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><p>Import <code>vaccine_adminstrated.csv</code> data into R</p>
+<li><p>Import <code>vaccine_administered.csv</code> data into R</p>
 <ul>
 <li>Check and modify the data types of variables as needed</li>
 </ul></li>
 <li><p>Prepare your data</p>
 <ul>
 <li>Check and fix missing values</li>
-<li>Check duplications and fix it</li>
+<li>Check for duplicates and fix them</li>
 <li>Create tsibble</li>
 <li>Check and fix temporal gaps</li>
 </ul></li>
 <li><p>Manipulating time series</p>
 <ul>
-<li>Create monthly time series of total doses adminstrated in the country</li>
-<li>Create quarterly time series of doses adminstrated in each region</li>
-<li>Create quarterly time series of total doses adminstrated in the country</li>
+<li>Create monthly time series of total doses administered in the country</li>
+<li>Create quarterly time series of doses administered in each region</li>
+<li>Create quarterly time series of total doses administered in the country</li>
 </ul></li>
-<li><p>Visualizing time series</p>
+<li><p>Visualising time series</p>
 <ul>
 <li>Use time plots and describe what patterns you observe</li>
-<li>Create plots to see if any consistent pattern exsists in monthly and quarterly of dose admisntrated</li>
-<li>Create plots to see how dose admisntrated chnage over time for each month/quarter and how it differs across differnt month/quarter</li>
+<li>Create plots to see if any consistent pattern exists in monthly and quarterly doses administered</li>
+<li>Create plots to see how doses administered change over time for each month/quarter and how this differs across months/quarters</li>
 </ul></li>
 </ol>
 </div>

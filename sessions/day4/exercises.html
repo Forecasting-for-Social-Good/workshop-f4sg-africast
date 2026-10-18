@@ -70,17 +70,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../..//images/fable.svg" rel="icon" type="image/svg+xml">
+<link href="../..//images/africast-mark.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ba8acc719c2e99225dd7b16dfa8f5774.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-cc6d87c63f75e33b23f1e40b3bec5464.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0bed2887bcc57cc24f3e1c6da17be4e2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -155,8 +155,12 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/africast-mark.png" alt="AFRICAST logo" class="navbar-logo light-content">
+    <img src="../../images/africast-mark.png" alt="AFRICAST logo" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">F4SG: Africast</span>
+    <span class="navbar-title">AFRICAST</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -216,6 +220,10 @@ window.Quarto = {
     <a class="nav-link" href="../../schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About AFRICAST</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
@@ -267,7 +275,7 @@ window.Quarto = {
   <ul>
   <li><a href="#learn" id="toc-learn" class="nav-link active" data-scroll-target="#learn">Learn</a>
   <ul class="collapse">
-  <li><a href="#expontential-smoothing" id="toc-expontential-smoothing" class="nav-link" data-scroll-target="#expontential-smoothing">Expontential smoothing</a></li>
+  <li><a href="#exponential-smoothing" id="toc-exponential-smoothing" class="nav-link" data-scroll-target="#exponential-smoothing">Exponential smoothing</a></li>
   <li><a href="#arima" id="toc-arima" class="nav-link" data-scroll-target="#arima">ARIMA</a></li>
   <li><a href="#ets-or-arima" id="toc-ets-or-arima" class="nav-link" data-scroll-target="#ets-or-arima">ETS or ARIMA</a></li>
   </ul></li>
@@ -308,13 +316,14 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibble)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibbledata)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fable)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fable)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtime)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="learn" class="level1">
 <h1>Learn</h1>
 <p>Exponential smoothing and ARIMA models allow more dynamic patterns to be modelled for forecasting. This allows the model to learn and adapt to changes in the trend, seasonality, and other subtle patterns to produce forecasts that accurately reflect the most recent data.</p>
-<section id="expontential-smoothing" class="level2">
-<h2 class="anchored" data-anchor-id="expontential-smoothing">Expontential smoothing</h2>
+<section id="exponential-smoothing" class="level2">
+<h2 class="anchored" data-anchor-id="exponential-smoothing">Exponential smoothing</h2>
 <p>Exponential smoothing models can handle both additive and multiplicative patterns, and models the series based on three primary components: the error, trend, and seasonality (ETS). Since multiplicative patterns can be directly modelled with ETS, there is no need to transform the data.</p>
 <p>ETS models are specified using the <code>ETS()</code> function.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -330,7 +339,7 @@ window.Quarto = {
 <p>The specials for the ETS model describe the structure of the three components.</p>
 <ul>
 <li>error(): The structure of the error, either additive (<code>"A"</code>) or multiplicative (<code>"M"</code>)</li>
-<li>trend(): The structure of the error, either none (<code>"N"</code>), additive (<code>"A"</code>) or multiplicative (<code>"M"</code>). Adding <code>"d"</code> afterwards (<code>"Ad"</code> or <code>"Md"</code>) will dampen the trend, flattening it out into the future.</li>
+<li>trend(): The structure of the trend, either none (<code>"N"</code>), additive (<code>"A"</code>) or multiplicative (<code>"M"</code>). Adding <code>"d"</code> afterwards (<code>"Ad"</code> or <code>"Md"</code>) will dampen the trend, flattening it out into the future.</li>
 <li>season(): The structure of the seasonality, either none (<code>"N"</code>), additive (<code>"A"</code>) or multiplicative (<code>"M"</code>).</li>
 </ul>
 <p>More information is available in the <code>?ETS</code> help file.</p>
@@ -509,13 +518,13 @@ window.Quarto = {
 </section>
 <section id="ets-or-arima" class="level2">
 <h2 class="anchored" data-anchor-id="ets-or-arima">ETS or ARIMA</h2>
-<p>Both ETS and ARIMA models work well for time series that contain trends and seasonality, so which works better? ETS models are well suited to time series with multiplicative patterns since they can be directly modelled without transformations. ETS is also more explainable, since the common temporal patterns of trend and seasonality are directly modelled. ARIMA models however are more capable at incorporating subtle patterns like short-term correlations into the forecasts, and are capable of modelling cyclical data. Often pracitioners use an average of the forecasts from both models to produce a more accurate forecast (ensembling).</p>
-<p>In the day 5 materials we will learn about accuracy measures, which will allow us to more precisely identify which model works best on specific datasets.</p>
+<p>Both ETS and ARIMA models work well for time series that contain trends and seasonality, so which works better? ETS models are well suited to time series with multiplicative patterns since they can be directly modelled without transformations. ETS is also more explainable, since the common temporal patterns of trend and seasonality are directly modelled. ARIMA models however are more capable at incorporating subtle patterns like short-term correlations into the forecasts, and are capable of modelling cyclical data. Often practitioners use an average of the forecasts from both models to produce a more accurate forecast (ensembling).</p>
+<p>In the day 5 exercises we will learn about accuracy measures, which will allow us to more precisely identify which model works best on specific datasets.</p>
 </section>
 </section>
 <section id="apply" class="level1">
 <h1>Apply</h1>
-<p>In this exercise, you use exponential smoothing and ARIMA models to produce forecasts of future administered vaccine doses for the next 12 months.</p>
+<p>In this exercise, you will use exponential smoothing and ARIMA models to produce forecasts of future administered vaccine doses for the next 12 months.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -527,12 +536,12 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><p>Specify and train automatic Exponential Smoothing model</p></li>
+<li><p>Specify and train automatic exponential smoothing model</p></li>
 <li><p>Observe the model table and explain what each row and column represent</p></li>
 <li><p>Extract ETS model’s output using <code>report()</code>, <code>tidy()</code>, <code>glance()</code></p></li>
 <li><p>Extract the components of the selected ETS model</p></li>
 <li><p>Generate forecasts using ETS and observe the forecast table</p></li>
-<li><p>Visualize forecasts</p></li>
+<li><p>Visualise forecasts</p></li>
 <li><p>Use the specific functions to determine manually the components and parameters of ETS models</p></li>
 </ol>
 </div>
@@ -552,7 +561,7 @@ window.Quarto = {
 <li><p>Observe the model table and explain what each row and column represent</p></li>
 <li><p>Extract ARIMA model’s output using <code>report()</code>, <code>tidy()</code>, <code>glance()</code></p></li>
 <li><p>Generate forecasts using ARIMA</p></li>
-<li><p>Visualize forecasts</p></li>
+<li><p>Visualise forecasts</p></li>
 <li><p>Determine model components manually</p></li>
 </ol>
 </div>

@@ -70,17 +70,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href=".//images/fable.svg" rel="icon" type="image/svg+xml">
+<link href=".//images/africast-mark.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ba8acc719c2e99225dd7b16dfa8f5774.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-cc6d87c63f75e33b23f1e40b3bec5464.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-0bed2887bcc57cc24f3e1c6da17be4e2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,9 +110,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-sessions .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
 
-<meta name="twitter:title" content="Tidy time series &amp; forecasting in R – F4SG: Africast">
+    const options = {
+      valueNames: ['listing-title','listing-subtitle','listing-author','listing-date','listing-order',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      
+      searchColumns: ["listing-project","listing-website","listing-from","listing-format","listing-execute","listing-engines","listing-language","listing-date-format","listing-title","listing-subtitle","listing-author","listing-date","listing-order","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-sessions'] = new List('listing-sessions', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta name="twitter:title" content="Tidy time series &amp; forecasting in R">
 <meta name="twitter:description" content="Homepage for forecasting for social good time series AFRICAST workshop">
 <meta name="twitter:image" content="https://workshop.f4sg.org/africast/images/twitter-card.png">
 <meta name="twitter:creator" content="@mitchoharawild">
@@ -119,15 +179,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/africast-mark.png" alt="AFRICAST logo" class="navbar-logo light-content">
+    <img src="./images/africast-mark.png" alt="AFRICAST logo" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">F4SG: Africast</span>
+    <span class="navbar-title">AFRICAST</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -187,6 +251,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About AFRICAST</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
@@ -231,174 +299,195 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#about-africast-project" id="toc-about-africast-project" class="nav-link active" data-scroll-target="#about-africast-project">About AFRICAST project</a></li>
-  <li><a href="#course-overview" id="toc-course-overview" class="nav-link" data-scroll-target="#course-overview">Course Overview</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
-  <li><a href="#educators" id="toc-educators" class="nav-link" data-scroll-target="#educators">Educators</a>
-  <ul class="collapse">
-  <li><a href="#instructor" id="toc-instructor" class="nav-link" data-scroll-target="#instructor">Instructor</a></li>
-  <li><a href="#instructor-1" id="toc-instructor-1" class="nav-link" data-scroll-target="#instructor-1">Instructor</a></li>
-  <li><a href="#instructor-2" id="toc-instructor-2" class="nav-link" data-scroll-target="#instructor-2">Instructor</a></li>
-  <li><a href="#instructor-3" id="toc-instructor-3" class="nav-link" data-scroll-target="#instructor-3">Instructor</a></li>
-  <li><a href="#instructor-4" id="toc-instructor-4" class="nav-link" data-scroll-target="#instructor-4">Instructor</a></li>
-  <li><a href="#planning-team" id="toc-planning-team" class="nav-link" data-scroll-target="#planning-team">Planning team</a></li>
-  <li><a href="#mentors-for-the-cohort-2026" id="toc-mentors-for-the-cohort-2026" class="nav-link" data-scroll-target="#mentors-for-the-cohort-2026">Mentors for the cohort 2026</a></li>
-  <li><a href="#coordinator" id="toc-coordinator" class="nav-link" data-scroll-target="#coordinator">Coordinator</a></li>
-  </ul></li>
-  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a>
-  <ul class="collapse">
-  <li><a href="#required-equipment" id="toc-required-equipment" class="nav-link" data-scroll-target="#required-equipment">Required equipment</a></li>
-  <li><a href="#required-software" id="toc-required-software" class="nav-link" data-scroll-target="#required-software">Required software</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Tidy time series &amp; forecasting in R</h1>
+
+
+
+<div class="home-hero column-screen">
+<div class="home-hero-inner">
+<div class="home-hero-text">
+<p><span class="kicker">AFRICAST 2026 · Forecasting for Social Good</span></p>
+<section id="tidy-time-series-forecasting-in-r" class="level1 unnumbered unlisted">
+<h1 class="unnumbered unlisted">Tidy time series &amp; forecasting in R</h1>
+<p>19–23 October 2026 · online · all times East Africa Time (UTC+3)</p>
+</section>
 </div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="about-africast-project" class="level2">
-<h2 class="anchored" data-anchor-id="about-africast-project">About AFRICAST project</h2>
-<iframe width="800" height="450" src="https://www.youtube.com/embed/4pYlobR-rbQ?si=p795vCfEx38K98KU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
+<div class="home-hero-actions">
+<p><a href="#before-you-start" class="btn btn-hero">Get set up</a> <a href="slides.zip" class="btn btn-hero-outline">Download slides</a></p>
+</div>
+</div>
+</div>
+<div class="home-about column-page">
+<div class="home-about-video">
+<iframe src="https://www.youtube.com/embed/4pYlobR-rbQ?si=p795vCfEx38K98KU" title="About the AFRICAST project" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
-<p><img src="images/fable.svg" class="img-fluid" style="float:right;padding: 0 0 0 10px;" alt="Fable Hex Logo" width="175"></p>
-</section>
-<section id="course-overview" class="level2">
-<h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
-<p>Forecasting is a valuable tool that allows organisations to make informed decisions about the future. Time series forecasting, in particular, uses historical data to predict future trends over time. This technique has extensive applications across a wide range of fields, including finance and economics, health and humanitarian operations, supply chain management, and more. By analysing trends and patterns in data, time series forecasting can help decision-makers identify potential challenges and opportunities, and plan accordingly.</p>
-<p>It is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyse data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.</p>
-<p>This workshop is part of the <a href="https://www.f4sg.org/">Forecasting for Social Good (F4SG)</a> initiative, and will run online from the 19th-23rd October 2026.</p>
-</section>
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h2>
-<p>During the training, participants will gain knowledge and skills in:</p>
+</div>
+<section id="about-africast" class="level2 unnumbered home-about-text">
+<h2 class="unnumbered anchored" data-anchor-id="about-africast">About AFRICAST</h2>
+<p>AFRICAST is part of the <a href="https://www.f4sg.org/">Forecasting for Social Good (F4SG)</a> initiative, building forecasting skills among researchers in Low- and Middle-Income Countries so that forecasts can inform planning and resource allocation. No prior experience with time series is needed.</p>
+<p>During the training, you’ll learn to:</p>
 <ol type="1">
-<li>Preparing time series data for analysis and exploration.</li>
-<li>Extracting and computing useful features from time series data and effectively visualising it.</li>
-<li>Identifying appropriate forecasting algorithms for time series and selecting the best approach for the data at hand.</li>
+<li>Prepare time series data for analysis and exploration.</li>
+<li>Extract and compute useful features from time series data and visualise them effectively.</li>
+<li>Identify appropriate forecasting algorithms and select the best approach for the data at hand.</li>
 </ol>
+<p><a href="./about.html">Read more about the workshop</a></p>
 </section>
-<section id="educators" class="level1">
+</div>
+<section id="sessions" class="level1 column-page">
+<h1>Sessions</h1>
+<p>Each day has two 90-minute live sessions, then exercises with mentors in the afternoon.</p>
+<div id="listing-sessions" class="quarto-listing quarto-listing-container-custom">
+<div class="sessions-grid" style="--days: 5">
+<div class="sg-time" style="grid-column: 1; grid-row: 2">
+10:00
+</div>
+<div class="sg-time" style="grid-column: 1; grid-row: 3">
+11:45
+</div>
+<div class="sg-time" style="grid-column: 1; grid-row: 4">
+17:00
+</div>
+<div class="sg-day" style="grid-column: 2; grid-row: 1">
+<span>Day 1</span> Mon 19 Oct
+</div>
+<div class="sg-cell" style="grid-column: 2; grid-row: 2">
+<a class="sg-session" href="./sessions/day1/basics.html"><span class="sg-num">1</span> <span class="sg-title">Basics of time series and data structures</span> <span class="sg-meta"><span class="sg-when">10:00-11:30 · </span>Mitchell O’Hara-Wild</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 2; grid-row: 3">
+<a class="sg-session" href="./sessions/day1/graphics.html"><span class="sg-num">2</span> <span class="sg-title">Time series patterns and basic graphics</span> <span class="sg-meta"><span class="sg-when">11:45-13:15 · </span>Abiodun Egwuenu</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 2; grid-row: 4">
+<a class="sg-exercises" href="./sessions/day1/exercises.html">Exercises <span class="sg-when">· 17:00-18:00</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 2; grid-row: 5">
+<a class="sg-resources" href="./sessions/day1/resources.html"><svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg> Recording &amp; code</a>
+</div>
+<div class="sg-day" style="grid-column: 3; grid-row: 1">
+<span>Day 2</span> Tue 20 Oct
+</div>
+<div class="sg-cell" style="grid-column: 3; grid-row: 2">
+<a class="sg-session" href="./sessions/day2/features.html"><span class="sg-num">3</span> <span class="sg-title">Computing and visualising features</span> <span class="sg-meta"><span class="sg-when">10:00-11:30 · </span>Mitchell O’Hara-Wild</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 3; grid-row: 3">
+<a class="sg-session" href="./sessions/day2/forecasting.html"><span class="sg-num">4</span> <span class="sg-title">Basic modelling / forecasting</span> <span class="sg-meta"><span class="sg-when">11:45-13:15 · </span>Mitchell O’Hara-Wild</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 3; grid-row: 4">
+<a class="sg-exercises" href="./sessions/day2/exercises.html">Exercises <span class="sg-when">· 17:00-18:00</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 3; grid-row: 5">
+<a class="sg-resources" href="./sessions/day2/resources.html"><svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg> Recording &amp; code</a>
+</div>
+<div class="sg-day" style="grid-column: 4; grid-row: 1">
+<span>Day 3</span> Wed 21 Oct
+</div>
+<div class="sg-cell" style="grid-column: 4; grid-row: 2">
+<a class="sg-session" href="./sessions/day3/regressors.html"><span class="sg-num">5</span> <span class="sg-title">Time series regression</span> <span class="sg-meta"><span class="sg-when">10:00-11:30 · </span>Mitchell O’Hara-Wild</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 4; grid-row: 3">
+<a class="sg-session" href="./sessions/day3/arima.html"><span class="sg-num">6</span> <span class="sg-title">ARIMA</span> <span class="sg-meta"><span class="sg-when">11:45-13:15 · </span>Mustafa Aslan</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 4; grid-row: 4">
+<a class="sg-exercises" href="./sessions/day3/exercises.html">Exercises <span class="sg-when">· 17:00-18:00</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 4; grid-row: 5">
+<a class="sg-resources" href="./sessions/day3/resources.html"><svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg> Recording &amp; code</a>
+</div>
+<div class="sg-day" style="grid-column: 5; grid-row: 1">
+<span>Day 4</span> Thu 22 Oct
+</div>
+<div class="sg-cell" style="grid-column: 5; grid-row: 2">
+<a class="sg-session" href="./sessions/day4/ets.html"><span class="sg-num">7</span> <span class="sg-title">ETS</span> <span class="sg-meta"><span class="sg-when">10:00-11:30 · </span>Bahman Rostami-Tabar</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 5; grid-row: 3">
+<a class="sg-session" href="./sessions/day4/accuracy.html"><span class="sg-num">8</span> <span class="sg-title">Basic training and test accuracy</span> <span class="sg-meta"><span class="sg-when">11:45-13:15 · </span>Bahman Rostami-Tabar</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 5; grid-row: 4">
+<a class="sg-exercises" href="./sessions/day4/exercises.html">Exercises <span class="sg-when">· 17:00-18:00</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 5; grid-row: 5">
+<a class="sg-resources" href="./sessions/day4/resources.html"><svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg> Recording &amp; code</a>
+</div>
+<div class="sg-day" style="grid-column: 6; grid-row: 1">
+<span>Day 5</span> Fri 23 Oct
+</div>
+<div class="sg-cell" style="grid-column: 6; grid-row: 2">
+<a class="sg-session" href="./sessions/day5/diagnostics.html"><span class="sg-num">9</span> <span class="sg-title">Residual diagnostics and cross validation</span> <span class="sg-meta"><span class="sg-when">10:00-11:30 · </span>Bahman Rostami-Tabar</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 6; grid-row: 3">
+<a class="sg-session" href="./sessions/day5/foundation_models.html"><span class="sg-num">10</span> <span class="sg-title">Time series foundation models</span> <span class="sg-meta"><span class="sg-when">11:45-13:15 · </span>Harsha Halgamuwe Hewage</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 6; grid-row: 4">
+<a class="sg-exercises" href="./sessions/day5/exercises.html">Exercises <span class="sg-when">· 17:00-18:00</span></a>
+</div>
+<div class="sg-cell" style="grid-column: 6; grid-row: 5">
+<a class="sg-resources" href="./sessions/day5/resources.html"><svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg> Recording &amp; code</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+</section>
+<section id="educators" class="level1 column-page">
 <h1>Educators</h1>
-<section id="instructor" class="level2">
-<h2 class="anchored" data-anchor-id="instructor">Instructor</h2>
-<p><img src="images/mitch.jpg" class="img-fluid" style="float:right;padding: 0 0 0 10px;" alt="Headshot of Mitchell O'Hara-Wild" width="200"> <a href="https://mitchelloharawild.com/"><strong>Mitchell O’Hara-Wild</strong></a> (he/him) is a PhD candidate at <a href="https://www.monash.edu">Monash University</a>, creating new techniques and tools for forecasting large collections of time series with Rob Hyndman and George Athanasopoulos. He is the lead developer of the tidy time-series forecasting tools fable and feasts, and has co-developed the widely used forecast package since 2015. Mitchell also operates a data consultancy, and has worked on many forecasting projects that have supported decision making and planning for businesses and governments. He is an award-winning educator, and has taught applied forecasting at Monash University and various forecasting workshops around the world.</p>
-<div data-align="center">
-<p><a href="https://www.mitchelloharawild.com"><img border="0" alt="Blog" src="images/social-webhome.svg" width="35" height="35"></a>  <a href="https://github.com/mitchelloharawild"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>  <a href="https://www.linkedin.com/in/mitchelloharawild/"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>  </p>
+<div class="educators">
+<div class="educator">
+<p><img src="images/mitch.jpg" class="img-fluid" alt="Headshot of Mitchell O'Hara-Wild"></p>
+<p><a href="./about.html#mitchell">Mitchell O’Hara-Wild</a></p>
+<p>Monash University · lead developer of fable</p>
 </div>
-</section>
-<section id="instructor-1" class="level2">
-<h2 class="anchored" data-anchor-id="instructor-1">Instructor</h2>
-<p><img src="images/bahman.jpg" class="img-fluid" style="float:right;padding: 0 0 0 10px;" alt="Headshot of Dr. Bahman Rostami-Tabar" width="200"> Bahman is the Professor of Data-Driven Decision Science at Cardiff Business School, Cardiff University, UK. He is interested in transforming data into insights for making smart decisions. Bahman is the founder and director of <a href="https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good">Data Lab for Social Good Research Group</a> at Cardiff University and the founder of <a href="https://www.f4sg.org/">Forecasting for Social Good committee</a> initiatives sponsored by the <a href="https://forecasters.org/programs/communities/forecasting-for-social-good-f4sg/">International Institute of Forecasters</a>. He is also leading the “Uncertainty &amp; the Future” theme at the <a href="https://www.cardiff.ac.uk/digital-transformation-innovation-institute/">Digital Transformation Innovation Institute</a>.</p>
-<p>Bahman specialises in the development and application of modelling, forecasting and management science tools and techniques providing informed insights for planning &amp; decision-making processes in sectors contributing to social good, including healthcare operations, global health and humanitarian supply chains. His collaborative efforts have spanned a multitude of organisations, including notable bodies such as the National Health Service (NHS), Welsh Ambulance Service Trusts (WAST), United States Agency for International Development (USAID), the International Committee of the Red Cross (ICRC), and John Snow Inc.&nbsp;(JSI). A remarkable highlight of his contributions is his pivotal role in disseminating forecasting knowledge especially in low and lower-middle income countries through the <a href="https://www.f4sg.org/services/democratising-forecasting/">democratising forecasting</a> project sponsored by International Institute of Forecasters.</p>
-<div data-align="center">
-<p><a href="http://www.bahmanrt.com/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>  <a href="https://github.com/bahmanrostamitabar/"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>  <a href="https://x.com/Bahman_R_T/"><img border="0" alt="X" src="images/social-x.svg" width="35" height="35"></a> </p>
+<div class="educator">
+<p><img src="images/bahman.jpg" class="img-fluid" alt="Headshot of Bahman Rostami-Tabar"></p>
+<p><a href="./about.html#bahman">Bahman Rostami-Tabar</a></p>
+<p>Cardiff University · founder of F4SG</p>
 </div>
-</section>
-<section id="instructor-2" class="level2">
-<h2 class="anchored" data-anchor-id="instructor-2">Instructor</h2>
-<p><img src="images/Headshot_Abiodun.jpg" class="img-fluid" style="float:right;padding: 0 0 0 10px;" alt="Headshot of Abiodun Egwuenu" width="200"> <strong>Abiodun Egwuenu</strong> is a medical doctor, field epidemiologist, and researcher specialising in antimicrobial resistance (AMR), data science, and public health policy. She is an <a href="https://isid.org/emergingleaders/">International Society for Infectious Diseases Emerging Leader in Infectious Disease Research</a> and a graduate of the Nigeria Field Epidemiology and Laboratory Training Programme. Her professional experience spans the national coordination of Nigeria’s AMR surveillance programme, the Intermediate Field Epidemiology Training Programme, and leadership of infectious disease outbreak responses. She served as the national lead for Nigeria’s mpox response, facilitating surveillance and public health response during the 2022/2023 pandemic.</p>
-<p>She is currently a PhD candidate at Charité – Universitätsmedizin Berlin, Germany. Her doctoral research uses ten years of surveillance data from Nigeria to analyse and model the spatial and temporal dynamics of antimicrobial resistance, generating evidence to strengthen public health interventions, improve surveillance strategies, and inform effective policy responses to AMR. In addition to her research, she serves as Vice Chair of the Board of Members of <a href="https://appliedepi.org/about/governance.html">Applied Epi</a>, where she supports the organisation’s mission to strengthen applied epidemiology through accessible, R-based training.</p>
-</section>
-<section id="instructor-3" class="level2">
-<h2 class="anchored" data-anchor-id="instructor-3">Instructor</h2>
-<p><img src="images/harsha.jpg" class="img-fluid" style="float:right;padding: 0 0 0 10px;" alt="Headshot of Harsha Halgamuwe Hewage" width="200"> <strong>Harsha Halgamuwe Hewage</strong> is a researcher at the <a href="https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good">Data Lab for Social Good</a>, Cardiff Business School, Cardiff University. His work focuses on forecasting and decision support under uncertainty, particularly in public health supply chains, demand forecasting, inventory planning, and time series foundation models. He works with organisations including JSI, USAID, the Ethiopian Pharmaceutical Supply Service, and the HISP Centre at the University of Oslo, with a focus on translating forecasting research into practical tools and approaches for public health decision making.</p>
-<p>Harsha is also involved in <a href="https://forecasters.org/programs/communities/forecasting-for-social-good-f4sg/">Forecasting for Social Good (F4SG)</a> and contributes to its training and capacity-building activities. He delivers forecasting training for public health practitioners, researchers, and government organisations, including recent training activities in Ethiopia and Rwanda. His current work also looks at the use of AI and time series foundation models in forecasting, and how these methods can be used responsibly in public health supply chains. He is also part of the Data Lab for Social Good team working on forecasting avoidable patient harm with the NHS, following the team’s joint first-place result in the 2026 NHS SPHERE-PPL forecasting challenge.</p>
-<div data-align="center">
-<p><a href="https://chamara7h.github.io/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>  <a href="https://github.com/chamara7h"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>  <a href="https://www.linkedin.com/in/harshachamara/"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>  </p>
+<div class="educator">
+<p><img src="images/Headshot_Abiodun.jpg" class="img-fluid" alt="Headshot of Abiodun Egwuenu"></p>
+<p><a href="./about.html#abiodun">Abiodun Egwuenu</a></p>
+<p>Charité Berlin · field epidemiologist</p>
 </div>
-</section>
-<section id="instructor-4" class="level2">
-<h2 class="anchored" data-anchor-id="instructor-4">Instructor</h2>
-<p><img src="images/mustafa.jpeg" class="img-fluid" style="float:right;padding: 0 0 0 10px;" alt="Headshot of Mustafa Aslan" width="200"> <strong>Mustafa Aslan</strong> is a third-year PhD researcher in the <a href="https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good">Data Lab for Social Good Research Group</a> at Cardiff University, UK. His research focuses on reducing delays and inefficiencies in hospital discharge processes and patient flow. Specifically, he works to improve discharge care coordination and operational effectiveness, including workforce planning and patient care delivery. To achieve this, he develops decision-making frameworks that integrate probabilistic forecasting models with sequential optimisation techniques. His work also leverages machine learning-based causal inference methods to provide actionable insights for healthcare providers and administrators on the factors contributing to discharge delays and inefficiencies.</p>
-<p>In addition to his PhD work, he is passionate about mathematical modelling and uncertainty quantification to address complex real-world challenges. He also builds reusable Python packages and is the developer of <a href="https://mustafaslancoto.github.io/peshbeen/">peshbeen</a>, an open-source forecasting package that helps users forecast using both statistical and machine learning models within a single pipeline, as well as generate probabilistic forecasts using various techniques. Furthermore, he is part of the Data Lab for Social Good team working on forecasting avoidable patient harm with the NHS, following the team’s joint first-place result in the 2026 NHS SPHERE-PPL forecasting challenge.</p>
-<div data-align="center">
-<p><a href="https://mustafaslancoto.github.io/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>  <a href="https://github.com/mustafaslanCoto"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>  <a href="https://www.linkedin.com/in/aslanmu"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>  </p>
+<div class="educator">
+<p><img src="images/harsha.jpg" class="img-fluid" alt="Headshot of Harsha Halgamuwe Hewage"></p>
+<p><a href="./about.html#harsha">Harsha Halgamuwe Hewage</a></p>
+<p>Data Lab for Social Good, Cardiff University</p>
 </div>
+<div class="educator">
+<p><img src="images/mustafa.jpeg" class="img-fluid" alt="Headshot of Mustafa Aslan"></p>
+<p><a href="./about.html#mustafa">Mustafa Aslan</a></p>
+<p>Data Lab for Social Good, Cardiff University</p>
+</div>
+</div>
+<p><a href="./about.html#educators">Read full bios, the planning team and mentors →</a></p>
 </section>
-<section id="planning-team" class="level2">
-<h2 class="anchored" data-anchor-id="planning-team">Planning team</h2>
-<p>The workshop is organised behind the scenes by a dedicated planning team, who volunteer their time to coordinate logistics and ensure the workshop runs smoothly. The team includes:</p>
-<ul>
-<li>Mkajuma Charity</li>
-<li>Kennedy Mung’are</li>
-<li>José Thiéry Hagbe</li>
-</ul>
+<section id="before-you-start" class="level1 column-page">
+<h1>Before you start</h1>
+<p>You should be comfortable writing R code with tidyverse packages such as dplyr and ggplot2 (if not, work through <a href="https://startr.numbat.space/" class="uri">https://startr.numbat.space/</a> first). Some familiarity with the mean, variance, quantiles, the normal distribution and regression will help, but isn’t required. Please have everything below ready on your own laptop before the workshop.</p>
+<div class="setup-steps">
+<section id="install-r-and-an-ide" class="level3 setup-step">
+<h3 class="anchored" data-anchor-id="install-r-and-an-ide">Install R and an IDE</h3>
+<p>A recent version of R (4.1+) and an IDE such as RStudio or Positron.</p>
 </section>
-<section id="mentors-for-the-cohort-2026" class="level2">
-<h2 class="anchored" data-anchor-id="mentors-for-the-cohort-2026">Mentors for the cohort 2026</h2>
-<p>A committed team generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the exercises. The team includes:</p>
-<ul>
-<li>Samson Oluwafemi</li>
-<li>Oluchukwu Aghadi</li>
-<li>Lumumba Victor</li>
-<li>Adamu SAIDU Saleh</li>
-<li>Akoeugnigan Idelphonse SODE</li>
-<li>AKOUNDA Badjibassa</li>
-</ul>
+<section id="install-the-packages" class="level3 setup-step">
+<h3 class="anchored" data-anchor-id="install-the-packages">Install the packages</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"fpp3"</span>, <span class="st">"GGally"</span>, <span class="st">"ggtime"</span>, <span class="st">"astsa"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="coordinator" class="level2">
-<h2 class="anchored" data-anchor-id="coordinator">Coordinator</h2>
-<p>The workshop is coordinated by:</p>
-<ul>
-<li>Henry Kissinger Ochieng</li>
-</ul>
-</section>
-</section>
-<section id="preparation" class="level1">
-<h1>Preparation</h1>
-<p>The workshop will provide a quick-start overview of exploring time series data and producing forecasts. There is no need for prior experience in time series to get the most out of this workshop.</p>
-<p>It is expected that you are comfortable with writing R code and using tidyverse packages including dplyr and ggplot2. If you are unfamiliar with writing R code or using the tidyverse, consider working through the learnr materials here: <a href="https://learnr.numbat.space/" class="uri">https://learnr.numbat.space/</a>.</p>
-<p>Some familiarity with statistical concepts such as the mean, variance, quantiles, normal distribution, and regression would be helpful to better understand the forecasts, although this is not strictly necessary.</p>
-<section id="required-equipment" class="level2">
-<h2 class="anchored" data-anchor-id="required-equipment">Required equipment</h2>
-<p>Please have your own laptop capable of running R.</p>
-</section>
-<section id="required-software" class="level2">
-<h2 class="anchored" data-anchor-id="required-software">Required software</h2>
-<p>To be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.</p>
-<ul>
-<li><strong>Time series packages and extensions</strong>
-<ul>
-<li>fpp3, mixtime, ggtime</li>
-</ul></li>
-<li><strong>tidyverse packages and friends</strong>
-<ul>
-<li>tidyverse</li>
-</ul></li>
-</ul>
-<p>The following code will install the main packages needed for the workshop.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>,<span class="st">"fpp3"</span>, <span class="st">"GGally"</span>, <span class="st">"mixtime"</span>, <span class="st">"ggtime"</span>, <span class="st">"astsa"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>After installing these packages, you can download the exercises and data for the course using the following code:</p>
+<section id="download-the-exercises" class="level3 setup-step">
+<h3 class="anchored" data-anchor-id="download-the-exercises">Download the exercises</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_course</span>(<span class="st">"https://workshop.f4sg.org/africast/exercises.zip"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Please have the required software installed and pre-work completed before attending the workshop.</p>
+</section>
+</div>
+</section>
+<section id="supported-by" class="level1 column-page">
+<h1>Supported by</h1>
+<div class="orgs">
+<p><a href="https://forecasters.org/"><img src="images/iifLOGO.jpeg" class="img-fluid" alt="International Institute of Forecasters"></a> <a href="https://www.f4sg.org/"><img src="images/f4sg.svg" class="img-fluid" alt="Forecasting for Social Good"></a> <a href="https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good"><img src="images/orgs/datalab.png" class="img-fluid" alt="Data Lab for Social Good, Cardiff University"></a> <a href="https://www.cardiff.ac.uk/business-school"><img src="images/orgs/cardiff.png" class="img-fluid" alt="Cardiff Business School"></a> <a href="https://www.monash.edu/business"><img src="images/orgs/monash.png" class="img-fluid" alt="Monash Business School"></a> <a href="https://www.jkuat.ac.ke/"><img src="images/orgs/jkuat.png" class="img-fluid" alt="Jomo Kenyatta University of Agriculture and Technology"></a> <a href="https://nectric.com.au/"><img src="images/orgs/nectric.svg" class="img-fluid" alt="Nectric"></a></p>
+</div>
+</section>
 
 
-</section>
-</section>
+
 
 </main> <!-- /main -->
 <!-- plausible --> 
@@ -816,7 +905,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>© Copyright 2026, <a href="https://www.f4sg.org/">F4SG</a></p>
 </div>

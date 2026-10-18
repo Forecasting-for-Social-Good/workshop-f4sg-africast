@@ -70,17 +70,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../..//images/fable.svg" rel="icon" type="image/svg+xml">
+<link href="../..//images/africast-mark.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ba8acc719c2e99225dd7b16dfa8f5774.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-cc6d87c63f75e33b23f1e40b3bec5464.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0bed2887bcc57cc24f3e1c6da17be4e2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -155,8 +155,12 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/africast-mark.png" alt="AFRICAST logo" class="navbar-logo light-content">
+    <img src="../../images/africast-mark.png" alt="AFRICAST logo" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">F4SG: Africast</span>
+    <span class="navbar-title">AFRICAST</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -215,6 +219,10 @@ window.Quarto = {
   <li class="nav-item">
     <a class="nav-link" href="../../schedule.html"> 
 <span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About AFRICAST</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -313,12 +321,15 @@ window.Quarto = {
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibbledata)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fable)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>aus_print <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span> </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Industry <span class="sc">==</span> <span class="st">"Newspaper and book retailing"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Turnover =</span> <span class="fu">sum</span>(Turnover))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtime)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>aus_print <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Industry <span class="sc">==</span> <span class="st">"Newspaper and book retailing"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Turnover =</span> <span class="fu">sum</span>(Turnover))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -342,13 +353,12 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aus_economy <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Australia"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">year</span>(Month)) <span class="sc">|&gt;</span> </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(aus_economy, <span class="at">by =</span> <span class="st">"Year"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover<span class="sc">/</span>CPI)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>aus_economy <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Australia"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">year</span>(Month)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(aus_economy, <span class="at">by =</span> <span class="st">"Year"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover<span class="sc">/</span>CPI)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -368,7 +378,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Select a country of your choice from <code>global_economy</code>, then calculate and visualise the the GDP per capita over time (that is, the GDP scaled by the population).</p>
+<p>Select a country of your choice from <code>global_economy</code>, then calculate and visualise the GDP per capita over time (that is, the GDP scaled by the population).</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -386,9 +396,8 @@ window.Quarto = {
 </div>
 <p>Another useful transformation is calendar adjustments. This adjusts the observations in the time series to represent an equivalent time period, and can simplify seasonal patterns which result from these different lengths. This is particularly useful for monthly data, since the number of days in each month varies substantially.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(feasts)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover <span class="sc">/</span> <span class="fu">days_in_month</span>(Month))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover <span class="sc">/</span> lubridate<span class="sc">::</span><span class="fu">days_in_month</span>(Month))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -397,7 +406,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_subseries</span>(Turnover <span class="sc">/</span> <span class="fu">days_in_month</span>(Month))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_subseries</span>(Turnover <span class="sc">/</span> lubridate<span class="sc">::</span><span class="fu">days_in_month</span>(Month))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -416,7 +425,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Calculate the monthly total Australian retail turnover from <code>aus_retail</code> and visualise the seasonal pattern. Then scale by the number of days in each month to calculate the daily average turnover and comparse the seasonal patterns.</p>
+<p>Calculate the monthly total Australian retail turnover from <code>aus_retail</code> and visualise the seasonal pattern. Then scale by the number of days in each month to calculate the daily average turnover and compare the seasonal patterns.</p>
 </div>
 </div>
 <p>Mathematical transformations are useful since they don’t require providing any future values to produce the forecasts. Log and power transformations (<span class="math inline">\(y^k\)</span>, for example square root, square, and inverse) are particularly helpful for regularising variation proportional to the level of the series.</p>
@@ -447,7 +456,7 @@ window.Quarto = {
 </div>
 <p>Log transforming the data changes this variation to be more consistent, where the variation before 2000 is now more similar to after 2010.</p>
 <p>The box-cox transformation family parameterises the range of power transformations for more precise adjustments. The transformation parameter <span class="math inline">\(\lambda\)</span> controls the strength of the transformation, with <span class="math inline">\(\lambda=1\)</span> being no change in shape, <span class="math inline">\(\lambda = 0\)</span> being a log transformation and others being equivalent in shape to <span class="math inline">\(y^\lambda\)</span>.</p>
-<p>The log transformation above was a bit strong, so let’s try something slightly close to <span class="math inline">\(\lambda=1\)</span> - perhaps <span class="math inline">\(\lambda = 0.1\)</span>?</p>
+<p>The log transformation above was a bit strong, so let’s try something slightly closer to <span class="math inline">\(\lambda=1\)</span> - perhaps <span class="math inline">\(\lambda = 0.1\)</span>?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>aus_retail <span class="sc">|&gt;</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>, Industry <span class="sc">==</span> <span class="st">"Cafes, restaurants and catering services"</span>) <span class="sc">|&gt;</span> </span>
@@ -516,7 +525,7 @@ window.Quarto = {
 </section>
 <section id="decomposition" class="level2">
 <h2 class="anchored" data-anchor-id="decomposition">Decomposition</h2>
-<p>Another commonly used transformation/adjustment requires a model to decompose the time series into its components. Seasonally adjusted time series are often used by analysts and policy makers to evaluate the underlying long term trends without the added complexity of seasonality. The STL decomposition is useful model which can isolate the seasonal pattern from the trend and remainder for many types of time series.</p>
+<p>Another commonly used transformation/adjustment requires a model to decompose the time series into its components. Seasonally adjusted time series are often used by analysts and policy makers to evaluate the underlying long term trends without the added complexity of seasonality. The STL decomposition is a useful model which can isolate the seasonal pattern from the trend and remainder for many types of time series.</p>
 <p>The STL decomposition separates time series into the form <span class="math inline">\(Y = \text{trend} + \text{seasonality} + \text{remainder}\)</span>. Since this is an additive decomposition, we must first simplify any multiplicative patterns into additive ones using a suitable power transformation. Let’s try to remove the annual seasonality from Australia’s print media turnover.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>aus_print <span class="sc">|&gt;</span> </span>
@@ -792,15 +801,15 @@ window.Quarto = {
 <ol type="1">
 <li><p>Decomposition</p>
 <ul>
-<li>Do an STL decomposition of <code>dose_adminstrated</code> for a region of your choice. You will need to choose a trend and seasonal window to allow for the changing shape of these components. How do values of parameters in trend and season changes the decomposition?</li>
+<li>Do an STL decomposition of <code>dose_administered</code> for a region of your choice. You will need to choose a trend and seasonal window to allow for the changing shape of these components. How do the values of the trend and season parameters change the decomposition?</li>
 <li>Plot the components from the STL decomposition.</li>
-<li>Could you describe the result of the decomposition.</li>
-<li>Could you produce a seasonally adjusted series and plot them with the dose admonstarted and the trend?</li>
+<li>Describe the result of the decomposition.</li>
+<li>Produce a seasonally adjusted series and plot it with the doses administered and the trend.</li>
 </ul></li>
 <li><p>Computing features</p>
 <ul>
-<li>Computer average, standard deviation and coefficient of variation (cv) for the monthly time series</li>
-<li>Compute all features for 9 monthly time series corresponding to vaccine doses adminstrated in 9 regions</li>
+<li>Compute the average, standard deviation and coefficient of variation (CV) for the monthly time series</li>
+<li>Compute all features for 9 monthly time series corresponding to vaccine doses administered in 9 regions</li>
 <li>Examine the following features and provide an interpretation based on their values:
 <ul>
 <li>spectral entropy</li>
@@ -810,10 +819,10 @@ window.Quarto = {
 <li>season_acf1</li>
 </ul></li>
 </ul></li>
-<li><p>Visualizing features</p>
+<li><p>Visualising features</p>
 <ul>
 <li>Create a scatter plot that shows the strength of trend versus strength of seasonality. What information does this plot convey?</li>
-<li>Which feature indicates how difficult/easy a time series is to forecast? Use that feature to create a distribution of forecastability of time series usign a boxplot or density plot. How such distribution could be informative?</li>
+<li>Which feature indicates how difficult/easy a time series is to forecast? Use that feature to create a distribution of forecastability of time series using a boxplot or density plot. How could such a distribution be informative?</li>
 </ul></li>
 </ol>
 </div>

@@ -1,5 +1,30 @@
 [
   {
+    "listing": "/index.html",
+    "items": [
+      "/sessions/day1/basics.html",
+      "/sessions/day1/exercises.html",
+      "/sessions/day1/graphics.html",
+      "/sessions/day1/resources.html",
+      "/sessions/day2/exercises.html",
+      "/sessions/day2/features.html",
+      "/sessions/day2/forecasting.html",
+      "/sessions/day2/resources.html",
+      "/sessions/day3/arima.html",
+      "/sessions/day3/exercises.html",
+      "/sessions/day3/regressors.html",
+      "/sessions/day3/resources.html",
+      "/sessions/day4/accuracy.html",
+      "/sessions/day4/ets.html",
+      "/sessions/day4/exercises.html",
+      "/sessions/day4/resources.html",
+      "/sessions/day5/diagnostics.html",
+      "/sessions/day5/exercises.html",
+      "/sessions/day5/foundation_models.html",
+      "/sessions/day5/resources.html"
+    ]
+  },
+  {
     "listing": "/schedule.html",
     "items": [
       "/sessions/day1/basics.html",
