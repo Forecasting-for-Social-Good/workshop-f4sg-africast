@@ -715,7 +715,8 @@ gridExtra::grid.arrange(tp1, tp2, tp3, tp4,
 
 ## Example: White noise
 
-```{r, fig.height=3.3}
+```{r wn, fig.height=3.3}
+set.seed(4)
 wn <- tsibble(t = seq(36), y = rnorm(36), index = t)
 wn |> autoplot(y)
 ```
