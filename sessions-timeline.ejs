@@ -7,6 +7,15 @@ const strip = (s) => String(s || "").replace(/<[^>]*>/g, "").trim();
 const authors = (a) => Array.isArray(a) ? a.map((x) => x.name || x).join(", ") : (a && a.name) || a || "";
 const initials = (name) => name.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 
+// Instructor headshots, matched on the author name in each session's front matter
+const photos = {
+  "Mitchell O'Hara-Wild": "images/mitch.jpg",
+  "Abiodun Egwuenu": "images/Headshot_Abiodun.jpg",
+  "Mustafa Aslan": "images/mustafa.jpeg",
+  "Bahman Rostami-Tabar": "images/bahman.jpg",
+  "Harsha Halgamuwe Hewage": "images/harsha.jpg",
+};
+
 // One short theme per day, in day order (shown under the day heading)
 const themes = [
   "The basics of time series",
@@ -56,7 +65,7 @@ const dayData = days.map((day) => {
 <div class="tl-day" id="day-<%= d + 1 %>">
 <div class="tl-heading"><span class="tl-kicker">Day <%= d + 1 %> · <%= day.date %></span><span class="tl-theme"><%= themes[d] || "" %></span></div>
 <% day.lectures.forEach((item, i) => { const name = authors(item.author); %>
-<div class="tl-row tl-lecture"><div class="tl-when"><%= range(item)[0] %><span><%= range(item)[1] %></span></div><div class="tl-rail"><i></i></div><div class="tl-card"><span class="tl-tag">Lecture</span><a class="tl-title" href="<%- item.path %>"><%= item.title %></a><span class="tl-who"><span class="tl-av tl-av-<%= people.indexOf(name) % 5 %>"><%= initials(name) %></span><%= name %></span></div></div>
+<div class="tl-row tl-lecture"><div class="tl-when"><%= range(item)[0] %><span><%= range(item)[1] %></span></div><div class="tl-rail"><i></i></div><div class="tl-card"><span class="tl-tag">Lecture</span><a class="tl-title" href="<%- item.path %>"><%= item.title %></a><span class="tl-who"><% if (photos[name]) { %><img class="tl-av" src="<%- photos[name] %>" alt="" width="30" height="30"><% } else { %><span class="tl-av tl-av-<%= people.indexOf(name) % 5 %>"><%= initials(name) %></span><% } %><%= name %></span></div></div>
 <% }) %>
 <% if (day.exercises) { %>
 <div class="tl-row tl-gap"><div class="tl-when"></div><div class="tl-rail"></div><div class="tl-break">Break · <%= range(day.lectures[day.lectures.length - 1])[1] %>–<%= range(day.exercises)[0] %></div></div>

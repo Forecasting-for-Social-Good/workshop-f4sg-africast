@@ -352,7 +352,14 @@ html { scroll-behavior: smooth; }
   color: white;
   font-size: 0.68rem;
   font-weight: 700;
-  // one colour per instructor
+  // headshots: square crop anchored near the top so faces stay in frame
+  &[src] {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    object-position: 50% 20%;
+  }
+  // initials fallback, one colour per instructor
   &.tl-av-0 { background: $africast-blue; }
   &.tl-av-1 { background: $ochre; }
   &.tl-av-2 { background: $grass; }
