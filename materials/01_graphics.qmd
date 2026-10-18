@@ -80,7 +80,7 @@ par(opar)
 
 ```{r trend, fig.align='center', echo=FALSE,out.width="100%"}
 set.seed(2)
-demand_trend <- list(ts(rep(100,7*4)+c(1:7*4)+round(rnorm(28,0,5)), frequency=4,start=c(2016,1)),
+demand_trend <- list(ts(rep(100,7*4)+c(1:(7*4))+round(rnorm(28,0,5)), frequency=4,start=c(2016,1)),
                 ts(rep(100,7*4)+c(1:(7*4)), frequency=4,start=c(2016,1)),
                 ts(rep(100,7*4)-c(1:(7*4))+round(rnorm(28,0,5)), frequency=4,start=c(2016,1)),
                 ts(rep(100,7*4)-c(1:(7*4)), frequency=4,start=c(2016,1)))
