@@ -292,11 +292,11 @@ griddf <- expand.grid(p = 0:6, q = 0:6) |>
   mutate(step = as.character(step))
 griddf |>
   ggplot(aes(x = q, y = p)) +
-  geom_point(aes(alpha = 0.2), colour = "gray", size = 5, shape = 19) +
+  geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
   geom_segment(aes(x = fromq, y = fromp, xend = q, yend = p, col = step),
     data = griddf |> filter(step %in% "1"),
     arrow = arrow(length = unit(0.15, "inches"), type = "open"),
-    size = 1, lineend = "butt"
+    linewidth = 1, lineend = "butt"
   ) +
   geom_point(aes(col = step),
     size = 5, shape = 19,
@@ -318,8 +318,7 @@ griddf |>
   scale_colour_manual(
     breaks = paste(1:4),
     values = c("#D55E00", "#0072B2", "#009E73", "#CC79A7")
-  ) +
-  guides(alpha = FALSE)
+  )
 ```
 
 ## How does ARIMA() work?
@@ -327,11 +326,11 @@ griddf |>
 ```{r ARMAgridsearch2, echo=FALSE, message=FALSE, warning=FALSE, fig.asp=1, out.width="60%", fig.width=4, fig.height=4}
 griddf |>
   ggplot(aes(x = q, y = p)) +
-  geom_point(aes(alpha = 0.2), colour = "gray", size = 5, shape = 19) +
+  geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
   geom_segment(aes(x = fromq, y = fromp, xend = q, yend = p, col = step),
     data = griddf |> filter(step == "2"),
     arrow = arrow(length = unit(0.15, "inches"), type = "open"),
-    size = 1, lineend = "butt"
+    linewidth = 1, lineend = "butt"
   ) +
   geom_point(aes(col = step),
     size = 5, shape = 19,
@@ -353,8 +352,7 @@ griddf |>
   scale_colour_manual(
     breaks = paste(1:4),
     values = c("#D55E00", "#0072B2", "#009E73", "#CC79A7")
-  ) +
-  guides(alpha = FALSE)
+  )
 ```
 
 ## How does ARIMA() work?
@@ -362,11 +360,11 @@ griddf |>
 ```{r ARMAgridsearch3, echo=FALSE, message=FALSE, warning=FALSE, fig.asp=1, out.width="60%", fig.width=4, fig.height=4}
 griddf |>
   ggplot(aes(x = q, y = p)) +
-  geom_point(aes(alpha = 0.2), colour = "gray", size = 5, shape = 19) +
+  geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
   geom_segment(aes(x = fromq, y = fromp, xend = q, yend = p, col = step),
     data = griddf |> filter(step %in% "3"),
     arrow = arrow(length = unit(0.15, "inches"), type = "open"),
-    size = 1, lineend = "butt"
+    linewidth = 1, lineend = "butt"
   ) +
   geom_point(aes(col = step),
     size = 5, shape = 19,
@@ -391,8 +389,7 @@ griddf |>
   scale_colour_manual(
     breaks = paste(1:4),
     values = c("#D55E00", "#0072B2", "#009E73", "#CC79A7")
-  ) +
-  guides(alpha = FALSE)
+  )
 ```
 
 ## How does ARIMA() work?
@@ -400,11 +397,11 @@ griddf |>
 ```{r ARMAgridsearch4, echo=FALSE, message=FALSE, warning=FALSE, fig.asp=1, out.width="60%", fig.width=4, fig.height=4}
 griddf |>
   ggplot(aes(x = q, y = p)) +
-  geom_point(aes(alpha = 0.2), colour = "gray", size = 5, shape = 19) +
+  geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
   geom_segment(aes(x = fromq, y = fromp, xend = q, yend = p, col = step),
     data = griddf |> filter(step %in% "4"),
     arrow = arrow(length = unit(0.15, "inches"), type = "open"),
-    size = 1, lineend = "butt"
+    linewidth = 1, lineend = "butt"
   ) +
   geom_point(aes(col = step),
     size = 5, shape = 19,
@@ -429,8 +426,7 @@ griddf |>
   scale_colour_manual(
     breaks = paste(1:4),
     values = c("#D55E00", "#0072B2", "#009E73", "#CC79A7")
-  ) +
-  guides(alpha = FALSE)
+  )
 ```
 
 
