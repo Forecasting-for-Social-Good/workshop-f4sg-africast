@@ -761,7 +761,7 @@ forecast(fit, advert_c) |> autoplot(insurance)
 
 ## Lead predictors
 
-Sometimes a change in the predictor $x_t$ that will happen in the future will affect the value of $y_t$ in the past. We say $x_t$ is a leading indicator.
+Sometimes $y_t$ responds to a change in $x$ before it happens, because the change is anticipated. Then $y_t$ depends on future values $x_{t+1}, x_{t+2}, \dots$
 
 * Lead values of a predictor:
     * Create new variables by shifting the existing variable forwards
