@@ -23,8 +23,8 @@ live-questions:
 #| include: false
 #| cache: false
 source("setup.R")
-ausbeer <- as_tsibble(fpp2::ausbeer) |>
-  rename(Time = index, Production = value)
+ausbeer <- aus_production |>
+  select(Time = Quarter, Production = Beer)
 library(fpp3)
 library(tidyverse)
 ```
