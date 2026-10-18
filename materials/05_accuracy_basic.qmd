@@ -103,7 +103,7 @@ beer_fit <- aus_production |>
     mean = MEAN(Beer)
   )
 beer_fit |>
-  forecast(h = "3 years") |>
+  forecast(h = 10) |>
   autoplot(aus_production, level = NULL) +
   labs(title ="Forecasts for quarterly beer production",
        x ="Year", y ="Megalitres") +
@@ -120,7 +120,7 @@ beer_fit <- aus_production |>
     mean = MEAN(Beer)
   )
 beer_fit |>
-  forecast(h = "3 years") |>
+  forecast(h = 10) |>
   autoplot(aus_production, level = NULL) +
   labs(
     title = "Forecasts for quarterly beer production",
@@ -213,7 +213,7 @@ Proposed by Hyndman and Koehler (IJF, 2006).
 ## Measures of forecast accuracy {.code-small}
 
 ```{r beer-test-accuracy, dependson='beer-fc-1'}
-beer_fc <- forecast(beer_fit, h = "3 years")
+beer_fc <- forecast(beer_fit, h = 10)
 accuracy(beer_fc, aus_production)
 ```
 
