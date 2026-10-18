@@ -449,7 +449,7 @@ $$\text{ARIMA}~\underbrace{(p,d,q)}_{\text{Non-seasonal part}}~\underbrace{(P,D,
 Seasonal and non-seasonal terms combine multiplicatively
 :::
 
-## Cortecosteroid drug sales
+## Corticosteroid drug sales
 
 ```{r, echo=TRUE}
 h02 <- PBS |>
@@ -457,7 +457,7 @@ h02 <- PBS |>
   summarise(Cost = sum(Cost) / 1e6)
 ```
 
-## Cortecosteroid drug sales
+## Corticosteroid drug sales
 
 ```{r, echo=TRUE}
 h02 |> autoplot(
@@ -465,7 +465,7 @@ h02 |> autoplot(
 )
 ```
 
-## Cortecosteroid drug sales
+## Corticosteroid drug sales
 
 ```{r, echo=TRUE}
 h02 |> autoplot(
@@ -473,7 +473,7 @@ h02 |> autoplot(
 )
 ```
 
-## Cortecosteroid drug sales
+## Corticosteroid drug sales
 
 ```{r, echo=TRUE}
 h02 |> autoplot(
@@ -481,7 +481,7 @@ h02 |> autoplot(
 )
 ```
 
-## Cortecosteroid drug sales
+## Corticosteroid drug sales
 
 ```{r, echo=TRUE}
 h02 |> autoplot(
@@ -489,7 +489,7 @@ h02 |> autoplot(
 )
 ```
 
-## Cortecosteroid drug sales
+## Corticosteroid drug sales
 
 ```{r h02fit, echo=TRUE, fig.height=2.8}
 h02 |>
@@ -497,7 +497,7 @@ h02 |>
   report()
 ```
 
-## Cortecosteroid drug sales
+## Corticosteroid drug sales
 
 ```{r h02fcst, echo=TRUE, fig.height=2.8}
 h02 |>
@@ -506,7 +506,7 @@ h02 |>
   autoplot(h02)
 ```
 
-## Cortecosteroid drug sales {.code-small}
+## Corticosteroid drug sales {.code-small}
 
 ```{r h02tryharder, echo=TRUE, fig.height=3.6}
 fit <- h02 |>
@@ -518,7 +518,7 @@ fit <- h02 |>
 report(fit)
 ```
 
-## Cortecosteroid drug sales
+## Corticosteroid drug sales
 
 ```{r h02f, echo=TRUE, fig.height=2.8}
 fit |>
