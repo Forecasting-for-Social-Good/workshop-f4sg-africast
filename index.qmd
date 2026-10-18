@@ -145,6 +145,6 @@ usethis::use_course("https://workshop.f4sg.org/africast/exercises.zip")
 [![Cardiff Business School](images/orgs/cardiff.png)](https://www.cardiff.ac.uk/business-school)
 [![Monash Business School](images/orgs/monash.png)](https://www.monash.edu/business)
 [![Jomo Kenyatta University of Agriculture and Technology](images/orgs/jkuat.png)](https://www.jkuat.ac.ke/)
-[![Nectric](images/orgs/nectric.png)](https://nectric.com.au/)
+[![Nectric](images/orgs/nectric.svg)](https://nectric.com.au/)
 :::
 :::
