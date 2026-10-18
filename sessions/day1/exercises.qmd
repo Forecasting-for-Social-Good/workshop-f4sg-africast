@@ -17,7 +17,7 @@ library(dplyr)
 library(fable)
 library(feasts)
 library(ggplot2)
-library(mixtime)
+library(lubridate)
 library(ggtime)
 
 knitr::opts_knit$set(root.dir = "../../exercises")
@@ -121,7 +121,7 @@ Looking at the index column (`Date`), we can see that each point in time is thre
 
 Temporal granularity is the resolution in time. The time variable needs to match this resolution.
 
-In this example, a date was used to represent quarters, but instead we must use `yearquarter()` from the `{mixtime}` package to match the temporal granularity.
+In this example, a date was used to represent quarters, but instead we must use `yearquarter()` from the `{tsibble}` package to match the temporal granularity.
 
 Here's a helpful list of common granularities:
 
@@ -130,7 +130,7 @@ Here's a helpful list of common granularities:
 * `yearmonth()`: Monthly data
 * `yearweek()`: Weekly data
 * `as.Date()`: Daily data
-* `datetime()`: Sub-daily data
+* `as_datetime()`: Sub-daily data
 :::
 
 To use the appropriate temporal granularity, we first must change our `Date` column before creating the tsibble.
@@ -227,7 +227,7 @@ Which state has had the most accommodation takings in 2010? Let's calculate tota
 
 ```{r}
 aus_accommodation |> 
-  filter(year(Date) == year(2010L)) |> 
+  filter(year(Date) == 2010) |> 
   as_tibble() |> 
   group_by(State) |> 
   summarise(Takings = sum(Takings), Occupancy = sum(Occupancy)) |> 

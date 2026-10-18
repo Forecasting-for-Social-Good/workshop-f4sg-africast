@@ -13,7 +13,6 @@ library(fable)
 library(feasts)
 library(fabletools)
 library(tidyverse)
-library(mixtime)
 library(ggtime)
 ```
 
@@ -66,7 +65,6 @@ library(fable)
 library(feasts)
 library(fabletools)
 library(tidyverse)
-library(mixtime)
 library(ggtime)
 
 vaccine_administered_tsb <- read_rds("data/vaccine_administered_tsb.rds")

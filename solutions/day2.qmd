@@ -6,7 +6,6 @@ editor: visual
 ```{r}
 #| label: setup
 library(fpp3)
-library(mixtime)
 library(ggtime)
 ```
 
@@ -100,7 +99,6 @@ library(tsibble)
 library(feasts)
 library(fabletools)
 library(tidyverse)
-library(mixtime)
 library(ggtime)
 
 vaccine_administered_tsb <- read_rds("data/vaccine_administered_tsb.rds")

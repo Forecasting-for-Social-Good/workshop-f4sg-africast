@@ -13,7 +13,7 @@ library(tsibble)
 library(dplyr)
 library(fable)
 library(feasts)
-library(mixtime)
+library(lubridate)
 library(ggtime)
 tourism <- read_csv("data/tourism.csv") |> 
   mutate(Quarter = yearquarter(Quarter)) |> 
@@ -99,7 +99,6 @@ Let's first import data and observe it. This dataset is located in`data` directo
 library(tidyverse)
 library(tsibble)
 library(feasts)
-library(mixtime)
 library(ggtime)
 vaccine_administered <- read_csv("data/vaccine_administered.csv")
 vaccine_administered

@@ -21,7 +21,7 @@ library(tsibbledata)
 library(fable)
 library(feasts)
 library(dplyr)
-library(mixtime)
+library(lubridate)
 library(ggtime)
 aus_print <- aus_retail |> 
   filter(Industry == "Newspaper and book retailing") |> 
@@ -40,8 +40,7 @@ It can be useful to use other datasets that contain information for the transfor
 
 ```{r}
 aus_economy <- global_economy |> 
-  filter(Country == "Australia") |> 
-  mutate(Year = year(as.integer(Year)))
+  filter(Country == "Australia")
 aus_print |> 
   mutate(Year = year(Month)) |> 
   left_join(aus_economy, by = "Year") |> 

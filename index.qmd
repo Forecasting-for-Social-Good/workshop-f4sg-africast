@@ -126,14 +126,14 @@ Please have your own laptop capable of running R.
 To be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.
 
 -   **Time series packages and extensions**
-    -   fpp3, mixtime, ggtime
+    -   fpp3, ggtime
 -   **tidyverse packages and friends**
     -   tidyverse
 
 The following code will install the main packages needed for the workshop.
 
 ```r
-install.packages(c("tidyverse","fpp3", "GGally", "mixtime", "ggtime", "astsa", "usethis"))
+install.packages(c("tidyverse","fpp3", "GGally", "ggtime", "astsa", "usethis"))
 ```
 
 After installing these packages, you can download the exercises and data for the course using the following code:

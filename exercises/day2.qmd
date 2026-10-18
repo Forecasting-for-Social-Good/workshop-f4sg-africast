@@ -5,7 +5,6 @@ title: "Lab exercise: day 2"
 ```{r}
 #| label: setup
 library(fpp3)
-library(mixtime)
 library(ggtime)
 ```
 

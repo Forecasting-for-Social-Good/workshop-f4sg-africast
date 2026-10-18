@@ -190,7 +190,6 @@ install.packages(c(
   "fpp3",
   "GGally",
   "ggtime",
-  "mixtime",
   "astsa"
 ))
 ```

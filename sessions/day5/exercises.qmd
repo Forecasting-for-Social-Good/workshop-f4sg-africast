@@ -13,7 +13,6 @@ library(tsibble)
 library(tsibbledata)
 library(tidyverse)
 library(fable)
-library(mixtime)
 library(ggtime)
 ```
 

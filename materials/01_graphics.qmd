@@ -21,7 +21,6 @@ source("setup.R")
 # gg_lag(), and autoplot() for tsibbles/ACF); feasts is reserved for
 # decomposition and feature extraction.
 library(ggtime)
-library(mixtime)
 for (f in c("common/morph.R", "horizon.R", "season.R", "subseries.R", "acf.R")) {
   source(file.path("R", "morph", f))
 }
@@ -216,7 +215,7 @@ So little vertical space that many series can be stacked and compared.
 #| include: false
 beer <- aus_production |>
   select(Quarter, Beer) |>
-  filter(year(Quarter) >= year(1992L))
+  filter(year(Quarter) >= 1992)
 ```
 
 ## Building a seasonal plot
@@ -229,7 +228,7 @@ beer <- aus_production |>
 #| output: asis
 #| cache: false
 beer_morph <- aus_production |>
-  filter(year(Quarter) >= year(1992L)) |>
+  filter(year(Quarter) >= 1992) |>
   select(Quarter, Beer)
 season_morph(
   beer_morph, Beer,
@@ -374,16 +373,14 @@ holidays |> gg_subseries(Trips) +
 
 ```{r ggtime_calendar, eval=FALSE}
 library(ggtime)
-library(mixtime)
 vic_elec |>
-  filter(year(Date) == year(2014L)) |>
+  filter(year(Date) == 2014) |>
   as_tibble() |>
-  mutate(Time = datetime(Time)) |>
   ggplot(aes(x = Time, y = Demand)) +
   geom_line() +
   coord_calendar(rows = month(1L), cols = NULL) +
   scale_x_mixtime(
-    time_breaks = days(1L),
+    time_breaks = mixtime::days(1L),
     time_labels = "{cyc(day, cal_isoweek$week, label = TRUE, abbreviate = TRUE)}"
   ) +
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
@@ -422,7 +419,7 @@ Cyclic
 
 ```{r, fig.height=2.7}
 aus_production |>
-  filter(year(Quarter) >= year(1980L)) |>
+  filter(year(Quarter) >= 1980) |>
   autoplot(Electricity) +
   labs(y = "GWh", title = "Australian electricity production")
 ```
@@ -440,7 +437,7 @@ aus_production |>
 
 ```{r, fig.height=2.7}
 us_employment |>
-  filter(Title == "Retail Trade", year(Month) >= year(1980L)) |>
+  filter(Title == "Retail Trade", year(Month) >= 1980) |>
   autoplot(Employed / 1e3) +
   labs(title = "Retail employment, USA", y = "Million people")
 ```
@@ -449,7 +446,7 @@ us_employment |>
 
 ```{r, fig.height=2.7}
 gafa_stock |>
-  filter(Symbol == "AMZN", year(Date) >= year(2018L)) |>
+  filter(Symbol == "AMZN", year(Date) >= 2018) |>
   autoplot(Close) +
   labs(title = "Amazon closing stock price", x = "Day", y = "$")
 ```
@@ -483,7 +480,7 @@ The timing of peaks and troughs is predictable with seasonal data, but unpredict
 
 ```{r}
 new_production <- aus_production |>
-  filter(year(Quarter) >= year(1992L))
+  filter(year(Quarter) >= 1992)
 new_production
 ```
 
@@ -605,7 +602,7 @@ holidays |> ACF(Trips) |> autoplot()
 
 ```{r}
 retail <- us_employment |>
-  filter(Title == "Retail Trade", year(Month) >= year(1980L))
+  filter(Title == "Retail Trade", year(Month) >= 1980)
 retail |> autoplot(Employed)
 ```
 
@@ -621,7 +618,7 @@ retail |>
 
 ```{r google-2015}
 google_2015 <- gafa_stock |>
-  filter(Symbol == "GOOG", year(Date) == year(2015L)) |>
+  filter(Symbol == "GOOG", year(Date) == 2015) |>
   select(Date, Close)
 google_2015
 ```
@@ -719,7 +716,7 @@ wn |>
 
 ```{r, fig.height=2.5}
 pigs <- aus_livestock |>
-  filter(State == "Victoria", Animal == "Pigs", year(Month) >= year(2014L))
+  filter(State == "Victoria", Animal == "Pigs", year(Month) >= 2014)
 pigs |> autoplot(Count / 1e3) +
   labs(x = "Year", y = "Thousands",
        title = "Number of pigs slaughtered in Victoria")

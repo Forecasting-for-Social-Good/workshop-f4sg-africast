@@ -10,7 +10,6 @@ library(tsibbledata)
 library(fable)
 library(feasts)
 library(tidyverse)
-library(mixtime)
 library(ggtime)
 ```
 
