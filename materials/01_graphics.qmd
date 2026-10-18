@@ -739,9 +739,7 @@ wn |>
   as_tibble() |>
   mutate(lag = as.numeric(lag)) |>
   pivot_wider(names_from = lag, values_from = acf) |>
-  rename_all(function(x) {
-    paste("$r_{", x, "}$", sep = "")
-  }) |>
+  rename_with(\(x) paste0("$r_{", x, "}$")) |>
   knitr::kable(
     format = "pipe",
     escape = FALSE, align = "c", digits = 3,
