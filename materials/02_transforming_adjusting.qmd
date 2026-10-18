@@ -420,11 +420,11 @@ us_retail_employment |>
 * Algorithm that updates trend and seasonal components iteratively.
 * Starts with $\hat{T}_t=0$
 * Uses a mixture of loess and moving averages to successively refine the trend and seasonal estimates.
-* trend window controls loess bandwidth on deasonalised values.
+* trend window controls loess bandwidth on deseasonalised values.
 * season window controls loess bandwidth on detrended subseries.
 * Robustness weights based on remainder.
 * Default season: `window = 13`
-* Default trend: `window = nextodd(ceiling((1.5*period)/(1-(1.5/s.window)))`
+* Default trend: `window = nextodd(ceiling((1.5*period)/(1-(1.5/s.window))))`
 * `window` values should be odd numbers for symmetry.
 
 ## Australian holidays
