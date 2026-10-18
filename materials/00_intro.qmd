@@ -6,7 +6,7 @@ revealjs-plugins:
   - live-questions
 live-questions:
   server: https://poll.nectric.com.au
-  session: africast-intro  # TODO: confirm/rename the session (one room per talk)
+  session: africast-intro
 ---
 
 ```{r}
@@ -15,6 +15,14 @@ live-questions:
 #| cache: false
 source("setup.R")
 ```
+
+## Workshop goals
+
+By the end of the workshop you will be able to:
+
+* wrangle and visualise time series data in R
+* produce forecasts with statistical models and time series foundation models
+* evaluate forecast accuracy and choose between models
 
 ## Project lead and Instructors
 
@@ -38,7 +46,7 @@ Professor of Data Driven Decision Making and Director of the Data Lab for Social
 ::: {.callout-important}
 ## Mitchell O'Hara-Wild
 
-Time series researcher and R package developer from Monash University (Australia).  
+Time series researcher and R package developer from Monash University (Australia).\
 Developer of the time series packages (`fable`, `tsibble`, `ggtime`, ...) used throughout this workshop.
 
 [mitchelloharawild.com](https://mitchelloharawild.com)\
@@ -55,7 +63,7 @@ Developer of the time series packages (`fable`, `tsibble`, `ggtime`, ...) used t
 ::: {.callout-important}
 ## Abiodun Egwuenu
 
-Medical doctor and field epidemiologist. PhD candidate at Charité -- Universitätsmedizin Berlin modelling antimicrobial resistance (AMR). Led Nigeria's 2022/23 mpox response.
+Instructor and workshop facilitator. Medical doctor and field epidemiologist. PhD candidate at Charité -- Universitätsmedizin Berlin modelling antimicrobial resistance (AMR). Led Nigeria's 2022/23 mpox response.
 :::
 :::
 
@@ -79,84 +87,155 @@ PhD researcher, Data Lab for Social Good, Cardiff University. Probabilistic fore
 :::
 :::
 
-## Facilitator
+## Organisers
 
-* Abiodun Egwuenu
+::: columns
+::: {.column width="45%"}
+**Coordinator**
 
-## Planning team
+* Henry Kissinger Ochieng
+
+**Planning team**
 
 * Mkajuma Charity
 * Kennedy Mung'are
 * José Thiéry Hagbe
+:::
 
-## Mentors
+::: {.column width="55%"}
+**Mentors**
 
+::: columns
+::: {.column width="50%"}
 * Samson Oluwafemi
 * Oluchukwu Aghadi
 * Lumumba Victor
 * Adamu SAIDU Saleh
 * Akoeugnigan Idelphonse SODE
+:::
+
+::: {.column width="50%"}
 * AKOUNDA Badjibassa
 * Caroline Mugo
 * Winnie Chacha
 * Matabel Odin
-
-## Coordinator
-
-* Henry Kissinger Ochieng
+:::
+:::
+:::
+:::
 
 ## Assumptions
 
-* This is not an introduction to R. We assume you are broadly comfortable with R code, the RStudio environment and the tidyverse.
-* This is not a statistics course. We assume you are familiar with concepts such as the mean, standard deviation, quantiles, regression, normal distribution, likelihood, etc.
-* This is not a theory course. We are not going to derive anything. We will teach you time series and forecasting tools, when to use them, and how to use them most effectively.
+* Not an R introduction: assumes comfort with R, an IDE (RStudio or Positron) and the tidyverse.
+* Not a statistics course: assumes familiarity with means, standard deviations, quantiles, regression, the normal distribution, likelihood, etc.
+* Not a theory course: no derivations, just tools for time series and forecasting, when to use them and how to use them well.
 
-## Key reference
+## Approximate outline
 
-::: {.block}
-**Hyndman, R. J. & Athanasopoulos, G. (2021) *Forecasting: principles and practice*, 3rd ed.**
+| Session | Topic                                        | Chapter |
+| :-----: | -------------------------------------------- | :-----: |
+| 1       | Basics of time series and data structures    | 2       |
+| 1       | Time series patterns and basic graphics      | 2       |
+| 2       | Computing and visualising features           | 4       |
+| 2       | Transformations and decompositions           | 3       |
+| 2       | Basic modelling / forecasting                | 1,5     |
+| 3       | Forecasting with regression                  | 7,10    |
+| 3       | ARIMA models                                 | 9       |
+| 4       | Exponential smoothing                        | 8       |
+| 4       | Basic training and test accuracy             | 5       |
+| 5       | Residual diagnostics and cross validation    | 5       |
+| 5       | Time series foundation models                | --      |
+
+::: {.alertblock .center-text}
+**[workshop.f4sg.org/africast](https://workshop.f4sg.org/africast/)**
 :::
 
-::: {.fragment}
+## Logistics
+
+::: columns
+::: {.column width="50%"}
+**Each session (UTC+3)**
+
+* Lecture 1: 10:00--11:30
+* Break: 11:30--11:45
+* Lecture 2: 11:45--13:15
+* Exercises: 14:00--17:00 (on your own)
+* Mentorship: 17:00--18:00
+:::
+
+::: {.column width="50%"}
+**Materials and support**
+
+* [Workshop website](https://workshop.f4sg.org/africast/)
+* Mentorship sessions and Q&A
+* Google Classroom
+:::
+:::
+
+## Install required packages
+
+Install before session 1:
+
+```r
+install.packages(c(
+  "tidyverse",
+  "fpp3",
+  "GGally",
+  "ggtime",
+  "astsa"
+))
+```
+
+Check it works:
+
+```r
+library(fpp3)
+```
+
+## References
+
+::: columns
+::: {.column width="50%"}
+::: {.block}
+Hyndman, R. J. & Athanasopoulos, G. (2021) *Forecasting: principles and practice*, 3rd ed.
+:::
+
 ::: {.alertblock .center-text}
 **[OTexts.org/fpp3/](https://OTexts.org/fpp3/)**
 :::
-:::
 
-::: {.fragment}
 * Free and online
 * Data sets in associated R package
 * R code for examples
 :::
 
-## Reference - Recommended
-
+::: {.column width="50%"}
 ::: {.block}
-**Kolassa S., Rostami-Tabar B., & Siemsen, E. (2023) *Demand forecasting for executives and professionals*, 1st ed.**
+Kolassa, S., Rostami-Tabar, B. & Siemsen, E. (2023) *Demand forecasting for executives and professionals*, 1st ed.
 :::
 
-::: {.fragment}
 ::: {.alertblock .center-text}
 **[dfep.netlify.app](https://dfep.netlify.app/)**
 :::
-:::
 
-::: {.fragment}
 * Free and online
 * Not an in-depth technical book
 * Mindset behind forecasting
 * Overview of forecasting methods and processes
 :::
+:::
 
-## International Institute of Forecasters (IIF)
+## Community
 
-* Certificate will be provided by IIF. You need to attend all lectures and exercise sessions to get the certificate.
-* A nonprofit organisation founded in 1982, dedicated to developing and furthering the generation, distribution, and use of knowledge on forecasting.
+**International Institute of Forecasters (IIF)**
 
-## [Forecasting for Social Good committee](https://www.f4sg.org/)
+* Certificate provided by IIF: attend all lectures and exercise sessions to receive it.
+* Nonprofit founded in 1982, dedicated to developing and furthering the generation, distribution and use of knowledge on forecasting.
 
-* [Follow us on LinkedIn](https://www.linkedin.com/company/f4sg/)
-* [Follow us on Twitter](https://twitter.com/FSG_forecast)
+**Forecasting for Social Good (F4SG) committee**
+
+* Website: [f4sg.org](https://www.f4sg.org/)
+* [Follow us on LinkedIn](https://www.linkedin.com/company/77766597/)
 * Use #AFRICAST, #F4SG if you post on social media about the workshop
 
 ## Poll: How proficient are you in using R?
@@ -172,7 +251,7 @@ PhD researcher, Data Lab for Social Good, Cardiff University. Probabilistic fore
 - Unknown: Why are you speaking like a pirate?
 :::
 
-## Poll: How experienced are you in forecasting
+## Poll: How experienced are you in forecasting?
 
 ::: {.poll #forecasting-experience}
 - Guru: I wrote the book, done it for decades, now I do the conference circuit.
@@ -183,49 +262,3 @@ PhD researcher, Data Lab for Social Good, Cardiff University. Probabilistic fore
 - Beginner: I have heard of it and would like to learn more.
 - Unknown: What is forecasting? Is that what the weather people do?
 :::
-
-## Install required packages
-
-```r
-install.packages(c(
-  "tidyverse",
-  "fpp3",
-  "GGally",
-  "ggtime",
-  "astsa"
-))
-```
-
-## Approximate outline {.smaller}
-
-| Session | Topic                                           | Chapter |
-| ------: | ----------------------------------------------- | :-----: |
-| 1       | 1. Basics of time series and data structures    | 2       |
-| 1       | 2. Time series patterns and basic graphics      | 2       |
-| 2       | 3. Computing and visualising features           | 4       |
-| 2       | 4. Basic modelling / forecasting                | 1,3,5   |
-| 3       | 5. Forecasting with regression                  | 7,10    |
-| 3       | 6. ARIMA models                                 | 9       |
-| 4       | 7. Exponential smoothing                        | 8       |
-| 4       | 8. Basic training and test accuracy             | 5       |
-| 5       | 9. Residual diagnostics and cross validation    | 5       |
-| 5       | 10. Time series foundation models               | --      |
-
-::: {.alertblock .center-text}
-**[workshop.f4sg.org/africast](https://workshop.f4sg.org/africast/)**
-:::
-
-## Schedule for each session (UTC+3)
-
-* Start at 10:00 a.m.
-* Lecture 1: 10:00 - 11:30
-* Break: 11:30 - 11:45
-* Lecture 2: 11:45 - 13:15
-* Exercises: 14:00 - 17:00 (on your own)
-* Mentorship: 17:00 - 18:00
-
-## Access materials
-
-* AFRICAST workshop website
-* Mentorship sessions and Q/A
-* Google Classroom
