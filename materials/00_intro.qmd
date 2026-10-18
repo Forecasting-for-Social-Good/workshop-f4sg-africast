@@ -5,8 +5,7 @@ filters:
 revealjs-plugins:
   - live-questions
 live-questions:
-  # TODO: set live-questions server
-  server: https://TODO-SET-LIVE-QUESTIONS-SERVER.example.workers.dev
+  server: https://poll.nectric.com.au
   session: africast-intro  # TODO: confirm/rename the session (one room per talk)
 ---
 
