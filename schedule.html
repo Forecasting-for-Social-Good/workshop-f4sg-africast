@@ -47,7 +47,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ba8acc719c2e99225dd7b16dfa8f5774.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ccde30cfb655b4804ad1c9fab289ca67.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-29e29a24f2fe54e0bce1cdd766bbebd4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -78,132 +78,20 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-day1 .list');
+    const listingTargetEl = window.document.querySelector('#listing-schedule .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-subtitle','listing-author','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      valueNames: ['listing-title','listing-subtitle','listing-author','listing-date','listing-order',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author"],
+      searchColumns: ["listing-project","listing-website","listing-from","listing-format","listing-execute","listing-engines","listing-language","listing-date-format","listing-title","listing-subtitle","listing-author","listing-date","listing-order","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-day1'] = new List('listing-day1', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-day2 .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-subtitle','listing-author','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-day2'] = new List('listing-day2', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-day3 .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-subtitle','listing-author','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-day3'] = new List('listing-day3', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-day4 .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-subtitle','listing-author','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-day4'] = new List('listing-day4', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-day5 .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-subtitle','listing-author','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-day5'] = new List('listing-day5', options);
+    window['quarto-listings']['listing-schedule'] = new List('listing-schedule', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -247,16 +135,22 @@ window.Quarto = {
 };
 </script>
 
+<meta property="og:title" content="Schedule – F4SG: Africast">
+<meta property="og:description" content="Homepage for forecasting for social good time series AFRICAST workshop">
+<meta property="og:image" content="https://workshop.f4sg.org/africast/images/twitter-card.png">
+<meta property="og:site_name" content="F4SG: Africast">
+<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
 <meta name="twitter:title" content="Schedule – F4SG: Africast">
 <meta name="twitter:description" content="Homepage for forecasting for social good time series AFRICAST workshop">
 <meta name="twitter:image" content="https://workshop.f4sg.org/africast/images/twitter-card.png">
 <meta name="twitter:creator" content="@mitchoharawild">
-<meta name="twitter:image-height" content="654">
-<meta name="twitter:image-width" content="1250">
+<meta name="twitter:image-height" content="630">
+<meta name="twitter:image-width" content="1200">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -376,19 +270,7 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#day-1" id="toc-day-1" class="nav-link active" data-scroll-target="#day-1">Day 1</a></li>
-  <li><a href="#day-2" id="toc-day-2" class="nav-link" data-scroll-target="#day-2">Day 2</a></li>
-  <li><a href="#day-3" id="toc-day-3" class="nav-link" data-scroll-target="#day-3">Day 3</a></li>
-  <li><a href="#day-4" id="toc-day-4" class="nav-link" data-scroll-target="#day-4">Day 4</a></li>
-  <li><a href="#day-5" id="toc-day-5" class="nav-link" data-scroll-target="#day-5">Day 5</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/edit/main/schedule.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -411,433 +293,366 @@ window.Quarto = {
 </header>
 
 
-<style>
-.quarto-listing-table { table-layout: auto; width: 100%; }
-.quarto-listing-table th.listing-subtitle,
-.quarto-listing-table td.listing-subtitle { width: 1%; white-space: nowrap; }
-.quarto-listing-table th.listing-author,
-.quarto-listing-table td.listing-author { width: 25%; }
-</style>
 <p>All times are listed in Africa/Nairobi time (UTC+3).</p>
-<section id="day-1" class="level2">
-<h2 class="anchored" data-anchor-id="day-1">Day 1</h2>
-<div id="listing-day1" class="quarto-listing quarto-listing-container-table">
-<table class="quarto-listing-table table table-hover">
-<thead>
-<tr>
+<div id="listing-schedule" class="quarto-listing quarto-listing-container-custom">
+<div class="tl-nav" role="navigation" aria-label="Jump to day">
+<div class="tl-nav-inner">
+<p><a class="tl-nav-day" href="#day-1" data-day="day-1"><span>Mon</span><b>19</b></a></p>
+<p><a class="tl-nav-day" href="#day-2" data-day="day-2"><span>Tue</span><b>20</b></a></p>
+<p><a class="tl-nav-day" href="#day-3" data-day="day-3"><span>Wed</span><b>21</b></a></p>
+<p><a class="tl-nav-day" href="#day-4" data-day="day-4"><span>Thu</span><b>22</b></a></p>
+<p><a class="tl-nav-day" href="#day-5" data-day="day-5"><span>Fri</span><b>23</b></a></p>
+</div>
+</div>
+<div id="day-1" class="tl-day">
+<div class="tl-heading">
+<span class="tl-kicker">Day 1 · Mon 19 Oct</span><span class="tl-theme">The basics of time series</span>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+10:00<span>11:30</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day1/basics.html">Basics of time series and data structures</a><span class="tl-who"><img class="tl-av" src="images/mitch.jpg" alt="" width="30" height="30">Mitchell O’Hara-Wild</span>
+</div>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+11:45<span>13:15</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day1/graphics.html">Time series patterns and basic graphics</a><span class="tl-who"><img class="tl-av" src="images/Headshot_Abiodun.jpg" alt="" width="30" height="30">Abiodun Egwuenu</span>
+</div>
+</div>
+<div class="tl-row tl-gap">
+<div class="tl-when">
 
-<th>
-Time
-</th>
+</div>
+<div class="tl-rail">
 
-<th>
-Instructor
-</th>
+</div>
+<div class="tl-break">
+Break · 13:15–17:00
+</div>
+</div>
+<div class="tl-row tl-exercises">
+<div class="tl-when">
+17:00<span>18:00</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Hands-on</span><a class="tl-title" href="./sessions/day1/exercises.html">Exercises</a>
+</div>
+</div>
+<div class="tl-row tl-resources">
+<div class="tl-when">
 
-<th>
-Session
-</th>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">After the day</span><a class="tl-title" href="./sessions/day1/resources.html">Recording &amp; code</a>
+</div>
+</div>
+</div>
+<div id="day-2" class="tl-day">
+<div class="tl-heading">
+<span class="tl-kicker">Day 2 · Tue 20 Oct</span><span class="tl-theme">Exploration and basic forecasting</span>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+10:00<span>11:30</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day2/features.html">Computing and visualising features</a><span class="tl-who"><img class="tl-av" src="images/mitch.jpg" alt="" width="30" height="30">Mitchell O’Hara-Wild</span>
+</div>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+11:45<span>13:15</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day2/forecasting.html">Basic modelling / forecasting</a><span class="tl-who"><img class="tl-av" src="images/mitch.jpg" alt="" width="30" height="30">Mitchell O’Hara-Wild</span>
+</div>
+</div>
+<div class="tl-row tl-gap">
+<div class="tl-when">
 
-</tr>
-</thead>
-<tbody class="list">
+</div>
+<div class="tl-rail">
 
-<tr data-index="0" data-listing-date-sort="1792328400000" data-listing-file-modified-sort="1791952821559" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="26" data-listing-title-sort="Basics of time series and data structures" data-listing-filename-sort="basics.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
-</td>
-<td>
-<span class="listing-author">Mitchell O’Hara-Wild</span>
-</td>
-<td>
-<a href="./sessions/day1/basics.html" class="title listing-title">Basics of time series and data structures</a>
-</td>
+</div>
+<div class="tl-break">
+Break · 13:15–17:00
+</div>
+</div>
+<div class="tl-row tl-exercises">
+<div class="tl-when">
+17:00<span>18:00</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Hands-on</span><a class="tl-title" href="./sessions/day2/exercises.html">Exercises</a>
+</div>
+</div>
+<div class="tl-row tl-resources">
+<div class="tl-when">
 
-</tr>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">After the day</span><a class="tl-title" href="./sessions/day2/resources.html">Recording &amp; code</a>
+</div>
+</div>
+</div>
+<div id="day-3" class="tl-day">
+<div class="tl-heading">
+<span class="tl-kicker">Day 3 · Wed 21 Oct</span><span class="tl-theme">Regression and ARIMA</span>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+10:00<span>11:30</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day3/regressors.html">Time series regression</a><span class="tl-who"><img class="tl-av" src="images/mitch.jpg" alt="" width="30" height="30">Mitchell O’Hara-Wild</span>
+</div>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+11:45<span>13:15</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day3/arima.html">ARIMA</a><span class="tl-who"><img class="tl-av" src="images/mustafa.jpeg" alt="" width="30" height="30">Mustafa Aslan</span>
+</div>
+</div>
+<div class="tl-row tl-gap">
+<div class="tl-when">
 
-<tr data-index="1" data-listing-date-sort="1792328400000" data-listing-file-modified-sort="1791952821561" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Time series patterns and basic graphics" data-listing-filename-sort="graphics.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
-</td>
-<td>
-<span class="listing-author">Abiodun Egwuenu</span>
-</td>
-<td>
-<a href="./sessions/day1/graphics.html" class="title listing-title">Time series patterns and basic graphics</a>
-</td>
+</div>
+<div class="tl-rail">
 
-</tr>
+</div>
+<div class="tl-break">
+Break · 13:15–17:00
+</div>
+</div>
+<div class="tl-row tl-exercises">
+<div class="tl-when">
+17:00<span>18:00</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Hands-on</span><a class="tl-title" href="./sessions/day3/exercises.html">Exercises</a>
+</div>
+</div>
+<div class="tl-row tl-resources">
+<div class="tl-when">
 
-<tr data-index="2" data-listing-date-sort="1792328400000" data-listing-file-modified-sort="1792285058994" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2605" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day1/exercises.html" class="title listing-title">Exercises</a>
-</td>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">After the day</span><a class="tl-title" href="./sessions/day3/resources.html">Recording &amp; code</a>
+</div>
+</div>
+</div>
+<div id="day-4" class="tl-day">
+<div class="tl-heading">
+<span class="tl-kicker">Day 4 · Thu 22 Oct</span><span class="tl-theme">ETS and forecast accuracy</span>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+10:00<span>11:30</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day4/ets.html">ETS</a><span class="tl-who"><img class="tl-av" src="images/bahman.jpg" alt="" width="30" height="30">Bahman Rostami-Tabar</span>
+</div>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+11:45<span>13:15</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day4/accuracy.html">Basic training and test accuracy</a><span class="tl-who"><img class="tl-av" src="images/bahman.jpg" alt="" width="30" height="30">Bahman Rostami-Tabar</span>
+</div>
+</div>
+<div class="tl-row tl-gap">
+<div class="tl-when">
 
-</tr>
+</div>
+<div class="tl-rail">
 
-<tr data-index="3" data-listing-date-sort="1792328400000" data-listing-file-modified-sort="1791295464900" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="87" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle">&nbsp;</span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day1/resources.html" class="title listing-title">Resources (recording and code)</a>
-</td>
+</div>
+<div class="tl-break">
+Break · 13:15–17:00
+</div>
+</div>
+<div class="tl-row tl-exercises">
+<div class="tl-when">
+17:00<span>18:00</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Hands-on</span><a class="tl-title" href="./sessions/day4/exercises.html">Exercises</a>
+</div>
+</div>
+<div class="tl-row tl-resources">
+<div class="tl-when">
 
-</tr>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">After the day</span><a class="tl-title" href="./sessions/day4/resources.html">Recording &amp; code</a>
+</div>
+</div>
+</div>
+<div id="day-5" class="tl-day">
+<div class="tl-heading">
+<span class="tl-kicker">Day 5 · Fri 23 Oct</span><span class="tl-theme">Model performance and foundation models</span>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+10:00<span>11:30</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day5/diagnostics.html">Residual diagnostics and cross validation</a><span class="tl-who"><img class="tl-av" src="images/bahman.jpg" alt="" width="30" height="30">Bahman Rostami-Tabar</span>
+</div>
+</div>
+<div class="tl-row tl-lecture">
+<div class="tl-when">
+11:45<span>13:15</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Lecture</span><a class="tl-title" href="./sessions/day5/foundation_models.html">Time series foundation models</a><span class="tl-who"><img class="tl-av" src="images/harsha.jpg" alt="" width="30" height="30">Harsha Halgamuwe Hewage</span>
+</div>
+</div>
+<div class="tl-row tl-gap">
+<div class="tl-when">
 
-</tbody>
-</table>
+</div>
+<div class="tl-rail">
+
+</div>
+<div class="tl-break">
+Break · 13:15–17:00
+</div>
+</div>
+<div class="tl-row tl-exercises">
+<div class="tl-when">
+17:00<span>18:00</span>
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">Hands-on</span><a class="tl-title" href="./sessions/day5/exercises.html">Exercises</a>
+</div>
+</div>
+<div class="tl-row tl-resources">
+<div class="tl-when">
+
+</div>
+<div class="tl-rail">
+<i></i>
+</div>
+<div class="tl-card">
+<span class="tl-tag">After the day</span><a class="tl-title" href="./sessions/day5/resources.html">Recording &amp; code</a>
+</div>
+</div>
+</div>
 <div class="listing-no-matching d-none">No matching items</div>
 </div>
-</section>
-<section id="day-2" class="level2">
-<h2 class="anchored" data-anchor-id="day-2">Day 2</h2>
-<div id="listing-day2" class="quarto-listing quarto-listing-container-table">
-<table class="quarto-listing-table table table-hover">
-<thead>
-<tr>
+<script>
+// Sticky day selector: keep it under the site navbar and highlight the day in view
+(function () {
+  var nav = document.querySelector(".tl-nav");
+  if (!nav) return;
+  var links = Array.prototype.slice.call(nav.querySelectorAll(".tl-nav-day"));
+  var days = links.map(function (a) { return document.getElementById(a.dataset.day); });
+  var root = document.documentElement;
 
-<th>
-Time
-</th>
+  function layout() {
+    var header = document.getElementById("quarto-header");
+    var top = header ? header.getBoundingClientRect().bottom : 0;
+    root.style.setProperty("--tl-top", Math.max(top, 0) + "px");
+    root.style.setProperty("--tl-nav-h", nav.offsetHeight + "px");
+  }
 
-<th>
-Instructor
-</th>
+  function update() {
+    var line = nav.getBoundingClientRect().bottom + 24;
+    var current = 0;
+    days.forEach(function (day, i) {
+      if (day && day.getBoundingClientRect().top <= line) current = i;
+    });
+    // At the very bottom of the page the last day is always the active one
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) current = days.length - 1;
+    links.forEach(function (a, i) {
+      var on = i === current;
+      if (on && a.getAttribute("aria-current") !== "true") {
+        // scroll the selector itself on narrow screens, without moving the page
+        var box = a.parentNode;
+        box.scrollTo({ left: a.offsetLeft - (box.clientWidth - a.offsetWidth) / 2, behavior: "smooth" });
+      }
+      if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+    });
+  }
 
-<th>
-Session
-</th>
-
-</tr>
-</thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-date-sort="1792414800000" data-listing-file-modified-sort="1791952821562" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Computing and visualising features" data-listing-filename-sort="features.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
-</td>
-<td>
-<span class="listing-author">Mitchell O’Hara-Wild</span>
-</td>
-<td>
-<a href="./sessions/day2/features.html" class="title listing-title">Computing and visualising features</a>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-date-sort="1792414800000" data-listing-file-modified-sort="1791952821565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Basic modelling / forecasting" data-listing-filename-sort="forecasting.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
-</td>
-<td>
-<span class="listing-author">Mitchell O’Hara-Wild</span>
-</td>
-<td>
-<a href="./sessions/day2/forecasting.html" class="title listing-title">Basic modelling / forecasting</a>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-date-sort="1792414800000" data-listing-file-modified-sort="1792285058994" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1802" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day2/exercises.html" class="title listing-title">Exercises</a>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-date-sort="1792414800000" data-listing-file-modified-sort="1791295464911" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="87" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle">&nbsp;</span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day2/resources.html" class="title listing-title">Resources (recording and code)</a>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div>
-</section>
-<section id="day-3" class="level2">
-<h2 class="anchored" data-anchor-id="day-3">Day 3</h2>
-<div id="listing-day3" class="quarto-listing quarto-listing-container-table">
-<table class="quarto-listing-table table table-hover">
-<thead>
-<tr>
-
-<th>
-Time
-</th>
-
-<th>
-Instructor
-</th>
-
-<th>
-Session
-</th>
-
-</tr>
-</thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-date-sort="1792501200000" data-listing-file-modified-sort="1791952821569" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Time series regression" data-listing-filename-sort="regressors.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
-</td>
-<td>
-<span class="listing-author">Mitchell O’Hara-Wild</span>
-</td>
-<td>
-<a href="./sessions/day3/regressors.html" class="title listing-title">Time series regression</a>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-date-sort="1792501200000" data-listing-file-modified-sort="1791952821567" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="ARIMA" data-listing-filename-sort="arima.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
-</td>
-<td>
-<span class="listing-author">Mustafa Aslan</span>
-</td>
-<td>
-<a href="./sessions/day3/arima.html" class="title listing-title">ARIMA</a>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-date-sort="1792501200000" data-listing-file-modified-sort="1792285058993" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2204" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day3/exercises.html" class="title listing-title">Exercises</a>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-date-sort="1792501200000" data-listing-file-modified-sort="1791295464920" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="87" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle">&nbsp;</span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day3/resources.html" class="title listing-title">Resources (recording and code)</a>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div>
-</section>
-<section id="day-4" class="level2">
-<h2 class="anchored" data-anchor-id="day-4">Day 4</h2>
-<div id="listing-day4" class="quarto-listing quarto-listing-container-table">
-<table class="quarto-listing-table table table-hover">
-<thead>
-<tr>
-
-<th>
-Time
-</th>
-
-<th>
-Instructor
-</th>
-
-<th>
-Session
-</th>
-
-</tr>
-</thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-date-sort="1792587600000" data-listing-file-modified-sort="1791952821572" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="ETS" data-listing-filename-sort="ets.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
-</td>
-<td>
-<span class="listing-author">Bahman Rostami-Tabar</span>
-</td>
-<td>
-<a href="./sessions/day4/ets.html" class="title listing-title">ETS</a>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-date-sort="1792587600000" data-listing-file-modified-sort="1791952821570" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Basic training and test accuracy" data-listing-filename-sort="accuracy.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
-</td>
-<td>
-<span class="listing-author">Bahman Rostami-Tabar</span>
-</td>
-<td>
-<a href="./sessions/day4/accuracy.html" class="title listing-title">Basic training and test accuracy</a>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-date-sort="1792587600000" data-listing-file-modified-sort="1792285058993" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1067" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day4/exercises.html" class="title listing-title">Exercises</a>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-date-sort="1792587600000" data-listing-file-modified-sort="1791295464931" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="97" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle">&nbsp;</span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day4/resources.html" class="title listing-title">Resources (recording and code)</a>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div>
-</section>
-<section id="day-5" class="level2">
-<h2 class="anchored" data-anchor-id="day-5">Day 5</h2>
-<div id="listing-day5" class="quarto-listing quarto-listing-container-table">
-<table class="quarto-listing-table table table-hover">
-<thead>
-<tr>
-
-<th>
-Time
-</th>
-
-<th>
-Instructor
-</th>
-
-<th>
-Session
-</th>
-
-</tr>
-</thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-date-sort="1792674000000" data-listing-file-modified-sort="1791952821573" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="18" data-listing-title-sort="Residual diagnostics and cross validation" data-listing-filename-sort="diagnostics.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">10:00-11:30</span></span>
-</td>
-<td>
-<span class="listing-author">Bahman Rostami-Tabar</span>
-</td>
-<td>
-<a href="./sessions/day5/diagnostics.html" class="title listing-title">Residual diagnostics and cross validation</a>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-date-sort="1792674000000" data-listing-file-modified-sort="1791295464942" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="88" data-listing-title-sort="Time series foundation models" data-listing-filename-sort="foundation_models.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">11:45-13:15</span></span>
-</td>
-<td>
-<span class="listing-author">Harsha Halgamuwe Hewage</span>
-</td>
-<td>
-<a href="./sessions/day5/foundation_models.html" class="title listing-title">Time series foundation models</a>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-date-sort="1792674000000" data-listing-file-modified-sort="1792285058993" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1437" data-listing-title-sort="Exercises" data-listing-filename-sort="exercises.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle"><span class="code">17:00-18:00</span></span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day5/exercises.html" class="title listing-title">Exercises</a>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-date-sort="1792674000000" data-listing-file-modified-sort="1791325705744" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="87" data-listing-title-sort="Resources (recording and code)" data-listing-filename-sort="resources.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<span class="listing-subtitle">&nbsp;</span>
-</td>
-<td>
-<span class="listing-author">&nbsp;</span>
-</td>
-<td>
-<a href="./sessions/day5/resources.html" class="title listing-title">Resources (recording and code)</a>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div>
+  var ticking = false;
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener("resize", function () { layout(); update(); });
+  window.addEventListener("load", function () { layout(); update(); });
+  layout();
+  update();
+})();
+</script>
 <!-- Day 1: The basics of time series -->
 <!-- Session 1. Basics of time series and data structures (Mitch) -->
 <!-- Session 2. Time series patterns and basic graphics (Abiodun Egwuenu) -->
@@ -860,7 +675,6 @@ Session
 
 
 
-</section>
 
 </main> <!-- /main -->
 <!-- plausible --> 
@@ -1278,7 +1092,7 @@ Session
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/edit/main/schedule.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/edit/main/schedule.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>© Copyright 2026, <a href="https://www.f4sg.org/">F4SG</a></p>
 </div>
