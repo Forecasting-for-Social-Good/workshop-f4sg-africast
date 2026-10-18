@@ -92,7 +92,7 @@ test <- antidiabetic_drug_sale |>
   slice((n()-forecast_horizon+1):n())
 train <- antidiabetic_drug_sale |> 
   slice(1:(n()-forecast_horizon))
-drug_sale_tcsv <-  train |> slice(1:(n()-forecast_horizon)) |> 
+drug_sale_tcsv <- train |>
   stretch_tsibble(.init = 24, .step = 1)
 ```
 
