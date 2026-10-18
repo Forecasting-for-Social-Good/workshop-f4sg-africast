@@ -1,148 +1,150 @@
 ---
-title: "Tidy time series & forecasting in R"
+pagetitle: "Tidy time series & forecasting in R"
+toc: false
+listing:
+  id: sessions
+  contents:
+    - sessions/day*/*.qmd
+  template: sessions-grid.ejs
+  fields: [title, subtitle, author, date, order]
+  date-format: "ddd D MMM"
+  sort: false
 ---
 
+::: {.home-hero .column-screen}
+::: {.home-hero-inner}
+::: {.home-hero-text}
+[AFRICAST 2026 · Forecasting for Social Good]{.kicker}
 
-## About AFRICAST project
+# Tidy time series & forecasting in R {.unnumbered .unlisted}
 
-<iframe width="800" height="450" src="https://www.youtube.com/embed/4pYlobR-rbQ?si=p795vCfEx38K98KU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+19–23 October 2026 · online · all times East Africa Time (UTC+3)
+:::
 
-![](images/fable.svg){style="float:right;padding: 0 0 0 10px;" fig-alt="Fable Hex Logo" width="175"}
+::: {.home-hero-actions}
+[Get set up](#before-you-start){.btn .btn-hero}
+[Download slides](slides.zip){.btn .btn-hero-outline}
+:::
+:::
+:::
 
-## Course Overview
+::: {.home-about .column-page}
+::: {.home-about-video}
+<iframe src="https://www.youtube.com/embed/4pYlobR-rbQ?si=p795vCfEx38K98KU" title="About the AFRICAST project" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+:::
 
-Forecasting is a valuable tool that allows organisations to make informed decisions about the future. Time series forecasting, in particular, uses historical data to predict future trends over time. This technique has extensive applications across a wide range of fields, including finance and economics, health and humanitarian operations, supply chain management, and more. By analysing trends and patterns in data, time series forecasting can help decision-makers identify potential challenges and opportunities, and plan accordingly.
+::: {.home-about-text}
+## About AFRICAST {.unnumbered}
 
-It is important for researchers in Low- and Middle-Income Countries (LMICs) to develop technical skill in data analysis and forecasting techniques, which are essential for accurate and reliable forecasting. By having these skills, researchers can analyse data, identify trends and patterns, and develop robust forecasting models to make informed decisions that can improve resource allocation and planning in LMICs. Additionally, researchers can collaborate with policy makers and stakeholders to ensure that the forecast results are integrated into decision-making processes, leading to more efficient and effective resource management strategies.
+AFRICAST is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, building forecasting skills among researchers in Low- and Middle-Income Countries so that forecasts can inform planning and resource allocation. No prior experience with time series is needed.
 
-This workshop is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, and will run online from the 19th-23rd October 2026.
+During the training, you'll learn to:
 
-## Learning objectives
+1. Prepare time series data for analysis and exploration.
+2. Extract and compute useful features from time series data and visualise them effectively.
+3. Identify appropriate forecasting algorithms and select the best approach for the data at hand.
 
-During the training, participants will gain knowledge and skills in:
+[Read more about the workshop](about.qmd)
+:::
+:::
 
-1. Preparing time series data for analysis and exploration.
-2. Extracting and computing useful features from time series data and effectively visualising it.
-3. Identifying appropriate forecasting algorithms for time series and selecting the best approach for the data at hand.
+::: {.column-page}
+# Sessions
 
+Each day has two 90-minute live sessions, then exercises with mentors in the afternoon.
+
+::: {#sessions}
+:::
+:::
+
+::: {.column-page}
 # Educators
 
-## Instructor
+::: {.educators}
+::: {.educator}
+![](images/mitch.jpg){fig-alt="Headshot of Mitchell O'Hara-Wild"}
 
-![](images/mitch.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Mitchell O'Hara-Wild" width="200"}
-[**Mitchell O'Hara-Wild**](https://mitchelloharawild.com/) (he/him) is a PhD candidate at [Monash University](https://www.monash.edu), creating new techniques and tools for forecasting large collections of time series with Rob Hyndman and George Athanasopoulos. He is the lead developer of the tidy time-series forecasting tools fable and feasts, and has co-developed the widely used forecast package since 2015. Mitchell also operates a data consultancy, and has worked on many forecasting projects that have supported decision making and planning for businesses and governments. He is an award-winning educator, and has taught applied forecasting at Monash University and various forecasting workshops around the world.
+[Mitchell O'Hara-Wild](about.qmd#mitchell)
 
-<div align="center">
-<a href="https://www.mitchelloharawild.com"><img border="0" alt="Blog" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
-<a href="https://github.com/mitchelloharawild"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>&ensp; 
-<a href="https://www.linkedin.com/in/mitchelloharawild/"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>&ensp;&emsp;
-</div>
+Monash University · lead developer of fable
+:::
 
-## Instructor
+::: {.educator}
+![](images/bahman.jpg){fig-alt="Headshot of Bahman Rostami-Tabar"}
 
-![](images/bahman.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Dr. Bahman Rostami-Tabar" width="200"}
-Bahman is the Professor of Data-Driven Decision Science at Cardiff Business School, Cardiff University, UK. He is interested in transforming data into insights for making smart decisions. Bahman is the founder and director of [Data Lab for Social Good Research Group](https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good) at Cardiff University and the founder of [Forecasting for Social Good committee](https://www.f4sg.org/) initiatives sponsored by the [International Institute of Forecasters](https://forecasters.org/programs/communities/forecasting-for-social-good-f4sg/). He is also leading the "Uncertainty & the Future" theme at the [Digital Transformation Innovation Institute](https://www.cardiff.ac.uk/digital-transformation-innovation-institute/).
+[Bahman Rostami-Tabar](about.qmd#bahman)
 
-Bahman specialises in the development and application of modelling, forecasting and management science tools and techniques providing informed insights for planning & decision-making processes in sectors contributing to social good, including healthcare operations, global health and humanitarian supply chains. His collaborative efforts have spanned a multitude of organisations, including notable bodies such as the National Health Service (NHS), Welsh Ambulance Service Trusts (WAST), United States Agency for International Development (USAID), the International Committee of the Red Cross (ICRC), and John Snow Inc. (JSI). A remarkable highlight of his contributions is his pivotal role in disseminating forecasting knowledge especially in low and lower-middle income countries through the [democratising forecasting](https://www.f4sg.org/services/democratising-forecasting/) project sponsored by International Institute of Forecasters.
+Cardiff University · founder of F4SG
+:::
 
-<div align="center">
-<a href="http://www.bahmanrt.com/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
-<a href="https://github.com/bahmanrostamitabar/"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>&ensp; 
-<a href="https://x.com/Bahman_R_T/"><img border="0" alt="X" src="images/social-x.svg" width="35" height="35"></a>&ensp; 
-</div>
+::: {.educator}
+![](images/Headshot_Abiodun.jpg){fig-alt="Headshot of Abiodun Egwuenu"}
 
-## Instructor
+[Abiodun Egwuenu](about.qmd#abiodun)
 
-![](images/Headshot_Abiodun.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Abiodun Egwuenu" width="200"}
-**Abiodun Egwuenu** is a medical doctor, field epidemiologist, and researcher specialising in antimicrobial resistance (AMR), data science, and public health policy. She is an [International Society for Infectious Diseases Emerging Leader in Infectious Disease Research](https://isid.org/emergingleaders/) and a graduate of the Nigeria Field Epidemiology and Laboratory Training Programme. Her professional experience spans the national coordination of Nigeria's AMR surveillance programme, the Intermediate Field Epidemiology Training Programme, and leadership of infectious disease outbreak responses. She served as the national lead for Nigeria's mpox response, facilitating surveillance and public health response during the 2022/2023 pandemic.
+Charité Berlin · field epidemiologist
+:::
 
-She is currently a PhD candidate at Charité – Universitätsmedizin Berlin, Germany. Her doctoral research uses ten years of surveillance data from Nigeria to analyse and model the spatial and temporal dynamics of antimicrobial resistance, generating evidence to strengthen public health interventions, improve surveillance strategies, and inform effective policy responses to AMR. In addition to her research, she serves as Vice Chair of the Board of Members of [Applied Epi](https://appliedepi.org/about/governance.html), where she supports the organisation's mission to strengthen applied epidemiology through accessible, R-based training.
+::: {.educator}
+![](images/harsha.jpg){fig-alt="Headshot of Harsha Halgamuwe Hewage"}
 
-## Instructor
+[Harsha Halgamuwe Hewage](about.qmd#harsha)
 
-![](images/harsha.jpg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Harsha Halgamuwe Hewage" width="200"}
-**Harsha Halgamuwe Hewage** is a researcher at the [Data Lab for Social Good](https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good), Cardiff Business School, Cardiff University. His work focuses on forecasting and decision support under uncertainty, particularly in public health supply chains, demand forecasting, inventory planning, and time series foundation models. He works with organisations including JSI, USAID, the Ethiopian Pharmaceutical Supply Service, and the HISP Centre at the University of Oslo, with a focus on translating forecasting research into practical tools and approaches for public health decision making.
+Data Lab for Social Good, Cardiff University
+:::
 
-Harsha is also involved in [Forecasting for Social Good (F4SG)](https://forecasters.org/programs/communities/forecasting-for-social-good-f4sg/) and contributes to its training and capacity-building activities. He delivers forecasting training for public health practitioners, researchers, and government organisations, including recent training activities in Ethiopia and Rwanda. His current work also looks at the use of AI and time series foundation models in forecasting, and how these methods can be used responsibly in public health supply chains. He is also part of the Data Lab for Social Good team working on forecasting avoidable patient harm with the NHS, following the team's joint first-place result in the 2026 NHS SPHERE-PPL forecasting challenge.
+::: {.educator}
+![](images/mustafa.jpeg){fig-alt="Headshot of Mustafa Aslan"}
 
-<div align="center">
-<a href="https://chamara7h.github.io/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
-<a href="https://github.com/chamara7h"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>&ensp;
-<a href="https://www.linkedin.com/in/harshachamara/"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>&ensp;&emsp;
-</div>
+[Mustafa Aslan](about.qmd#mustafa)
 
-## Instructor
+Data Lab for Social Good, Cardiff University
+:::
+:::
 
-![](images/mustafa.jpeg){style="float:right;padding: 0 0 0 10px;" fig-alt="Headshot of Mustafa Aslan" width="200"}
-**Mustafa Aslan** is a third-year PhD researcher in the [Data Lab for Social Good Research Group](https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good) at Cardiff University, UK. His research focuses on reducing delays and inefficiencies in hospital discharge processes and patient flow. Specifically, he works to improve discharge care coordination and operational effectiveness, including workforce planning and patient care delivery. To achieve this, he develops decision-making frameworks that integrate probabilistic forecasting models with sequential optimisation techniques. His work also leverages machine learning-based causal inference methods to provide actionable insights for healthcare providers and administrators on the factors contributing to discharge delays and inefficiencies.
+[Read full bios, the planning team and mentors →](about.qmd#educators)
+:::
 
-In addition to his PhD work, he is passionate about mathematical modelling and uncertainty quantification to address complex real-world challenges. He also builds reusable Python packages and is the developer of [peshbeen](https://mustafaslancoto.github.io/peshbeen/), an open-source forecasting package that helps users forecast using both statistical and machine learning models within a single pipeline, as well as generate probabilistic forecasts using various techniques. Furthermore, he is part of the Data Lab for Social Good team working on forecasting avoidable patient harm with the NHS, following the team's joint first-place result in the 2026 NHS SPHERE-PPL forecasting challenge.
+::: {.column-page}
+# Before you start
 
-<div align="center">
-<a href="https://mustafaslancoto.github.io/"><img border="0" alt="Website" src="images/social-webhome.svg" width="35" height="35"></a>&ensp;
-<a href="https://github.com/mustafaslanCoto"><img border="0" alt="Github" src="images/social-github.svg" width="35" height="35"></a>&ensp;
-<a href="https://www.linkedin.com/in/aslanmu"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>&ensp;&emsp;
-</div>
+You should be comfortable writing R code with tidyverse packages such as dplyr and ggplot2 (if not, work through <https://learnr.numbat.space/> first). Some familiarity with the mean, variance, quantiles, the normal distribution and regression will help, but isn't required. Please have everything below ready on your own laptop before the workshop.
 
-## Planning team
+::: {.setup-steps}
+::: {.setup-step}
+### Install R and an IDE
 
-The workshop is organised behind the scenes by a dedicated planning team, who volunteer their time to coordinate logistics and ensure the workshop runs smoothly. The team includes:
+A recent version of R (4.1+) and an IDE such as RStudio or Positron.
+:::
 
-- Mkajuma Charity
-- Kennedy Mung'are
-- José Thiéry Hagbe
-
-## Mentors for the cohort 2026
-
-A committed team generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the exercises. The team includes:
-
-- Samson Oluwafemi
-- Oluchukwu Aghadi
-- Lumumba Victor
-- Adamu SAIDU Saleh
-- Akoeugnigan Idelphonse SODE
-- AKOUNDA Badjibassa
-- Caroline Mugo
-- Winnie Chacha
-- Matabel Odin
-
-## Coordinator
-
-The workshop is coordinated by:
-
-- Henry Kissinger Ochieng
-
-# Preparation
-
-The workshop will provide a quick-start overview of exploring time series data and producing forecasts. There is no need for prior experience in time series to get the most out of this workshop.
-
-It is expected that you are comfortable with writing R code and using tidyverse packages including dplyr and ggplot2. If you are unfamiliar with writing R code or using the tidyverse, consider working through the learnr materials here: <https://learnr.numbat.space/>.
-
-Some familiarity with statistical concepts such as the mean, variance, quantiles, normal distribution, and regression would be helpful to better understand the forecasts, although this is not strictly necessary.
-
-## Required equipment
-
-Please have your own laptop capable of running R.
-
-## Required software
-
-To be able to complete the exercises of this workshop, please install a suitable IDE (such as RStudio), a recent version of R (4.1+) and the following packages.
-
--   **Time series packages and extensions**
-    -   fpp3, ggtime
--   **tidyverse packages and friends**
-    -   tidyverse
-
-The following code will install the main packages needed for the workshop.
+::: {.setup-step}
+### Install the packages
 
 ```r
-install.packages(c("tidyverse","fpp3", "GGally", "ggtime", "astsa", "usethis"))
+install.packages(c("tidyverse", "fpp3", "GGally", "ggtime", "astsa", "usethis"))
 ```
+:::
 
-After installing these packages, you can download the exercises and data for the course using the following code:
+::: {.setup-step}
+### Download the exercises
 
 ```r
 usethis::use_course("https://workshop.f4sg.org/africast/exercises.zip")
 ```
+:::
+:::
+:::
 
-Please have the required software installed and pre-work completed before attending the workshop.
+::: {.column-page}
+# Supported by
+
+::: {.orgs}
+[![International Institute of Forecasters](images/iifLOGO.jpeg)](https://forecasters.org/)
+[![Forecasting for Social Good](images/f4sg.svg)](https://www.f4sg.org/)
+[![Data Lab for Social Good, Cardiff University](images/orgs/datalab.png)](https://www.cardiff.ac.uk/research/explore/research-units/data-lab-for-social-good)
+[![Cardiff Business School](images/orgs/cardiff.png)](https://www.cardiff.ac.uk/business-school)
+[![Monash Business School](images/orgs/monash.png)](https://www.monash.edu/business)
+[![Jomo Kenyatta University of Agriculture and Technology](images/orgs/jkuat.png)](https://www.jkuat.ac.ke/)
+[![Nectric](images/orgs/nectric.png)](https://nectric.com.au/)
+:::
+:::

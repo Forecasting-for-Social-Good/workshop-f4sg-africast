@@ -99,8 +99,7 @@ $table-border-color: $sage-line;
 }
 
 // Section headings: h1 becomes a poster tab, h2 a slate heading with a keyline
-#quarto-content main > section.level1 > h1,
-#quarto-content main h1:not(.title) {
+#quarto-content main h1:not(.title):not(.home-hero h1) {
   display: inline-block;
   background: $slate;
   color: white;
@@ -210,4 +209,310 @@ main p > img[src*="images/"][width="200"] {
 .alert {
   color: $ochre;
   font-weight: 600;
+}
+
+// Home page ----------------------------------------------------------------
+
+// Compact hero: one band over the savanna skyline
+.home-hero {
+  margin-top: -3rem;
+  padding: 2.25rem 1.5rem 120px;
+  background: #F3F7EA url("images/savanna.png") bottom right / auto 100px repeat-x;
+  .home-hero-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.25rem 2.5rem;
+  }
+  .home-hero-text {
+    flex: 999 1 520px;
+    min-width: 0;
+    p { margin: 0.6rem 0 0; font-size: 1.125rem; color: $slate; }
+  }
+  .kicker {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: $africast-blue;
+  }
+  h1 {
+    margin: 0.35rem 0 0;
+    font-size: clamp(2rem, 4.5vw, 2.75rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: $ink;
+    border: none;
+  }
+  .home-hero-actions {
+    flex: 1 1 280px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+    p { display: contents; }
+  }
+}
+.btn-hero,
+.btn-hero-outline {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border-radius: 8px;
+  border: 2px solid $slate;
+  font-weight: 600;
+  text-decoration: none;
+}
+.btn-hero {
+  background: $slate;
+  color: white;
+  &:hover { background: $ink; border-color: $ink; color: white; }
+}
+.btn-hero-outline {
+  color: $slate;
+  &:hover { background: $slate; color: white; }
+}
+
+// About band: the project video beside a short introduction
+.home-about {
+  margin-top: 2.5rem;
+  background: $tint-blue;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  .home-about-video {
+    flex: 1 1 360px;
+    iframe {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border-radius: 8px;
+    }
+  }
+  .home-about-text {
+    flex: 1 1 380px;
+    h2 {
+      margin-top: 0;
+      border: none !important;
+      padding: 0;
+    }
+    > :last-child { margin-bottom: 0; }
+  }
+}
+
+// Sessions: the week as a timetable, stacking by day on narrow screens
+.sessions-grid {
+  display: grid;
+  grid-template-columns: 3.5rem repeat(var(--days), minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 1rem;
+  .sg-time {
+    grid-column: 1;
+    padding-top: 0.75rem;
+    font-family: $font-family-monospace;
+    font-size: 0.875rem;
+    color: $muted;
+  }
+  .sg-day {
+    grid-row: 1;
+    padding: 0 4px 6px;
+    border-bottom: 3px solid $africast-blue;
+    font-size: 0.875rem;
+    color: $muted;
+    span {
+      display: block;
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: $slate;
+    }
+  }
+  p { margin: 0; }
+  .sg-cell > p { height: 100%; }
+  a { text-decoration: none; }
+  .sg-session {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.875rem;
+    min-height: 130px;
+    background: white;
+    border: 1px solid $sage-line;
+    border-radius: 10px;
+    color: $ink;
+    transition: border-color 0.15s;
+    &:hover { border-color: $africast-blue; }
+  }
+  .sg-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: $slate;
+    color: white;
+    display: grid;
+    place-items: center;
+    font-weight: 600;
+    font-size: 0.8125rem;
+  }
+  .sg-title {
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .sg-meta {
+    margin-top: auto;
+    font-size: 0.8125rem;
+    color: $muted;
+  }
+  .sg-when { display: none; }
+  .sg-exercises {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    background: $tint-grass;
+    border-radius: 10px;
+    color: $grass;
+    font-weight: 600;
+    font-size: 0.875rem;
+    &:hover { background: darken($tint-grass, 6%); }
+  }
+  .sg-resources {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+@media (max-width: 767.98px) {
+  .sessions-grid {
+    display: flex;
+    flex-direction: column;
+    .sg-time { display: none; }
+    .sg-day:not(:first-of-type) { margin-top: 1rem; }
+    .sg-session { min-height: 0; }
+    .sg-when { display: inline; }
+  }
+}
+
+// Educators: square photo cards
+.educators {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+  .educator {
+    p { margin: 0 0 0.25rem; }
+    img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      object-position: 50% 20%;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+    }
+    a {
+      font-weight: 600;
+      font-size: 1.0625rem;
+      color: $ink;
+      text-decoration: none;
+      &:hover { color: $africast-blue; }
+    }
+    p:last-child {
+      font-size: 0.875rem;
+      color: $muted;
+    }
+  }
+}
+
+// Before you start: numbered steps on pale blue, the title beside its detail
+.setup-steps {
+  counter-reset: step;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  .setup-step {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    background: $tint-blue;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    // one detail per step, beside its title
+    > * { grid-column: 2; grid-row: 1; margin: 0; }
+    h3 {
+      grid-column: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.125rem;
+      color: $ink;
+      &::before {
+        content: counter(step);
+        flex: 0 0 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: $africast-blue;
+        color: white;
+        display: grid;
+        place-items: center;
+        font-size: 0.9375rem;
+      }
+    }
+    div.sourceCode {
+      margin: 0;
+      background: $code-bg;
+      // room for the copy button
+      pre { margin: 0; padding-right: 2.5rem; }
+      code { font-size: 0.875em; }
+    }
+  }
+}
+@media (max-width: 767.98px) {
+  .setup-steps .setup-step {
+    grid-template-columns: minmax(0, 1fr);
+    > *, h3 { grid-column: 1; grid-row: auto; }
+  }
+}
+
+// Supporting organisations: full-colour logos on a white panel
+.orgs {
+  margin-top: 1rem;
+  padding: 1.75rem 1.5rem;
+  background: white;
+  border: 1px solid $sage-line;
+  border-radius: 10px;
+  p {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem 2rem;
+  }
+  a {
+    display: block;
+    transition: opacity 0.15s;
+    &:hover { opacity: 0.75; }
+  }
+  img {
+    display: block;
+    height: 52px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+  }
 }

@@ -81,6 +81,7 @@ website:
           - text: Time series foundation models
             href: sessions/day5/foundation_models.qmd
       - href: schedule.qmd
+      - href: about.qmd
 
 from: markdown+emoji
 format:

@@ -1,0 +1,49 @@
+<%
+// Week timetable for the home page: one column per day, rows for the
+// lecture slots, then exercises and resources. Cells are emitted day by day
+// and placed on the grid, so on narrow screens they stack in day order.
+// The output is read as markdown: keep it unindented (or it becomes code),
+// and place the cells' wrapping divs, since links get wrapped in <p>.
+const strip = (s) => String(s || "").replace(/<[^>]*>/g, "").trim();
+const authors = (a) => Array.isArray(a) ? a.map((x) => x.name || x).join(", ") : (a && a.name) || a || "";
+
+const days = [];
+for (const item of items) {
+  let day = days.find((d) => d.date === item.date);
+  if (!day) {
+    day = { date: item.date, items: [] };
+    days.push(day);
+  }
+  day.items.push(item);
+}
+for (const day of days) {
+  day.items.sort((a, b) => (a.order || 0) - (b.order || 0));
+  day.lectures = day.items.filter((x) => authors(x.author));
+  day.exercises = day.items.find((x) => /^exercises/i.test(x.title));
+  day.resources = day.items.find((x) => /^resources/i.test(x.title));
+}
+
+const slots = Math.max(...days.map((d) => d.lectures.length));
+const slotTime = (i) => strip((days.find((d) => d.lectures[i]) || {}).lectures[i].subtitle).split("-")[0];
+const exercisesTime = strip((days.find((d) => d.exercises) || { exercises: {} }).exercises.subtitle).split("-")[0];
+const at = (col, row) => `grid-column: ${col}; grid-row: ${row}`;
+let n = 0;
+%>
+<div class="sessions-grid" style="--days: <%= days.length %>">
+<% for (let i = 0; i < slots; i++) { %>
+<div class="sg-time" style="<%= at(1, i + 2) %>"><%= slotTime(i) %></div>
+<% } %>
+<div class="sg-time" style="<%= at(1, slots + 2) %>"><%= exercisesTime %></div>
+<% days.forEach((day, d) => { %>
+<div class="sg-day" style="<%= at(d + 2, 1) %>"><span>Day <%= d + 1 %></span> <%= day.date %></div>
+<% day.lectures.forEach((item, i) => { n++; %>
+<div class="sg-cell" style="<%= at(d + 2, i + 2) %>"><a class="sg-session" href="<%- item.path %>"><span class="sg-num"><%= n %></span> <span class="sg-title"><%= item.title %></span> <span class="sg-meta"><span class="sg-when"><%= strip(item.subtitle) %> · </span><%= authors(item.author) %></span></a></div>
+<% }) %>
+<% if (day.exercises) { %>
+<div class="sg-cell" style="<%= at(d + 2, slots + 2) %>"><a class="sg-exercises" href="<%- day.exercises.path %>">Exercises <span class="sg-when">· <%= strip(day.exercises.subtitle) %></span></a></div>
+<% } %>
+<% if (day.resources) { %>
+<div class="sg-cell" style="<%= at(d + 2, slots + 3) %>"><a class="sg-resources" href="<%- day.resources.path %>"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg> Recording &amp; code</a></div>
+<% } %>
+<% }) %>
+</div>
