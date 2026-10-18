@@ -1,6 +1,13 @@
 ---
 title: "Basic modelling and forecasting"
 session: 4
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-modelling
 ---
 
 ## Outline
@@ -338,14 +345,29 @@ Simulated futures from an ETS model
 
 ## Which is easiest to forecast?
 
- 1. daily electricity demand in 3 days time
- 2. timing of next Halley's comet appearance
- 3. time of sunrise this day next year
- 4. Google stock price tomorrow
- 5. Google stock price in 6 months time
- 6. maximum temperature tomorrow
- 7. exchange rate of \$US/AUS next week
- 8. total sales of drugs in Australian pharmacies next month
+::: {.poll #easiest-to-forecast}
+- daily electricity demand in 3 days time
+- timing of next Halley's comet appearance
+- time of sunrise this day next year
+- Google stock price tomorrow
+- Google stock price in 6 months time
+- maximum temperature tomorrow
+- exchange rate of \$US/AUS next week
+- total sales of drugs in Australian pharmacies next month
+:::
+
+## Which is hardest to forecast?
+
+::: {.poll #hardest-to-forecast}
+- daily electricity demand in 3 days time
+- timing of next Halley's comet appearance
+- time of sunrise this day next year
+- Google stock price tomorrow
+- Google stock price in 6 months time
+- maximum temperature tomorrow
+- exchange rate of \$US/AUS next week
+- total sales of drugs in Australian pharmacies next month
+:::
 
 ::: {.fragment}
  - how do we measure "easiest"?

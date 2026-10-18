@@ -2,6 +2,13 @@
 title: "Forecasting with regression"
 subtitle: "Representing temporal structure with regressors"
 session: 5
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-regression
 ---
 
 ## Outline
@@ -460,6 +467,15 @@ Check out [https://www.tylervigen.com/spurious-correlations](https://www.tylervi
 ```{r,echo=FALSE, fig.align='center', out.width="80%"}
 knitr::include_graphics("figs/corr_not_caus.jpeg")
 ```
+
+## Correlation and forecasting
+
+::: {.poll #correlation-forecasting}
+Ice-cream sales are strongly correlated with drownings. Are ice-cream sales useful for forecasting drownings?
+
+- [x] Yes
+- [ ] No
+:::
 
 ## Correlation is not causation
 

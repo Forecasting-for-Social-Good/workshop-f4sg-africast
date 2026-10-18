@@ -1,6 +1,13 @@
 ---
 title: "Basic training and test accuracy"
 session: 8
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-accuracy
 ---
 
 ## Outline
@@ -36,6 +43,16 @@ melsyd <- tsibbledata::ansett |>
 * We should be choosing forecast models that lead to better business decisions
     - least staffing costs, least emission, highest service level, least stock-out, least inventory, fastest response, least change in planing,  for example.
 * However, this is not always easy to obtain, therefore we might simply use methods that provide the most accurate forecast.
+
+## A perfect fit
+
+::: {.poll #perfect-fit}
+A model fits the training data perfectly. Will it forecast well?
+
+- [ ] Yes
+- [x] Not necessarily
+- [ ] No
+:::
 
 ## In-sample (training) vs. out-of-sample (test)
 

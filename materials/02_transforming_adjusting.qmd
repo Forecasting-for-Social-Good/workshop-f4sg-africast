@@ -1,5 +1,12 @@
 ---
 title: "Transforming and adjusting time series"
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-transforming
 ---
 
 ## Outline
@@ -86,6 +93,17 @@ food |> autoplot(log(Turnover)) +
 food |> autoplot(-1 / Turnover) +
   labs(y = "Inverse turnover")
 ```
+
+## Variance stabilisation
+
+::: {.poll #food-transformation}
+Which transformation best stabilises the variance of food turnover?
+
+- Square root
+- Cube root
+- Logarithm
+- Inverse
+:::
 
 ## Box-Cox transformations
 

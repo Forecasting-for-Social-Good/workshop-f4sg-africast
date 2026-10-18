@@ -1,6 +1,13 @@
 ---
 title: "Time series patterns and basic graphics"
 session: 2
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-graphics
 ---
 
 ## Outline
@@ -415,50 +422,85 @@ Cyclic
 * average length of cycle longer than length of seasonal pattern
 * magnitude of cycle more variable than magnitude of seasonal pattern
 
-## Time series patterns
+## Time series patterns {.nostretch}
 
-```{r, fig.height=2.7}
+```{r, echo=FALSE, fig.height=2}
 aus_production |>
   filter(year(Quarter) >= 1980) |>
   autoplot(Electricity) +
   labs(y = "GWh", title = "Australian electricity production")
 ```
 
-## Time series patterns
+::: {.poll #pattern-electricity prompt="Australian electricity production: seasonal, cyclic, both or neither?"}
+- [x] Seasonal
+- [ ] Cyclic
+- [ ] Both
+- [ ] Neither
+:::
 
-```{r, warning=FALSE, fig.height=2.7}
+## Time series patterns {.nostretch}
+
+```{r, echo=FALSE, warning=FALSE, fig.height=2}
 aus_production |>
   autoplot(Bricks) +
   labs(title = "Australian clay brick production",
        x = "Year", y = "million units")
 ```
 
-## Time series patterns
+::: {.poll #pattern-bricks prompt="Australian clay brick production: seasonal, cyclic, both or neither?"}
+- [ ] Seasonal
+- [ ] Cyclic
+- [x] Both
+- [ ] Neither
+:::
 
-```{r, fig.height=2.7}
+## Time series patterns {.nostretch}
+
+```{r, echo=FALSE, fig.height=2}
 us_employment |>
   filter(Title == "Retail Trade", year(Month) >= 1980) |>
   autoplot(Employed / 1e3) +
   labs(title = "Retail employment, USA", y = "Million people")
 ```
 
-## Time series patterns
+::: {.poll #pattern-retail prompt="US retail employment: seasonal, cyclic, both or neither?"}
+- [ ] Seasonal
+- [ ] Cyclic
+- [x] Both
+- [ ] Neither
+:::
 
-```{r, fig.height=2.7}
+## Time series patterns {.nostretch}
+
+```{r, echo=FALSE, fig.height=2}
 gafa_stock |>
   filter(Symbol == "AMZN", year(Date) >= 2018) |>
   autoplot(Close) +
   labs(title = "Amazon closing stock price", x = "Day", y = "$")
 ```
 
-## Time series patterns
+::: {.poll #pattern-amazon prompt="Amazon closing stock price: seasonal, cyclic, both or neither?"}
+- [ ] Seasonal
+- [ ] Cyclic
+- [ ] Both
+- [x] Neither
+:::
 
-```{r, fig.height=2.7}
+## Time series patterns {.nostretch}
+
+```{r, echo=FALSE, fig.height=2}
 pelt |>
   autoplot(Lynx) +
   labs(title = "Annual Canadian Lynx Trappings",
        x = "Year", y = "Number trapped")
 ```
+
+::: {.poll #pattern-lynx prompt="Annual Canadian lynx trappings: seasonal, cyclic, both or neither?"}
+- [ ] Seasonal
+- [x] Cyclic
+- [ ] Both
+- [ ] Neither
+:::
 
 ## Seasonal or cyclic?
 
@@ -637,9 +679,9 @@ google_2015 |>
   autoplot()
 ```
 
-## Which is which?
+## Which is which? {.nostretch}
 
-```{r, fig.height=6, fig.width=12, echo=FALSE, warning=FALSE, out.width="100%"}
+```{r, fig.height=2.8, fig.width=12, echo=FALSE, warning=FALSE, out.width="100%"}
 cowtemp <- as_tsibble(fma::cowtemp)
 USAccDeaths <- as_tsibble(USAccDeaths)
 AirPassengers <- as_tsibble(AirPassengers)
@@ -661,6 +703,13 @@ gridExtra::grid.arrange(tp1, tp2, tp3, tp4,
   nrow = 2
 )
 ```
+
+::: {.poll #acf-match prompt="Match each time series (1-4) to its ACF (A-D)"}
+- [ ] 1A, 2B, 3C, 4D
+- [x] 1B, 2A, 3D, 4C
+- [ ] 1B, 2D, 3A, 4C
+- [ ] 1C, 2A, 3D, 4B
+:::
 
 # White noise
 
@@ -722,13 +771,18 @@ pigs |> autoplot(Count / 1e3) +
        title = "Number of pigs slaughtered in Victoria")
 ```
 
-## Example: Pigs slaughtered
+## Example: Pigs slaughtered {.nostretch}
 
-```{r}
+```{r, echo=FALSE, fig.height=2}
 pigs |>
   ACF(Count) |>
   autoplot()
 ```
+
+::: {.poll #pigs-white-noise prompt="Is the number of pigs slaughtered a white noise series?"}
+- [ ] Yes
+- [x] No
+:::
 
 ## Example: Pigs slaughtered
 

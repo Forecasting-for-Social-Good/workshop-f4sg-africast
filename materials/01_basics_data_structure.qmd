@@ -1,6 +1,13 @@
 ---
 title: "Basics of time series and data structures"
 session: 1
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-basics
 ---
 
 ## Outline
@@ -115,14 +122,8 @@ local({
 
 ## Your time series
 
-::: {.block}
-What time series do you work with?
-:::
-
-::: {.fragment}
-* What is measured?
-* How often?
-* One series, or many?
+::: {.wordcloud #your-time-series max-words=3 max-answers=3}
+What time series data do you work with?
 :::
 
 ## What makes it a time series?

@@ -1,6 +1,13 @@
 ---
 title: "Time series foundation models"
 session: 10
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-foundation-models
 ---
 
 ## Outline
@@ -10,6 +17,12 @@ session: 10
 * What is a time series foundation model?
 * How do they compare to classical methods?
 * When to use a foundation model
+
+## Foundation models
+
+::: {.wordcloud #foundation-models-known max-words=2 max-answers=3}
+Which time series foundation models have you heard of?
+:::
 
 ## What is a time series foundation model?
 

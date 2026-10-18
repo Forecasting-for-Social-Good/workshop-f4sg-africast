@@ -450,3 +450,23 @@ $bleed-width: calc(var(--slide-width) + 160px);
   max-height: 570px;
   max-width: 100%;
 }
+
+// Live questions: larger poll text, each option's label beside its bar
+.reveal .lq-question.lq-active .lq-main {
+  font-size: 1.4em;
+}
+.reveal .lq-bars {
+  display: grid;
+  grid-template-columns: fit-content(45%) minmax(0, 1fr) auto;
+  align-content: center;
+  column-gap: 0.8em;
+  row-gap: calc(0.7em * var(--lq-fit));
+}
+.reveal .lq-row {
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  grid-template-areas: "label track stat";
+}
+.reveal .lq-question.lq-active .lq-side {
+  width: 9.5em;
+}

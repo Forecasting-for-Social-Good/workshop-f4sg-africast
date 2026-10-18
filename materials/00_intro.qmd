@@ -160,7 +160,7 @@ PhD researcher, Data Lab for Social Good, Cardiff University. Probabilistic fore
 * [Follow us on Twitter](https://twitter.com/FSG_forecast)
 * Use #AFRICAST, #F4SG if you post on social media about the workshop
 
-## Poll: How proficient are you in using R? {.smaller}
+## Poll: How proficient are you in using R?
 
 ::: {.poll #r-proficiency}
 - Guru: The R core team come to me for advice.
@@ -173,7 +173,7 @@ PhD researcher, Data Lab for Social Good, Cardiff University. Probabilistic fore
 - Unknown: Why are you speaking like a pirate?
 :::
 
-## Poll: How experienced are you in forecasting {.smaller}
+## Poll: How experienced are you in forecasting
 
 ::: {.poll #forecasting-experience}
 - Guru: I wrote the book, done it for decades, now I do the conference circuit.

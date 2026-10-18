@@ -1,6 +1,13 @@
 ---
 title: "ARIMA models"
 session: 6
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-arima
 ---
 
 ## Outline
@@ -46,23 +53,33 @@ A **stationary series** is:
 * no patterns predictable in the long-term
 :::
 
-## Stationary?
+## Stationary? {.nostretch}
 
-```{r, fig.height=2.7}
+```{r, echo=FALSE, fig.height=2.2}
 gafa_stock |>
   filter(Symbol == "GOOG", year(Date) == 2018) |>
   autoplot(Close) +
-  labs(y = "Google closing stock price ($US)")
+  labs(y = "Closing price ($US)", title = "Google closing stock price")
 ```
 
-## Stationary?
+::: {.poll #stationary-goog prompt="Is the Google closing stock price stationary?"}
+- [ ] Yes
+- [x] No
+:::
 
-```{r, fig.height=2.7}
+## Stationary? {.nostretch}
+
+```{r, echo=FALSE, fig.height=2.2}
 gafa_stock |>
   filter(Symbol == "GOOG", year(Date) == 2018) |>
   autoplot(difference(Close)) +
-  labs(y = "Daily change in Google closing stock price")
+  labs(y = "Change ($US)", title = "Daily change in Google closing stock price")
 ```
+
+::: {.poll #stationary-goog-diff prompt="Is the daily change in Google closing stock price stationary?"}
+- [x] Yes
+- [ ] No
+:::
 
 ## Differencing
 
