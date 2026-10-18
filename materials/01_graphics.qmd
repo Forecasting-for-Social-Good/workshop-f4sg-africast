@@ -698,10 +698,7 @@ acfb <- ACF(cowtemp, value) |> autoplot() + labs(x = "") + labs(title = "B") + y
 acfa <- ACF(USAccDeaths, value) |> autoplot() + labs(x = "") + labs(title = "A") + ylim(-0.5, 1)
 acfd <- ACF(AirPassengers, value) |> autoplot() + labs(x = "") + labs(title = "D") + ylim(-0.5, 1)
 acfc <- ACF(mink, value) |> autoplot() + labs(x = "") + labs(title = "C") + ylim(-0.5, 1)
-gridExtra::grid.arrange(tp1, tp2, tp3, tp4,
-  acfa, acfb, acfc, acfd,
-  nrow = 2
-)
+(tp1 | tp2 | tp3 | tp4) / (acfa | acfb | acfc | acfd)
 ```
 
 ::: {.poll #acf-match prompt="Match each time series (1-4) to its ACF (A-D)"}
