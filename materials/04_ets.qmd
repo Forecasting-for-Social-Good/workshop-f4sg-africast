@@ -469,7 +469,7 @@ vic_cafe |>
   geom_line(aes(y = Turnover)) +
   geom_line(aes(y = .sim, colour = as.factor(.rep)), data = sim) +
   labs(title = "Monthly turnover of Victorian cafes") +
-  guides(col = FALSE)
+  guides(colour = "none")
 ```
 
 ## Bootstrapped forecast distributions {.code-small}
