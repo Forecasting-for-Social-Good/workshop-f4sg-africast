@@ -423,13 +423,17 @@ main p > img[src*="images/"][width="200"] {
     }
     a {
       font-weight: 600;
-      font-size: 1.0625rem;
+      font-size: 0.875rem;
+      white-space: nowrap;
       color: $ink;
       text-decoration: none;
       &:hover { color: $africast-blue; }
     }
-    p:last-child {
-      font-size: 0.875rem;
+    // Organisation and role, one line each
+    p:nth-last-child(-n+2) {
+      font-size: 0.8125rem;
+      line-height: 1.3;
+      white-space: nowrap;
       color: $muted;
     }
   }

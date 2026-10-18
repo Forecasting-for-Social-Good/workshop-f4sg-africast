@@ -33,12 +33,13 @@ Professor of Data Driven Decision Making and Director of the Data Lab for Social
 :::
 
 ::: {.instructor}
-![](figs/mitch.png)
+![](figs/mitch.jpg)
 
 ::: {.callout-important}
 ## Mitchell O'Hara-Wild
 
-Time series researcher and R developer, Monash University. Developer of the `fable`, `tsibble` and `fabletools` packages used throughout this workshop.
+Time series researcher and R package developer from Monash University (Australia).  
+Developer of the time series packages (`fable`, `tsibble`, `ggtime`, ...) used throughout this workshop.
 
 [mitchelloharawild.com](https://mitchelloharawild.com)\
 [github.com/mitchelloharawild](https://github.com/mitchelloharawild)\
@@ -75,8 +76,6 @@ Researcher, Data Lab for Social Good, Cardiff Business School. Forecasting and d
 ## Mustafa Aslan
 
 PhD researcher, Data Lab for Social Good, Cardiff University. Probabilistic forecasting and optimisation for hospital patient flow. Developer of the `peshbeen` forecasting package.
-
-[mustafaslancoto.github.io](https://mustafaslancoto.github.io/)
 :::
 :::
 

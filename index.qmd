@@ -18,7 +18,7 @@ listing:
 
 # Tidy time series & forecasting in R {.unnumbered .unlisted}
 
-19–23 October 2026 · online · all times East Africa Time (UTC+3)
+19–23 October 2026 · Online training course
 :::
 
 ::: {.home-hero-actions}
@@ -66,7 +66,9 @@ Each day has two 90-minute live sessions, then exercises with mentors in the aft
 
 [Mitchell O'Hara-Wild](about.qmd#mitchell)
 
-Monash University · lead developer of fable
+Monash University
+
+Lead developer of fable
 :::
 
 ::: {.educator}
@@ -74,7 +76,9 @@ Monash University · lead developer of fable
 
 [Bahman Rostami-Tabar](about.qmd#bahman)
 
-Cardiff University · founder of F4SG
+Cardiff University
+
+Founder of F4SG
 :::
 
 ::: {.educator}
@@ -82,7 +86,9 @@ Cardiff University · founder of F4SG
 
 [Abiodun Egwuenu](about.qmd#abiodun)
 
-Charité Berlin · field epidemiologist
+Charité Berlin
+
+Field epidemiologist
 :::
 
 ::: {.educator}
@@ -90,7 +96,9 @@ Charité Berlin · field epidemiologist
 
 [Harsha Halgamuwe Hewage](about.qmd#harsha)
 
-Data Lab for Social Good, Cardiff University
+Cardiff University
+
+Supply chain forecaster
 :::
 
 ::: {.educator}
@@ -98,7 +106,9 @@ Data Lab for Social Good, Cardiff University
 
 [Mustafa Aslan](about.qmd#mustafa)
 
-Data Lab for Social Good, Cardiff University
+Cardiff University
+
+Healthcare forecaster
 :::
 :::
 
