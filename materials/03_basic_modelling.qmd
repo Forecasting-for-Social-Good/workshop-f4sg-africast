@@ -1,6 +1,6 @@
 ---
-title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "4. Basic modelling and forecasting"
+title: "Basic modelling and forecasting"
+session: 4
 ---
 
 ## Outline

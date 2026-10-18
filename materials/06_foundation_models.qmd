@@ -1,6 +1,6 @@
 ---
-title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "10. Time series foundation models"
+title: "Time series foundation models"
+session: 10
 ---
 
 ## Outline

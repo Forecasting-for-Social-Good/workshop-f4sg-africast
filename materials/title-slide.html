@@ -1,12 +1,18 @@
 <section id="$idprefix$title-slide"$for(title-slide-attributes/pairs)$ $it.key$="$it.value$"$endfor$>
+  <div class="title-brand"><img src="figs/africast-mark.png" alt=""><span>AFRICAST</span></div>
+  <p class="title-kicker">Tidy time series &amp; forecasting in R</p>
   <h1 class="title">$title$</h1>
 $if(subtitle)$
   <p class="subtitle">$subtitle$</p>
 $endif$
-  <p class="title-url">workshop.f4sg.org/africast</p>
+$if(session)$
+  <p class="title-session" data-session="$session$">Session $session$ of 10</p>
+$endif$
   <div class="title-hexes">
     <img src="figs/tsibble.png" alt="tsibble">
     <img src="figs/feasts.png" alt="feasts">
     <img src="figs/fable.png" alt="fable">
   </div>
+  <img class="africast-savanna" src="figs/savanna.png" alt="">
+  <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
 </section>

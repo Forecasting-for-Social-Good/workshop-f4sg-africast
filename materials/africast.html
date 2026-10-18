@@ -1,0 +1,60 @@
+<script>
+// AFRICAST slide furniture: section dividers that show the deck's outline,
+// and a running footer naming the session on every content slide.
+(function () {
+  function decorate() {
+    var titleSlide = document.getElementById("title-slide");
+    var title = titleSlide ? titleSlide.querySelector("h1.title").textContent.trim() : "";
+    var sessionEl = titleSlide && titleSlide.querySelector(".title-session");
+    var session = sessionEl ? sessionEl.dataset.session + " " : "";
+    // Reuse the title slide's images, which embed-resources has inlined
+    var savannaImg = titleSlide && titleSlide.querySelector("img.africast-savanna");
+    var markImg = titleSlide && titleSlide.querySelector(".title-brand img");
+
+    // Section dividers: "Section i of n", the outline track and the skyline
+    var sections = Array.from(document.querySelectorAll(".reveal .slides section.slide.level1"));
+    var names = sections.map(function (s) {
+      var h = s.querySelector("h1");
+      return h ? h.textContent.trim() : "";
+    });
+    sections.forEach(function (s, i) {
+      s.classList.remove("center");
+      s.classList.add("africast-section");
+      var kicker = document.createElement("p");
+      kicker.className = "section-kicker";
+      kicker.textContent = "Section " + (i + 1) + " of " + sections.length;
+      s.insertBefore(kicker, s.firstChild);
+      var track = document.createElement("ol");
+      track.className = "section-track";
+      names.forEach(function (name, j) {
+        var li = document.createElement("li");
+        if (j < i) li.className = "done";
+        if (j === i) li.className = "now";
+        var n = document.createElement("i");
+        n.textContent = j + 1;
+        li.appendChild(n);
+        li.appendChild(document.createTextNode(name));
+        track.appendChild(li);
+      });
+      s.appendChild(track);
+      if (savannaImg) s.appendChild(savannaImg.cloneNode());
+    });
+
+    // Running footer on content slides
+    document.querySelectorAll(".reveal .slides section.slide:not(.level1):not(#title-slide)").forEach(function (s) {
+      var foot = document.createElement("div");
+      foot.className = "africast-foot";
+      if (markImg) foot.appendChild(markImg.cloneNode());
+      var brand = document.createElement("b");
+      brand.textContent = "AFRICAST";
+      foot.appendChild(brand);
+      foot.appendChild(document.createTextNode(" · " + session + title));
+      s.appendChild(foot);
+    });
+
+    Reveal.layout();
+  }
+  if (Reveal.isReady()) decorate();
+  else Reveal.on("ready", decorate);
+})();
+</script>

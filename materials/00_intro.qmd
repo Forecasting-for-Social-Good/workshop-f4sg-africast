@@ -1,5 +1,5 @@
 ---
-title: "Africast-Tidy Time Series & Forecasting Using R"
+title: "Introduction"
 filters:
   - live-questions
 revealjs-plugins:

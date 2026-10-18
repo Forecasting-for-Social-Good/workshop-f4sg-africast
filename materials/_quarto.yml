@@ -27,17 +27,16 @@ format:
     embed-resources: true
     template-partials:
       - title-slide.html
-    title-slide-attributes:
-      data-background-image: figs/africa1-title.jpg
-      data-background-size: cover
     include-in-header:
       - macros.html
       - fonts/fonts.html
+    include-after-body:
+      - africast.html
     knitr:
       opts_chunk:
         dev: "ragg_png"
         out.width: "100%"
-highlight-style: tango
+highlight-style: africast.theme
 execute:
   echo: true
   message: false

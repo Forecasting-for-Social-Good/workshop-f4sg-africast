@@ -1,6 +1,6 @@
 ---
-title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "2. Time series patterns and basic graphics"
+title: "Time series patterns and basic graphics"
+session: 2
 ---
 
 ## Outline

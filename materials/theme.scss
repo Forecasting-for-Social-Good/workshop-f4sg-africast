@@ -1,107 +1,292 @@
 /*-- scss:defaults --*/
 
-$monash-blue: #0063A7;
-$orange: #CC5900;
-$dark-yellow: #E6AC00;
-$light-grey: #E7E7E7;
+// AFRICAST palette, sampled from the workshop poster and the title photo
+$ink: #1F2A36;        // running text
+$slate: #434A5C;      // poster tabs and numbered circles: structure
+$africast-blue: #3B75AC; // poster wordmark: bullets, links, forecasts
+$sage: #EEF4DF;       // poster background
+$sage-line: #D9E2C8;
+$ochre: #B5570F;      // sunset in the title photo: alerts
+$ochre-deep: #8C3F08;
+$tint-blue: #E4ECF3;
+$tint-ochre: #FAEBD7;
+$night: #0E2224;      // savanna silhouette, footer band
+$muted: #6B7480;
+$code-bg: #F1F4EA;
 
 $font-family-sans-serif: "Fira Sans", sans-serif;
 $font-family-monospace: "Source Code Pro", monospace;
 $presentation-font-size-root: 34px;
 $presentation-heading-font: "Fira Sans", sans-serif;
-$presentation-heading-color: $monash-blue;
+$presentation-heading-color: $slate;
 $presentation-heading-font-weight: 600;
 $presentation-h2-font-size: 1.15em;
-$link-color: $monash-blue;
-$body-bg: #FAFAFA;
+$body-color: $ink;
+$link-color: $africast-blue;
+$body-bg: #FBFCF7;
 $code-block-font-size: 0.72em;
-$code-block-bg: #E1E1E1;
-$code-block-border-color: transparent;
+$code-block-bg: $code-bg;
+$code-block-border-color: $sage-line;
 
 /*-- scss:rules --*/
 
-// Frame title bar spanning the full slide, as in the Beamer theme
-.reveal .slides > section:not(#title-slide) > h2,
-.reveal .slides > section > section:not(#title-slide) > h2 {
-  background-color: $monash-blue;
-  color: white;
-  text-transform: lowercase;
-  margin: -40px -80px 0.6em -80px;
-  padding: 0.35em 80px 0.35em 80px;
+// Letterbox: one white-to-sage gradient across the whole frame, borders included
+.quarto-light, .quarto-dark {
+  background-color: #1B2A2C;
+}
+.reveal .slides {
+  border-color: transparent;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAF2 55%, $sage 100%) border-box;
 }
 
-// Code in the frame title should stay readable on blue
+// Full-bleed helpers, relative to a slide's content box (letterbox borders are 80px / 40px)
+$bleed-width: calc(var(--slide-width) + 160px);
+@function from-bottom($h) {
+  @return calc(var(--slide-height) + 40px - #{$h});
+}
+
+// Slide headers: a full-width slate band with a blue keyline, in sentence case
+.reveal .slides > section:not(#title-slide) > h2,
+.reveal .slides > section > section:not(#title-slide) > h2 {
+  background-color: $slate;
+  color: white;
+  margin: -40px -80px 0.6em -80px;
+  padding: 20px 80px 18px 80px;
+  box-shadow: inset 0 -5px 0 $africast-blue;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+// Code and links in the header band stay readable on slate
 .reveal .slides section > h2 code {
   color: white;
   background: transparent;
 }
-
-// Section dividers
-.reveal .slides section.title-slide.level1 h1 {
-  color: $monash-blue;
-  border-bottom: 4px solid $orange;
-  padding-bottom: 0.2em;
+.reveal .slides section > h2 a {
+  color: white;
+  text-decoration: underline;
 }
 
-// Title slide (background image from title-slide-attributes)
+// Running footer (added by africast.html), sitting in the bottom letterbox border
+.reveal .africast-foot {
+  position: absolute;
+  top: calc(var(--slide-height) + 8px);
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: $muted;
+  letter-spacing: 0.02em;
+  img {
+    height: 22px;
+    margin: 0;
+  }
+  b {
+    color: $africast-blue;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+}
+.reveal .slide-number {
+  background: transparent;
+  color: $muted;
+  font-family: $font-family-sans-serif;
+  font-size: 15px;
+}
+.reveal .progress {
+  height: 4px;
+  color: $africast-blue;
+}
+
+// Savanna skyline from the poster, along the bottom of the frame
+.reveal img.africast-savanna {
+  position: absolute;
+  left: -80px;
+  top: from-bottom(150px);
+  width: $bleed-width;
+  max-width: none;
+  height: 150px;
+  max-height: none;
+  margin: 0;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+// Section dividers (track and skyline added by africast.html)
+.reveal .slides section.africast-section {
+  .section-kicker {
+    margin: 120px 0 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: $africast-blue;
+  }
+  h1 {
+    margin: 10px 0 0;
+    font-size: 92px;
+    line-height: 1;
+    font-weight: 700;
+    color: $slate;
+    text-wrap: balance;
+  }
+  .section-track {
+    list-style: none;
+    padding: 0;
+    margin: 46px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 30px;
+    font-size: 19px;
+    color: $muted;
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+    }
+    li i {
+      font-style: normal;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #A9B3BD;
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    li.done i {
+      background: #A9B3BD;
+      color: white;
+    }
+    li.now {
+      color: $ink;
+      font-weight: 600;
+    }
+    li.now i {
+      background: $slate;
+      border-color: $slate;
+      color: white;
+    }
+  }
+}
+
+// Title slide, after the poster
 #title-slide {
   text-align: left;
-  h1.title {
-    color: white;
-    font-size: 1.35em;
+  // Keep the title text above the skyline if a long title runs into it
+  .title-kicker, h1.title, .subtitle, .title-session {
+    position: relative;
+    z-index: 1;
+  }
+  .title-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    img {
+      height: 78px;
+      margin: 0;
+    }
+    span {
+      font-size: 50px;
+      font-weight: 600;
+      color: $africast-blue;
+      letter-spacing: 0.01em;
+      margin-top: 26px;
+    }
+  }
+  .title-kicker {
+    margin: 56px 0 0;
+    font-size: 22px;
     font-weight: 700;
-    max-width: 60%;
-    margin-top: 0;
-    text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: $slate;
+  }
+  h1.title {
+    margin: 12px 0 0;
+    max-width: 640px;
+    font-size: 80px;
+    line-height: 1.02;
+    font-weight: 700;
+    color: $ink;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
   .subtitle {
-    color: white;
-    font-weight: 600;
-    font-size: 0.85em;
-    max-width: 60%;
-    text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    margin: 14px 0 0;
+    max-width: 640px;
+    font-size: 26px;
+    color: $slate;
   }
-  .title-url {
-    position: absolute;
-    top: -20px;
-    right: 0;
-    margin: 0;
+  .title-session {
+    display: inline-block;
+    margin: 22px 0 0;
+    font-size: 22px;
+    font-weight: 600;
     color: white;
-    font-size: 0.6em;
+    background: $africast-blue;
+    padding: 6px 20px 6px 18px;
+    border-radius: 999px;
   }
   .title-hexes {
     position: absolute;
-    top: 470px;
-    left: 0;
+    top: 160px;
+    right: 0;
     display: flex;
-    gap: 16px;
+    gap: 10px;
     img {
-      height: 200px;
+      height: 150px;
       margin: 0;
+    }
+  }
+  img.africast-savanna {
+    top: from-bottom(208px);
+  }
+  .title-band {
+    position: absolute;
+    left: -80px;
+    top: from-bottom(58px);
+    width: $bleed-width;
+    height: 58px;
+    box-sizing: border-box;
+    padding: 0 80px;
+    background: $night;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 21px;
+    font-weight: 600;
+    span:last-child {
+      font-weight: 400;
+      color: #B8C4C0;
     }
   }
 }
 
 // Alerted text
 .alert {
-  color: $orange;
+  color: $ochre;
   font-weight: 600;
 }
 
-// Square orange bullets and numbers, as in the Beamer theme
+// Bullets and numbers in AFRICAST blue
 .reveal ul > li::marker {
-  color: $orange;
+  color: $africast-blue;
 }
 .reveal ol > li::marker {
-  color: $orange;
+  color: $africast-blue;
   font-weight: 600;
 }
 
-// Beamer-style blocks: callout-note is a block, callout-important an alertblock
+// Callouts: flat, slate title over pale blue; important is deep ochre over sand
 .reveal div.callout {
   border: none !important;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  box-shadow: none;
   overflow: hidden;
   margin: 0.4em 0;
   .callout-body {
@@ -109,26 +294,44 @@ $code-block-border-color: transparent;
   }
   .callout-title {
     color: white !important;
-    padding: 0.2em 0.6em !important;
+    opacity: 1 !important;
+    font-size: 0.8em;
+    padding: 0.2em 0.75em !important;
     margin: 0 !important;
     p {
       margin: 0;
     }
   }
   .callout-content {
-    color: black;
+    color: $ink;
     padding: 0.3em 0.6em !important;
     > p:first-child { margin-top: 0; }
     > p:last-child { margin-bottom: 0; }
   }
 }
 .reveal div.callout-note {
-  .callout-body { background-color: $light-grey !important; }
-  .callout-title { background-color: $monash-blue !important; }
+  .callout-body { background-color: $tint-blue !important; }
+  .callout-title { background-color: $slate !important; }
 }
 .reveal div.callout-important {
-  .callout-body { background-color: $dark-yellow !important; }
-  .callout-title { background-color: black !important; }
+  .callout-body { background-color: $tint-ochre !important; }
+  .callout-title { background-color: $ochre-deep !important; }
+}
+.reveal div.callout .callout-title * {
+  color: white !important;
+}
+
+// Code blocks
+.reveal div.sourceCode {
+  border-radius: 10px;
+}
+.reveal pre code {
+  max-height: none;
+}
+// Console output sits directly on the slide
+.reveal .cell-output pre,
+.reveal .cell-output pre code {
+  background: transparent;
 }
 
 // Smaller code for wide console output
@@ -143,13 +346,9 @@ $code-block-border-color: transparent;
   font-size: 1em;
 }
 
-.reveal pre code {
-  max-height: none;
-}
-
 // Definition lists (patterns, ARIMA steps)
 .reveal dl dt {
-  color: $orange;
+  color: $ochre;
   font-weight: 600;
 }
 .reveal dl dd {
@@ -162,10 +361,10 @@ $code-block-border-color: transparent;
   font-size: 0.8em;
 }
 .reveal table th {
-  color: $monash-blue;
+  color: $slate;
 }
 
-// Small floating note boxes (replacing Beamer textblocks)
+// Small floating note boxes
 .reveal .absolute.callout,
 .reveal .absolute .callout {
   margin: 0;
@@ -177,7 +376,7 @@ $code-block-border-color: transparent;
 
 // Struck-through cells (ETS taxonomy)
 .reveal del {
-  text-decoration-color: red;
+  text-decoration-color: $ochre;
   text-decoration-thickness: 4px;
 }
 
@@ -194,7 +393,7 @@ $code-block-border-color: transparent;
       width: 150px;
       height: 150px;
       margin: 0;
-      border-radius: 6px;
+      border-radius: 10px;
       // square crop, anchored near the top so faces stay in frame
       object-fit: cover;
       object-position: 50% 20%;
@@ -207,26 +406,21 @@ $code-block-border-color: transparent;
   }
 }
 
-.reveal div.callout .callout-title * {
-  color: white !important;
-}
-
-// Untitled Beamer blocks
+// Untitled blocks
 .reveal div.block,
 .reveal div.alertblock {
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
   padding: 0.3em 0.6em;
   margin: 0.4em 0;
-  color: black;
+  color: $ink;
   > :first-child { margin-top: 0; }
   > :last-child { margin-bottom: 0; }
 }
 .reveal div.block {
-  background-color: $light-grey;
+  background-color: $tint-blue;
 }
 .reveal div.alertblock {
-  background-color: $dark-yellow;
+  background-color: $tint-ochre;
 }
 
 // Floating note (absolutely positioned block)
@@ -256,4 +450,3 @@ $code-block-border-color: transparent;
   max-height: 570px;
   max-width: 100%;
 }
-.reveal .slides section > h2 a { color: white; text-decoration: underline; }

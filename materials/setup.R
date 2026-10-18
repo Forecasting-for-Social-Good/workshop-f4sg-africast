@@ -9,7 +9,7 @@ options(
   ggplot2.discrete.fill = c("#D55E00", "#0072B2", "#009E73", "#CC79A7", "#E69F00", "#56B4E9", "#F0E442")
 )
 knitr::opts_chunk$set(
-  dev.args = list(pointsize = 11),
+  dev.args = list(pointsize = 11, bg = "transparent"),
   # Keep figures outside *_files/, which is removed after embedding resources,
   # so cached chunks still have their figures on re-render
   fig.path = file.path(
@@ -28,12 +28,19 @@ knitr::opts_chunk$set(
   }
 )
 
-# Font for graphics to be Fira Sans
+# Graphics in the AFRICAST palette: Fira Sans, slate text, sage gridlines and a
+# transparent background so plots sit on the slide's gradient
 ggplot2::theme_set(
-  ggplot2::theme_get() +
+  ggplot2::theme_minimal(base_family = "Fira Sans") +
     ggplot2::theme(
-      text = ggplot2::element_text(family = "Fira Sans"),
-      plot.background = ggplot2::element_rect(fill = "#fafafa", color = "#fafafa")
+      text = ggplot2::element_text(colour = "#434A5C"),
+      axis.text = ggplot2::element_text(colour = "#434A5C"),
+      panel.grid.major = ggplot2::element_line(colour = "#D9E2C8"),
+      panel.grid.minor = ggplot2::element_line(colour = "#E8EEDD"),
+      strip.text = ggplot2::element_text(colour = "#434A5C", face = "bold"),
+      plot.background = ggplot2::element_rect(fill = "transparent", colour = NA),
+      panel.background = ggplot2::element_rect(fill = "transparent", colour = NA),
+      legend.background = ggplot2::element_rect(fill = "transparent", colour = NA)
     )
 )
 # Render a gganimate animation to an MP4 video that reveal.js autoplays (and

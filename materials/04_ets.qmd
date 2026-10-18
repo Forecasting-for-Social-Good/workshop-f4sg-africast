@@ -1,6 +1,6 @@
 ---
-title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "7. Exponential smoothing"
+title: "Exponential smoothing"
+session: 7
 ---
 
 ## Outline

@@ -18,7 +18,7 @@ morph_font_setup <- function(family = "Fira Sans") {
 }
 
 # Draw a grob into an SVG string of the given size (in inches)
-morph_svg_string <- function(grob, width, height, bg = "#fafafa") {
+morph_svg_string <- function(grob, width, height, bg = "transparent") {
   s <- svglite::svgstring(width = width, height = height, bg = bg)
   grid::grid.newpage()
   grid::grid.draw(grob)

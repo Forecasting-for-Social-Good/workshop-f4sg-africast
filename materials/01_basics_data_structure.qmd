@@ -1,6 +1,6 @@
 ---
-title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "1. Basics of time series and data structures"
+title: "Basics of time series and data structures"
+session: 1
 ---
 
 ## Outline

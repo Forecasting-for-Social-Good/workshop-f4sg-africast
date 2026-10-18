@@ -1,6 +1,6 @@
 ---
-title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "3. Computing and visualising features"
+title: "Computing and visualising features"
+session: 3
 ---
 
 ## Outline

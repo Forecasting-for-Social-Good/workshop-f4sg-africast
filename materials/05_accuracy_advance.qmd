@@ -1,6 +1,6 @@
 ---
-title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "9. Residual diagnostics and cross validation "
+title: "Residual diagnostics and cross validation"
+session: 9
 ---
 
 ## Outline

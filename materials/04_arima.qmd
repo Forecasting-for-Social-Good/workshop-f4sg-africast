@@ -1,6 +1,6 @@
 ---
-title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "6. ARIMA models"
+title: "ARIMA models"
+session: 6
 ---
 
 ## Outline
@@ -221,11 +221,8 @@ Note: Can't compare AICc for different values of $d$.
 ## How does ARIMA() work?
 
 Step 1:
-: Select current model (with smallest AICc) from:  
-ARIMA$(2,d,2)$  
-ARIMA$(0,d,0)$  
-ARIMA$(1,d,0)$  
-ARIMA$(0,d,1)$
+: Select current model (with smallest AICc) from:\
+ARIMA$(2,d,2)$, ARIMA$(0,d,0)$, ARIMA$(1,d,0)$, ARIMA$(0,d,1)$
 
 ::: {.fragment}
 Step 2:

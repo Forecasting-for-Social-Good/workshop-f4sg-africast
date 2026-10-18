@@ -1,6 +1,5 @@
 ---
-title: "Africast-Time Series Analysis & Forecasting Using R"
-subtitle: "Transforming / adjusting time series"
+title: "Transforming and adjusting time series"
 ---
 
 ## Outline
