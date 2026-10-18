@@ -20,7 +20,6 @@ ausbeer <- as_tsibble(fpp2::ausbeer) |>
   rename(Time = index, Production = value)
 library(fpp3)
 library(tidyverse)
-library(mixtime)
 ```
 
 # Introduction to forecasting
@@ -74,7 +73,6 @@ knitr::include_graphics("figs/forecasting_workflow.png")
 
 ::: {.hexes}
 ![](figs/tsibble.png)
-![](figs/mixtime.png)
 ![](figs/tsibbledata.png)
 ![](figs/feasts.png)
 ![](figs/ggtime.png)
@@ -100,13 +98,6 @@ local({
   attach_msg()
 })
 ```
-
-::: {.fragment}
-```r
-# Time classes for the index (load after fpp3)
-library(mixtime)
-```
-:::
 
 # Time series data
 
@@ -198,7 +189,20 @@ Measure
 Domestic visitor nights (thousands).
 :::
 
-## The index needs a time class
+## The `tsibble` index
+
+For annual data, integer years work as the index:
+
+```{r tstable}
+mydata <- tsibble(
+  year = 2012:2016,
+  y = c(123, 39, 78, 52, 110),
+  index = year
+)
+mydata
+```
+
+## The `tsibble` index
 
 ```{r tstablemonth, echo=FALSE}
 z <- tibble(Month = paste(2019, month.abb[1:5]), Observation = c(50, 23, 34, 30, 25))
@@ -210,61 +214,10 @@ z
 
 ::: {.fragment}
 * `"2019 Jan"` is just text
-* A time class knows the frequency
+* More frequent than yearly? Use a time class
 :::
 
-## Time classes with `mixtime`
-
-![](figs/mixtime.png){.absolute bottom="0px" right="0px" height="180px"}
-
-Three kinds of time:
-
-| Kind     | Meaning                | Function          | Example    |
-| -------- | ---------------------- | ----------------- | ---------- |
-| Linear   | Point on a timeline    | `linear_time()`   | 2026 Oct   |
-| Cyclical | Position in a cycle    | `cyclical_time()` | Mon        |
-| Duration | Length of time         | `duration()`      | 3 months   |
-
-::: {.fragment}
-The time index for a tsibble is typically [linear time]{.alert}.
-:::
-
-## Linear time
-
-Common frequencies have convenient functions:
-
-```{r tstable2, echo=FALSE}
-tribble(
-  ~`Frequency`, ~Function,
-  "Annual", "`year()`",
-  "Quarterly", "`yearquarter()`",
-  "Monthly", "`yearmonth()`",
-  "Weekly", "`yearweek()`",
-  "Daily", "`date()`",
-  "Seconds", "`datetime()`"
-) |>
-  knitr::kable()
-```
-
-## Linear time
-
-Often data is provided in a date format, even if it isn't daily.
-
-```{r linear-helpers, collapse=TRUE}
-d <- as.Date("2026-10-01")
-yearquarter(d)
-yearmonth(d) + 0:2
-```
-
-::: {.fragment}
-Multiple granularities can share one vector:
-
-```{r linear-mixed, collapse=TRUE}
-c(yearquarter(d), yearmonth(d), date(d))
-```
-:::
-
-## Making a `tsibble`
+## The `tsibble` index
 
 ```{r month-tsibble}
 z |>
@@ -272,82 +225,76 @@ z |>
   as_tsibble(index = Month)
 ```
 
-## Custom granularity
+## The `tsibble` index
 
-```{r mt-narrow, include=FALSE}
-options(width = 60)
+Common time index variables can be created with these functions:
+
+```{r tstable2, echo=FALSE}
+tribble(
+  ~`Frequency`, ~Function,
+  "Annual", "`start:end`",
+  "Quarterly", "`yearquarter()`",
+  "Monthly", "`yearmonth()`",
+  "Weekly", "`yearweek()`",
+  "Daily", "`as_date()`, `ymd()`",
+  "Sub-daily", "`as_datetime()`, `ymd_hms()`"
+) |>
+  knitr::kable()
 ```
 
-Any time step with `linear_time()`:
+## Converting dates
 
-```{r chronon-minute, collapse=TRUE}
-x <- datetime("2024-01-01 00:00:00") + minutes(0:5) * 15L
+Often data is provided as dates, even if it isn't daily.
+
+```{r convert-dates, collapse=TRUE}
+d <- as.Date("2026-10-01")
+yearquarter(d)
+yearmonth(d)
+yearweek(d)
+```
+
+## Looking ahead: `mixtime` {.code-small}
+
+![](figs/mixtime.png){.absolute bottom="0px" right="0px" height="180px"}
+
+One family of linear time classes, including `year()` and `datetime()`:
+
+```{r mixtime-linear, cache=FALSE, collapse=TRUE}
+library(mixtime)
+c(year(d), yearquarter(d), yearmonth(d), date(d))
+```
+
+::: {.fragment}
+Any granularity from a [chronon]{.alert} (one time step) and `linear_time()`:
+
+```{r mixtime-chronon, cache=FALSE, collapse=TRUE}
+x <- datetime("2024-01-01 00:00:00") + minutes(0:3) * 15L
 linear_time(x, chronon = cal_gregorian$minute(15L))
 ```
 
-::: {.fragment}
-* `chronon`: the size of one time step
-* `cal_gregorian$minute(15L)`: 15 minutes
-* `cal_gregorian$hour(6L)`: 6 hours
+* `yearmonth(d)` is `linear_time(d, chronon = cal_gregorian$month(1L))`
 :::
 
-## Timezones
+## Looking ahead: `mixtime` {.code-small}
 
-```{r timezones, collapse=TRUE}
-t <- as.POSIXct("2026-10-05 22:30:00", tz = "UTC")
-datetime(t, tz = "Africa/Lagos")
-datetime(t, tz = "Africa/Nairobi")
-date(t, tz = "Africa/Nairobi")
-```
+![](figs/mixtime.png){.absolute bottom="0px" right="0px" height="180px"}
 
-::: {.fragment}
-* Same moment, different local time zone.
-* The date can change!
-:::
+More time types, beyond this course:
 
-## Cyclical time
-
-[Cyclical time]{.alert} describes positions within a cycle:
-
-```{r cyclical, collapse=TRUE}
-month_of_year(d)
+```{r mixtime-more, cache=FALSE, collapse=TRUE}
+# Timezones
+datetime(as.POSIXct("2026-10-05 22:30", tz = "UTC"), tz = "Africa/Nairobi")
+# Other calendars (also cal_isoweek, lunar and solar calendars)
+linear_time(d, chronon = cal_sym454$month(1L))
+# Cyclical time
 day_of_week(d)
-time_of_day(t)
-```
-
-::: {.fragment}
-* Also `week_of_year()`, `day_of_month()`, `day_of_year()`
-* Useful for seasonal patterns
-:::
-
-::: {.fragment .absolute top="120px" right="0px" width="420px"}
-::: {.callout-important}
-## Your turn
-What day of the week were you born on?
-:::
-:::
-
-## Durations
-
-[Durations]{.alert} describe a length of time:
-
-```{r durations, collapse=TRUE}
-months(3)
-```
-
-* Also `years()`, `quarters()`, `weeks()`, `days()`, `hours()`, `minutes()`, `seconds()`
-
-::: {.fragment}
-They are useful for arithmetic.
-
-```{r duration-arith, collapse=TRUE}
+# Durations
 yearmonth(d) + months(0:2)
-yearmonth("2026 Oct") - yearmonth("2025 Jan")
 ```
-:::
 
-```{r mt-wide, include=FALSE}
-options(width = 88)
+```{r mixtime-detach, include=FALSE, cache=FALSE}
+# The rest of the course uses the tsibble time classes
+detach("package:mixtime")
 ```
 
 # Example: Australian prison population
@@ -513,6 +460,5 @@ options(width = 60)
 ## Recap
 
 * A tsibble has an **index**, **keys** and **measures**
-* The index needs a time class (`mixtime`)
-* Time can be linear, cyclical or a duration
+* The index needs a time class (`yearmonth()`, `as_date()`, ...)
 * Use dplyr verbs to wrangle tsibbles
