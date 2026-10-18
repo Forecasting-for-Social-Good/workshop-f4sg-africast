@@ -99,7 +99,7 @@ $$
 
 ```{r ConsInc, echo=TRUE, fig.height=3.5}
 us_change |>
-  gather("Measure", "Change", Consumption, Income) |>
+  pivot_longer(c(Consumption, Income), names_to = "Measure", values_to = "Change") |>
   autoplot(Change) +
   ylab("% change") + xlab("Year")
 ```
@@ -187,7 +187,7 @@ $$
 
 ```{r MultiPredictors, echo=FALSE}
 us_change |>
-  gather("Measure", "Change", Consumption, Income, Production, Savings, Unemployment) |>
+  pivot_longer(-Time, names_to = "Measure", values_to = "Change") |>
   ggplot(aes(x = Time, y = Change, colour = Measure)) +
   geom_line() +
   facet_grid(vars(Measure), scales = "free_y") +
