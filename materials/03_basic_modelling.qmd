@@ -557,7 +557,7 @@ my_mable <- my_data %>%
 ```
 
 
-## Model fitting- example {.code-small}
+## Model fitting: example {.code-small}
 
 The `model()` function trains models on data.
 
@@ -591,11 +591,11 @@ beer_fit %>% glance()
 
 - The `report()` function gives a formatted model-specific display.
 - The `tidy()` function is used to extract the coefficients from the models.
-- We can extract information about some specific model using the `filter()` and `select()`functions.
+- We can extract information about some specific model using the `filter()` and `select()` functions.
 
 ## Check model performance
 
-Once a model has been fitted, it is important to check  how well it has performed on the data. I come back to this latter.
+Once a model has been fitted, it is important to check how well it has performed on the data. We come back to this later.
 
 # Produce forecasts
 
