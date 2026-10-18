@@ -75,7 +75,7 @@ $table-border-color: $sage-line;
     right: 0;
     bottom: 100%;
     height: 134px;
-    background: url("images/savanna.png") bottom center / auto 134px repeat-x;
+    background: url("images/savanna-wide.png") bottom center / auto 134px repeat-x;
     pointer-events: none;
   }
 }
@@ -217,7 +217,7 @@ main p > img[src*="images/"][width="200"] {
 .home-hero {
   margin-top: -3rem;
   padding: 2.25rem 1.5rem 120px;
-  background: #F3F7EA url("images/savanna.png") bottom right / auto 100px repeat-x;
+  background: #F3F7EA url("images/savanna-wide.png") bottom right / auto 100px repeat-x;
   .home-hero-inner {
     max-width: 1180px;
     margin: 0 auto;
