@@ -208,7 +208,7 @@ $Q = \frac{1}{T-m}\displaystyle\sum_{t=m+1}^T (y_{t}-y_{t-m})^2$
 where $m$ is the seasonal frequency
 :::
 
-Proposed by Hyndman and Koehler (IJF, 2006).
+Used in the M5 forecasting competition (Makridakis et al., IJF, 2022).
 
 ## Measures of forecast accuracy {.code-small}
 
