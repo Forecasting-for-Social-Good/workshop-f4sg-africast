@@ -194,22 +194,22 @@ Domestic visitor nights (thousands).
 For annual data, integer years work as the index:
 
 ```{r tstable}
-mydata <- tsibble(
+annual_data <- tsibble(
   year = 2012:2016,
   y = c(123, 39, 78, 52, 110),
   index = year
 )
-mydata
+annual_data
 ```
 
 ## The `tsibble` index
 
 ```{r tstablemonth, echo=FALSE}
-z <- tibble(Month = paste(2019, month.abb[1:5]), Observation = c(50, 23, 34, 30, 25))
+monthly_data <- tibble(Month = paste(2019, month.abb[1:5]), Observation = c(50, 23, 34, 30, 25))
 ```
 
 ```{r tstablemonth2}
-z
+monthly_data
 ```
 
 ::: {.fragment}
@@ -220,7 +220,7 @@ z
 ## The `tsibble` index
 
 ```{r month-tsibble}
-z |>
+monthly_data |>
   mutate(Month = yearmonth(Month)) |>
   as_tsibble(index = Month)
 ```
@@ -247,10 +247,10 @@ tribble(
 Often data is provided as dates, even if it isn't daily.
 
 ```{r convert-dates, collapse=TRUE}
-d <- as.Date("2026-10-01")
-yearquarter(d)
-yearmonth(d)
-yearweek(d)
+my_date <- as.Date("2026-10-01")
+yearquarter(my_date)
+yearmonth(my_date)
+yearweek(my_date)
 ```
 
 ## Looking ahead: `mixtime` {.code-small}
@@ -261,18 +261,18 @@ One family of linear time classes, including `year()` and `datetime()`:
 
 ```{r mixtime-linear, cache=FALSE, collapse=TRUE}
 library(mixtime)
-c(year(d), yearquarter(d), yearmonth(d), date(d))
+c(year(my_date), yearquarter(my_date), yearmonth(my_date), date(my_date))
 ```
 
 ::: {.fragment}
 Any granularity from a [chronon]{.alert} (one time step) and `linear_time()`:
 
 ```{r mixtime-chronon, cache=FALSE, collapse=TRUE}
-x <- datetime("2024-01-01 00:00:00") + minutes(0:3) * 15L
-linear_time(x, chronon = cal_gregorian$minute(15L))
+quarter_hours <- datetime("2024-01-01 00:00:00") + minutes(0:3) * 15L
+linear_time(quarter_hours, chronon = cal_gregorian$minute(15L))
 ```
 
-* `yearmonth(d)` is `linear_time(d, chronon = cal_gregorian$month(1L))`
+* `yearmonth(my_date)` is `linear_time(my_date, chronon = cal_gregorian$month(1L))`
 :::
 
 ## Looking ahead: `mixtime` {.code-small}
@@ -285,11 +285,11 @@ More time types, beyond this course:
 # Timezones
 datetime(as.POSIXct("2026-10-05 22:30", tz = "UTC"), tz = "Africa/Nairobi")
 # Other calendars (also cal_isoweek, lunar and solar calendars)
-linear_time(d, chronon = cal_sym454$month(1L))
+linear_time(my_date, chronon = cal_sym454$month(1L))
 # Cyclical time
-day_of_week(d)
+day_of_week(my_date)
 # Durations
-yearmonth(d) + months(0:2)
+yearmonth(my_date) + months(0:2)
 ```
 
 ```{r mixtime-detach, include=FALSE, cache=FALSE}
