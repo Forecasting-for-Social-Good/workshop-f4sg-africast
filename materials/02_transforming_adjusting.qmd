@@ -91,7 +91,7 @@ food |> autoplot(log(Turnover)) +
 
 ```{r food-inverse, echo=TRUE, fig.height=3.8}
 food |> autoplot(-1 / Turnover) +
-  labs(y = "Inverse turnover")
+  labs(y = "Negative inverse turnover")
 ```
 
 ## Variance stabilisation
@@ -120,7 +120,7 @@ $$
 * $\lambda=1$: (No substantive transformation)
 * $\lambda=\frac12$: (Square root plus linear transformation)
 * $\lambda=0$: (Natural logarithm)
-* $\lambda=-1$: (Inverse plus 1)
+* $\lambda=-1$: (Negative inverse plus 1)
 :::
 
 ## Box-Cox transformations
