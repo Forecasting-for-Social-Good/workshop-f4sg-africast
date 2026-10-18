@@ -24,6 +24,8 @@ source("setup.R")
 ::: {.callout-important}
 ## Bahman Rostami-Tabar
 
+Professor of Data Driven Decision Making and Director of the Data Lab for Social Good, Cardiff Business School. Founder of the Forecasting for Social Good (F4SG) community and leader of the AFRICAST project.
+
 [bahmanrt.com](https://www.bahmanrt.com/)\
 [github.com/bahmanrostamitabar](https://github.com/bahmanrostamitabar)\
 [Rostami-TabarB@cardiff.ac.uk](mailto:Rostami-TabarB@cardiff.ac.uk)
@@ -35,6 +37,8 @@ source("setup.R")
 
 ::: {.callout-important}
 ## Mitchell O'Hara-Wild
+
+Time series researcher and R developer, Monash University. Developer of the `fable`, `tsibble` and `fabletools` packages used throughout this workshop.
 
 [mitchelloharawild.com](https://mitchelloharawild.com)\
 [github.com/mitchelloharawild](https://github.com/mitchelloharawild)\
@@ -50,7 +54,7 @@ source("setup.R")
 ::: {.callout-important}
 ## Abiodun Egwuenu
 
-Medical doctor, field epidemiologist & researcher specialising in antimicrobial resistance (AMR). National lead for Nigeria's mpox response (2022/23). PhD candidate at Charité -- Universitätsmedizin Berlin, modelling the spatiotemporal dynamics of AMR. Vice Chair, Board of Members, Applied Epi.
+Medical doctor and field epidemiologist. PhD candidate at Charité -- Universitätsmedizin Berlin modelling antimicrobial resistance (AMR). Led Nigeria's 2022/23 mpox response.
 :::
 :::
 
@@ -60,11 +64,9 @@ Medical doctor, field epidemiologist & researcher specialising in antimicrobial 
 ::: {.callout-important}
 ## Harsha Halgamuwe Hewage
 
-Researcher, Data Lab for Social Good, Cardiff Business School. Works on forecasting & decision support under uncertainty for public health supply chains, with JSI, USAID and the HISP Centre, Oslo. Delivers F4SG training and researches time series foundation models.
+Researcher, Data Lab for Social Good, Cardiff Business School. Forecasting and decision support for public health supply chains; researches time series foundation models.
 :::
 :::
-
-## Instructors
 
 ::: {.instructor}
 ![](figs/Mustafa.jpg)
@@ -72,10 +74,9 @@ Researcher, Data Lab for Social Good, Cardiff Business School. Works on forecast
 ::: {.callout-important}
 ## Mustafa Aslan
 
-Third-year PhD researcher, Data Lab for Social Good, Cardiff University. Researches hospital discharge delays and patient flow, combining probabilistic forecasting, sequential optimisation and ML-based causal inference. Developer of the `peshbeen` forecasting package. Part of the team placing joint first in the 2026 NHS SPHERE-PPL forecasting challenge.
+PhD researcher, Data Lab for Social Good, Cardiff University. Probabilistic forecasting and optimisation for hospital patient flow. Developer of the `peshbeen` forecasting package.
 
-[mustafaslancoto.github.io](https://mustafaslancoto.github.io/)\
-[github.com/mustafaslanCoto](https://github.com/mustafaslanCoto)
+[mustafaslancoto.github.io](https://mustafaslancoto.github.io/)
 :::
 :::
 
