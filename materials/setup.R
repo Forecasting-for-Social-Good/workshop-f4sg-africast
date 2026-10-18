@@ -71,16 +71,16 @@ global_economy <- global_economy |>
   select(Year, Country, GDP, Imports, Exports, Population)
 tourism <- tsibble::tourism |>
   mutate(
-    State = recode(State,
-      "Australian Capital Territory" = "ACT",
-      "New South Wales" = "NSW",
-      "Northern Territory" = "NT",
-      "Queensland" = "QLD",
-      "South Australia" = "SA",
-      "Tasmania" = "TAS",
-      "Victoria" = "VIC",
-      "Western Australia" = "WA"
+    State = replace_values(State,
+      "Australian Capital Territory" ~ "ACT",
+      "New South Wales" ~ "NSW",
+      "Northern Territory" ~ "NT",
+      "Queensland" ~ "QLD",
+      "South Australia" ~ "SA",
+      "Tasmania" ~ "TAS",
+      "Victoria" ~ "VIC",
+      "Western Australia" ~ "WA"
     )
-  )  |>
+  ) |>
   # Remove "Australia's" from region
   mutate(Region = stringr::str_replace(Region, "Australia's ", ""))
