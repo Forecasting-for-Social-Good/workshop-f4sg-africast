@@ -101,7 +101,7 @@ $$
 us_change |>
   pivot_longer(c(Consumption, Income), names_to = "Measure", values_to = "Change") |>
   autoplot(Change) +
-  ylab("% change") + xlab("Year")
+  labs(x = "Year", y = "% change")
 ```
 
 ## Example: US consumption expenditure
@@ -109,8 +109,7 @@ us_change |>
 ```{r ConsInc2, echo=FALSE}
 us_change |>
   ggplot(aes(x=Income, y=Consumption)) +
-    ylab("Consumption (quarterly % change)") +
-    xlab("Income (quarterly % change)") +
+    labs(x = "Income (quarterly % change)", y = "Consumption (quarterly % change)") +
     geom_point() +
     geom_smooth(method="lm", se=FALSE)
 ```
@@ -191,7 +190,7 @@ us_change |>
   ggplot(aes(x = Time, y = Change, colour = Measure)) +
   geom_line() +
   facet_grid(vars(Measure), scales = "free_y") +
-  ylab("") + xlab("Year") +
+  labs(x = "Year", y = NULL) +
   guides(colour="none")
 ```
 
@@ -220,9 +219,8 @@ augment(fit_consMR) |>
   ggplot(aes(x = Time)) +
   geom_line(aes(y = Consumption, colour = "Data")) +
   geom_line(aes(y = .fitted, colour = "Fitted")) +
-  xlab("Year") + ylab("") +
-  ggtitle("Percentage change in US consumption expenditure") +
-  guides(colour=guide_legend(title=""))
+  labs(x = "Year", y = NULL, colour = NULL,
+    title = "Percentage change in US consumption expenditure")
 ```
 
 ## Example: US consumption expenditure
@@ -231,9 +229,8 @@ augment(fit_consMR) |>
 augment(fit_consMR) |>
   ggplot(aes(x=.fitted, y=Consumption)) +
     geom_point() +
-    xlab("Fitted (predicted values)") +
-    ylab("Data (actual values)") +
-    ggtitle("Percentage change in US consumption expenditure") +
+    labs(x = "Fitted (predicted values)", y = "Data (actual values)",
+      title = "Percentage change in US consumption expenditure") +
     geom_abline(intercept=0, slope=1)
 ```
 
@@ -282,13 +279,13 @@ no values too far from the band and no patterns such as curvature or increasing 
 ```{r scatterplot-residuals, fig.height=3.8}
 df <- left_join(us_change, residuals(fit_consMR), by = "Time")
 p1 <- ggplot(df, aes(x=Income, y=.resid)) +
-  geom_point() + ylab("Residuals")
+  geom_point() + labs(y = "Residuals")
 p2 <- ggplot(df, aes(x=Production, y=.resid)) +
-  geom_point() + ylab("Residuals")
+  geom_point() + labs(y = "Residuals")
 p3 <- ggplot(df, aes(x=Savings, y=.resid)) +
-  geom_point() + ylab("Residuals")
+  geom_point() + labs(y = "Residuals")
 p4 <- ggplot(df, aes(x=Unemployment, y=.resid)) +
-  geom_point() + ylab("Residuals")
+  geom_point() + labs(y = "Residuals")
 (p1 | p2) / (p3 | p4)
 ```
 

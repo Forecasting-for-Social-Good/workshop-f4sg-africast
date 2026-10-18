@@ -156,8 +156,7 @@ ansett |>
 ```{r a10-plot, echo=TRUE, dependson="a10", fig.height=2.5}
 PBS |> filter(ATC2 == "A10") |>
   summarise(Cost = sum(Cost)/1e6) |> autoplot(Cost) +
-  ylab("$ million") + xlab("Year") +
-  ggtitle("Antidiabetic drug sales")
+  labs(x = "Year", y = "$ million", title = "Antidiabetic drug sales")
 ```
 
 
