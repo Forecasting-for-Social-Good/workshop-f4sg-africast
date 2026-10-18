@@ -200,7 +200,7 @@ fit |>
 ::: {.callout-note}
 ## Additive errors
 $$\begin{aligned}
-\text{Forecast equation}&& \hat{y}_{T+h|T} &= \ell_T + (\phi + \cdots + \phi^{h-1})b_T\\
+\text{Forecast equation}&& \hat{y}_{T+h|T} &= \ell_T + (\phi + \phi^2 + \cdots + \phi^{h})b_T\\
 \text{Measurement equation}&& y_t &= (\ell_{t-1}+\phi b_{t-1})+\varepsilon_t\\
 \text{State equations}&&       \ell_t&=(\ell_{t-1}+\phi b_{t-1})+\alpha \varepsilon_t\\
 &&      b_t&=\phi b_{t-1}+\beta \varepsilon_t
