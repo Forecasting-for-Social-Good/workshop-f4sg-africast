@@ -108,7 +108,7 @@ Data Lab for Social Good, Cardiff University
 ::: {.column-page}
 # Before you start
 
-You should be comfortable writing R code with tidyverse packages such as dplyr and ggplot2 (if not, work through <https://learnr.numbat.space/> first). Some familiarity with the mean, variance, quantiles, the normal distribution and regression will help, but isn't required. Please have everything below ready on your own laptop before the workshop.
+You should be comfortable writing R code with tidyverse packages such as dplyr and ggplot2 (if not, work through <https://startr.numbat.space/> first). Some familiarity with the mean, variance, quantiles, the normal distribution and regression will help, but isn't required. Please have everything below ready on your own laptop before the workshop.
 
 ::: {.setup-steps}
 ::: {.setup-step}
