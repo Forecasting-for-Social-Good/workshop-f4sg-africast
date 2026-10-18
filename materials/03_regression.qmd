@@ -439,23 +439,22 @@ fit_consBest <- us_change |>
     TSLM(Consumption ~ Income + Savings + Unemployment)
   )
 
-down_future <- new_data(us_change, 4) |>
-  mutate(Income = -1, Savings = -0.5, Unemployment = 0)
-fc_down <- forecast(fit_consBest, new_data = down_future)
-
-up_future <- new_data(us_change, 4) |>
-  mutate(Income = 1, Savings = 0.5, Unemployment = 0)
-fc_up <- forecast(fit_consBest, new_data = up_future)
+future_scenarios <- scenarios(
+  Increase = new_data(us_change, 4) |>
+    mutate(Income = 1, Savings = 0.5, Unemployment = 0),
+  Decrease = new_data(us_change, 4) |>
+    mutate(Income = -1, Savings = -0.5, Unemployment = 0),
+  names_to = "Scenario"
+)
+fc <- forecast(fit_consBest, new_data = future_scenarios)
 ```
 
 ## US Consumption
 
 ```{r usconsumptionf2, echo=TRUE, fig.height=3.5}
 us_change |> autoplot(Consumption) +
-  ylab("% change in US consumption") +
-  autolayer(fc_up, series = "increase") +
-  autolayer(fc_down, series = "decrease") +
-  guides(colour = guide_legend(title = "Scenario"))
+  autolayer(fc) +
+  labs(y = "% change in US consumption")
 ```
 
 # Correlation, causation and forecasting
