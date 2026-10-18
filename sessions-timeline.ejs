@@ -1,0 +1,69 @@
+<%
+// Schedule page: a sticky day selector, then every day as a timeline.
+// Sessions are grouped by date and listed in `order`. The output is read as
+// markdown: keep it unindented (or it becomes code), and write the markup
+// literally, since HTML returned from a script is escaped.
+const strip = (s) => String(s || "").replace(/<[^>]*>/g, "").trim();
+const authors = (a) => Array.isArray(a) ? a.map((x) => x.name || x).join(", ") : (a && a.name) || a || "";
+const initials = (name) => name.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+
+// One short theme per day, in day order (shown under the day heading)
+const themes = [
+  "The basics of time series",
+  "Exploration and basic forecasting",
+  "Regression and ARIMA",
+  "ETS and forecast accuracy",
+  "Model performance and foundation models",
+];
+
+const days = [];
+for (const item of items) {
+  let day = days.find((d) => d.date === item.date);
+  if (!day) {
+    day = { date: item.date, items: [] };
+    days.push(day);
+  }
+  day.items.push(item);
+}
+
+// Each instructor keeps one colour across the page, in order of first appearance
+const people = [];
+for (const day of days) {
+  day.items.sort((a, b) => (a.order || 0) - (b.order || 0));
+  for (const item of day.items) {
+    const name = authors(item.author);
+    if (name && !people.includes(name)) people.push(name);
+  }
+}
+
+const range = (item) => strip(item.subtitle).split("-");
+const dayData = days.map((day) => {
+  const lectures = day.items.filter((x) => authors(x.author));
+  return {
+    date: day.date,
+    lectures,
+    exercises: day.items.find((x) => /^exercises/i.test(x.title)),
+    resources: day.items.find((x) => /^resources/i.test(x.title)),
+  };
+});
+%>
+<div class="tl-nav" role="navigation" aria-label="Jump to day"><div class="tl-nav-inner">
+<% dayData.forEach((day, d) => { %>
+<a class="tl-nav-day" href="#day-<%= d + 1 %>" data-day="day-<%= d + 1 %>"><span><%= day.date.split(" ")[0] %></span><b><%= day.date.split(" ")[1] %></b></a>
+<% }) %>
+</div></div>
+<% dayData.forEach((day, d) => { %>
+<div class="tl-day" id="day-<%= d + 1 %>">
+<div class="tl-heading"><span class="tl-kicker">Day <%= d + 1 %> · <%= day.date %></span><span class="tl-theme"><%= themes[d] || "" %></span></div>
+<% day.lectures.forEach((item, i) => { const name = authors(item.author); %>
+<div class="tl-row tl-lecture"><div class="tl-when"><%= range(item)[0] %><span><%= range(item)[1] %></span></div><div class="tl-rail"><i></i></div><div class="tl-card"><span class="tl-tag">Lecture</span><a class="tl-title" href="<%- item.path %>"><%= item.title %></a><span class="tl-who"><span class="tl-av tl-av-<%= people.indexOf(name) % 5 %>"><%= initials(name) %></span><%= name %></span></div></div>
+<% }) %>
+<% if (day.exercises) { %>
+<div class="tl-row tl-gap"><div class="tl-when"></div><div class="tl-rail"></div><div class="tl-break">Break · <%= range(day.lectures[day.lectures.length - 1])[1] %>–<%= range(day.exercises)[0] %></div></div>
+<div class="tl-row tl-exercises"><div class="tl-when"><%= range(day.exercises)[0] %><span><%= range(day.exercises)[1] %></span></div><div class="tl-rail"><i></i></div><div class="tl-card"><span class="tl-tag">Hands-on</span><a class="tl-title" href="<%- day.exercises.path %>"><%= day.exercises.title %></a></div></div>
+<% } %>
+<% if (day.resources) { %>
+<div class="tl-row tl-resources"><div class="tl-when"></div><div class="tl-rail"><i></i></div><div class="tl-card"><span class="tl-tag">After the day</span><a class="tl-title" href="<%- day.resources.path %>">Recording &amp; code</a></div></div>
+<% } %>
+</div>
+<% }) %>

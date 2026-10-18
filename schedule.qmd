@@ -1,116 +1,71 @@
 ---
 title: "Schedule"
+toc: false
 listing:
-  - id: day1
-    contents:
-      - sessions/day1/*.qmd
-    type: table
-    fields: [subtitle, author, title]
-    field-display-names:
-      subtitle: "Time"
-      author: "Instructor"
-      title: "Session"
-    table-hover: true
-    sort: [order]
-    sort-ui: false
-    filter-ui: false
-    image-height: 75px
-  - id: day2
-    contents:
-      - sessions/day2/*.qmd
-    type: table
-    fields: [subtitle, author, title]
-    field-display-names:
-      subtitle: "Time"
-      author: "Instructor"
-      title: "Session"
-    table-hover: true
-    sort: [order]
-    sort-ui: false
-    filter-ui: false
-    image-height: 75px
-  - id: day3
-    contents:
-      - sessions/day3/*.qmd
-    type: table
-    fields: [subtitle, author, title]
-    field-display-names:
-      subtitle: "Time"
-      author: "Instructor"
-      title: "Session"
-    table-hover: true
-    sort: [order]
-    sort-ui: false
-    filter-ui: false
-    image-height: 75px
-  - id: day4
-    contents:
-      - sessions/day4/*.qmd
-    type: table
-    fields: [subtitle, author, title]
-    field-display-names:
-      subtitle: "Time"
-      author: "Instructor"
-      title: "Session"
-    table-hover: true
-    sort: [order]
-    sort-ui: false
-    filter-ui: false
-    image-height: 75px
-  - id: day5
-    contents:
-      - sessions/day5/*.qmd
-    type: table
-    fields: [subtitle, author, title]
-    field-display-names:
-      subtitle: "Time"
-      author: "Instructor"
-      title: "Session"
-    table-hover: true
-    sort: [order]
-    sort-ui: false
-    filter-ui: false
-    image-height: 75px
+  id: schedule
+  contents:
+    - sessions/day*/*.qmd
+  template: sessions-timeline.ejs
+  fields: [title, subtitle, author, date, order]
+  date-format: "ddd D MMM"
+  sort: false
 editor: source
 ---
 
-```{=html}
-<style>
-.quarto-listing-table { table-layout: auto; width: 100%; }
-.quarto-listing-table th.listing-subtitle,
-.quarto-listing-table td.listing-subtitle { width: 1%; white-space: nowrap; }
-.quarto-listing-table th.listing-author,
-.quarto-listing-table td.listing-author { width: 25%; }
-</style>
-```
-
 All times are listed in Africa/Nairobi time (UTC+3).
 
-## Day 1
-
-::: {#day1}
+::: {#schedule}
 :::
 
-## Day 2
+```{=html}
+<script>
+// Sticky day selector: keep it under the site navbar and highlight the day in view
+(function () {
+  var nav = document.querySelector(".tl-nav");
+  if (!nav) return;
+  var links = Array.prototype.slice.call(nav.querySelectorAll(".tl-nav-day"));
+  var days = links.map(function (a) { return document.getElementById(a.dataset.day); });
+  var root = document.documentElement;
 
-::: {#day2}
-:::
+  function layout() {
+    var header = document.getElementById("quarto-header");
+    var top = header ? header.getBoundingClientRect().bottom : 0;
+    root.style.setProperty("--tl-top", Math.max(top, 0) + "px");
+    root.style.setProperty("--tl-nav-h", nav.offsetHeight + "px");
+  }
 
-## Day 3
+  function update() {
+    var line = nav.getBoundingClientRect().bottom + 24;
+    var current = 0;
+    days.forEach(function (day, i) {
+      if (day && day.getBoundingClientRect().top <= line) current = i;
+    });
+    // At the very bottom of the page the last day is always the active one
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) current = days.length - 1;
+    links.forEach(function (a, i) {
+      var on = i === current;
+      if (on && a.getAttribute("aria-current") !== "true") {
+        // scroll the selector itself on narrow screens, without moving the page
+        var box = a.parentNode;
+        box.scrollTo({ left: a.offsetLeft - (box.clientWidth - a.offsetWidth) / 2, behavior: "smooth" });
+      }
+      if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+    });
+  }
 
-::: {#day3}
-:::
-
-## Day 4
-
-::: {#day4}
-:::
-
-## Day 5
-
-::: {#day5}
-:::
-
+  var ticking = false;
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener("resize", function () { layout(); update(); });
+  window.addEventListener("load", function () { layout(); update(); });
+  layout();
+  update();
+})();
+</script>
+```
 
 <!-- Day 1: The basics of time series -->
 <!-- Session 1. Basics of time series and data structures (Mitch) -->
