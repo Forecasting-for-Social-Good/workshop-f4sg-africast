@@ -126,7 +126,7 @@ report(fit_cons)
 ## Multiple regression
 
 * In multiple regression there is one variable to be forecast and several predictor variables.
-* The basic concept is that we forecast the time series of interest $y$ assuming that it has a linear relationship with other time series $x_1$, $x_2$, ...., $x_K$
+* The basic concept is that we forecast the time series of interest $y$ assuming that it has a linear relationship with other time series $x_1$, $x_2$, ..., $x_K$
 * We might forecast daily A&E attendance  $y$ using temperature   $x_1$ and GP visits $x_2$ as predictors.
 
 ## How many variable can we add?
