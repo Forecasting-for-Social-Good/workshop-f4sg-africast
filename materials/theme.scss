@@ -188,12 +188,16 @@ $code-block-border-color: transparent;
   gap: 30px;
   margin-bottom: 0.4em;
   > :first-child {
-    flex: 0 0 170px;
+    flex: 0 0 150px;
     margin: 0;
     img {
-      width: 170px;
+      width: 150px;
+      height: 150px;
       margin: 0;
       border-radius: 6px;
+      // square crop, anchored near the top so faces stay in frame
+      object-fit: cover;
+      object-position: 50% 20%;
     }
   }
   > div.callout {
