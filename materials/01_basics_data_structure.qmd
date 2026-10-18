@@ -156,15 +156,15 @@ Works with tidyverse functions.
 global_economy
 ```
 
-::: {.fragment .alertblock .center-text .absolute top="163px" left="57px" width="75px"}
+::: {.fragment .ts-part .ts-index .absolute top="180px" left="44px" width="83px" height="388px"}
 Index
 :::
 
-::: {.fragment .alertblock .center-text .absolute top="163px" left="138px" width="165px"}
+::: {.fragment .ts-part .ts-key .absolute top="180px" left="132px" width="172px" height="388px"}
 Key
 :::
 
-::: {.fragment .alertblock .center-text .absolute top="163px" left="331px" width="560px"}
+::: {.fragment .ts-part .ts-measure .absolute top="180px" left="308px" width="568px" height="388px"}
 Measures
 :::
 
@@ -174,19 +174,19 @@ Measures
 tourism
 ```
 
-::: {.fragment .alertblock .center-text .absolute top="163px" left="42px" width="105px"}
+::: {.fragment .ts-part .ts-index .absolute top="180px" left="44px" width="113px" height="388px"}
 Index
 :::
 
-::: {.fragment .alertblock .center-text .absolute top="163px" left="168px" width="345px"}
+::: {.fragment .ts-part .ts-key .absolute top="180px" left="162px" width="348px" height="388px"}
 Keys
 :::
 
-::: {.fragment .alertblock .center-text .absolute top="163px" left="519px" width="140px"}
+::: {.fragment .ts-part .ts-measure .absolute top="180px" left="514px" width="83px" height="388px"}
 Measure
 :::
 
-::: {.block .absolute top="420px" left="760px" width="300px"}
+::: {.block .absolute top="205px" left="625px" width="300px"}
 Domestic visitor nights (thousands).
 :::
 

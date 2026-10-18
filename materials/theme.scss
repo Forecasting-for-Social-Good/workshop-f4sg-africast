@@ -10,6 +10,7 @@ $ochre: #B5570F;      // sunset in the title photo: alerts
 $ochre-deep: #8C3F08;
 $tint-blue: #E4ECF3;
 $tint-ochre: #FAEBD7;
+$grass: #4E7A27;      // code strings: tsibble measures
 $night: #0E2224;      // savanna silhouette, footer band
 $muted: #6B7480;
 $code-bg: #F1F4EA;
@@ -320,6 +321,9 @@ $bleed-width: calc(var(--slide-width) + 160px);
 .reveal div.callout .callout-title * {
   color: white !important;
 }
+.reveal div.callout .callout-title code {
+  background: transparent !important;
+}
 
 // Code blocks
 .reveal div.sourceCode {
@@ -429,6 +433,34 @@ $bleed-width: calc(var(--slide-width) + 160px);
   margin: 0;
   font-size: 0.75em;
   z-index: 10;
+}
+
+// tsibble anatomy: a tinted frame over each column group, its label in a pill
+// below the console output (frames are .absolute; labels clear the footer line)
+.reveal .ts-part {
+  border: 2px solid;
+  border-radius: 8px;
+  z-index: 10;
+  > p {
+    position: absolute;
+    top: calc(100% + 34px);
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0.05em 0.6em;
+    border-radius: 999px;
+    color: white;
+    font-size: 0.7em;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+@each $part, $colour in (index: $ochre, key: $africast-blue, measure: $grass) {
+  .reveal .ts-#{$part} {
+    border-color: $colour;
+    background-color: rgba($colour, 0.1);
+    > p { background-color: $colour; }
+  }
 }
 
 // Hex sticker grids
