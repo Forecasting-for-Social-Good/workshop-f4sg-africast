@@ -359,21 +359,21 @@ holidays
 
 ```{r holidays-plot, echo=TRUE, dependson="holidays", fig.height=3.1}
 holidays |> autoplot(Trips) +
-  labs(y = "thousands of trips", title = "Australian domestic holiday nights")
+  labs(y = "thousands of trips", title = "Australian domestic holiday trips")
 ```
 
 ## Seasonal plots
 
 ```{r graphics1, fig.width=6, fig.height=6, out.width="42%"}
 holidays |> gg_season(Trips) +
-  labs(y = "thousands of trips", title = "Australian domestic holiday nights")
+  labs(y = "thousands of trips", title = "Australian domestic holiday trips")
 ```
 
 ## Seasonal subseries plots
 
 ```{r graphics2, fig.height=5.5, fig.width=12.5}
 holidays |> gg_subseries(Trips) +
-  labs(y = "thousands of trips", title = "Australian domestic holiday nights")
+  labs(y = "thousands of trips", title = "Australian domestic holiday trips")
 ```
 
 ## Calendar plots

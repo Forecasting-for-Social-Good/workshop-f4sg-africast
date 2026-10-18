@@ -187,7 +187,7 @@ Measure
 :::
 
 ::: {.block .absolute top="205px" left="625px" width="300px"}
-Domestic visitor nights (thousands).
+Domestic overnight trips (thousands).
 :::
 
 ## The `tsibble` index

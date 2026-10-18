@@ -439,7 +439,7 @@ holidays <- tourism |>
 ```{r holidays-plot2, echo=TRUE, dependson="holidays", fig.height=2.8}
 holidays |> autoplot(Trips) +
   labs(y = "thousands of trips", x = "Year",
-       title = "Australian domestic holiday nights")
+       title = "Australian domestic holiday trips")
 ```
 
 ## Australian holidays
