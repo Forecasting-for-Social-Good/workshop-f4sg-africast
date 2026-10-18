@@ -473,6 +473,17 @@ $bleed-width: calc(var(--slide-width) + 160px);
     height: 230px;
     margin: 0;
   }
+  // A hex with its role captioned beneath
+  .hex {
+    width: 200px;
+    text-align: center;
+    p {
+      margin: 0;
+      font-size: 0.65em;
+      line-height: 1.3;
+      color: $muted;
+    }
+  }
 }
 
 // Full-size photo slides

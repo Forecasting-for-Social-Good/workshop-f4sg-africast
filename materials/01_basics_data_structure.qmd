@@ -35,11 +35,78 @@ library(tidyverse)
 
 Estimating how a sequence of observations will continue into the future, using all information available now.
 
-```{r forecasting,echo=FALSE, out.width="90%", fig.align='center'}
-ausbeer |> model(ETS(Production)) |> forecast(h=20) |> autoplot(tail(ausbeer, 60), level=NULL, alpha=.01)+
-  geom_vline(xintercept = as.numeric(as.Date("2010-04-01")),col="red", linetype = "longdash")+
-  labs(x ="Time",y="Observation",title = "Forecasting")
+```{r}
+#| label: beer-forecast
+#| include: false
+beer <- tail(ausbeer, 60)
+beer_fit <- ausbeer |> model(ETS(Production))
+set.seed(2026)
+beer_paths <- beer_fit |> generate(h = 20, times = 30)
+beer_fc <- beer_fit |>
+  forecast(h = 20) |>
+  mutate(`80%` = hilo(Production, 80), `95%` = hilo(Production, 95)) |>
+  unpack_hilo(c(`80%`, `95%`))
+
+# Each frame shares its scales, so the frames line up when stacked
+beer_plot <- function(paths = 0, intervals = FALSE) {
+  p <- ggplot(beer, aes(x = Time, y = Production)) +
+    geom_line() +
+    expand_limits(
+      x = range(beer_paths$Time),
+      y = range(beer_paths$.sim, beer_fc$`95%_lower`, beer_fc$`95%_upper`)
+    ) +
+    labs(x = "Quarter", y = "Megalitres", title = "Quarterly Australian beer production")
+  if (paths > 0) {
+    p <- p + geom_line(
+      aes(y = .sim, group = .rep),
+      data = filter(beer_paths, as.integer(.rep) <= paths),
+      colour = "#3B75AC", alpha = if (paths == 1) 1 else 0.4
+    )
+  }
+  if (intervals) {
+    p <- p +
+      geom_ribbon(aes(y = NULL, ymin = `95%_lower`, ymax = `95%_upper`),
+                  data = beer_fc, fill = "#3B75AC", alpha = 0.25) +
+      geom_ribbon(aes(y = NULL, ymin = `80%_lower`, ymax = `80%_upper`),
+                  data = beer_fc, fill = "#3B75AC", alpha = 0.35) +
+      geom_line(aes(y = .mean), data = beer_fc, colour = "#3B75AC")
+  }
+  p
+}
 ```
+
+<!-- One frame visible at a time: the transparent plots would double their gridlines if stacked -->
+::: {.r-stack}
+::: {.fragment .fade-out fragment-index=1}
+```{r beer-data, echo=FALSE, dependson="beer-forecast"}
+beer_plot()
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{r beer-path1, echo=FALSE, dependson="beer-forecast"}
+beer_plot(paths = 1)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+```{r beer-path5, echo=FALSE, dependson="beer-forecast"}
+beer_plot(paths = 5)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=3}
+```{r beer-path30, echo=FALSE, dependson="beer-forecast"}
+beer_plot(paths = 30)
+```
+:::
+
+::: {.fragment fragment-index=4}
+```{r beer-intervals, echo=FALSE, dependson="beer-forecast"}
+beer_plot(intervals = TRUE)
+```
+:::
+:::
 
 ## What data do we need?
 
@@ -55,22 +122,22 @@ ausbeer |> model(ETS(Production)) |> forecast(h=20) |> autoplot(tail(ausbeer, 60
 Why do you use forecasts?
 
 ::: {.fragment}
-| Decision                                              | Forecast  |
-| ----------------------------------------------------- |:---------:|
-| Build a new hospital in the next 10 years?            |      ?    |
-| Call centre staff needed next week?                   |      ?    |
-| Vaccine doses needed next month?                      |      ?    |
+| Decision                                    | Forecast                                       |
+| ------------------------------------------- | ---------------------------------------------- |
+| Build a new hospital in the next 10 years?  | [Population and patient demand, years ahead]{.fragment} |
+| Call centre staff needed next week?         | [Call volumes, hours to days ahead]{.fragment}           |
+| Vaccine doses needed next month?            | [Doses by region, weeks ahead]{.fragment}                |
+:::
 
-* Supports planning
-* Informs decisions
-* Provides evidence
+::: {.fragment}
+::: {.block}
+The decision sets [what]{.alert} to forecast and [how far ahead]{.alert}.
+:::
 :::
 
 ## Forecasting workflow
 
-```{r forecastingworkflow,echo=FALSE, fig.align='center', out.width="32%"}
-knitr::include_graphics("figs/forecasting_workflow.png")
-```
+![](figs/workflow.svg){fig-align="center" width="100%"}
 
 ## Packages for this course
 
@@ -79,11 +146,31 @@ knitr::include_graphics("figs/forecasting_workflow.png")
 :::
 
 ::: {.hexes}
+::: {.hex}
 ![](figs/tsibble.png)
+
+Time series data
+:::
+::: {.hex}
 ![](figs/tsibbledata.png)
+
+Example datasets
+:::
+::: {.hex}
 ![](figs/feasts.png)
+
+Features and decompositions
+:::
+::: {.hex}
 ![](figs/ggtime.png)
+
+Time series graphics
+:::
+::: {.hex}
 ![](figs/fable.png)
+
+Forecasting models
+:::
 :::
 
 ## Packages for this course
@@ -134,7 +221,7 @@ Observations + [when]{.alert} they happened.
 
 * The time column is the [index]{.alert}
 * Observations are ordered in time
-* The frequency matters
+* Regular intervals define the frequency (yearly, quarterly, ...)
 
 # tsibble objects
 
@@ -148,7 +235,7 @@ A [tsibble]{.alert} stores one or more time series in a table.
 * **Key**: which series (optional)
 * **Measures**: what was observed
 
-Works with tidyverse functions.
+Works with dplyr verbs (`filter()`, `mutate()`, ...).
 
 ## `tsibble` objects
 
@@ -187,7 +274,7 @@ Measure
 :::
 
 ::: {.block .absolute top="205px" left="625px" width="300px"}
-Domestic overnight trips (thousands).
+Overnight trips (thousands), quarterly, by region and purpose of travel.
 :::
 
 ## The `tsibble` index
@@ -247,7 +334,7 @@ tribble(
 
 Often data is provided as dates, even if it isn't daily.
 
-```{r convert-dates, collapse=TRUE}
+```{r convert-dates}
 my_date <- as.Date("2026-10-01")
 yearquarter(my_date)
 yearmonth(my_date)
@@ -256,19 +343,19 @@ yearweek(my_date)
 
 ## Looking ahead: `mixtime` {.code-small}
 
-![](figs/mixtime.png){.absolute bottom="0px" right="0px" height="180px"}
+![](figs/mixtime.png){.absolute top="-36px" right="-50px" height="100px"}
 
 One family of linear time classes, including `year()` and `datetime()`:
 
-```{r mixtime-linear, cache=FALSE, collapse=TRUE}
+```{r mixtime-linear, cache=FALSE}
 library(mixtime)
 c(year(my_date), yearquarter(my_date), yearmonth(my_date), date(my_date))
 ```
 
 ::: {.fragment}
-Any granularity from a [chronon]{.alert} (one time step) and `linear_time()`:
+Any granularity: pick a [chronon]{.alert} (one time step) and call `linear_time()`:
 
-```{r mixtime-chronon, cache=FALSE, collapse=TRUE}
+```{r mixtime-chronon, cache=FALSE}
 quarter_hours <- datetime("2024-01-01 00:00:00") + minutes(0:3) * 15L
 linear_time(quarter_hours, chronon = cal_gregorian$minute(15L))
 ```
@@ -278,11 +365,11 @@ linear_time(quarter_hours, chronon = cal_gregorian$minute(15L))
 
 ## Looking ahead: `mixtime` {.code-small}
 
-![](figs/mixtime.png){.absolute bottom="0px" right="0px" height="180px"}
+![](figs/mixtime.png){.absolute top="-36px" right="-50px" height="100px"}
 
 More time types, beyond this course:
 
-```{r mixtime-more, cache=FALSE, collapse=TRUE}
+```{r mixtime-more, cache=FALSE}
 # Timezones
 datetime(as.POSIXct("2026-10-05 22:30", tz = "UTC"), tz = "Africa/Nairobi")
 # Other calendars (also cal_isoweek, lunar and solar calendars)
@@ -298,6 +385,17 @@ yearmonth(my_date) + months(0:2)
 detach("package:mixtime")
 ```
 
+## What a `tsibble` checks {.code-small}
+
+* Index + key must [uniquely identify]{.alert} each row: `as_tsibble()` errors on duplicates (find them with `duplicates()`)
+* The [interval]{.alert} is shown in the header: `[1Y]`, `[1Q]`, `[1M]`, ...
+* Missing time steps are [implicit gaps]{.alert}: find them with `has_gaps()`, make them explicit with `fill_gaps()`
+
+```{r fill-gaps}
+tsibble(year = c(2012, 2013, 2015, 2016), y = c(123, 39, 52, 110), index = year) |>
+  fill_gaps()
+```
+
 # Example: Australian prison population
 
 ## Australian prison population
@@ -305,6 +403,8 @@ detach("package:mixtime")
 ![](figs/Beechworth_prison.jpg){.photo}
 
 ## Read a csv file
+
+Quarterly prisoner counts from the ABS, 2005 Q1 to 2016 Q4, by state, gender, legal status and indigenous status (ATSI: Aboriginal and Torres Strait Islander).
 
 ```{r prison}
 prison <- readr::read_csv("data/prison_population.csv")
@@ -316,6 +416,7 @@ prison
 ## Convert to a time class
 
 ```{r prison3}
+#| code-line-numbers: "2"
 prison <- readr::read_csv("data/prison_population.csv") |>
   mutate(quarter = yearquarter(date))
 ```
@@ -327,6 +428,7 @@ prison
 ## Remove the old date column
 
 ```{r prison4}
+#| code-line-numbers: "3"
 prison <- readr::read_csv("data/prison_population.csv") |>
   mutate(quarter = yearquarter(date)) |>
   select(-date)
@@ -339,6 +441,7 @@ prison
 ## Declare the index and keys {.code-small}
 
 ```{r prison5}
+#| code-line-numbers: "4-7"
 prison <- readr::read_csv("data/prison_population.csv") |>
   mutate(quarter = yearquarter(date)) |>
   select(-date) |>
@@ -366,31 +469,42 @@ The [PBS]{.alert} is the Australian government drug subsidy scheme.
 
 ::: {.fragment}
 * Subsidises many pharmacy drugs
-* Costs nearly 1% of GDP
+* Cost the government A$19.1 billion in 2024--25 (about 0.7% of GDP)
 * Budget relies on forecasts of drug usage
-* Split by drug type (ATC2 x`r length(unique(PBS$ATC2))`), concession (x`r length(unique(PBS$Concession))`) and patient type (x`r length(unique(PBS$Type))`)
 :::
 
-## Working with `tsibble` objects
+::: {.fragment}
+`PBS` data: monthly, July 1991 to June 2008
+
+* `Scripts` (prescriptions) and `Cost` (A$)
+* By drug type (ATC2 x`r length(unique(PBS$ATC2))`), concession (x`r length(unique(PBS$Concession))`) and patient type (x`r length(unique(PBS$Type))`)
+* ATC: Anatomical Therapeutic Chemical classification
+:::
+
+## Working with `tsibble` objects {.code-small}
 
 ```{r wide, include=FALSE}
-options(width = 78)
+options(width = 100)
 ```
 
 ```{r pbs1, dependson='wide'}
 PBS
 ```
 
-## `filter()`: choose rows
+## `filter()`: choose rows {.code-small}
 
 ```{r pbs2}
 PBS |>
   filter(ATC2 == "A10")
 ```
 
+```{r medium, include=FALSE}
+options(width = 78)
+```
+
 ## `select()`: choose columns {.code-small}
 
-```{r pbs3}
+```{r pbs3, dependson='medium'}
 PBS |>
   filter(ATC2 == "A10") |>
   select(Month, Concession, Type, Cost)
@@ -412,17 +526,19 @@ PBS |>
   filter(ATC2 == "A10") |>
   select(Month, Concession, Type, Cost) |>
   summarise(total_cost = sum(Cost)) |>
-  mutate(total_cost = total_cost / 1e6)
+  mutate(cost_m = total_cost / 1e6)
 ```
+
+`cost_m` is the total cost in A$ millions.
 
 ## Save the result {.code-small}
 
 ```{r pbs6}
-PBS |>
+a10 <- PBS |>
   filter(ATC2 == "A10") |>
   select(Month, Concession, Type, Cost) |>
   summarise(total_cost = sum(Cost)) |>
-  mutate(total_cost = total_cost / 1e6) -> a10
+  mutate(cost_m = total_cost / 1e6)
 ```
 
 ```{r a10, echo=FALSE, dependson="pbs6"}
@@ -431,6 +547,13 @@ a10
 
 ```{r narrow, include=FALSE}
 options(width = 60)
+```
+
+## Plot the result
+
+```{r a10-plot, dependson="pbs6"}
+autoplot(a10, cost_m) +
+  labs(y = "A$ (millions)", title = "Australian antidiabetic drug sales")
 ```
 
 ## Your turn
@@ -453,13 +576,16 @@ options(width = 60)
 ## Hints
 
 * `summarise()` always keeps the index
-* `group_by()` the keys you want to keep
-* `as_tibble()` drops the index, to summarise over time
+* Q1: `group_by(State)`, then `summarise()`
+* Q2: `as_tibble()` first: it drops the tsibble structure, so `summarise()` no longer keeps the index
+* Q3: `filter()`, then `summarise()`
 :::
 :::
 
 ## Recap
 
 * A tsibble has an **index**, **keys** and **measures**
+* Index + keys uniquely identify each row
 * The index needs a time class (`yearmonth()`, `as_date()`, ...)
 * Use dplyr verbs to wrangle tsibbles
+* `summarise()` combines over keys, keeping the index
