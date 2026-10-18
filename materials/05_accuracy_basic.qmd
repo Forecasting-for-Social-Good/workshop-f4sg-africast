@@ -34,14 +34,14 @@ melsyd <- tsibbledata::ansett |>
 
 ## Evaluate forecast accuracy
 
-* In order to evaluate the performance of a forecasting model, we compute its forecast  accuracy.
+* In order to evaluate the performance of a forecasting model, we compute its forecast accuracy.
 * Forecast accuracy is compared by measuring errors based on the test set.
 * Ideally it should allow comparing benefits from improved accuracy with the cost of obtaining the improvement.
 
-## Evaluate forecast accuracy- Business impact
+## Evaluate forecast accuracy: business impact
 
 * We should be choosing forecast models that lead to better business decisions
-    - least staffing costs, least emission, highest service level, least stock-out, least inventory, fastest response, least change in planing,  for example.
+    - least staffing costs, lowest emissions, highest service level, least stock-out, least inventory, fastest response, least change in planning, for example.
 * However, this is not always easy to obtain, therefore we might simply use methods that provide the most accurate forecast.
 
 ## A perfect fit
@@ -239,7 +239,7 @@ $$\begin{aligned}
 
 ## Prediction interval accuracy {.code-small}
 
-```{r winker-accuracy, echo=TRUE}
+```{r winkler-accuracy, echo=TRUE}
   # Compute interval accuracy
 beer_fc |> accuracy(aus_production,
    measures = interval_accuracy_measures) 
