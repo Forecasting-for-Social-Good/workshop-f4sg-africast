@@ -36,7 +36,7 @@ library(tidyverse)
 Estimating how a sequence of observations will continue into the future, using all information available now.
 
 ```{r forecasting,echo=FALSE, out.width="90%", fig.align='center'}
-ausbeer %>% model(ETS(Production)) %>% forecast(h=20) %>% autoplot(tail(ausbeer, 60), level=NULL, alpha=.01)+
+ausbeer |> model(ETS(Production)) |> forecast(h=20) |> autoplot(tail(ausbeer, 60), level=NULL, alpha=.01)+
   geom_vline(xintercept = as.numeric(as.Date("2010-04-01")),col="red", linetype = "longdash")+
   labs(x ="Time",y="Observation",title = "Forecasting")
 ```

@@ -20,8 +20,8 @@ h02 <- tsibbledata::PBS |>
   summarise(Cost = sum(Cost))
 melsyd <- tsibbledata::ansett |>
   filter(Airports == "MEL-SYD")
-antidiabetic_drug_sale <- PBS %>% filter(ATC2 == "A10") %>%
-  summarise(Cost = sum(Cost)/1e6) %>% filter_index("2000"~.)
+antidiabetic_drug_sale <- PBS |> filter(ATC2 == "A10") |>
+  summarise(Cost = sum(Cost)/1e6) |> filter_index("2000"~.)
 ```
 
 

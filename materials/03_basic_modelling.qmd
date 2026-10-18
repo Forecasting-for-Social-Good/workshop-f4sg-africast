@@ -547,7 +547,7 @@ The `model()` function trains models on data.
 
 ```{r model_template, eval=FALSE, echo=TRUE}
 # Fit the models
-my_mable <- my_data %>%
+my_mable <- my_data |>
   model(
     choose_name1 = MODEL1(response ~ term1+...),
     choose_name2 = MODEL2(response ~ term1+...),
@@ -584,9 +584,9 @@ A `mable` is a model table, each cell corresponds to a fitted model.
 ## Extract information from `mable`
 
 ```{r beer-mablea, eval= FALSE, dependson='beer-model'}
-beer_fit %>% select(`Seasonal_naïve`) %>% report()
-beer_fit %>% tidy()
-beer_fit %>% glance()
+beer_fit |> select(`Seasonal_naïve`) |> report()
+beer_fit |> tidy()
+beer_fit |> glance()
 ```
 
 - The `report()` function gives a formatted model-specific display.
@@ -701,8 +701,8 @@ fc
 - Forecast intervals can be extracted using the `hilo()` function.
 
 ```{r fb-fc, echo=TRUE}
-fit <- aus_production |> select(Beer) %>% model(NAIVE(Beer))
-forecast(fit) %>% hilo(level = 95) %>% unpack_hilo("95%")
+fit <- aus_production |> select(Beer) |> model(NAIVE(Beer))
+forecast(fit) |> hilo(level = 95) |> unpack_hilo("95%")
 ```
 
 ## Prediction intervals {.code-small}
@@ -745,7 +745,7 @@ beer_fc |>
 ## Beer production - augment {.code-small}
 
 ```{r augment}
-fit <- aus_production |> select(Beer) %>% model(SNAIVE(Beer))
+fit <- aus_production |> select(Beer) |> model(SNAIVE(Beer))
 augment(fit)
 ```
 

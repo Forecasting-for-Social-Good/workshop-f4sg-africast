@@ -26,8 +26,8 @@ live-questions:
 #| include: false
 #| cache: false
 source("setup.R")
-us_change <- readr::read_csv("data/uschange.csv") %>%
-  mutate(Time = yearquarter(Time)) %>%
+us_change <- readr::read_csv("data/uschange.csv") |>
+  mutate(Time = yearquarter(Time)) |>
   as_tsibble(index = Time)
 ```
 
@@ -98,8 +98,8 @@ $$
 ## Example: US consumption expenditure
 
 ```{r ConsInc, echo=TRUE, fig.height=3.5}
-us_change %>%
-  gather("Measure", "Change", Consumption, Income) %>%
+us_change |>
+  gather("Measure", "Change", Consumption, Income) |>
   autoplot(Change) +
   ylab("% change") + xlab("Year")
 ```
@@ -107,7 +107,7 @@ us_change %>%
 ## Example: US consumption expenditure
 
 ```{r ConsInc2, echo=FALSE}
-us_change %>%
+us_change |>
   ggplot(aes(x=Income, y=Consumption)) +
     ylab("Consumption (quarterly % change)") +
     xlab("Income (quarterly % change)") +
@@ -118,7 +118,7 @@ us_change %>%
 ## Example: US consumption expenditure {.code-small}
 
 ```{r, echo=TRUE}
-fit_cons <- us_change %>%
+fit_cons <- us_change |>
   model(lm = TSLM(Consumption ~ Income))
 report(fit_cons)
 ```
@@ -186,8 +186,8 @@ $$
 ## Example: US consumption expenditure
 
 ```{r MultiPredictors, echo=FALSE}
-us_change %>%
-  gather("Measure", "Change", Consumption, Income, Production, Savings, Unemployment) %>%
+us_change |>
+  gather("Measure", "Change", Consumption, Income, Production, Savings, Unemployment) |>
   ggplot(aes(x = Time, y = Change, colour = Measure)) +
   geom_line() +
   facet_grid(vars(Measure), scales = "free_y") +
@@ -198,16 +198,16 @@ us_change %>%
 ## Example: US consumption expenditure
 
 ```{r ScatterMatrix, echo=FALSE}
-us_change %>%
-  as_tibble() %>%
-  select(-Time) %>%
+us_change |>
+  as_tibble() |>
+  select(-Time) |>
   GGally::ggpairs()
 ```
 
 ## Example: US consumption expenditure {.code-tiny}
 
 ```{r usestim, echo=TRUE}
-fit_consMR <- us_change %>%
+fit_consMR <- us_change |>
   model(lm = TSLM(Consumption ~ Income + Production + Unemployment + Savings))
 report(fit_consMR)
 
@@ -216,7 +216,7 @@ report(fit_consMR)
 ## Example: US consumption expenditure
 
 ```{r usfitted1, echo=FALSE}
-augment(fit_consMR) %>%
+augment(fit_consMR) |>
   ggplot(aes(x = Time)) +
   geom_line(aes(y = Consumption, colour = "Data")) +
   geom_line(aes(y = .fitted, colour = "Fitted")) +
@@ -228,7 +228,7 @@ augment(fit_consMR) %>%
 ## Example: US consumption expenditure
 
 ```{r usfitted2, echo=FALSE, message=FALSE, warning=FALSE}
-augment(fit_consMR) %>%
+augment(fit_consMR) |>
   ggplot(aes(x=.fitted, y=Consumption)) +
     geom_point() +
     xlab("Fitted (predicted values)") +
@@ -240,7 +240,7 @@ augment(fit_consMR) %>%
 ## Example: US consumption expenditure
 
 ```{r, echo=TRUE}
-augment(fit_consMR) %>%
+augment(fit_consMR) |>
   gg_tsdisplay(.resid, plot_type="hist")
 ```
 
@@ -381,7 +381,7 @@ As with the AIC, the AIC$_{\text{C}}$ should be minimised.
 ## Comparing regression models
 
 ```{r, echo=TRUE}
-glance(fit_consMR) %>%
+glance(fit_consMR) |>
   select(r_squared, adj_r_squared, AIC, AICc, CV)
 ```
 
@@ -434,16 +434,16 @@ $$
 ## US Consumption
 
 ```{r usconsumptionf, echo=TRUE}
-fit_consBest <- us_change %>%
+fit_consBest <- us_change |>
   model(
     TSLM(Consumption ~ Income + Savings + Unemployment)
   )
 
-down_future <- new_data(us_change, 4) %>%
+down_future <- new_data(us_change, 4) |>
   mutate(Income = -1, Savings = -0.5, Unemployment = 0)
 fc_down <- forecast(fit_consBest, new_data = down_future)
 
-up_future <- new_data(us_change, 4) %>%
+up_future <- new_data(us_change, 4) |>
   mutate(Income = 1, Savings = 0.5, Unemployment = 0)
 fc_up <- forecast(fit_consBest, new_data = up_future)
 ```
@@ -451,7 +451,7 @@ fc_up <- forecast(fit_consBest, new_data = up_future)
 ## US Consumption
 
 ```{r usconsumptionf2, echo=TRUE, fig.height=3.5}
-us_change %>% autoplot(Consumption) +
+us_change |> autoplot(Consumption) +
   ylab("% change in US consumption") +
   autolayer(fc_up, series = "increase") +
   autolayer(fc_down, series = "decrease") +

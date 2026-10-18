@@ -145,8 +145,8 @@ abline(v=2009, lty=3)
 
 
 ```{r, echo=TRUE, fig.height=3}
-ansett %>%
-  filter(Airports=="MEL-SYD", Class=="Economy") %>%
+ansett |>
+  filter(Airports=="MEL-SYD", Class=="Economy") |>
   autoplot(Passengers)
 ```
 
@@ -154,8 +154,8 @@ ansett %>%
 
 
 ```{r a10-plot, echo=TRUE, dependson="a10", fig.height=2.5}
-PBS %>% filter(ATC2 == "A10") %>%
-  summarise(Cost = sum(Cost)/1e6) %>% autoplot(Cost) +
+PBS |> filter(ATC2 == "A10") |>
+  summarise(Cost = sum(Cost)/1e6) |> autoplot(Cost) +
   ylab("$ million") + xlab("Year") +
   ggtitle("Antidiabetic drug sales")
 ```
