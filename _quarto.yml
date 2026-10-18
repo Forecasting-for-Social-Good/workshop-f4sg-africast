@@ -12,7 +12,9 @@ project:
     - "!solutions"
     - "!demo"
     - "!README.Rmd"
-  pre-render: zip.R
+  pre-render:
+    - slides-pdf.R
+    - zip.R
 
 website:
   page-navigation: true
