@@ -584,7 +584,7 @@ A `mable` is a model table, each cell corresponds to a fitted model.
 ## Extract information from `mable`
 
 ```{r beer-mablea, eval= FALSE, dependson='beer-model'}
-beer_fit %>% select(snaive) %>% report()
+beer_fit %>% select(`Seasonal_naïve`) %>% report()
 beer_fit %>% tidy()
 beer_fit %>% glance()
 ```
