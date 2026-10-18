@@ -670,7 +670,7 @@ When a normal distribution for the residuals is an unreasonable assumption, one 
 ## Generate many possible future using `generate()` {.code-small}
 
 ```{r generate, echo=TRUE}
-beer_2000 <- aus_production |> filter(year(Quarter) == 2000) |> select(Beer)
+beer_2000 <- aus_production |> filter(year(Quarter) >= 2000) |> select(Beer)
 fit <- beer_2000 |>
   model(NAIVE(Beer))
 sim <- fit |> generate(h = 12, times = 5, bootstrap = TRUE)
