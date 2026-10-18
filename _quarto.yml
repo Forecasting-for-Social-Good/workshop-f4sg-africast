@@ -25,7 +25,10 @@ website:
   repo-url: https://github.com/Forecasting-for-Social-Good/workshop-f4sg-africast
   repo-actions: [edit, issue]
 
-  # opengraph: true
+  open-graph:
+    image: "/images/twitter-card.png"
+    image-width: 1200
+    image-height: 630
   twitter-card:
     creator: "@mitchoharawild"
     image: "/images/twitter-card.png"
