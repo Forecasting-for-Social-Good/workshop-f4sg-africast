@@ -4,13 +4,14 @@
 #' `autoplot()` of its `ACF()`. The series is paired with a lagged copy of
 #' itself, the pairs become a lag plot beside a growing ACF plot, and the
 #' autocorrelation at each lag is added as its lag plot is shown. The lag plot
-#' is then removed, leaving the ACF plot.
+#' is then removed, leaving the ACF plot. The lags pause at the seasonal lag.
 #' The steps between them are described by `.morph-step` divs in the document.
 #'
 #' @param data A tsibble containing a single regular time series.
 #' @param y The variable to plot.
 #' @param id A unique identifier for the animation on the page.
 #' @param width,height Size of the plot in inches.
+#' @param pause_lag The lag to pause at, by default the seasonal period.
 #' @param lag_duration Time (ms) to show the lag plot of each lag after the
 #'   first.
 #' @param lag_colour Colour of the lagged series and the current lag's bar.
@@ -21,6 +22,7 @@ acf_morph <- function(
   id = "acf-morph",
   width = 9,
   height = 5.6,
+  pause_lag = tsibble::guess_frequency(data[[tsibble::index_var(data)]]),
   lag_duration = 450,
   lag_colour = "#D55E00",
   alt = NULL
@@ -90,14 +92,21 @@ acf_morph <- function(
       # svglite draws dashes 4 line widths long
       dasharray = sprintf("%.2f", 4 * ggplot2::ggplot_build(to_p)$data[[3]]$linewidth[1] * ggplot2::.pt)
     ),
-    lag_colour = lag_colour
+    lag_colour = lag_colour,
+    pause_lag = pause_lag
   )
 
   n_lags <- nrow(acf)
+  stopifnot(pause_lag > 1, pause_lag < n_lags)
   morph_widget(
     id, "acf", scene_data,
-    n_steps = 6,
-    durations = c(1100, 1400, 1100, max(1100, lag_duration * (n_lags - 1)), 1400),
+    n_steps = 7,
+    durations = c(
+      1100, 1400, 1100,
+      max(1100, lag_duration * (pause_lag - 1)),
+      max(1100, lag_duration * (n_lags - pause_lag)),
+      1400
+    ),
     alt = alt
   )
 }
