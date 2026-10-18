@@ -32,7 +32,7 @@ melsyd <- tsibbledata::ansett |> filter(Airports == "MEL-SYD")
 * Most recent data should have more weight.
 * This is exactly the concept behind exponential smoothing
 
-## Pegel's classification
+## Pegels' classification
 
 ```{r pegel1,echo=FALSE, out.width='90%', fig.align='center'}
 knitr::include_graphics("figs/pegel1.png")
