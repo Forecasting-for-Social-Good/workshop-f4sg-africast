@@ -102,7 +102,7 @@ drug_sale_tcsv |> print(n = 4)
 
 ## Time series cross-validation {.code-small}
 
-Estimate RW w/ drift models for each window.
+Estimate seasonal naïve models for each window.
 
 ```{r google-fit, cache = TRUE}
 drug_fit_tr <- drug_sale_tcsv |> 
@@ -115,7 +115,7 @@ print(drug_fit_tr, n = 4)
 
 ## Time series cross-validation {.code-small}
 
-Produce 8 step ahead forecasts from all models.
+Produce 12-step-ahead forecasts from each window.
 
 ```{r google-fc, cache = TRUE}
 drug_fc_tr <- drug_fit_tr |> 
