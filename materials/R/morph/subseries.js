@@ -7,7 +7,8 @@
 // Steps:
 //   0. The time plot, exactly as autoplot() draws it.
 //   1. Observations are coloured by season, and the line fades.
-//   2. Observations from the same season are joined into subseries.
+//   2. Observations from the same season are joined into subseries, with the
+//      original series kept faintly behind them.
 //   3. The cards squeeze side by side into the facets.
 //   4. Season means are added, giving exactly the gg_subseries() output.
 PlotMorph.register("subseries", function (svg, data, h) {
@@ -138,7 +139,8 @@ PlotMorph.register("subseries", function (svg, data, h) {
     setBox(baseClip, from.panel);
     baseLine.setAttribute("points", linePoints(series.x.map((_, i) => i), sFrom, 1));
     baseLine.setAttribute("stroke", lerpColour(series.colour, ghost, ease(colour)));
-    show(baseLine, 1 - ease(join));
+    // Faded further behind the subseries, then gone as the cards squeeze
+    show(baseLine, lerp(1, 0.35, ease(join)) * (1 - ease(phase(p, 2, 2.5))));
 
     cards.forEach((card, k) => {
       const target = to.panels[k];
