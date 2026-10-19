@@ -35,7 +35,10 @@ acf_morph <- function(
   y <- rlang::enquo(y)
   morph_font_setup()
   from_p <- autoplot(data, !!y)
-  to_p <- autoplot(feasts::ACF(data, !!y))
+  # Lags are broken at multiples of the seasonal period, as the development
+  # ggtime does for mixtime lags
+  to_p <- autoplot(feasts::ACF(data, !!y)) +
+    ggplot2::scale_x_continuous(breaks = function(x) seq(0, x[2], by = pause_lag))
   from <- morph_plot_parts(from_p, width, height)
   to <- morph_plot_parts(to_p, width, height)
 
