@@ -1,0 +1,8 @@
+{
+  "numpy": "1.26.4",
+  "pandas": "2.1.4",
+  "torch": "2.10.0",
+  "chronos-forecasting": "2.2.2",
+  "nixtla": "0.7.2",
+  "peft": "0.17.1"
+}

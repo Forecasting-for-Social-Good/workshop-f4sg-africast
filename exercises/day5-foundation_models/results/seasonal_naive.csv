@@ -1,0 +1,5 @@
+unique_id,ds,y,prediction,model
+Snowy Mountains / Holiday,2017-01-01,119.0177251,99.2136451,Seasonal naive
+Snowy Mountains / Holiday,2017-04-01,124.4655134,77.2130006,Seasonal naive
+Snowy Mountains / Holiday,2017-07-01,378.1434605,330.9926395,Seasonal naive
+Snowy Mountains / Holiday,2017-10-01,84.6557145,67.9491372,Seasonal naive

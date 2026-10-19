@@ -1,0 +1,17 @@
+{
+  "raw_rows": 24320,
+  "raw_series": 304,
+  "series": "Snowy Mountains / Holiday",
+  "frequency": "Quarterly; quarter-start timestamps",
+  "unit": "thousand overnight trips",
+  "rows": 80,
+  "start": "1998 Q1",
+  "end": "2017 Q4",
+  "horizon": 4,
+  "training": "1998 Q1 to 2013 Q4",
+  "validation": "2014 Q1 to 2016 Q4",
+  "test": "2017 Q1 to 2017 Q4",
+  "adaptation_history": "1998 Q1 to 2016 Q4",
+  "source": "exercises/data/tourism.csv in the workshop repository",
+  "sha256": "e071d38c74020fdd6a2ff86fb47ddd1082937c4b337b5d9e63687e6af29e7e1b"
+}

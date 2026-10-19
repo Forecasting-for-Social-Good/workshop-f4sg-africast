@@ -1,0 +1,15 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{preamble}
+\begin{document}
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{9}{11}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.3cm,minimum height=1cm}]
+\node[box] (a) at (0,0) {Snowy Mountains\\Holiday trips};
+\node[box] (ma) at (4.5,0) {Fit ETS\\to this history};
+\node[box,fill=Orange!12] (fa) at (9,0) {Fitted ETS model\\for Snowy Mountains};
+\node[box] (b) at (0,-1.6) {Sydney\\Holiday trips};
+\node[box] (mb) at (4.5,-1.6) {Fit ETS\\to this history};
+\node[box,fill=Orange!12] (fb) at (9,-1.6) {Fitted ETS model\\for Sydney};
+\draw[->,thick](a)--(ma);\draw[->,thick](ma)--(fa);
+\draw[->,thick](b)--(mb);\draw[->,thick](mb)--(fb);
+\end{tikzpicture}
+\end{document}

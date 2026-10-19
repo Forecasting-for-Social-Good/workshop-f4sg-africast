@@ -1,0 +1,12 @@
+{
+  "checkpoint": "amazon/chronos-2",
+  "finetune_mode": "lora",
+  "steps": 10,
+  "context_length": 64,
+  "min_past": 8,
+  "learning_rate": 1e-05,
+  "batch_size": 4,
+  "seed": 42,
+  "device": "cpu",
+  "adaptation_and_inference_seconds": 13.135246499999994
+}

@@ -1,0 +1,13 @@
+# Versions used to generate the saved core outputs, Python 3.12.
+numpy==1.26.4
+pandas==2.1.4
+matplotlib==3.10.8
+torch==2.10.0
+transformers==4.57.6
+chronos-forecasting==2.2.2
+peft==0.17.1
+accelerate==1.12.0
+nixtla==0.7.2
+python-dotenv==1.2.1
+ipykernel
+notebook
