@@ -403,6 +403,6 @@
     "href": "sessions/day5/foundation_models.html",
     "title": "Time series foundation models",
     "section": "",
-    "text": "Note\n\n\n\nSlides for this session are still being prepared and will be added closer to the workshop.\n\n\nThis new session introduces time series foundation models: large, pre-trained models (such as Chronos, TimeGPT and Moirai) that can produce forecasts directly from historical data with little or no task-specific training. It will cover how these models work at a high level, how they compare to the classical methods covered earlier in the workshop, and when they are (and aren’t) a good choice for forecasting problems in low- and middle-income country contexts."
+    "text": "View slides in full screen"
   }
 ]
