@@ -69,7 +69,13 @@ acf_morph <- function(
     )
   }
   # The unit of the lags, such as "quarter", from the mixtime time unit class
-  unit <- sub("^tu_", "", S7::S7_class(tsibble::interval(data))@name)
+  # or else the non-zero field of a tsibble interval
+  interval <- tsibble::interval(data)
+  unit <- if (S7::S7_inherits(interval)) {
+    sub("^tu_", "", S7::S7_class(interval)@name)
+  } else {
+    Filter(function(f) vctrs::field(interval, f) != 0, vctrs::fields(interval))[1]
+  }
 
   acf <- to$layers[[1]]
   scene_data <- list(
