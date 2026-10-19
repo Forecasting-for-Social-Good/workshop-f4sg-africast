@@ -513,3 +513,149 @@ $bleed-width: calc(var(--slide-width) + 160px);
 .reveal .lq-question.lq-active .lq-side {
   width: 9.5em;
 }
+
+// Interactive webR slider plots (webr-slider.js): ggplot2-style titles above
+// the plot and the sliders below it, no wider than the plot (WIDTH in the JS)
+.reveal .webr-slider {
+  max-width: 1256px;
+  font-size: 17px;
+  color: $slate;
+  .webr-slider-title {
+    font-size: 25px;
+    line-height: 1.2;
+  }
+  .webr-slider-subtitle {
+    font-size: 21px;
+    line-height: 1.2;
+  }
+  .webr-slider-plot svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .webr-slider-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.6em;
+    margin-top: 36px;
+    padding-bottom: 24px;
+    font-size: 22px;
+    label {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .webr-slider-track {
+      position: relative;
+      flex: 0 1 480px;
+      min-width: 0;
+    }
+    .webr-slider-input {
+      display: flex;
+      flex: 0 1 640px;
+      align-items: center;
+      gap: 0.8em;
+    }
+    // A lone slider spans the plot
+    .webr-slider-input:only-of-type {
+      flex: 1 1 auto;
+      .webr-slider-track { flex: 1 1 auto; }
+    }
+  }
+  // Range inputs drawn the same in every browser, so that the tick marks
+  // line up with the thumb (whose centre runs from --thumb/2 to 100% - --thumb/2)
+  .webr-slider-track {
+    --thumb: 18px;
+    input[type="range"] {
+      display: block;
+      width: 100%;
+      height: var(--thumb);
+      margin: 0;
+      background: transparent;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(to right, $africast-blue calc(var(--fill, 0) * 100%), $sage-line 0);
+    }
+    input[type="range"]::-moz-range-track {
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(to right, $africast-blue calc(var(--fill, 0) * 100%), $sage-line 0);
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: var(--thumb);
+      height: var(--thumb);
+      margin-top: calc(3px - var(--thumb) / 2);
+      border: none;
+      border-radius: 50%;
+      background: $africast-blue;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: var(--thumb);
+      height: var(--thumb);
+      border: none;
+      border-radius: 50%;
+      background: $africast-blue;
+    }
+    // The value, in a bubble that follows the thumb
+    output {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: calc(var(--thumb) / 2 + var(--fill, 0) * (100% - var(--thumb)));
+      transform: translateX(-50%);
+      padding: 1px 7px;
+      border-radius: 4px;
+      background: $africast-blue;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      pointer-events: none;
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border: 5px solid transparent;
+        border-top-color: $africast-blue;
+      }
+    }
+    .webr-slider-ticks {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      font-size: 14px;
+      color: $muted;
+      &:empty { display: none; }
+      span {
+        position: absolute;
+        top: 4px;
+        left: calc(var(--thumb) / 2 + var(--at) * (100% - var(--thumb)));
+        transform: translateX(-50%);
+        padding-top: 5px;
+        font-variant-numeric: tabular-nums;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 50%;
+          height: 5px;
+          border-left: 1px solid $muted;
+        }
+      }
+    }
+  }
+  .webr-slider-status {
+    color: $muted;
+    white-space: nowrap;
+    font-size: 0.8em;
+  }
+}

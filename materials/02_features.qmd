@@ -28,6 +28,12 @@ library(glue)
 library(stringr)
 ```
 
+```{=html}
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js"></script>
+<script src="webr-slider.js"></script>
+```
+
 
 # Transforming time series
 
@@ -128,21 +134,24 @@ $$
 
 ## Box-Cox transformations
 
-```{r food-anim, echo=FALSE, message=FALSE, fig.height=5, fig.width=8}
-library(rlang)
-library(gganimate)
-library(latex2exp)
-p <- food |>
-  mutate(!!!set_names(map(seq(0, 1, 0.01), ~ expr(fabletools::box_cox(Turnover, !!.x))), seq(0, 1, 0.01))) |>
-  select(-Turnover) |>
-  pivot_longer(-Month, names_to = "lambda", values_to = "Turnover") |>
-  mutate(lambda = as.numeric(lambda)) |>
-  ggplot(aes(x = Month, y = Turnover)) +
-  geom_line() +
-  transition_states(1 - lambda, state_length = 0) +
-  view_follow() +
-  labs(title = "Box-Cox transformed food retailing turnover (lambda = {format(1 - as.numeric(closest_state), digits = 2)})")
-anim_video(p)
+```{r}
+#| label: food-boxcox
+#| echo: false
+webr_slider(
+  food, x = "Month",
+  fn = function(data, lambda) {
+    y <- data$Turnover
+    data.frame(Turnover = if (lambda == 0) log(y) else (sign(y) * abs(y)^lambda - 1) / lambda)
+  },
+  sliders = list(
+    lambda = list(
+      label = "λ", value = 1, min = -1, max = 2, step = 0.01,
+      ticks = seq(-1, 2, by = 0.5)
+    )
+  ),
+  title = "Box-Cox transformed food retailing turnover (λ = {lambda})",
+  height = 475
+)
 ```
 
 ## Box-Cox transformations
@@ -360,30 +369,38 @@ us_retail_employment |>
 
 ## STL decomposition
 
-```{r stlwindowanim, echo=FALSE, warning=FALSE, message=FALSE, fig.height=5.35, fig.width=8, eval=TRUE}
-s_windows <- seq(5, 55, by = 2)
-stl_defs <- purrr::map(s_windows, function(s_window) {
-  STL(Employed ~ season(window = s_window), robust = TRUE)
-})
-names(stl_defs) <- sprintf("season(window=%02d)", s_windows)
-
-p <- us_retail_employment |>
-  model(!!!stl_defs) |>
-  components() |>
-  as_tibble() |>
-  pivot_longer(Employed:remainder,
-    names_to = "component", names_ptypes = list(component = factor(levels = c("Employed", "trend", "season_year", "remainder"))),
-    values_to = "Employed"
-  ) |>
-  ggplot(aes(x = Month, y = Employed)) +
-  geom_line() +
-  facet_grid(rows = vars(component), scales = "free_y") +
-  labs(
-    title = "STL decomposition of US retail employment",
-    subtitle = "{closest_state}"
-  ) +
-  transition_states(.model)
-anim_video(p)
+```{r}
+#| label: stl-window
+#| echo: false
+# Trend windows up to the length of the data, then up to the smallest window
+# whose fit is exactly linear: stl() fits the trend every ceiling(t.window/10)
+# points and interpolates, so it fits only the two ends from 10 * (n - 2) + 1
+n <- nrow(us_retail_employment)
+webr_slider(
+  us_retail_employment |> select(Month, Employed), x = "Month",
+  fn = function(data, s_window, t_window) {
+    fit <- stl(ts(data$Employed, frequency = 12),
+      s.window = s_window, t.window = t_window, robust = TRUE
+    )$time.series
+    data.frame(
+      Employed = data$Employed, trend = fit[, "trend"],
+      season_year = fit[, "seasonal"], remainder = fit[, "remainder"]
+    )
+  },
+  sliders = list(
+    t_window = list(
+      label = "Trend window", value = 21, min = 7,
+      max = 10 * (n - 2) + 1, step = 2, log = TRUE,
+      ticks = c(7, 13, 25, 51, 101, n, 1001, 10 * (n - 2) + 1)
+    ),
+    s_window = list(
+      label = "Seasonal window", value = 13, min = 5, max = 55, step = 2,
+      log = TRUE, ticks = c(5, 7, 9, 13, 19, 27, 39, 55)
+    )
+  ),
+  title = "STL decomposition of US retail employment",
+  subtitle = "trend(window = {t_window}) + season(window = {s_window})", height = 490
+)
 ```
 
 
