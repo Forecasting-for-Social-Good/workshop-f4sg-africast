@@ -1,23 +1,24 @@
 // Scene: from a time plot (autoplot) to an ACF plot (autoplot of ACF()).
 //
-// The series is paired with a copy of itself lagged by one period, and each
-// pair becomes a point of a lag plot. As the y value of each point is the
-// same in the time plot and the lag plot, the points only move sideways. The
-// lag plot sits beside the ACF plot being built, which gains a bar for each
-// lag as its lag plot is shown.
+// The time plot shrinks into a strip along the top, where the series is
+// paired with a copy of itself lagged by one period. Each pair becomes a point
+// of a lag plot below, beside the ACF plot being built. As the lagged copy
+// shifts along the time plot, the lag plot changes to match and the ACF plot
+// gains a bar for each lag.
 //
 // Steps:
 //   0. The time plot, exactly as autoplot() draws it.
-//   1. A copy of the series lagged by one period is added.
+//   1. The time plot shrinks to the top, and a copy of the series lagged by
+//      one period is added.
 //   2. Each observation and the one before it become a point of a lag plot.
 //   3. The autocorrelation of the lag plot is added as the first bar.
-//   4. The lag plot is shown for each lag in turn up to the seasonal lag
-//      (data.pause_lag), adding its bar.
+//   4. The lagged copy shifts one period at a time up to the seasonal lag
+//      (data.pause_lag), showing the lag plot and adding the bar of each lag.
 //   5. The remaining lags are shown in the same way.
-//   6. The lag plot is removed and the ACF plot is widened, with its
-//      significance bounds, giving the autoplot(ACF()) output.
+//   6. The time plot and lag plot are removed and the ACF plot is widened,
+//      with its significance bounds, giving the autoplot(ACF()) output.
 PlotMorph.register("acf", function (svg, data, h) {
-  const { el, clamp, lerp, ease, phase, lerpBox, lerpColour } = h;
+  const { el, lerp, ease, phase, lerpBox, lerpColour } = h;
   const series = data.series;
   const acf = data.acf;
   const n = series.y.length;
@@ -30,11 +31,11 @@ PlotMorph.register("acf", function (svg, data, h) {
   };
 
   // Layers, bottom to top
-  const views = ["from", "lag", "bars", "to"];
+  const views = ["from", "time", "lag", "bars", "to"];
   const chrome = views.map((v) =>
     h.svg(
       data[v].chrome,
-      { x: data[v].offset, width: data[v].width, height: data.height },
+      { x: data[v].x, y: data[v].y, width: data[v].width, height: data[v].height },
       svg
     )
   );
@@ -42,8 +43,8 @@ PlotMorph.register("acf", function (svg, data, h) {
   const grills = views.map((v) => h.svg(data[v].grill, common, svg));
 
   // Panels of each view, placed on the full plot
-  const place = (v) => ({ ...data[v].panel, x: data[v].panel.x + data[v].offset });
-  const [fromBox, lagBox, barsBox, toBox] = views.map(place);
+  const place = (v) => ({ ...data[v].panel, x: data[v].panel.x + data[v].x, y: data[v].panel.y + data[v].y });
+  const [fromBox, timeBox, lagBox, barsBox, toBox] = views.map(place);
 
   const uid = svg.closest(".morph-figure").id;
   const defs = el("defs", {}, svg);
@@ -64,17 +65,19 @@ PlotMorph.register("acf", function (svg, data, h) {
     { ...lineStyle, "stroke-width": series.stroke_width, stroke: data.lag_colour },
     content
   );
-  const lagPoints = series.y.map(() => el("circle", { r: 1.8, fill: data.lag_colour }, content));
-  const points = series.y.map(() => el("circle", { r: 1.8, fill: series.colour }, content));
-  const label = el(
-    "text",
-    {
-      "font-family": "Fira Sans, sans-serif",
-      "font-size": 13.2,
-      fill: "#1a1a1a",
-    },
-    svg
-  );
+  // The points move between the time plot and the lag plot, so are not clipped
+  const lagPoints = series.y.map(() => el("circle", { r: 1.8, fill: data.lag_colour }, svg));
+  const points = series.y.map(() => el("circle", { r: 1.8, fill: series.colour }, svg));
+  const text = {
+    "font-family": "Fira Sans, sans-serif",
+    "font-size": 13.2,
+    fill: "#1a1a1a",
+  };
+  const label = el("text", text, svg);
+  // The series and its lagged copy, named in their colours
+  const timeLabel = el("text", text, svg);
+  el("tspan", { fill: series.colour }, timeLabel).textContent = series.label;
+  const lagName = el("tspan", { fill: data.lag_colour, dx: 12 }, timeLabel);
 
   // The ACF plot
   const bars = el("g", {}, svg);
@@ -139,9 +142,14 @@ PlotMorph.register("acf", function (svg, data, h) {
 
   const polyline = (pts) => pts.map(([x, y]) => x.toFixed(2) + "," + y.toFixed(2)).join(" ");
 
-  // Time of the observation i periods on (extrapolated past the end)
+  // Time of the observation u periods on, between observations and
+  // extrapolated past the end
   const step = series.x[n - 1] - series.x[n - 2];
   const timeAt = (i) => (i < n ? series.x[i] : series.x[n - 1] + (i - n + 1) * step);
+  const timeAtF = (u) => {
+    const i = Math.floor(u);
+    return lerp(timeAt(i), timeAt(i + 1), u - i);
+  };
 
   // Each lag after the first moves the points, then grows its bar. pos is the
   // number of lags moved on from the first.
@@ -158,7 +166,8 @@ PlotMorph.register("acf", function (svg, data, h) {
   }
 
   return function render(p) {
-    const copy = ease(phase(p, 0, 1));
+    const shrink = ease(phase(p, 0, 0.5));
+    const copy = ease(phase(p, 0.4, 1));
     const scatter = ease(phase(p, 1, 2));
     const first = ease(phase(p, 2, 3));
     // Lags up to the pause, then the rest
@@ -168,28 +177,38 @@ PlotMorph.register("acf", function (svg, data, h) {
 
     // Axes and panels
     // The ACF plot's axes are hidden while it widens, but not its panel
+    const strip = phase(p, 0.35, 0.5);
     const appear = phase(p, 1.4, 2);
-    const opacity = [1 - phase(p, 1, 1.4), appear * (1 - drop), appear, phase(p, 5.8, 6)];
-    chrome.forEach((node, i) => show(node, i === 2 ? appear * (1 - phase(p, 5.3, 5.45)) : opacity[i]));
+    const opacity = [
+      1 - phase(p, 0, 0.15),
+      strip * (1 - drop),
+      appear * (1 - drop),
+      appear * (1 - phase(p, 5.3, 5.45)),
+      phase(p, 5.8, 6),
+    ];
+    chrome.forEach((node, i) => show(node, opacity[i]));
 
-    const box = lerpBox(fromBox, lagBox, scatter);
+    const box = lerpBox(fromBox, timeBox, shrink);
     const acfBox = lerpBox(barsBox, toBox, widen);
     setGrill(grills[0], box, data.from.panel);
-    setGrill(grills[1], box, data.lag.panel);
-    setGrill(grills[2], acfBox, data.bars.panel);
-    setGrill(grills[3], acfBox, data.to.panel);
-    show(grills[0], opacity[1] >= 1 ? 0 : opacity[0]);
+    setGrill(grills[1], box, data.time.panel);
+    setGrill(grills[2], lagBox, data.lag.panel);
+    setGrill(grills[3], acfBox, data.bars.panel);
+    setGrill(grills[4], acfBox, data.to.panel);
+    show(grills[0], strip >= 1 ? 0 : 1);
     show(grills[1], opacity[1]);
-    show(grills[2], opacity[3] >= 1 ? 0 : opacity[2]);
-    show(grills[3], opacity[3]);
+    show(grills[2], opacity[2]);
+    show(grills[3], opacity[4] >= 1 ? 0 : appear);
+    show(grills[4], opacity[4]);
     setBox(clip, box);
 
-    // Scales of the time plot and the lag plot, as the panel moves
+    // Scales of the time plot and the lag plot
     const sTime = scaler(box, data.from.panel.xrange, data.from.panel.yrange);
-    const sLag = scaler(box, data.lag.panel.xrange, data.lag.panel.yrange);
+    const sLag = scaler(lagBox, data.lag.panel.xrange, data.lag.panel.yrange);
 
     // The lag shown, and how far the points have moved to the next lag
     const state = p < 3 ? { lag: 1, move: 0, grow: 0 } : lagState(cycle);
+    const shown = state.lag + (state.move >= 0.5 ? 1 : 0);
     const lagX = (i) => {
       const a = i - state.lag;
       const b = a - 1;
@@ -197,26 +216,29 @@ PlotMorph.register("acf", function (svg, data, h) {
       return b < 0 ? series.y[a] : lerp(series.y[a], series.y[b], state.move);
     };
 
-    // The series and its lagged copy, sliding along by one period
+    // The series and its lagged copy, sliding along a period at a time
+    const shift = p < 1 ? copy : state.lag + state.move;
     const timeY = series.y.map((v) => sTime.y(v));
-    const lagTime = series.y.map((_, i) => lerp(timeAt(i), timeAt(i + 1), copy));
+    const lagTime = series.y.map((_, i) => timeAtF(i + shift));
     baseLine.setAttribute("points", polyline(series.x.map((x, i) => [sTime.x(x), timeY[i]])));
     lagLine.setAttribute("points", polyline(lagTime.map((x, i) => [sTime.x(x), timeY[i]])));
-    // The lines leave before they are squeezed into the lag plot
-    const lines = 1 - phase(p, 1, 1.4);
-    show(baseLine, lines);
-    show(lagLine, copy * lines);
+    show(baseLine, 1 - drop);
+    show(lagLine, copy * (1 - drop));
+
+    // Each observation and its pair, hidden while the lagged copy moves
+    const pairOpacity = Math.abs(2 * state.move - 1);
+    series.y.forEach((_, i) => {
+      const j = i - shown;
+      if (j >= 0) setLine(pairs[i], sTime.x(series.x[i]), timeY[i], sTime.x(series.x[i]), timeY[j]);
+      show(pairs[i], j >= 0 ? copy * pairOpacity * 0.8 * (1 - drop) : 0);
+    });
 
     series.y.forEach((v, i) => {
-      // The pair of each observation: the lagged copy's value at its time
-      const pairX = i > 0 ? sTime.x(series.x[i]) : null;
-      const pairY = i > 0 ? timeY[i - 1] : null;
-      if (i > 0) setLine(pairs[i], pairX, timeY[i], pairX, pairY);
-      show(pairs[i], i > 0 ? copy * lines * 0.8 : 0);
-
-      // Observations move sideways into the lag plot, and their pairs join them
+      // Observations move from the time plot into the lag plot, and their
+      // pairs join them
       const lx = lagX(i);
-      const x = lx === null ? sTime.x(series.x[i]) : lerp(sTime.x(series.x[i]), sLag.x(lx), scatter);
+      const tx = sTime.x(series.x[i]);
+      const x = lx === null ? tx : lerp(tx, sLag.x(lx), scatter);
       const y = lerp(timeY[i], sLag.y(v), scatter);
       points[i].setAttribute("cx", x);
       points[i].setAttribute("cy", y);
@@ -235,8 +257,14 @@ PlotMorph.register("acf", function (svg, data, h) {
       show(pt, i + 1 < n ? copy * (1 - scatter) : 0);
     });
 
+    // The lagged copy, in the time plot's (empty) title
+    timeLabel.setAttribute("x", round(timeBox.x));
+    timeLabel.setAttribute("y", round(timeBox.y - 6));
+    lagName.textContent = `lagged by ${shown} ${acf.unit}${shown === 1 ? "" : "s"}`;
+    lagName.setAttribute("opacity", copy);
+    show(timeLabel, strip * (1 - drop));
+
     // The lag and autocorrelation of the lag plot
-    const shown = state.lag + (state.move >= 0.5 ? 1 : 0);
     const r = acf.value[shown - 1];
     // In the lag plot's (empty) title
     label.setAttribute("x", round(lagBox.x));

@@ -572,7 +572,7 @@ Time plot of quarterly Australian beer production since 1992.
 :::
 
 ::: {.morph-step .fragment .fade-in-then-out}
-Shift the series by one quarter, pairing each observation with the one before it.
+Shift a copy of the series (orange) by one quarter, pairing each observation with the one before it.
 :::
 
 ::: {.morph-step .fragment .fade-in-then-out}
@@ -584,7 +584,7 @@ The autocorrelation $r_1$ measures the linear relationship in this lag plot. It 
 :::
 
 ::: {.morph-step .fragment .fade-in-then-out}
-Repeat for lags 2, 3 and 4. At lag 4, each quarter is paired with the same quarter a year earlier, so the seasonal peaks and troughs line up: $r_4$ is large and positive.
+Shift the copy further for lags 2, 3 and 4. At lag 4, each quarter is paired with the same quarter a year earlier, so the seasonal peaks and troughs line up: $r_4$ is large and positive.
 :::
 
 ::: {.morph-step .fragment .fade-in-then-out}

@@ -1,16 +1,20 @@
 #' Animate a time plot becoming an ACF plot
 #'
 #' The first frame is `autoplot()` of the series and the last frame is
-#' `autoplot()` of its `ACF()`. The series is paired with a lagged copy of
-#' itself, the pairs become a lag plot beside a growing ACF plot, and the
-#' autocorrelation at each lag is added as its lag plot is shown. The lag plot
-#' is then removed, leaving the ACF plot. The lags pause at the seasonal lag.
+#' `autoplot()` of its `ACF()`. The time plot shrinks into a strip along the
+#' top, where the series is paired with a lagged copy of itself. The pairs
+#' become a lag plot below it, beside a growing ACF plot, and the
+#' autocorrelation at each lag is added as the lagged copy shifts along and
+#' its lag plot is shown. The lags pause at the seasonal lag. The time plot
+#' and lag plot are then removed, leaving the ACF plot.
 #' The steps between them are described by `.morph-step` divs in the document.
 #'
 #' @param data A tsibble containing a single regular time series.
 #' @param y The variable to plot.
 #' @param id A unique identifier for the animation on the page.
 #' @param width,height Size of the plot in inches.
+#' @param strip Proportion of the height taken by the time plot, above the lag
+#'   and ACF plots.
 #' @param pause_lag The lag to pause at, by default the seasonal period.
 #' @param lag_duration Time (ms) to show the lag plot of each lag after the
 #'   first.
@@ -22,6 +26,7 @@ acf_morph <- function(
   id = "acf-morph",
   width = 9,
   height = 5.6,
+  strip = 0.4,
   pause_lag = tsibble::guess_frequency(data[[tsibble::index_var(data)]]),
   lag_duration = 450,
   lag_colour = "#D55E00",
@@ -36,6 +41,7 @@ acf_morph <- function(
 
   obs <- from$layers[[1]]
   obs <- obs[order(obs$x), ]
+  y_label <- from_p$labels$y %||% rlang::as_label(y)
 
   # The lag plot and the ACF plot being built, side by side. Both axes of the
   # lag plot span the series, so they stay fixed as the lag changes.
@@ -43,40 +49,49 @@ acf_morph <- function(
   lag_p <- ggplot2::ggplot() +
     ggplot2::scale_x_continuous(limits = limits) +
     ggplot2::scale_y_continuous(limits = limits) +
-    ggplot2::labs(
-      x = paste("Lagged", rlang::as_label(y)),
-      y = from_p$labels$y %||% rlang::as_label(y)
-    )
-  # Both have an empty title, to make room for the lag and autocorrelation
-  lag <- morph_plot_parts(lag_p + ggplot2::labs(title = " "), width / 2, height)
-  bars <- morph_plot_parts(to_p + ggplot2::labs(title = " "), width / 2, height)
+    ggplot2::labs(x = paste("Lagged", rlang::as_label(y)), y = y_label)
+  # All have an empty title, to make room for the lag and autocorrelation
+  top <- strip * height
+  time <- morph_plot_parts(from_p + ggplot2::labs(title = " "), width, top)
+  lag <- morph_plot_parts(lag_p + ggplot2::labs(title = " "), width / 2, height - top)
+  bars <- morph_plot_parts(to_p + ggplot2::labs(title = " "), width / 2, height - top)
 
-  panel <- function(parts, offset = 0) {
+  # Each view is placed at (x, y) on the full plot, in pt
+  panel <- function(parts, x = 0, y = 0) {
     list(
       chrome = parts$chrome,
       grill = parts$grills[[1]],
       panel = parts$panels[[1]],
       width = parts$width,
-      offset = offset
+      height = parts$height,
+      x = x,
+      y = y
     )
   }
+  # The unit of the lags, such as "quarter"
+  interval <- tsibble::interval(data)
+  unit <- Filter(function(f) vctrs::field(interval, f) != 0, vctrs::fields(interval))[1]
+
   acf <- to$layers[[1]]
   scene_data <- list(
     width = from$width,
     height = from$height,
     from = panel(from),
-    lag = panel(lag),
-    bars = panel(bars, from$width / 2),
+    time = panel(time),
+    lag = panel(lag, 0, top * 72),
+    bars = panel(bars, from$width / 2, top * 72),
     to = panel(to),
     series = list(
       x = obs$x,
       y = obs$y,
+      label = y_label,
       colour = obs$colour[1],
       stroke_width = obs$stroke_width[1]
     ),
     acf = list(
       lag = acf$x,
       value = acf$y,
+      unit = unit,
       colour = acf$colour[1],
       stroke_width = acf$stroke_width[1]
     ),
@@ -102,7 +117,7 @@ acf_morph <- function(
     id, "acf", scene_data,
     n_steps = 7,
     durations = c(
-      1100, 1400, 1100,
+      1400, 1400, 1100,
       max(1100, lag_duration * (pause_lag - 1)),
       max(1100, lag_duration * (n_lags - pause_lag)),
       1400
