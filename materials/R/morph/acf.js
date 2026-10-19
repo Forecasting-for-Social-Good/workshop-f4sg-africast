@@ -13,10 +13,13 @@
 //   2. Each observation and the one before it become a point of a lag plot.
 //   3. The autocorrelation of the lag plot is drawn as a line through it, and
 //      added as the first bar.
-//   4. The lagged copy shifts one period at a time up to the seasonal lag
+//   4. The lagged copy shifts by another period to lag 2, showing its lag plot
+//      and adding its bar.
+//   5. The same for lag 3.
+//   6. The lagged copy shifts one period at a time up to the seasonal lag
 //      (data.pause_lag), showing the lag plot and adding the bar of each lag.
-//   5. The remaining lags are shown in the same way.
-//   6. The time plot and lag plot are removed and the ACF plot is widened,
+//   7. The remaining lags are shown in the same way.
+//   8. The time plot and lag plot are removed and the ACF plot is widened,
 //      with its significance bounds, giving the autoplot(ACF()) output.
 PlotMorph.register("acf", function (svg, data, h) {
   const { el, lerp, ease, phase, lerpBox, lerpColour } = h;
@@ -180,10 +183,11 @@ PlotMorph.register("acf", function (svg, data, h) {
     const copy = ease(phase(p, 0.4, 1));
     const scatter = ease(phase(p, 1, 2));
     const first = ease(phase(p, 2, 3));
-    // Lags up to the pause, then the rest
-    const cycle = phase(p, 3, 4) * (pause - 1) + phase(p, 4, 5) * (nLags - pause);
-    const drop = phase(p, 5, 5.3);
-    const widen = ease(phase(p, 5.3, 6));
+    // Lags 2 and 3, the lags up to the pause, then the rest
+    const cycle =
+      phase(p, 3, 4) + phase(p, 4, 5) + phase(p, 5, 6) * (pause - 3) + phase(p, 6, 7) * (nLags - pause);
+    const drop = phase(p, 7, 7.3);
+    const widen = ease(phase(p, 7.3, 8));
 
     // Axes and panels
     // The ACF plot's axes are hidden while it widens, but not its panel
@@ -193,8 +197,8 @@ PlotMorph.register("acf", function (svg, data, h) {
       1 - phase(p, 0, 0.15),
       strip * (1 - drop),
       appear * (1 - drop),
-      appear * (1 - phase(p, 5.3, 5.45)),
-      phase(p, 5.8, 6),
+      appear * (1 - phase(p, 7.3, 7.45)),
+      phase(p, 7.8, 8),
     ];
     chrome.forEach((node, i) => show(node, opacity[i]));
 
@@ -304,11 +308,11 @@ PlotMorph.register("acf", function (svg, data, h) {
     barLines.forEach((line, j) => {
       const k = j + 1;
       const grow =
-        k === 1 ? first : k < state.lag + 1 || p >= 5 ? 1 : k === state.lag + 1 ? state.grow : 0;
+        k === 1 ? first : k < state.lag + 1 || p >= 7 ? 1 : k === state.lag + 1 ? state.grow : 0;
       const x = sAcf.x(acf.lag[j]);
       // Drawn from the value to zero, as geom_segment() does in autoplot()
       setLine(line, x, sAcf.y(acf.value[j] * grow), x, y0);
-      const highlight = k === current ? 1 - ease(phase(p, 5, 5.5)) : 0;
+      const highlight = k === current ? 1 - ease(phase(p, 7, 7.5)) : 0;
       line.setAttribute("stroke", lerpColour(acf.colour, data.lag_colour, highlight));
       show(line, grow > 0 ? 1 : 0);
     });
@@ -316,7 +320,7 @@ PlotMorph.register("acf", function (svg, data, h) {
     ciLines.forEach((line, j) => {
       const y = sAcf.y(data.ci.y[j]);
       setLine(line, acfBox.x, y, acfBox.x + acfBox.w, y);
-      show(line, phase(p, 5.5, 6));
+      show(line, phase(p, 7.5, 8));
     });
   };
 });

@@ -5,7 +5,7 @@
 #' top, where the series is paired with a lagged copy of itself. The pairs
 #' become a lag plot below it, beside a growing ACF plot, and the
 #' autocorrelation at each lag is added as the lagged copy shifts along and
-#' its lag plot is shown. The lags pause at the seasonal lag. The time plot
+#' its lag plot is shown. The lags pause at lags 2 and 3 and at the seasonal lag. The time plot
 #' and lag plot are then removed, leaving the ACF plot.
 #' The steps between them are described by `.morph-step` divs in the document.
 #'
@@ -120,13 +120,13 @@ acf_morph <- function(
   )
 
   n_lags <- nrow(acf)
-  stopifnot(pause_lag > 1, pause_lag < n_lags)
+  stopifnot(pause_lag > 3, pause_lag < n_lags)
   morph_widget(
     id, "acf", scene_data,
-    n_steps = 7,
+    n_steps = 9,
     durations = c(
-      1400, 1400, 1100,
-      max(1100, lag_duration * (pause_lag - 1)),
+      1400, 1400, 1100, 1100, 1100,
+      max(1100, lag_duration * (pause_lag - 3)),
       max(1100, lag_duration * (n_lags - pause_lag)),
       1400
     ),

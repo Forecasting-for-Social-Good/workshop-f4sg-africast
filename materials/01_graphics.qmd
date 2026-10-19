@@ -536,7 +536,15 @@ The autocorrelation $r_1$ measures the linear relationship in this lag plot (ora
 :::
 
 ::: {.morph-step .fragment .fade-in-then-out}
-Shift the copy further for lags 2, 3 and 4. At lag 4, each quarter is paired with the same quarter a year earlier, so the seasonal peaks and troughs line up: $r_4$ is large and positive.
+Shift the copy by another quarter. At lag 2, each quarter is paired with the quarter half a year earlier, so the seasonality is out of phase: peaks are paired with troughs, and $r_2$ is strongly negative.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Shift the copy by another quarter. At lag 3, each quarter is paired with the following quarter of the previous year. Like lag 1, these are neighbouring quarters, so $r_3$ is close to zero.
+:::
+
+::: {.morph-step .fragment .fade-in-then-out}
+Shift the copy to lag 4. Now each quarter is paired with the same quarter a year earlier, so the seasonal peaks and troughs line up: $r_4$ is large and positive.
 :::
 
 ::: {.morph-step .fragment .fade-in-then-out}
