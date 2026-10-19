@@ -28,7 +28,7 @@ source("setup.R")
 # gg_lag(), and autoplot() for tsibbles/ACF); feasts is reserved for
 # decomposition and feature extraction.
 library(ggtime)
-for (f in c("common/morph.R", "horizon.R", "season.R", "subseries.R", "acf.R")) {
+for (f in c("common/morph.R", "season.R", "subseries.R", "acf.R")) {
   source(file.path("R", "morph", f))
 }
 ```
@@ -159,54 +159,6 @@ PBS |> filter(ATC2 == "A10") |>
   labs(x = "Year", y = "$ million", title = "Antidiabetic drug sales")
 ```
 
-
-## Horizon plots
-
-::::: {.morph-slide}
-
-```{r}
-#| label: horizon-morph
-#| echo: false
-#| output: asis
-#| cache: false
-# setup.R drops Growth from global_economy, so use the original data
-growth <- tsibbledata::global_economy |>
-  filter(Code %in% c("AUS", "CAN", "FRA", "JPN", "GBR", "USA"), !is.na(Growth)) |>
-  select(Country, Year, Growth)
-horizon_morph(
-  growth, Growth,
-  focus = "United Kingdom",
-  origin = 0,
-  horizonscale = c(-7.5, -5, -2.5, 2.5, 5, 7.5),
-  alt = "Animation transforming a time plot of annual GDP growth in the United Kingdom into a horizon plot, alongside horizon plots of GDP growth in five other countries."
-)
-```
-
-:::: {.morph-captions}
-
-::: {.morph-step}
-Time plot of UK annual GDP growth.
-:::
-
-::: {.morph-step .fragment .fade-in-then-out}
-Fill the area between the series and 0%, in bands 2.5 percentage points wide: blue above, red below, darker further away.
-:::
-
-::: {.morph-step .fragment .fade-in-then-out}
-Mirror the negative bands above the origin. Red now means negative growth.
-:::
-
-::: {.morph-step .fragment .fade-in-then-out}
-Collapse the bands onto the origin, darker over lighter. The plot is one band tall.
-:::
-
-::: {.morph-step .fragment .fade-in-then-out}
-So little vertical space that many series can be stacked and compared.
-:::
-
-::::
-
-:::::
 
 # Seasonal plots
 
