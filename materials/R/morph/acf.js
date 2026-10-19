@@ -11,7 +11,8 @@
 //   1. The time plot shrinks to the top, and a copy of the series lagged by
 //      one period is added.
 //   2. Each observation and the one before it become a point of a lag plot.
-//   3. The autocorrelation of the lag plot is added as the first bar.
+//   3. The autocorrelation of the lag plot is drawn as a line through it, and
+//      added as the first bar.
 //   4. The lagged copy shifts one period at a time up to the seasonal lag
 //      (data.pause_lag), showing the lag plot and adding the bar of each lag.
 //   5. The remaining lags are shown in the same way.
@@ -65,6 +66,15 @@ PlotMorph.register("acf", function (svg, data, h) {
     { ...lineStyle, "stroke-width": series.stroke_width, stroke: data.lag_colour },
     content
   );
+  // The autocorrelation as a line in the lag plot: through the mean on both
+  // axes with slope r, as both axes share the same scale
+  const lagClip = el("rect", {}, el("clipPath", { id: `${uid}-lag` }, defs));
+  const fit = el(
+    "line",
+    { "stroke-width": 1.5 * series.stroke_width, stroke: data.lag_colour, "stroke-linecap": "butt" },
+    el("g", { "clip-path": `url(#${uid}-lag)` }, svg)
+  );
+  const mean = series.y.reduce((a, b) => a + b, 0) / n;
   // The points move between the time plot and the lag plot, so are not clipped
   const lagPoints = series.y.map(() => el("circle", { r: 1.8, fill: data.lag_colour }, svg));
   const points = series.y.map(() => el("circle", { r: 1.8, fill: series.colour }, svg));
@@ -272,6 +282,13 @@ PlotMorph.register("acf", function (svg, data, h) {
     label.textContent =
       `lag ${shown}` + (p >= 2.5 || shown > 1 ? `, r = ${r.toFixed(2).replace("-", "−")}` : "");
     show(label, phase(p, 1.6, 2) * (1 - drop));
+
+    // The line turns to the next lag's autocorrelation as the points move
+    const slope = lerp(acf.value[state.lag - 1], acf.value[Math.min(state.lag, nLags - 1)], state.move);
+    const xr = data.lag.panel.xrange;
+    setBox(lagClip, lagBox);
+    setLine(fit, sLag.x(xr[0]), sLag.y(mean + slope * (xr[0] - mean)), sLag.x(xr[1]), sLag.y(mean + slope * (xr[1] - mean)));
+    show(fit, phase(p, 2, 2.5) * (1 - drop));
 
     // The ACF plot, with a bar for each lag shown
     const sAcf = scaler(

@@ -532,7 +532,7 @@ Each pair is a point in the lag plot: $y_t$ against $y_{t-1}$. The first observa
 :::
 
 ::: {.morph-step .fragment .fade-in-then-out}
-The autocorrelation $r_1$ measures the linear relationship in this lag plot. It is small and negative: the first ACF bar.
+The autocorrelation $r_1$ measures the linear relationship in this lag plot (orange line). It is small and negative: the first ACF bar.
 :::
 
 ::: {.morph-step .fragment .fade-in-then-out}
