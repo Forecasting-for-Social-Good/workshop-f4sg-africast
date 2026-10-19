@@ -365,8 +365,8 @@
     },
     "S7": {
       "Package": "S7",
-      "Version": "0.2.2",
-      "Source": "Repository",
+      "Version": "0.2.2.9000",
+      "Source": "GitHub",
       "Title": "An Object Oriented System Meant to Become a Successor to S3 and S4",
       "Authors@R": "c( person(\"Object-Oriented Programming Working Group\", role = \"cph\"), person(\"Davis\", \"Vaughan\", role = \"aut\"), person(\"Jim\", \"Hester\", role = \"aut\", comment = c(ORCID = \"0000-0002-2739-7082\")), person(\"Tomasz\", \"Kalinowski\", role = \"aut\"), person(\"Will\", \"Landau\", role = \"aut\"), person(\"Michael\", \"Lawrence\", role = \"aut\"), person(\"Martin\", \"Maechler\", role = \"aut\", comment = c(ORCID = \"0000-0002-8685-9910\")), person(\"Luke\", \"Tierney\", role = \"aut\"), person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0003-4757-117X\")) )",
       "Description": "A new object oriented programming system designed to be a successor to S3 and S4. It includes formal class, generic, and method specification, and a limited form of multiple dispatch. It has been designed and implemented collaboratively by the R Consortium Object-Oriented Programming Working Group, which includes representatives from R-Core, 'Bioconductor', 'Posit'/'tidyverse', and the wider R community.",
@@ -374,9 +374,10 @@
       "URL": "https://rconsortium.github.io/S7/, https://github.com/RConsortium/S7",
       "BugReports": "https://github.com/RConsortium/S7/issues",
       "Depends": [
-        "R (>= 3.5.0)"
+        "R (>= 4.2.0)"
       ],
       "Imports": [
+        "methods",
         "utils"
       ],
       "Suggests": [
@@ -384,10 +385,11 @@
         "callr",
         "covr",
         "knitr",
-        "methods",
+        "lifecycle",
         "rmarkdown",
-        "testthat (>= 3.2.0)",
-        "tibble"
+        "testthat (>= 3.3.0)",
+        "tibble",
+        "withr"
       ],
       "VignetteBuilder": "knitr",
       "Config/build/compilation-database": "true",
@@ -396,11 +398,16 @@
       "Config/testthat/parallel": "TRUE",
       "Config/testthat/start-first": "external-generic",
       "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.3",
-      "NeedsCompilation": "yes",
+      "Roxygen": "list(markdown = TRUE)",
+      "Config/roxygen2/version": "8.1.1",
       "Author": "Object-Oriented Programming Working Group [cph], Davis Vaughan [aut], Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>), Tomasz Kalinowski [aut], Will Landau [aut], Michael Lawrence [aut], Martin Maechler [aut] (ORCID: <https://orcid.org/0000-0002-8685-9910>), Luke Tierney [aut], Hadley Wickham [aut, cre] (ORCID: <https://orcid.org/0000-0003-4757-117X>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "P3M"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "RConsortium",
+      "RemoteRepo": "S7",
+      "RemoteRef": "a84a3542074c1be05f6aee4abdc42e2e874f2f65",
+      "RemoteSha": "a84a3542074c1be05f6aee4abdc42e2e874f2f65"
     },
     "anytime": {
       "Package": "anytime",
@@ -1771,8 +1778,8 @@
     },
     "fabletools": {
       "Package": "fabletools",
-      "Version": "0.8.0",
-      "Source": "Repository",
+      "Version": "0.8.0.9000",
+      "Source": "Local",
       "Title": "Core Tools for Packages in the 'fable' Framework",
       "Authors@R": "c(person(given = \"Mitchell\", family = \"O'Hara-Wild\", role = c(\"aut\", \"cre\"), email = \"mail@mitchelloharawild.com\", comment = c(ORCID = \"0000-0001-6729-7695\")), person(given = \"Rob\", family = \"Hyndman\", role = \"aut\"), person(given = \"Earo\", family = \"Wang\", role = \"aut\", comment = c(ORCID = \"0000-0001-6448-5260\")), person(given = \"Di\", family = \"Cook\", role = \"ctb\"), person(given = \"George\", family = \"Athanasopoulos\", role = \"ctb\"), person(given = \"David\", family = \"Holt\", role = \"ctb\"))",
       "Description": "Provides tools, helpers and data structures for developing models and time series functions for 'fable' and extension packages. These tools support a consistent and tidy interface for time series modelling and analysis.",
@@ -1795,7 +1802,7 @@
         "R6",
         "utils",
         "vctrs (>= 0.2.2)",
-        "distributional (>= 0.3.1)",
+        "distributional (>= 0.6.0)",
         "progressr",
         "lifecycle",
         "ggdist",
@@ -1816,6 +1823,7 @@
         "testthat",
         "tsibbledata (>= 0.2.0)",
         "lubridate",
+        "mixtime",
         "urca",
         "mvtnorm",
         "Matrix",
@@ -1826,11 +1834,12 @@
       "ByteCompile": "true",
       "Encoding": "UTF-8",
       "Language": "en-GB",
+      "Roxygen": "list(markdown = TRUE, roclets=c('rd', 'collate', 'namespace'))",
       "Config/roxygen2/version": "8.0.0",
-      "NeedsCompilation": "no",
       "Author": "Mitchell O'Hara-Wild [aut, cre] (ORCID: <https://orcid.org/0000-0001-6729-7695>), Rob Hyndman [aut], Earo Wang [aut] (ORCID: <https://orcid.org/0000-0001-6448-5260>), Di Cook [ctb], George Athanasopoulos [ctb], David Holt [ctb]",
       "Maintainer": "Mitchell O'Hara-Wild <mail@mitchelloharawild.com>",
-      "Repository": "P3M"
+      "RemoteType": "local",
+      "RemoteUrl": "/home/mitchell/github/fabletools"
     },
     "farver": {
       "Package": "farver",
@@ -2663,8 +2672,8 @@
     },
     "ggtime": {
       "Package": "ggtime",
-      "Version": "1.0.0",
-      "Source": "Repository",
+      "Version": "1.1.0.9000",
+      "Source": "Local",
       "Title": "Grammar of Graphics and Plot Helpers for Time Series Visualization",
       "Authors@R": "c( person( given = \"Mitchell\", family = \"O'Hara-Wild\", role = c(\"aut\", \"cre\"), email = \"mail@mitchelloharawild.com\", comment = c(ORCID = \"0000-0001-6729-7695\") ), person( given = \"Cynthia A.\",  family = \"Huang\", role = c(\"aut\"),  comment = c(ORCID = \"0000-0002-9218-987X\") ), person( given = \"Matthew\",  family = \"Kay\", role = c(\"aut\"),  comment = c(ORCID = \"0000-0001-9446-0419\") ), person( given = \"Rob\", family = \"Hyndman\", role = c(\"aut\"), comment = c(ORCID = \"0000-0002-2140-5352\") ), person( given = \"Earo\", family = \"Wang\", role = c(\"ctb\"), comment = c(ORCID = \"0000-0001-6448-5260\") ) )",
       "Description": "Extends the capabilities of 'ggplot2' by providing grammatical elements and plot helpers designed for visualizing temporal patterns. The  package implements a grammar of temporal graphics, which leverages calendar structures to highlight changes over time. The package also provides plot  helper functions to quickly produce commonly used time series graphics, including time plots, season plots, and seasonal sub-series plots.",
@@ -2680,18 +2689,19 @@
         "tsibble",
         "fabletools",
         "dplyr",
-        "lubridate (>= 1.7.1)",
         "tidyr",
         "vctrs",
         "cli",
         "vecvec",
-        "mixtime (>= 0.3.0)",
+        "mixtime (>= 0.3.0.9000)",
         "S7",
         "utils"
       ],
       "Suggests": [
         "testthat (>= 3.0.0)",
+        "tibble",
         "tsibbledata",
+        "lubridate",
         "feasts",
         "fable",
         "ggrepel",
@@ -2706,12 +2716,13 @@
       ],
       "Config/testthat/edition": "3",
       "Encoding": "UTF-8",
+      "Roxygen": "list(markdown = TRUE)",
       "BugReports": "https://github.com/mitchelloharawild/ggtime/issues",
       "Config/roxygen2/version": "8.0.0",
-      "NeedsCompilation": "no",
       "Author": "Mitchell O'Hara-Wild [aut, cre] (ORCID: <https://orcid.org/0000-0001-6729-7695>), Cynthia A. Huang [aut] (ORCID: <https://orcid.org/0000-0002-9218-987X>), Matthew Kay [aut] (ORCID: <https://orcid.org/0000-0001-9446-0419>), Rob Hyndman [aut] (ORCID: <https://orcid.org/0000-0002-2140-5352>), Earo Wang [ctb] (ORCID: <https://orcid.org/0000-0001-6448-5260>)",
       "Maintainer": "Mitchell O'Hara-Wild <mail@mitchelloharawild.com>",
-      "Repository": "P3M"
+      "RemoteType": "local",
+      "RemoteUrl": "~/github/ggtime"
     },
     "gh": {
       "Package": "gh",
@@ -3700,6 +3711,54 @@
       "Author": "Vitalie Spinu [aut, cre], Garrett Grolemund [aut], Hadley Wickham [aut], Davis Vaughan [ctb], Ian Lyttle [ctb], Imanuel Costigan [ctb], Jason Law [ctb], Doug Mitarotonda [ctb], Joseph Larmarange [ctb], Jonathan Boiser [ctb], Chel Hee Lee [ctb]",
       "Repository": "RSPM"
     },
+    "magick": {
+      "Package": "magick",
+      "Version": "2.9.1",
+      "Source": "Repository",
+      "Type": "Package",
+      "Title": "Advanced Graphics and Image-Processing in R",
+      "Authors@R": "person(\"Jeroen\", \"Ooms\", role = c(\"aut\", \"cre\"), email = \"jeroenooms@gmail.com\", comment = c(ORCID = \"0000-0002-4035-0289\"))",
+      "Description": "Bindings to 'ImageMagick': the most comprehensive open-source image processing library available. Supports many common formats (png, jpeg, tiff, pdf, etc) and manipulations (rotate, scale, crop, trim, flip, blur, etc). All operations are vectorized via the Magick++ STL meaning they operate either on a single frame or a series of frames for working with layers, collages, or animation. In RStudio images are automatically previewed when printed to the console, resulting in an interactive editing environment. Also includes a graphics device for creating drawing onto images using pixel coordinates.",
+      "License": "MIT + file LICENSE",
+      "URL": "https://docs.ropensci.org/magick/ https://ropensci.r-universe.dev/magick",
+      "BugReports": "https://github.com/ropensci/magick/issues",
+      "SystemRequirements": "ImageMagick++: ImageMagick-c++-devel (rpm) or libmagick++-dev (deb)",
+      "VignetteBuilder": "knitr",
+      "Depends": [
+        "R (>= 4.1.0)"
+      ],
+      "Imports": [
+        "Rcpp (>= 0.12.12)",
+        "magrittr",
+        "curl"
+      ],
+      "LinkingTo": [
+        "Rcpp"
+      ],
+      "Suggests": [
+        "av",
+        "spelling",
+        "jsonlite",
+        "methods",
+        "knitr",
+        "rmarkdown",
+        "rsvg",
+        "webp",
+        "pdftools",
+        "ggplot2",
+        "gapminder",
+        "IRdisplay",
+        "tesseract",
+        "gifski"
+      ],
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.3.3",
+      "Language": "en-US",
+      "NeedsCompilation": "yes",
+      "Author": "Jeroen Ooms [aut, cre] (ORCID: <https://orcid.org/0000-0002-4035-0289>)",
+      "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
+      "Repository": "P3M"
+    },
     "magrittr": {
       "Package": "magrittr",
       "Version": "2.0.5",
@@ -3784,16 +3843,17 @@
     },
     "mixtime": {
       "Package": "mixtime",
-      "Version": "0.3.0",
-      "Source": "Repository",
+      "Version": "0.4.0.9000",
+      "Source": "Local",
       "Title": "Mixed Temporal Vectors and Operations",
-      "Authors@R": "c(person(given = \"Mitchell\", family = \"O'Hara-Wild\", email = \"mail@mitchelloharawild.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0001-6729-7695\")))",
+      "Authors@R": "c(person(given = \"Mitchell\", family = \"O'Hara-Wild\", email = \"mail@mitchelloharawild.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0001-6729-7695\")), person(given = \"Cynthia\", family = \"Huang\", role = \"ctb\", comment = c(ORCID = \"0000-0002-9218-987X\")), person(given = \"Rob\", family = \"Hyndman\", role = \"ctb\", comment = c(ORCID = \"0000-0002-2140-5352\")))",
       "Description": "Flexible time classes for time series analysis and forecasting with mixed temporal granularities. Supports linear and cyclical time  representations in discrete and continuous forms, with timezone support,  across multiple calendar systems including Gregorian and ISO week date  calendars. Time points are stored numerically relative to a chronon; an  atomic time granule defined by time units of a calendar. Calendrical  arithmetic enables conversion between time granules (e.g. days to months)  and calendar systems. Multi-unit arithmetic allows for temporal analysis with other granules of common calendars (e.g. fortnights are 2-week units). Time vectors of different granularities (e.g. monthly and quarterly) can be combined in a single vector, making 'mixtime' ideal for data that changes observation frequency over time or requires temporal reconciliation across  scales. The package is extensible, allowing users to define custom calendars  that build upon civil and astronomical time systems.",
       "License": "MIT + file LICENSE",
       "URL": "https://pkg.mitchelloharawild.com/mixtime/, https://github.com/mitchelloharawild/mixtime",
       "BugReports": "https://github.com/mitchelloharawild/mixtime/issues",
       "Encoding": "UTF-8",
       "Language": "en-GB",
+      "Roxygen": "list(markdown = TRUE)",
       "Depends": [
         "R (>= 3.0.2)"
       ],
@@ -3802,7 +3862,7 @@
         "vctrs",
         "rlang",
         "cli",
-        "S7",
+        "S7 (>= 0.2.2.9000)",
         "vecvec (>= 1.2.0)",
         "tzdb",
         "methods"
@@ -3824,10 +3884,10 @@
       "RdMacros": "lifecycle",
       "VignetteBuilder": "knitr",
       "Config/roxygen2/version": "8.0.0",
-      "NeedsCompilation": "yes",
-      "Author": "Mitchell O'Hara-Wild [aut, cre] (ORCID: <https://orcid.org/0000-0001-6729-7695>)",
+      "Author": "Mitchell O'Hara-Wild [aut, cre] (ORCID: <https://orcid.org/0000-0001-6729-7695>), Cynthia Huang [ctb] (ORCID: <https://orcid.org/0000-0002-9218-987X>), Rob Hyndman [ctb] (ORCID: <https://orcid.org/0000-0002-2140-5352>)",
       "Maintainer": "Mitchell O'Hara-Wild <mail@mitchelloharawild.com>",
-      "Repository": "P3M"
+      "RemoteType": "local",
+      "RemoteUrl": "~/github/mixtime"
     },
     "modelr": {
       "Package": "modelr",
@@ -5303,6 +5363,54 @@
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "RSPM"
     },
+    "svglite": {
+      "Package": "svglite",
+      "Version": "2.2.2",
+      "Source": "Repository",
+      "Title": "An 'SVG' Graphics Device",
+      "Authors@R": "c( person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\"), person(\"Lionel\", \"Henry\", , \"lionel@posit.co\", role = \"aut\"), person(\"Thomas Lin\", \"Pedersen\", , \"thomas.pedersen@posit.co\", role = c(\"cre\", \"aut\"), comment = c(ORCID = \"0000-0002-5147-4711\")), person(\"T Jake\", \"Luciani\", , \"jake@apache.org\", role = \"aut\"), person(\"Matthieu\", \"Decorde\", , \"matthieu.decorde@ens-lyon.fr\", role = \"aut\"), person(\"Vaudor\", \"Lise\", , \"lise.vaudor@ens-lyon.fr\", role = \"aut\"), person(\"Tony\", \"Plate\", role = \"ctb\", comment = \"Early line dashing code\"), person(\"David\", \"Gohel\", role = \"ctb\", comment = \"Line dashing code and early raster code\"), person(\"Yixuan\", \"Qiu\", role = \"ctb\", comment = \"Improved styles; polypath implementation\"), person(\"Håkon\", \"Malmedal\", role = \"ctb\", comment = \"Opacity code\"), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"), comment = c(ROR = \"03wc8by49\")) )",
+      "Description": "A graphics device for R that produces 'Scalable Vector Graphics'. 'svglite' is a fork of the older 'RSvgDevice' package.",
+      "License": "GPL (>= 2)",
+      "URL": "https://svglite.r-lib.org, https://github.com/r-lib/svglite",
+      "BugReports": "https://github.com/r-lib/svglite/issues",
+      "Depends": [
+        "R (>= 4.1)"
+      ],
+      "Imports": [
+        "base64enc",
+        "cli",
+        "lifecycle",
+        "rlang (>= 1.1.0)",
+        "systemfonts (>= 1.3.0)",
+        "textshaping (>= 0.3.0)"
+      ],
+      "Suggests": [
+        "covr",
+        "fontquiver (>= 0.2.0)",
+        "htmltools",
+        "knitr",
+        "rmarkdown",
+        "testthat (>= 3.0.0)",
+        "xml2 (>= 1.0.0)"
+      ],
+      "LinkingTo": [
+        "cpp11",
+        "systemfonts",
+        "textshaping"
+      ],
+      "VignetteBuilder": "knitr",
+      "Config/build/compilation-database": "true",
+      "Config/Needs/website": "tidyverse/tidytemplate",
+      "Config/testthat/edition": "3",
+      "Config/usethis/last-upkeep": "2025-04-25",
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.3.2",
+      "SystemRequirements": "libpng",
+      "NeedsCompilation": "yes",
+      "Author": "Hadley Wickham [aut], Lionel Henry [aut], Thomas Lin Pedersen [cre, aut] (ORCID: <https://orcid.org/0000-0002-5147-4711>), T Jake Luciani [aut], Matthieu Decorde [aut], Vaudor Lise [aut], Tony Plate [ctb] (Early line dashing code), David Gohel [ctb] (Line dashing code and early raster code), Yixuan Qiu [ctb] (Improved styles; polypath implementation), Håkon Malmedal [ctb] (Opacity code), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
+      "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
+      "Repository": "RSPM"
+    },
     "sys": {
       "Package": "sys",
       "Version": "3.4.3",
@@ -5757,8 +5865,8 @@
     },
     "tsibble": {
       "Package": "tsibble",
-      "Version": "1.2.0",
-      "Source": "Repository",
+      "Version": "1.2.0.9000",
+      "Source": "Local",
       "Type": "Package",
       "Title": "Tidy Temporal Data Frames and Tools",
       "Authors@R": "c(person(given = \"Earo\", family = \"Wang\", role = c(\"aut\"), comment = c(ORCID = \"0000-0001-6448-5260\")), person(given = \"Di\", family = \"Cook\", role = c(\"aut\", \"ths\"), comment = c(ORCID = \"0000-0002-3813-7155\")), person(given = \"Rob\", family = \"Hyndman\", role = c(\"aut\", \"ths\"), comment = c(ORCID = \"0000-0002-2140-5352\")), person(given = \"Mitchell\", family = \"O'Hara-Wild\", role = c(\"aut\", \"cre\"), email = \"mail@mitchelloharawild.com\", comment = c(ORCID = \"0000-0001-6729-7695\")), person(given = \"Tyler\", family = \"Smith\", role = \"ctb\"), person(given = \"Wil\", family = \"Davis\", role = \"ctb\", email = \"william.davis@worthingtonindustries.com\"))",
@@ -5771,11 +5879,13 @@
       ],
       "Imports": [
         "anytime (>= 0.3.1)",
+        "cli",
         "dplyr (>= 1.1.0)",
         "generics",
         "lifecycle",
         "lubridate (>= 1.7.0)",
         "methods",
+        "mixtime",
         "rlang (>= 1.0.0)",
         "tibble (>= 3.0.0)",
         "tidyselect (>= 1.0.0)",
@@ -5783,6 +5893,7 @@
       ],
       "Suggests": [
         "ggplot2 (>= 3.3.0)",
+        "graphvec",
         "hms",
         "knitr",
         "nanotime",
@@ -5800,11 +5911,12 @@
       "Encoding": "UTF-8",
       "Language": "en-GB",
       "LazyData": "true",
-      "RoxygenNote": "7.3.3",
-      "NeedsCompilation": "no",
+      "Roxygen": "list(markdown = TRUE)",
+      "Config/roxygen2/version": "8.0.0",
       "Author": "Earo Wang [aut] (ORCID: <https://orcid.org/0000-0001-6448-5260>), Di Cook [aut, ths] (ORCID: <https://orcid.org/0000-0002-3813-7155>), Rob Hyndman [aut, ths] (ORCID: <https://orcid.org/0000-0002-2140-5352>), Mitchell O'Hara-Wild [aut, cre] (ORCID: <https://orcid.org/0000-0001-6729-7695>), Tyler Smith [ctb], Wil Davis [ctb]",
       "Maintainer": "Mitchell O'Hara-Wild <mail@mitchelloharawild.com>",
-      "Repository": "P3M"
+      "RemoteType": "local",
+      "RemoteUrl": "/home/mitchell/github/tsibble"
     },
     "tsibbledata": {
       "Package": "tsibbledata",
@@ -6152,10 +6264,10 @@
       ],
       "Config/testthat/edition": "3",
       "Encoding": "UTF-8",
+      "Roxygen": "list(markdown = TRUE)",
       "URL": "https://pkg.mitchelloharawild.com/vecvec/, https://github.com/mitchelloharawild/vecvec",
       "BugReports": "https://github.com/mitchelloharawild/vecvec/issues",
       "Config/roxygen2/version": "8.0.0",
-      "NeedsCompilation": "yes",
       "Author": "Mitchell O'Hara-Wild [aut, cre] (ORCID: <https://orcid.org/0000-0001-6729-7695>)",
       "Maintainer": "Mitchell O'Hara-Wild <mail@mitchelloharawild.com>",
       "RemoteType": "github",
