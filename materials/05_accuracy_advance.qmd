@@ -14,6 +14,33 @@ antidiabetic_drug_sale <- PBS |>
   filter(ATC2 == "A10") |>
   summarise(Cost = sum(Cost) / 1e6) |>
   filter(year(Month) >= 2000)
+
+# Animate the windows of a rolled tsibble of `n` time points, adding one window
+# (row) per frame and holding the last frame for `pause` frames. Points in each
+# window are blue, the rest are grey.
+roll_anim <- function(windows, n = 20, pause = 4) {
+  windows <- as_tibble(windows)
+  ids <- unique(windows$.id)
+  frames <- seq_len(length(ids) + pause)
+  # Each frame shows every window up to that frame
+  shown <- function(data) {
+    tidyr::expand_grid(frame = frames, data) |>
+      filter(.id <= frame)
+  }
+  all_points <- shown(tidyr::expand_grid(.id = ids, t = seq_len(n)))
+  p <- ggplot(mapping = aes(x = t, y = .id)) +
+    geom_point(data = all_points, colour = "grey80", size = 3) +
+    geom_point(data = shown(windows), colour = "#0072B2", size = 3) +
+    scale_y_reverse(breaks = ids, limits = rev(range(ids))) +
+    labs(x = "Time", y = "Window (.id)") +
+    theme(
+      panel.grid.minor = element_blank(),
+      # MP4 has no transparency, so match the slide's background gradient
+      plot.background = element_rect(fill = "#F8FAF2", colour = NA)
+    ) +
+    gganimate::transition_manual(frame)
+  anim_video(p, nframes = length(frames), fps = 2)
+}
 ```
 
 
@@ -67,20 +94,71 @@ text(28,.95,"time")
 * Also known as "evaluation on a rolling forecasting origin"
 :::
 
-## Creating the rolling training sets 
+## Creating the rolling training sets
 
-There are three main rolling types which can be used.
+Three functions roll a tsibble into windows, numbered by a new `.id` column.
 
-* Stretch: extends a growing length window with new data.
-* Slide: shifts a fixed length window through the data.
-* Tile: moves a fixed length window without overlap.
-
-Three functions to roll a tsibble: `stretch_tsibble()`, `slide_tsibble()`,
-and `tile_tsibble()`.
+* `stretch_tsibble()`: extends a growing window with new data.
+* `slide_tsibble()`: shifts a fixed length window through the data.
+* `tile_tsibble()`: moves a fixed length window without overlap.
 
 For time series cross-validation, stretching windows are most commonly used.
 
-## Stretching windows {.code-small}
+## Stretch: `stretch_tsibble()` {.code-small}
+
+```{r}
+#| label: roll-stretch
+x <- tsibble(t = 1:20, index = t)
+stretch <- x |> stretch_tsibble(.init = 6, .step = 2)
+```
+
+```{r}
+#| label: roll-stretch-anim
+#| dependson: roll-stretch
+#| echo: false
+#| fig-height: 3
+roll_anim(stretch)
+```
+
+Starts with `.init` observations and grows by `.step` each window.
+
+## Slide: `slide_tsibble()` {.code-small}
+
+```{r}
+#| label: roll-slide
+#| dependson: roll-stretch
+slide <- x |> slide_tsibble(.size = 8, .step = 2)
+```
+
+```{r}
+#| label: roll-slide-anim
+#| dependson: roll-slide
+#| echo: false
+#| fig-height: 3
+roll_anim(slide)
+```
+
+Keeps `.size` observations and shifts by `.step` each window.
+
+## Tile: `tile_tsibble()` {.code-small}
+
+```{r}
+#| label: roll-tile
+#| dependson: roll-stretch
+tile <- x |> tile_tsibble(.size = 5)
+```
+
+```{r}
+#| label: roll-tile-anim
+#| dependson: roll-tile
+#| echo: false
+#| fig-height: 3
+roll_anim(tile)
+```
+
+Splits the data into non-overlapping windows of `.size` observations.
+
+## Rolling origins for drug sales {.code-small}
 
 Monthly antidiabetic drug sales in Australia (\$ millions), from 2000.
 Stretch with a minimum length of 24, growing by 1 each step.
