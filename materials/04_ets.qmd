@@ -244,7 +244,9 @@ global_economy |>
 :::
 ::::
 
-::: {.poll #nigeria-best-ets prompt="Which ETS model is best for Nigeria's population?"}
+::: {.poll #nigeria-best-ets}
+Which ETS model is best for Nigeria's population?
+
 - [ ] ETS(A,N,N)
 - [x] ETS(A,A,N)
 - [ ] ETS(A,Ad,N)
@@ -321,7 +323,9 @@ holidays |>
   labs(y = "Thousands", title = "Snowy Mountains holiday trips")
 ```
 
-::: {.poll #snowy-ets-pattern prompt="Based on the time plot, which ETS model suits Snowy Mountains holiday trips?"}
+::: {.poll #snowy-ets-pattern}
+Which ETS model suits Snowy Mountains holiday trips?
+
 - [ ] ETS(?,A,A)
 - [x] ETS(?,N,A)
 - [ ] ETS(?,N,M)
@@ -481,7 +485,9 @@ vic_cafe |>
   select(.model, AICc)
 ```
 
-::: {.poll #cafe-log-aicc prompt="Which model is better for Victorian cafe turnover?"}
+::: {.poll #cafe-log-aicc}
+Which model is better for Victorian cafe turnover?
+
 - [ ] ETS(log(Turnover))
 - [ ] ETS(Turnover)
 - [x] Can't tell from AICc
