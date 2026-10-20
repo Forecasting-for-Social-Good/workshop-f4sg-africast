@@ -626,7 +626,7 @@ insurance
 
 ## Example: Insurance quotes and TV adverts
 
-```{r tvadvert, dependson='tvadvertdata', echo=FALSE}
+```{r tvadvert, echo=FALSE}
 insurance |>
   pivot_longer(c(Quotes, TVadverts)) |>
   ggplot(aes(x = Month, y = value)) +
@@ -637,7 +637,7 @@ insurance |>
 
 ## Example: Insurance quotes and TV adverts
 
-```{r tvadvertpairs, dependson='tvadvertdata', echo=FALSE}
+```{r tvadvertpairs, echo=FALSE}
 insurance |>
   mutate(
     lag1 = lag(TVadverts),
@@ -695,13 +695,13 @@ report(fit)
 
 ```{r tvadvertparam, echo=FALSE, dependson='tvadvertagain'}
 # Store coefficients
-coef <- rlang::set_names(tidy(fit)$estimate, tidy(fit)$term)
-phi1 <- coef["ar1"]
-theta1 <- coef["ma1"]
-theta2 <- coef["ma2"]
-intercept <- coef["intercept"]
-gamma0 <- coef["TVadverts"]
-gamma1 <- coef["lag(TVadverts)"]
+cf <- rlang::set_names(tidy(fit)$estimate, tidy(fit)$term)
+phi1 <- cf["ar1"]
+theta1 <- cf["ma1"]
+theta2 <- cf["ma2"]
+intercept <- cf["intercept"]
+gamma0 <- cf["TVadverts"]
+gamma1 <- cf["lag(TVadverts)"]
 ```
 
 ::: {.fragment}
