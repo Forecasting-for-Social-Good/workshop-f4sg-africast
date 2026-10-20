@@ -343,6 +343,12 @@ us_retail_employment |>
 
 ## US Retail Employment
 
+```{r usretail3}
+components(dcmp) |> gg_subseries(season_year)
+```
+
+## US Retail Employment
+
 ::: {.poll #retail-peak-month}
 In which month does US retail employment peak?
 
@@ -362,12 +368,6 @@ How is the December peak in US retail employment changing over time?
 - [ ] Staying the same
 - [x] Grew, then shrank
 :::
-
-## US Retail Employment
-
-```{r usretail3}
-components(dcmp) |> gg_subseries(season_year)
-```
 
 ## Seasonal adjustment
 
