@@ -1,6 +1,13 @@
 ---
 title: "Exponential smoothing"
 session: 7
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-ets
 ---
 
 ```{r}
