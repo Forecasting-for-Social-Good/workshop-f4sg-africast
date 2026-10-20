@@ -605,7 +605,7 @@ fit_h02_best |>
 #| echo: true
 train <- tourism |>
   filter(year(Quarter) <= 2014)
-fit <- train |>
+fit_tourism <- train |>
   model(
     ets = ETS(Trips),
     arima = ARIMA(Trips),
@@ -614,9 +614,9 @@ fit <- train |>
   mutate(mixed = (ets + arima + snaive) / 3)
 ```
 
-
- * Ensemble forecast `mixed` is a simple average of the three fitted models.
- *  `forecast()` will produce distributional forecasts taking into account the correlations between the forecast errors of the component models.
+* Fits three models to each of the 304 tourism series (this takes a while).
+* Ensemble forecast `mixed` is a simple average of the three fitted models.
+* `forecast()` will produce distributional forecasts taking into account the correlations between the forecast errors of the component models.
 
 ## Forecast ensembles
 
@@ -624,8 +624,26 @@ fit <- train |>
 #| label: trainfc
 #| dependson: "trainall"
 #| fig-height: 3.6
-fc <- fit |> forecast(h = "3 years")
+fc <- fit_tourism |> forecast(h = "3 years")
 fc |>
   filter(Region == "Snowy Mountains", Purpose == "Holiday") |>
-  autoplot(tourism, level = NULL)
+  autoplot(tourism |> filter(year(Quarter) >= 2010), level = NULL)
 ```
+
+## Forecast ensembles
+
+Accuracy on the 2015--2017 test set, averaged across all series.
+
+```{r}
+#| label: trainacc
+#| dependson: "trainfc"
+fc |>
+  accuracy(tourism) |>
+  group_by(.model) |>
+  summarise(RMSE = mean(RMSE), MASE = mean(MASE)) |>
+  arrange(RMSE)
+```
+
+::: {.fragment}
+Averaging lets errors from different models partially cancel, and reduces the risk of picking the wrong model.
+:::
