@@ -209,9 +209,9 @@ beer_fc |>
 
 # Evaluating distributional forecast accuracy
 
-## Prediction interval accuracy using winkler score
+## Prediction interval accuracy using Winkler score
 
-Winkler proposed a scoring method to enable comparisons between prediction intervals:
+Winkler (1972) proposed a scoring method to enable comparisons between prediction intervals:
 
 - it takes account of both coverage and width of the intervals.
 
@@ -220,20 +220,30 @@ Winkler proposed a scoring method to enable comparisons between prediction inter
 $$\begin{aligned}
   W(l_t,u_t,y_t) =
     \begin{cases}
-      u_t-l_t & \text{if $l_t < y_t <u_t$}\\
+      u_t-l_t & \text{if $l_t \le y_t \le u_t$}\\
       (u_t-l_t)+ \frac{2}{\alpha}(l_t-y_t) & \text{if $y_t < l_t$}\\
       (u_t-l_t) + \frac{2}{\alpha}(y_t-u_t) & \text{if $y_t > u_t$}
     \end{cases}
 \end{aligned}$$
 :::
 
+where $[l_t, u_t]$ is a $100(1-\alpha)\%$ prediction interval.
+
+* Lower is better.
+* Misses are penalised by $2/\alpha$ times the distance outside the interval.
+
 ## Prediction interval accuracy {.code-small}
 
 ```{r}
 #| label: winkler-accuracy
 beer_fc |>
-  accuracy(aus_production, measures = interval_accuracy_measures)
+  accuracy(aus_production, measures = list(winkler = winkler_score), level = 95)
 ```
+
+::: {.fragment}
+* Winkler scores for 95% prediction intervals ($\alpha = 0.05$).
+* Both cover every test observation, but seasonal naïve intervals are half as wide.
+:::
 
 
 ## Quantile score
