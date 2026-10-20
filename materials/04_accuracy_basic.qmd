@@ -26,11 +26,31 @@ source("setup.R")
 * Forecast accuracy is compared by measuring errors based on the test set.
 * Ideally, compare the benefit of improved accuracy with the cost of obtaining it.
 
-## Evaluate forecast accuracy: business impact
+## Evaluate forecast accuracy: decision impact
 
-* We should be choosing forecast models that lead to better business decisions
-    - least staffing costs, lowest emissions, highest service level, least stock-out, least inventory, fastest response, least change in planning, for example.
-* However, such measures are not always easy to obtain, so we often use the most accurate forecast instead.
+::::: {.callout-note}
+## Best forecast = best decisions
+Choose the model whose forecasts lead to better decisions, such as:
+
+:::: {.columns}
+::: {.column width="50%"}
+* lower staffing costs
+* lower emissions
+* higher service levels
+* fewer stock-outs
+:::
+::: {.column width="50%"}
+* less excess inventory
+* faster response
+* more stable plans
+:::
+::::
+:::::
+
+::: {.fragment}
+* Decision impact is often hard to measure.
+* Fallback: choose the most accurate forecast.
+:::
 
 ## A perfect fit
 
