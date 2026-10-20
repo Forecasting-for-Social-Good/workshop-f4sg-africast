@@ -185,7 +185,9 @@ Errors are averaged over all origins and all 12 horizons.
 #| label: fb-stock
 fb_stock <- gafa_stock |>
   filter(Symbol == "FB")
-fb_stock |> autoplot(Close)
+fb_stock |>
+  autoplot(Close) +
+  labs(x = "Date", y = "Closing price (US$)")
 ```
 
 ## Naïve model of Facebook's stock price {.code-small}
@@ -209,7 +211,7 @@ augment(fit) |>
   ggplot(aes(x = trading_day)) +
   geom_line(aes(y = Close, colour = "Data")) +
   geom_line(aes(y = .fitted, colour = "Fitted")) +
-  labs(colour = NULL)
+  labs(x = "Trading day", y = "Closing price (US$)", colour = NULL)
 ```
 
 ## Fitted values (last 158 trading days)
@@ -223,7 +225,7 @@ augment(fit) |>
   ggplot(aes(x = trading_day)) +
   geom_line(aes(y = Close, colour = "Data")) +
   geom_line(aes(y = .fitted, colour = "Fitted")) +
-  labs(colour = NULL)
+  labs(x = "Trading day", y = "Closing price (US$)", colour = NULL)
 ```
 
 ## Residuals over time
@@ -233,7 +235,7 @@ augment(fit) |>
 #| dependson: fb-augment
 augment(fit) |>
   autoplot(.resid) +
-  labs(x = "Day", y = "", title = "Residuals from naïve method")
+  labs(x = "Trading day", y = "Residual", title = "Residuals from naïve method")
 ```
 
 ## Histogram of residuals
@@ -245,7 +247,7 @@ augment(fit) |>
 augment(fit) |>
   ggplot(aes(x = .resid)) +
   geom_histogram(bins = 150) +
-  labs(title = "Histogram of residuals")
+  labs(x = "Residual", y = "Count", title = "Histogram of residuals")
 ```
 
 ## ACF of residuals
@@ -255,7 +257,8 @@ augment(fit) |>
 #| dependson: fb-augment
 augment(fit) |>
   ACF(.resid) |>
-  autoplot() + labs(title = "ACF of residuals")
+  autoplot() +
+  labs(x = "Lag", y = "ACF", title = "ACF of residuals")
 ```
 
 ## Checking the ACF of residuals
@@ -270,8 +273,18 @@ augment(fit) |>
 
 ```{r}
 #| label: fb-tsresiduals
-#| dependson: fb-augment
+#| eval: false
 fit |> gg_tsresiduals()
+```
+
+```{r}
+#| label: fb-tsresiduals-plot
+#| dependson: fb-augment
+#| echo: false
+p <- gg_tsresiduals(fit) + labs(x = "Trading day", y = "Residual")
+p[[2]] <- p[[2]] + labs(x = "Lag", y = "ACF")
+p[[3]] <- p[[3]] + labs(x = "Residual", y = "Count")
+p
 ```
 
 ## Ljung-Box test
@@ -300,7 +313,8 @@ $\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$ $\qquad$ where $\ell=
 #| fig-height: 1.65
 augment(fit) |>
   ACF(.resid, lag_max = 10) |>
-  autoplot() + labs(title = "ACF of residuals")
+  autoplot() +
+  labs(x = "Lag", y = "ACF", title = "ACF of residuals")
 ```
 
 ```{r}
