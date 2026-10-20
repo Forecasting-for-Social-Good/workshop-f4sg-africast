@@ -80,6 +80,14 @@ A model fits the training data perfectly. Will it forecast well?
 * A perfect fit can always be obtained by using a model with enough parameters
 * Over-fitting a model to data is just as bad as failing to identify a systematic pattern in the data
 
+## How long a test set?
+
+::: {.poll #test-set-length prompt="You need forecasts 12 months ahead. What is the shortest sensible test set?"}
+- [ ] 3 months
+- [x] 12 months
+- [ ] 36 months
+:::
+
 ## Forecast accuracy evaluation using test sets
 
 * We mimic the real life situation
