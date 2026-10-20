@@ -15,7 +15,7 @@ live-questions:
 * Adjusting time series
 * Time series decompositions
 * STL Features
-* Dimension reduction for features
+* Clustering features
 
 ```{r}
 #| label: setup
@@ -585,7 +585,7 @@ tourism |>
 tourism |> features(Trips, feat_acf)
 ```
 
-# Dimension reduction for features
+# Clustering features
 
 ## Feature extraction and statistics {.code-tiny}
 
