@@ -612,54 +612,31 @@ tourism |> features(Trips, feat_acf)
 
 ## All feasts features {.code-tiny}
 
-```{r pca}
-#| echo: false
-#| include: false
-# Compute features
+All features from the feasts package:
+
+```{r tourismfeatures}
 tourism_features <- tourism |>
   features(Trips, feature_set(pkgs = "feasts"))
-# Compute PCs
-pcs <- tourism_features |>
-  select(-State, -Region, -Purpose) |>
-  prcomp(scale. = TRUE) |>
-  broom::augment(tourism_features)
-# Find outliers
-outliers <- pcs |>
-  filter(.fittedPC1 > 12 | (.fittedPC1 > 10 & .fittedPC2 > 0))
-```
-
-```{r}
-#| label: tourismfeatures
-#| eval: false
-tourism_features <- tourism |>
-  features(Trips, feature_set(pkgs = "feasts"))
-```
-
-```{r}
-#| echo: false
 tourism_features
 ```
 
-::: {.alertblock .absolute top="0px" right="0px" width="360px" style="font-size:0.7em;"}
-All features from the feasts package
-:::
-
 ## Principal components {.code-tiny}
+
+Principal components based on all features from the feasts package:
 
 ```{r pcatable}
 pcs <- tourism_features |>
   select(-State, -Region, -Purpose) |>
   prcomp(scale. = TRUE) |>
   broom::augment(tourism_features)
+pcs |> select(Region, State, Purpose, starts_with(".fittedPC"))
 ```
 
-```{r echo=FALSE}
-pcs
+```{r outliers}
+#| include: false
+outliers <- pcs |>
+  filter(.fittedPC1 > 12 | (.fittedPC1 > 10 & .fittedPC2 > 0))
 ```
-
-::: {.alertblock .absolute top="0px" right="0px" width="360px" style="font-size:0.7em;"}
-Principal components based on all features from the feasts package
-:::
 
 ## PC1 vs PC2 {.code-small}
 
