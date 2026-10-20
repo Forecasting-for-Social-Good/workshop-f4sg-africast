@@ -517,13 +517,13 @@ $$\max\left(0, 1-\frac{\text{Var}(R_t)}{\text{Var}(S_t+R_t)}\right)$$
 ### Trend strength
 $$\max\left(0, 1-\frac{\text{Var}(R_t)}{\text{Var}(T_t+R_t)}\right)$$
 
-## Feature extraction and statistics {.code-small}
+## STL features {.code-small}
 
 ```{r features}
 tourism |> features(Trips, feat_stl)
 ```
 
-## Feature extraction and statistics {.code-tiny}
+## Seasonal and trend strength {.code-tiny}
 
 ```{r}
 #| label: features-plot
@@ -541,7 +541,7 @@ tourism |>
 :::
 :::
 
-## Feature extraction and statistics {.code-small}
+## Most seasonal series {.code-small}
 
 Find the most seasonal time series:
 
@@ -560,7 +560,7 @@ tourism |>
 ```
 :::
 
-## Feature extraction and statistics {.code-small}
+## Most trended series {.code-small}
 
 Find the most trended time series:
 
@@ -579,7 +579,7 @@ tourism |>
 ```
 :::
 
-## Feature extraction and statistics {.code-small}
+## ACF features {.code-small}
 
 ```{r featuresacf}
 tourism |> features(Trips, feat_acf)
@@ -587,7 +587,7 @@ tourism |> features(Trips, feat_acf)
 
 # Clustering features
 
-## Feature extraction and statistics {.code-tiny}
+## All feasts features {.code-tiny}
 
 ```{r pca}
 #| echo: false
@@ -621,7 +621,7 @@ tourism_features
 All features from the feasts package
 :::
 
-## Feature extraction and statistics {.code-tiny}
+## Principal components {.code-tiny}
 
 ```{r pcatable}
 pcs <- tourism_features |>
@@ -638,7 +638,7 @@ pcs
 Principal components based on all features from the feasts package
 :::
 
-## Feature extraction and statistics {.code-small}
+## PC1 vs PC2 {.code-small}
 
 ::: {.alertblock .absolute top="200px" left="0px" width="270px" style="font-size:0.7em;"}
 Principal components based on all features from the feasts package
@@ -660,7 +660,7 @@ pcs |> ggplot(aes(x = .fittedPC1, y = .fittedPC2)) +
   theme(aspect.ratio = 1)
 ```
 
-## Feature extraction and statistics {.code-small}
+## PCs coloured by State {.code-small}
 
 ::: {.alertblock .absolute top="200px" left="0px" width="270px" style="font-size:0.7em;"}
 Principal components based on all features from the feasts package
@@ -682,7 +682,7 @@ pcs |> ggplot(aes(x = .fittedPC1, y = .fittedPC2, col = State)) +
   theme(aspect.ratio = 1)
 ```
 
-## Feature extraction and statistics {.code-small}
+## PCs coloured by Purpose {.code-small}
 
 ::: {.alertblock .absolute top="200px" left="0px" width="270px" style="font-size:0.7em;"}
 Principal components based on all features from the feasts package
@@ -720,7 +720,7 @@ pcs |> ggplot(aes(x = .fittedPC1, y = .fittedPC2, col = Purpose)) +
 :::
 :::
 
-## Feature extraction and statistics
+## Outlying series
 
 ```{r outliers2, fig.height=4.5, fig.width=12}
 outliers |>
