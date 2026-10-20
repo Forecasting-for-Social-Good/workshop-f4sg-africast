@@ -509,6 +509,20 @@ fit_h02 |>
   labs(y = "$AUD million")
 ```
 
+## Corticosteroid drug sales: searching harder
+
+By default `ARIMA()` takes shortcuts to keep model selection fast.
+
+::: {.callout-note}
+## Search options
+
+* `stepwise = FALSE`: fit every model within the order limit, not just the stepwise path.
+* `approximation = FALSE`: estimate with the exact likelihood rather than an approximation.
+* `order_constraint`: limit the total number of AR and MA terms considered.
+:::
+
+A wider search is slower, but may find a model with a lower AICc.
+
 ## Corticosteroid drug sales: searching harder {.code-small}
 
 ```{r}
@@ -522,6 +536,10 @@ fit_h02_best <- h02 |>
   ))
 fit_h02_best |> report()
 ```
+
+::: {.fragment}
+Same differencing and transformation, so the AICc is comparable: $-487$ vs $-483$ for the automatic model, using nine coefficients instead of three.
+:::
 
 ## Corticosteroid drug sales: forecasts
 
