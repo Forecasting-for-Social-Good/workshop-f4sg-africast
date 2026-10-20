@@ -143,7 +143,7 @@ PhD researcher, Data Lab for Social Good, Cardiff University. Probabilistic fore
 | 3       | ARIMA models                                 | 9       |
 | 4       | Exponential smoothing                        | 8       |
 | 4       | Basic training and test accuracy             | 5       |
-| 5       | Residual diagnostics and cross validation    | 5       |
+| 5       | Cross-validation and residual diagnostics    | 5       |
 | 5       | Time series foundation models                | --      |
 
 ::: {.alertblock .center-text}

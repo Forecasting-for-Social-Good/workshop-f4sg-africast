@@ -1,5 +1,5 @@
 ---
-title: "Residual diagnostics and cross validation"
+title: "Cross-validation and residual diagnostics"
 session: 9
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "Residual diagnostics and cross validation"
+title: "Cross-validation and residual diagnostics"
 subtitle: "<span class='code'>10:00-11:30</span>"
 author: "Bahman Rostami-Tabar"
 date: "2026-10-23"

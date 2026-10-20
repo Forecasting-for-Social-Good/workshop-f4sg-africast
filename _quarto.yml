@@ -86,7 +86,7 @@ website:
             href: sessions/day4/ets.qmd
           - text: Basic training and test accuracy
             href: sessions/day4/accuracy.qmd
-          - text: "Residual diagnostics and cross validation"
+          - text: "Cross-validation and residual diagnostics"
             href: sessions/day5/diagnostics.qmd
           - text: Time series foundation models
             href: sessions/day5/foundation_models.qmd
