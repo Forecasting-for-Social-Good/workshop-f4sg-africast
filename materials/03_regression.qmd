@@ -488,6 +488,17 @@ fit_candidates <- us_change |>
   )
 ```
 
+## Example: candidate models
+
+::: {.poll #drop-predictor}
+Which predictor can we most afford to drop from the full model?
+
+- [ ] Income
+- [x] Production
+- [ ] Unemployment
+- [ ] Savings
+:::
+
 ## Example: comparing candidate models
 
 ```{r}
