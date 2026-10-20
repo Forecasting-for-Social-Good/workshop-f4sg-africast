@@ -9,8 +9,6 @@ session: 7
 #| cache: false
 source("setup.R")
 library(fpp3)
-library(tidyverse)
-melsyd <- tsibbledata::ansett |> filter(Airports == "MEL-SYD")
 ```
 
 # Exponential smoothing
@@ -401,7 +399,7 @@ Optimise parameters and initial values using MLE.
 ## Non-Gaussian forecast distributions {.code-small}
 
 ```{r cafe, fig.height=3.1}
-vic_cafe <- tsibbledata::aus_retail |>
+vic_cafe <- aus_retail |>
   filter(State == "Victoria",
          Industry == "Cafes, restaurants and catering services") |>
   select(Month, Turnover)
