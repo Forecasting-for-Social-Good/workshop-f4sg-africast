@@ -8,13 +8,10 @@ session: 9
 #| include: false
 #| cache: false
 source("setup.R")
-h02 <- tsibbledata::PBS |>
-  filter(ATC2 == "H02") |>
-  summarise(Cost = sum(Cost))
-melsyd <- tsibbledata::ansett |>
-  filter(Airports == "MEL-SYD")
-antidiabetic_drug_sale <- PBS |> filter(ATC2 == "A10") |>
-  summarise(Cost = sum(Cost)/1e6) |> filter_index("2000"~.)
+antidiabetic_drug_sale <- PBS |>
+  filter(ATC2 == "A10") |>
+  summarise(Cost = sum(Cost) / 1e6) |>
+  filter(year(Month) >= 2000)
 ```
 
 
@@ -22,13 +19,18 @@ antidiabetic_drug_sale <- PBS |> filter(ATC2 == "A10") |>
 
 ## Issue with traditional train/test split 
 
-```{r t_evl, echo=FALSE, out.width='90%'}
+```{r}
+#| label: f-test
+#| echo: false
+#| out-width: 90%
 knitr::include_graphics("figs/f_test.jpg")
 ```
 
 ## Time series cross-validation
 
-```{r split_cv, echo=FALSE}
+```{r}
+#| label: f-future
+#| echo: false
 knitr::include_graphics("figs/f_future.jpg")
 ```
 
@@ -36,7 +38,10 @@ knitr::include_graphics("figs/f_future.jpg")
 
 **Time series cross-validation**
 
-```{r cv1, cache=TRUE, echo=FALSE, fig.height=4}
+```{r}
+#| label: cv-diagram
+#| echo: false
+#| fig-height: 4
 par(mar=c(0,0,0,0))
 plot(0,0,xlim=c(0,28),ylim=c(0,1),
        xaxt="n",yaxt="n",bty="n",xlab="",ylab="",type="n")
@@ -79,7 +84,8 @@ For time series cross-validation, stretching windows are most commonly used.
 
 Stretch with a minimum length of 24, growing by 1 each step.
 
-```{r google-stretch, cache=TRUE, dependson="split_in_r"}
+```{r}
+#| label: cv-stretch
 forecast_horizon <- 12
 test <- antidiabetic_drug_sale |> 
   slice((n()-forecast_horizon+1):n())
@@ -89,7 +95,9 @@ drug_sale_tcsv <- train |>
   stretch_tsibble(.init = 24, .step = 1)
 ```
 
-```{r stretch-print, echo = FALSE}
+```{r}
+#| label: cv-stretch-print
+#| echo: false
 drug_sale_tcsv |> print(n = 4)
 ```
 
@@ -97,12 +105,15 @@ drug_sale_tcsv |> print(n = 4)
 
 Estimate seasonal naïve models for each window.
 
-```{r google-fit, cache = TRUE}
+```{r}
+#| label: cv-fit
 drug_fit_tr <- drug_sale_tcsv |> 
   model(snaive=SNAIVE(Cost))
 ```
 
-```{r google-fit-print, echo = FALSE}
+```{r}
+#| label: cv-fit-print
+#| echo: false
 print(drug_fit_tr, n = 4)
 ```
 
@@ -110,18 +121,22 @@ print(drug_fit_tr, n = 4)
 
 Produce 12-step-ahead forecasts from each window.
 
-```{r google-fc, cache = TRUE}
+```{r}
+#| label: cv-fc
 drug_fc_tr <- drug_fit_tr |> 
   forecast(h=forecast_horizon)
 ```
 
-```{r google-fc-print, echo = FALSE}
+```{r}
+#| label: cv-fc-print
+#| echo: false
 drug_fc_tr |> print(n = 4)
 ```
 
 ## Time series cross-validation {.code-small}
 
-```{r google-accuracy1, cache = TRUE}
+```{r}
+#| label: cv-accuracy
 # Cross-validated
 drug_fc_tr |> 
   accuracy(antidiabetic_drug_sale,
@@ -155,7 +170,8 @@ drug_fc_tr |>
 
 ## Facebook closing stock price
 
-```{r fbf}
+```{r}
+#| label: fb-stock
 fb_stock <- gafa_stock |>
   filter(Symbol == "FB")
 fb_stock |> autoplot(Close)
@@ -163,7 +179,8 @@ fb_stock |> autoplot(Close)
 
 ## Facebook closing stock price {.code-small}
 
-```{r augment}
+```{r}
+#| label: fb-augment
 fb_stock <- fb_stock |>
   mutate(trading_day = row_number()) |>
   update_tsibble(index = trading_day, regular = TRUE)
@@ -173,7 +190,10 @@ augment(fit)
 
 ## Facebook closing stock price
 
-```{r dj4, echo=TRUE, warning=FALSE, fig.height=3.4, dependson="augment"}
+```{r}
+#| label: fb-fitted
+#| dependson: fb-augment
+#| fig-height: 3.4
 augment(fit) |>
   ggplot(aes(x = trading_day)) +
   geom_line(aes(y = Close, colour = "Data")) +
@@ -182,7 +202,10 @@ augment(fit) |>
 
 ## Facebook closing stock price
 
-```{r dj4a, echo=TRUE, warning=FALSE, fig.height=3.4, dependson="augment"}
+```{r}
+#| label: fb-fitted-zoom
+#| dependson: fb-augment
+#| fig-height: 3.4
 augment(fit) |>
   filter(trading_day > 1100) |>
   ggplot(aes(x = trading_day)) +
@@ -192,7 +215,9 @@ augment(fit) |>
 
 ## Facebook closing stock price
 
-```{r dj5, echo=TRUE, warning = FALSE, dependson="augment"}
+```{r}
+#| label: fb-resid
+#| dependson: fb-augment
 augment(fit) |>
   autoplot(.resid) +
   labs(x = "Day", y = "", title = "Residuals from naïve method")
@@ -200,7 +225,10 @@ augment(fit) |>
 
 ## Facebook closing stock price
 
-```{r dj6, warning=FALSE, fig.height=3.4, dependson="augment"}
+```{r}
+#| label: fb-resid-hist
+#| dependson: fb-augment
+#| fig-height: 3.4
 augment(fit) |>
   ggplot(aes(x = .resid)) +
   geom_histogram(bins = 150) +
@@ -209,7 +237,9 @@ augment(fit) |>
 
 ## Facebook closing stock price
 
-```{r dj7, dependson="augment"}
+```{r}
+#| label: fb-resid-acf
+#| dependson: fb-augment
 augment(fit) |>
   ACF(.resid) |>
   autoplot() + labs(title = "ACF of residuals")
@@ -225,7 +255,9 @@ augment(fit) |>
 
 ## Combined diagnostic graph
 
-```{r dj8, dependson="augment"}
+```{r}
+#| label: fb-tsresiduals
+#| dependson: fb-augment
 fit |> gg_tsresiduals()
 ```
 
@@ -253,13 +285,18 @@ $\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$ $\qquad$ where $\ell=
 :::
 
 
-```{r dj9extra, echo=FALSE, fig.height=1.65}
+```{r}
+#| label: fb-lb-acf
+#| echo: false
+#| fig-height: 1.65
 augment(fit) |>
   ACF(.resid, lag_max = 10) |>
   autoplot() + labs(title = "ACF of residuals")
 ```
 
-```{r dj9, echo=TRUE, dependson="augment"}
+```{r}
+#| label: fb-ljung-box
+#| dependson: fb-augment
 # lag = h
 augment(fit) |> features(.resid, ljung_box, lag = 10)
 ```
