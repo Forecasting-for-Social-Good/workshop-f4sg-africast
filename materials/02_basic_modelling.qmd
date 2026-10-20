@@ -696,24 +696,30 @@ fc
 
 - Forecast intervals can be extracted using the `hilo()` function.
 
-```{r fb-fc, echo=TRUE}
+```{r beer-naive-hilo, echo=TRUE}
 fit <- aus_production |> select(Beer) |> model(NAIVE(Beer))
-forecast(fit) |> mutate(`95%` = hilo(Beer, 95))
+forecast(fit, h = 8) |>
+  hilo(level = 95) |>
+  select(Quarter, .mean, `95%`)
 ```
 
 ## Prediction intervals {.code-small}
 
 ```{r beer-fc-interval, dependson='beer-fc'}
 beer_fc |>
-  mutate(hilo(Beer, list(`50%` = 50, `75%` = 75)))
+  filter(.model == "Seasonal_naive") |>
+  hilo(level = c(50, 75)) |>
+  select(Quarter, .mean, `50%`, `75%`)
 ```
 
 ## Prediction intervals {.code-small}
 
 ```{r beer-fc-interval2, dependson='beer-fc'}
 beer_fc |>
-  mutate(`50%` = hilo(Beer, 50)) |>
-  mutate(lower = `50%`$lower, upper = `50%`$upper)
+  filter(.model == "Seasonal_naive") |>
+  hilo(level = 50) |>
+  unpack_hilo(`50%`) |>
+  select(Quarter, `50%_lower`, `50%_upper`)
 ```
 
 # Fitted values and residuals
