@@ -483,54 +483,56 @@ h02 |> autoplot(log(Cost) |> difference(12))
 h02 |> autoplot(log(Cost) |> difference(12) |> difference(1))
 ```
 
-## Corticosteroid drug sales
+## Corticosteroid drug sales: automatic ARIMA
 
 ```{r}
 #| label: h02fit
 #| echo: true
-#| fig-height: 2.8
-h02 |>
-  model(arima = ARIMA(log(Cost))) |>
-  report()
+fit_h02 <- h02 |>
+  model(auto = ARIMA(log(Cost)))
+fit_h02 |> report()
 ```
 
-## Corticosteroid drug sales
+::: {.fragment}
+$d=1$ and $D=1$ match the differencing above, leaving an AR(2) and a seasonal MA(1) at lag 12.
+:::
+
+## Corticosteroid drug sales: forecasts
 
 ```{r}
 #| label: h02fcst
 #| echo: true
 #| fig-height: 2.8
-h02 |>
-  model(arima = ARIMA(log(Cost))) |>
+fit_h02 |>
   forecast(h = "3 years") |>
-  autoplot(h02)
+  autoplot(h02) +
+  labs(y = "$AUD million")
 ```
 
-## Corticosteroid drug sales {.code-small}
+## Corticosteroid drug sales: searching harder {.code-small}
 
 ```{r}
 #| label: h02tryharder
 #| echo: true
-#| fig-height: 3.6
-fit <- h02 |>
+fit_h02_best <- h02 |>
   model(best = ARIMA(log(Cost),
     stepwise = FALSE,
     approximation = FALSE,
     order_constraint = p + q + P + Q <= 9
   ))
-report(fit)
+fit_h02_best |> report()
 ```
 
-## Corticosteroid drug sales
+## Corticosteroid drug sales: forecasts
 
 ```{r}
 #| label: h02f
 #| echo: true
 #| fig-height: 2.8
-fit |>
-  forecast() |>
+fit_h02_best |>
+  forecast(h = "3 years") |>
   autoplot(h02) +
-  labs(y = "H02 Expenditure ($AUD)", x = "Year")
+  labs(y = "$AUD million")
 ```
 
 
