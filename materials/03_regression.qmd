@@ -719,25 +719,14 @@ $$\begin{aligned}
 ## Example: Insurance quotes and TV adverts
 
 ```{r, echo=TRUE, fig.height=3}
-advert_a <- new_data(insurance, 20) |>
-  mutate(TVadverts = 10)
-forecast(fit, advert_a) |> autoplot(insurance)
-```
-
-## Example: Insurance quotes and TV adverts
-
-```{r, echo=TRUE, fig.height=3}
-advert_b <- new_data(insurance, 20) |>
-  mutate(TVadverts = 8)
-forecast(fit, advert_b) |> autoplot(insurance)
-```
-
-## Example: Insurance quotes and TV adverts
-
-```{r, echo=TRUE, fig.height=3}
-advert_c <- new_data(insurance, 20) |>
-  mutate(TVadverts = 6)
-forecast(fit, advert_c) |> autoplot(insurance)
+future_adverts <- scenarios(
+  `10 adverts` = new_data(insurance, 20) |> mutate(TVadverts = 10),
+  `8 adverts` = new_data(insurance, 20) |> mutate(TVadverts = 8),
+  `6 adverts` = new_data(insurance, 20) |> mutate(TVadverts = 6),
+  names_to = "Scenario"
+)
+insurance |> autoplot(Quotes) +
+  autolayer(forecast(fit, future_adverts), level = 80)
 ```
 
 ## Lead predictors
