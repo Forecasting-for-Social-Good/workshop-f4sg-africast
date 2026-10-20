@@ -62,15 +62,15 @@ austa <- readxl::read_excel("data/340101.xlsx", sheet = "Data1", skip = 9) |>
   as_tsibble(index = Month) |>
   filter(Month >= yearmonth("2000 Jan"))
 # Fit ETS model
-fit <- austa |>
+austa_fit <- austa |>
   filter(Month < yearmonth("2018 Jan")) |>
   model(ETS(Visitors))
 # Produce forecasts
-fc <- forecast(fit, h = 48) |>
+austa_fc <- forecast(austa_fit, h = 48) |>
   mutate(Month = as.Date(Month))
 # Simulate 100 future sample paths
 set.seed(1967)
-sim <- fit |>
+austa_sim <- austa_fit |>
   generate(h = 48, times = 100) |>
   mutate(
     replicate = factor(.rep, levels = 1:100, labels = paste("Future", 1:100)),
@@ -101,30 +101,30 @@ p1 <- austa |>
     labels = paste("Jan", seq(2000, 2020, by = 5)),
     minor_breaks = seq(as.Date("2001-01-01"), by = "1 year", l = 25)
   ) +
-  ylim(min(austa$Visitors, sim$.sim, na.rm = TRUE), max(austa$Visitors, sim$.sim, na.rm = TRUE))
+  ylim(min(austa$Visitors, austa_sim$.sim, na.rm = TRUE), max(austa$Visitors, austa_sim$.sim, na.rm = TRUE))
 p2 <- p1 + cols +
   geom_line(aes(y = .sim, group = replicate, colour = replicate),
-    data = sim |> filter(.rep <= 1)
+    data = austa_sim |> filter(.rep <= 1)
   )
 p3 <- p1 + cols +
   geom_line(aes(y = .sim, group = replicate, colour = replicate),
-    data = sim |> filter(.rep <= 2)
+    data = austa_sim |> filter(.rep <= 2)
   )
 p4 <- p1 + cols +
   geom_line(aes(y = .sim, group = replicate, colour = replicate),
-    data = sim |> filter(.rep <= 3)
+    data = austa_sim |> filter(.rep <= 3)
   )
 p5 <- p1 + cols +
   geom_line(aes(y = .sim, group = replicate, colour = replicate),
-    data = sim |> filter(.rep <= 10)
+    data = austa_sim |> filter(.rep <= 10)
   )
 p6 <- p1 + cols +
-  geom_line(aes(y = .sim, group = replicate, colour = replicate), alpha = 0.5, data = sim) +
+  geom_line(aes(y = .sim, group = replicate, colour = replicate), alpha = 0.5, data = austa_sim) +
   guides(colour = "none")
 p7 <- p1 +
-  geom_line(aes(y = .sim, group = replicate, colour = replicate), alpha = 0.5, col = "gray", data = sim) +
+  geom_line(aes(y = .sim, group = replicate, colour = replicate), alpha = 0.5, col = "gray", data = austa_sim) +
   guides(colour = "none")
-p8 <- p7 + autolayer(fc, level = c(50, 90))
+p8 <- p7 + autolayer(austa_fc, level = c(50, 90))
 p9 <- p8 + coord_cartesian(xlim = as.Date(c("2014-01-01", "2021-08-01"))) +
   scale_x_date(
     breaks = seq(as.Date("2000-01-01"), by = "2 years", l = 11),
@@ -435,7 +435,7 @@ bricks <- aus_production |>
   filter(!is.na(Bricks)) |>
   mutate(average = mean(Bricks))
 
-fc <- bricks |>
+bricks_fc <- bricks |>
   model(MEAN(Bricks)) |>
   forecast(h = "5 years")
 
@@ -443,7 +443,7 @@ bricks |>
   ggplot(aes(x = Quarter, y = Bricks)) +
   geom_line() +
   geom_line(aes(y = average), colour = "blue", linetype = "dashed") +
-  geom_line(aes(y = .mean), data = fc, colour = "blue") +
+  geom_line(aes(y = .mean), data = bricks_fc, colour = "blue") +
   labs(title = "Clay brick production in Australia")
 ```
 
@@ -646,29 +646,29 @@ When a normal distribution for the residuals is an unreasonable assumption, one 
 
 ```{r generate, echo=TRUE}
 beer_2000 <- aus_production |> filter(year(Quarter) >= 2000) |> select(Beer)
-fit <- beer_2000 |>
+beer_2000_fit <- beer_2000 |>
   model(NAIVE(Beer))
 set.seed(2024)
-sim <- fit |> generate(h = 12, times = 5, bootstrap = TRUE)
-sim
+beer_2000_sim <- beer_2000_fit |> generate(h = 12, times = 5, bootstrap = TRUE)
+print(beer_2000_sim, n = 5)
 ```
 
 ## Generate 5 different futures
 
-```{r visualise-future, echo=FALSE}
+```{r visualise-future, echo=FALSE, dependson="generate"}
 beer_2000 |> 
   ggplot(aes(x = Quarter)) +
   geom_line(aes(y = Beer)) +
   geom_line(aes(y = .sim, colour = as.factor(.rep)),
-    data = sim)+
+    data = beer_2000_sim)+
   labs(colour="Future")
 ```
 
 ## Use `forecast()` to produce probabilistic forecasts {.code-small}
 
-```{r probabilistic-forecast, echo=TRUE}
-fc <- fit |> forecast(h = 12, bootstrap = TRUE)
-fc
+```{r probabilistic-forecast, echo=TRUE, dependson="generate"}
+beer_2000_fc <- beer_2000_fit |> forecast(h = 12, bootstrap = TRUE)
+beer_2000_fc
 ```
 
 
@@ -677,8 +677,8 @@ fc
 - Forecast intervals can be extracted using the `hilo()` function.
 
 ```{r beer-naive-hilo, echo=TRUE}
-fit <- aus_production |> select(Beer) |> model(NAIVE(Beer))
-forecast(fit, h = 8) |>
+beer_naive_fit <- aus_production |> select(Beer) |> model(NAIVE(Beer))
+forecast(beer_naive_fit, h = 8) |>
   hilo(level = 95) |>
   select(Quarter, .mean, `95%`)
 ```
@@ -732,14 +732,14 @@ beer_fc |>
 ## Beer production - augment {.code-small}
 
 ```{r augment}
-fit <- aus_production |> select(Beer) |> model(SNAIVE(Beer))
-augment(fit)
+beer_snaive_fit <- aus_production |> select(Beer) |> model(SNAIVE(Beer))
+augment(beer_snaive_fit)
 ```
 
 ## Beer production - fitted values
 
 ```{r dj4, echo=TRUE, warning=FALSE, fig.height=3.4, dependson="augment"}
-augment(fit) |>
+augment(beer_snaive_fit) |>
   ggplot(aes(x = Quarter)) +
   geom_line(aes(y = Beer, colour = "Data")) +
   geom_line(aes(y = .fitted, colour = "Fitted")) +
@@ -749,7 +749,7 @@ augment(fit) |>
 ## Beer production - residuals
 
 ```{r dj5, echo=TRUE, warning = FALSE, dependson="augment"}
-augment(fit) |>
+augment(beer_snaive_fit) |>
   autoplot(.resid) +
   labs(x = "Quarter", y = "", title = "Residuals from snaïve method")
 ```
@@ -757,7 +757,7 @@ augment(fit) |>
 ## Beer production - residual ACF {.nostretch}
 
 ```{r dj6, echo=TRUE, fig.height=2.2, out.width="70%", fig.align="center", dependson="augment"}
-augment(fit) |> ACF(.resid) |> autoplot()
+augment(beer_snaive_fit) |> ACF(.resid) |> autoplot()
 ```
 
 ::: {.likert #beer-resid-noise}
