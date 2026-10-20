@@ -622,14 +622,14 @@ tourism_features
 
 ## Principal components {.code-tiny}
 
-Principal components based on all features from the feasts package:
+Principal components are combinations of the 48 features with the most variation, so the 304 series can be compared in two dimensions:
 
 ```{r pcatable}
 pcs <- tourism_features |>
   select(-State, -Region, -Purpose) |>
   prcomp(scale. = TRUE) |>
   broom::augment(tourism_features)
-pcs |> select(Region, State, Purpose, starts_with(".fittedPC"))
+pcs |> select(Region, State, Purpose, .fittedPC1, .fittedPC2)
 ```
 
 ## PC1 vs PC2 {.code-small}
@@ -660,6 +660,8 @@ pcs |>
 ```
 
 ## PCs coloured by Purpose {.code-small}
+
+Holiday series sit higher on both PCs than other travel purposes.
 
 ```{r pca3-plot}
 #| output-location: column
