@@ -632,93 +632,67 @@ pcs <- tourism_features |>
 pcs |> select(Region, State, Purpose, starts_with(".fittedPC"))
 ```
 
-```{r outliers}
-#| include: false
-outliers <- pcs |>
-  filter(.fittedPC1 > 12 | (.fittedPC1 > 10 & .fittedPC2 > 0))
-```
-
 ## PC1 vs PC2 {.code-small}
 
-::: {.alertblock .absolute top="200px" left="0px" width="270px" style="font-size:0.7em;"}
-Principal components based on all features from the feasts package
-:::
-
-```r
-pcs |> ggplot(aes(x=.fittedPC1, y=.fittedPC2)) +
-  geom_point() + theme(aspect.ratio=1)
-```
-
 ```{r pca1-plot}
-#| echo: false
+#| output-location: column
 #| fig-width: 5
 #| fig-height: 5
-#| out.width: "480px"
-#| fig-align: right
-pcs |> ggplot(aes(x = .fittedPC1, y = .fittedPC2)) +
+#| out-width: "85%"
+pcs |>
+  ggplot(aes(x = .fittedPC1, y = .fittedPC2)) +
   geom_point() +
   theme(aspect.ratio = 1)
 ```
 
 ## PCs coloured by State {.code-small}
 
-::: {.alertblock .absolute top="200px" left="0px" width="270px" style="font-size:0.7em;"}
-Principal components based on all features from the feasts package
-:::
-
-```r
-pcs |> ggplot(aes(x=.fittedPC1, y=.fittedPC2, col=State)) +
-  geom_point() + theme(aspect.ratio=1)
-```
-
 ```{r pca2-plot}
-#| echo: false
+#| output-location: column
 #| fig-width: 5
 #| fig-height: 5
-#| out.width: "480px"
-#| fig-align: right
-pcs |> ggplot(aes(x = .fittedPC1, y = .fittedPC2, col = State)) +
+#| out-width: "85%"
+pcs |>
+  ggplot(aes(x = .fittedPC1, y = .fittedPC2,
+             col = State)) +
   geom_point() +
   theme(aspect.ratio = 1)
 ```
 
 ## PCs coloured by Purpose {.code-small}
 
-::: {.alertblock .absolute top="200px" left="0px" width="270px" style="font-size:0.7em;"}
-Principal components based on all features from the feasts package
-:::
-
-```r
-pcs |> ggplot(aes(x=.fittedPC1, y=.fittedPC2, col=Purpose)) +
-  geom_point() + theme(aspect.ratio=1)
-```
-
-::: {.r-stack}
-::: {.fragment .fade-out fragment-index=1}
 ```{r pca3-plot}
-#| echo: false
+#| output-location: column
 #| fig-width: 5
 #| fig-height: 5
-#| out.width: "480px"
-pcs |> ggplot(aes(x = .fittedPC1, y = .fittedPC2, col = Purpose)) +
+#| out-width: "85%"
+pcs |>
+  ggplot(aes(x = .fittedPC1, y = .fittedPC2,
+             col = Purpose)) +
   geom_point() +
   theme(aspect.ratio = 1)
 ```
-:::
 
-::: {.fragment fragment-index=1}
-```{r pca4-plot}
-#| echo: false
+## Outliers in PC space {.code-small}
+
+Four outlying series: PC1 > 12, or PC1 > 10 and PC2 > 0.
+
+```{r pca-outliers}
+#| output-location: column
 #| fig-width: 5
 #| fig-height: 5
-#| out.width: "480px"
-pcs |> ggplot(aes(x = .fittedPC1, y = .fittedPC2, col = Purpose)) +
+#| out-width: "85%"
+outliers <- pcs |>
+  filter(.fittedPC1 > 12 |
+           (.fittedPC1 > 10 & .fittedPC2 > 0))
+pcs |>
+  ggplot(aes(x = .fittedPC1, y = .fittedPC2,
+             col = Purpose)) +
   geom_point() +
-  theme(aspect.ratio = 1) +
-  geom_point(data = outliers, aes(x = .fittedPC1, y = .fittedPC2), col = "black", shape = 1, size = 3)
+  geom_point(data = outliers, col = "black",
+             shape = 1, size = 3) +
+  theme(aspect.ratio = 1)
 ```
-:::
-:::
 
 ## Outlying series
 
