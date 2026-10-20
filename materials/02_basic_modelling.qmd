@@ -597,10 +597,10 @@ beer_fit |> glance()
 ## Producing forecasts
 
 - The `forecast()` function is used to produce forecasts from estimated models.
-- **h** can be specified with:
-    * a number (the number of future observations)
-    * natural language (the length of time to predict)
-    * provide a dataset of future time periods
+- The forecast horizon can be specified with:
+    * `h` as a number (the number of future observations);
+    * `h` as natural language (the length of time to predict, e.g. `"5 years"`);
+    * `new_data`, a dataset of future time periods.
     
 ## Producing forecasts
 
@@ -620,9 +620,9 @@ A `fable` is a forecast table with point forecasts and distributions.
 
 ## Visualising forecasts
 
-```{r beer-fc-plot, warning=FALSE, message=FALSE, fig.height=3.4, dependson='brick-fc'}
+```{r beer-fc-plot, warning=FALSE, message=FALSE, fig.height=3.4, dependson='beer-fc'}
 beer_fc |>
-  autoplot(aus_production, level = NULL) +
+  autoplot(filter(aus_production, year(Quarter) >= 1995), level = NULL) +
   labs(title = "Forecasts for quarterly beer production",
        x = "Quarter", y = "Megalitres") +
   guides(colour = guide_legend(title = "Forecast"))
