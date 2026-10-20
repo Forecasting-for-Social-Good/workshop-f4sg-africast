@@ -434,7 +434,7 @@ if (!identical(fabletools:::model_sum(fit$ets[[1]]), "ETS(A,A,A)")) {
 
 ::: {.alertblock .fragment .absolute top="420px" right="0px" width="440px"}
 * `t(N)` denotes a transformed normal distribution.
-* back-transformation and bias adjustment is done automatically.
+* The distribution is back-transformed and the mean (`.mean`) is bias-adjusted automatically.
 :::
 
 ## Forecasting with transformations {.code-small}
