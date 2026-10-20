@@ -517,6 +517,8 @@ $$\max\left(0, 1-\frac{\text{Var}(R_t)}{\text{Var}(S_t+R_t)}\right)$$
 ### Trend strength
 $$\max\left(0, 1-\frac{\text{Var}(R_t)}{\text{Var}(T_t+R_t)}\right)$$
 
+Both range from 0 (no seasonality or trend) to 1 (strong), and are computed from an STL decomposition by `feat_stl()`.
+
 ## STL features {.code-small}
 
 ```{r features}
