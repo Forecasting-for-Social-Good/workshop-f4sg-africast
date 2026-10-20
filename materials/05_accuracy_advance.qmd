@@ -8,6 +8,8 @@ session: 9
 #| include: false
 #| cache: false
 source("setup.R")
+# gg_tsresiduals() has moved from feasts to ggtime
+library(ggtime)
 antidiabetic_drug_sale <- PBS |>
   filter(ATC2 == "A10") |>
   summarise(Cost = sum(Cost) / 1e6) |>
