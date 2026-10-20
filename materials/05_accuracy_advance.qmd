@@ -3,13 +3,6 @@ title: "Residual diagnostics and cross validation"
 session: 9
 ---
 
-## Outline
-
-* Time series cross-validation
-* Residual diagnostics
-* Recap
-
-
 ```{r}
 #| label: setup
 #| include: false

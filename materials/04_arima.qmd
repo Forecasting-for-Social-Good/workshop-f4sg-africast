@@ -10,13 +10,6 @@ live-questions:
   session: africast-arima
 ---
 
-## Outline
-
-* ARIMA models
-* Seasonal ARIMA models
-* Forecast ensembles
-
-
 ```{r}
 #| label: setup
 #| include: false

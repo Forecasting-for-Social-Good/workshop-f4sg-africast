@@ -10,15 +10,6 @@ live-questions:
   session: africast-graphics
 ---
 
-## Outline
-
-* Time series patterns
-* Time plots
-* Seasonal plots
-* Seasonal or cyclic?
-* Lag plots and autocorrelation
-* White noise
-
 ```{r}
 #| label: setup
 #| include: false

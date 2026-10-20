@@ -3,15 +3,6 @@ title: "Exponential smoothing"
 session: 7
 ---
 
-## Outline
-
-* Exponential smoothing
-* Trend methods
-* Seasonal methods
-* ETS taxonomy
-* Non-Gaussian forecast distributions
-
-
 ```{r}
 #| label: setup
 #| include: false

@@ -10,15 +10,6 @@ live-questions:
   session: africast-modelling
 ---
 
-## Outline
-
-* Statistical forecasting
-* What can we forecast?
-* Benchmark methods
-* Specify and estimate
-* Produce forecasts
-* Fitted values and residuals
-
 ## Your forecasting
 
 ::: {.wordcloud #what-you-forecast max-words=3 max-answers=3}

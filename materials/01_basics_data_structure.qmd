@@ -10,14 +10,6 @@ live-questions:
   session: africast-basics
 ---
 
-## Outline
-
-* Introduction to forecasting
-* Time series data
-* tsibble objects
-* Example: Australian prison population
-* Example: Australian pharmaceutical sales
-
 ```{r}
 #| label: setup
 #| include: false

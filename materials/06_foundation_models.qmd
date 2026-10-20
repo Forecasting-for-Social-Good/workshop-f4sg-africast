@@ -10,15 +10,6 @@ live-questions:
   session: africast-foundation-models
 ---
 
-## Outline
-
-* Introduction
-* Transfer learning
-* Overview of foundation models
-* Example: forecasting Australian tourism
-* Evidence from public health forecasting
-* Further reading and lab notebook
-
 ## Foundation models
 
 ::: {.wordcloud #foundation-models-known max-words=2 max-answers=3}

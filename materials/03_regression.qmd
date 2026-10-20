@@ -11,16 +11,6 @@ live-questions:
   session: africast-regression
 ---
 
-## Outline
-
-* The linear model with time series
-* Evaluating the regression model
-* Selecting predictors
-* Forecasting with regression
-* Correlation, causation and forecasting
-* Some useful predictors for regression models
-
-
 ```{r}
 #| label: setup
 #| include: false

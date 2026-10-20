@@ -10,13 +10,6 @@ live-questions:
   session: africast-accuracy
 ---
 
-## Outline
-
-* Evaluating forecast accuracy
-* Evaluating point forecast accuracy
-* Evaluating distributional forecast accuracy
-
-
 ```{r}
 #| label: setup
 #| include: false
