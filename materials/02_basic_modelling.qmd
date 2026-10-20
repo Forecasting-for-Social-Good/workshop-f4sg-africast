@@ -632,12 +632,12 @@ beer_fc |>
 ## Forecast distributions
 
  * A forecast $\hat{y}_{T+h|T}$ is (usually) the mean of the conditional distribution $y_{T+h} \mid y_1, \dots, y_{T}$.
- * Most time series models produce normally distributed forecasts.
+ * Many time series models produce normally distributed forecasts.
  * The forecast distribution describes the probability of observing any future value.
 
 ## Forecast distributions - normal distribution
 
-Assuming residuals are normal, uncorrelated, sd = $\hat\sigma$:
+Assuming residuals are normal and uncorrelated, with variance $\hat\sigma^2$:
 
 ::: {.block}
 | | |
@@ -656,13 +656,13 @@ Note that when $h=1$ and $T$ is large, these all give the same approximate forec
 
 When a normal distribution for the residuals is an unreasonable assumption, one alternative is to use bootstrapping, which only assumes that the residuals are uncorrelated with constant variance.
 
-- A one-step forecast error is defined as $e_t = y_t - \hat{y}_{t|t-1}$, $y_t = \hat{y}_{t|t-1} + e_t.$
+- A residual (one-step forecast error) is $e_t = y_t - \hat{y}_{t|t-1}$, so $y_t = \hat{y}_{t|t-1} + e_t$.
 
-- So we can simulate the next observation of a time series using $y_{T+1} = \hat{y}_{T+1|T} + e_{T+1}$
+- So we can simulate the next observation of a time series using $y_{T+1} = \hat{y}_{T+1|T} + e_{T+1}$, where $e_{T+1}$ is sampled (with replacement) from the past residuals.
 
 - Adding the new simulated observation to our data set, we can repeat the process to obtain $y_{T+2} = \hat{y}_{T+2|T+1} + e_{T+2}$
 
-## Generate many possible future using `generate()` {.code-small}
+## Generate many possible futures using `generate()` {.code-small}
 
 ```{r generate, echo=TRUE}
 beer_2000 <- aus_production |> filter(year(Quarter) >= 2000) |> select(Beer)
@@ -684,7 +684,7 @@ beer_2000 |>
   labs(colour="Future")
 ```
 
-## Use `forecast()` function to generate probabilistic forecasts {.code-small}
+## Use `forecast()` to produce probabilistic forecasts {.code-small}
 
 ```{r probabilistic-forecast, echo=TRUE}
 fc <- fit |> forecast(h = 12, bootstrap = TRUE)
