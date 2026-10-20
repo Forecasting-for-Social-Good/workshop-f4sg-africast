@@ -29,7 +29,7 @@ us_change <- readr::read_csv("data/uschange.csv") |>
 * To **explain** 
 * To **forecast**
 
-* Simple linear regression model(SLR)
+* Simple linear regression model (SLR)
 * Multiple linear regression model (MLR)
 
 ## SLR model in theory
@@ -65,7 +65,7 @@ $$
 ## What is the best fit
 
 * There are many ways that a straight line can be laid on the scatter
-* Best known criterion is called Ordinary Least Squares(OLS)
+* Best known criterion is called Ordinary Least Squares (OLS)
 
 ```{r SLR, echo=FALSE, fig.align='center', out.width= "70%"}
 knitr::include_graphics("figs/SLRpop1-1.png")
@@ -115,10 +115,10 @@ report(fit_cons)
 ## Multiple regression
 
 * In multiple regression there is one variable to be forecast and several predictor variables.
-* The basic concept is that we forecast the time series of interest $y$ assuming that it has a linear relationship with other time series $x_1$, $x_2$, ..., $x_K$
+* The basic concept is that we forecast the time series of interest $y$ assuming that it has a linear relationship with other time series $x_1$, $x_2$, ..., $x_k$
 * We might forecast daily A&E attendance  $y$ using temperature   $x_1$ and GP visits $x_2$ as predictors.
 
-## How many variable can we add?
+## How many predictors?
 
 You can add as many as you want but be aware of:
 
@@ -139,8 +139,7 @@ $$
  They are usually assumed to be known for all past and future times.
 
 * The coefficients $\beta_1,\dots,\beta_k$ measure the effect of each predictor after taking account of the effect of all other predictors in the model.
-
-That is, the coefficients measure the **marginal effects**.
+    * That is, the coefficients measure the **marginal effects**.
 
 * $\varepsilon_t$ is a white noise error term
 
@@ -233,7 +232,7 @@ augment(fit_consMR) |>
 
 # Evaluating the regression model 
 
-##  Multiple regression and forecasting
+## Assumptions for forecasting
 
 For forecasting purposes, we require the following assumptions:
 
@@ -584,7 +583,7 @@ If there are more than two categories, then the variable can be coded using seve
 * this could also be handled using a piecewise trend, `trend(knots = ...)`
 :::
 
-##  Include special event using dummies
+## Special events as dummies
 
 * Christmas Eve: if Christmas Eve, $v_t=1$, $v_t=0$ otherwise
 * New year's Day: if New year's Day, $v_t=1$, $v_t=0$ otherwise.
