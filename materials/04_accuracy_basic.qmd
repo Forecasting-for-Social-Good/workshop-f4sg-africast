@@ -183,7 +183,7 @@ You forecast clinic visits in 50 districts of very different sizes. Which measur
 ::: {.callout-note}
 ## Mean Absolute Scaled Error
 $$
-  \text{MASE} = \text{mean}(|e_{T+h}|/Q)
+  \Large \text{MASE} = \text{mean}(|e_{T+h}|/Q)
 $$
 :::
 
@@ -225,7 +225,7 @@ Which measure suits daily sales of a slow-selling item with many zero days?
 ::: {.callout-note}
 ## Root Mean Squared Scaled Error
 $$
-  \text{RMSSE} = \sqrt{\text{mean}(e^2_{T+h}/Q)}
+  \Large \text{RMSSE} = \sqrt{\text{mean}(e^2_{T+h}/Q)}
 $$
 :::
 
