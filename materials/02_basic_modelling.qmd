@@ -730,7 +730,7 @@ augment(beer_snaive_fit)
 
 ## Beer production - fitted values
 
-```{r dj4, echo=TRUE, warning=FALSE, fig.height=3.4, dependson="augment"}
+```{r dj4, echo=TRUE, warning=FALSE, fig.height=3.4, cache=FALSE}
 augment(beer_snaive_fit) |>
   ggplot(aes(x = Quarter)) +
   geom_line(aes(y = Beer, colour = "Data")) +
@@ -740,7 +740,7 @@ augment(beer_snaive_fit) |>
 
 ## Beer production - residuals
 
-```{r dj5, echo=TRUE, warning = FALSE, dependson="augment"}
+```{r dj5, echo=TRUE, warning = FALSE, cache=FALSE}
 augment(beer_snaive_fit) |>
   autoplot(.resid) +
   labs(x = "Quarter", y = "", title = "Residuals from snaïve method")
@@ -748,7 +748,7 @@ augment(beer_snaive_fit) |>
 
 ## Beer production - residual ACF {.nostretch}
 
-```{r dj6, echo=TRUE, fig.height=2.2, out.width="70%", fig.align="center", dependson="augment"}
+```{r dj6, echo=TRUE, fig.height=2.2, out.width="70%", fig.align="center", cache=FALSE}
 augment(beer_snaive_fit) |> ACF(.resid) |> autoplot()
 ```
 
