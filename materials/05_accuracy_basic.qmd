@@ -82,7 +82,11 @@ Forecast "error": the difference between an observed value and its forecast.
 $$
   e_{T+h} = y_{T+h} - \hat{y}_{T+h|T},
 $$
-where the training data is given by $\{y_1,\dots,y_T\}$
+where
+
+* the training data is $\{y_1,\dots,y_T\}$
+* $y_{T+h}$ is the $h$th test observation, $h=1,\dots,H$
+* $\hat{y}_{T+h|T}$ is its forecast based on data up to time $T$
 
 ## Forecasting beer production {.code-small}
 
@@ -106,20 +110,14 @@ beer_fit |>
   guides(colour = guide_legend(title = "Forecast"))
 ```
 
-## Measures of forecast accuracy
-
-$$\begin{aligned}
-y_{T+h} &= (T+h)\text{th observation, } h=1,\dots,H \\
-\hat{y}_{T+h|T} &= \text{its forecast based on data up to time } T. \\
-e_{T+h} &= y_{T+h} - \hat{y}_{T+h|T}
-\end{aligned}$$
+## Scale-dependent and percentage errors
 
 ::: {.block}
 $$\begin{aligned}
 \text{MAE} &= \text{mean}(|e_{T+h}|) \\
-\text{MSE} &= \text{mean}(e_{T+h}^2) \qquad
-&\text{RMSE} &= \sqrt{\text{mean}(e_{T+h}^2)} \\
-\text{MAPE} &= 100\text{mean}(|e_{T+h}|/ |y_{T+h}|)
+\text{MSE} &= \text{mean}(e_{T+h}^2) \\
+\text{RMSE} &= \sqrt{\text{mean}(e_{T+h}^2)} \\
+\text{MAPE} &= 100\,\text{mean}(|e_{T+h}|/|y_{T+h}|)
 \end{aligned}$$
 :::
 
