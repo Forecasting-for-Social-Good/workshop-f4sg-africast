@@ -48,16 +48,16 @@ $$
 
 ## SLR model in practice
 
-In practice, of course, we have a collection of observations but we do not know the values of the coefficients $\hat\beta_0$, $\hat\beta_1$. 
+In practice, of course, we have a collection of observations but we do not know the values of the coefficients $\beta_0$, $\beta_1$.
 These need to be estimated from the data.
 
 ::: {.block}
 $$
-  y_t = \hat\beta_0 + \hat\beta_1 x_{t}.
+  \hat{y}_t = \hat\beta_0 + \hat\beta_1 x_{t}.
 $$
 :::
 
-* $y_t$ is the "response" variable
+* $\hat{y}_t$ is the fitted value of the response
 * Each $x_{t}$ is a "predictor"
 * $\hat\beta_0$ is the estimated intercept
 * $\hat\beta_1$ is the estimated slope
