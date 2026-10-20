@@ -14,6 +14,8 @@ live-questions:
 #| include: false
 #| cache: false
 source("setup.R")
+# ggtime provides gg_subseries(); the feasts version is deprecated
+library(ggtime)
 library(glue)
 ```
 
