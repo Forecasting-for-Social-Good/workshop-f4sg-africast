@@ -549,11 +549,11 @@ Which benchmark method is best for the number of pigs slaughtered in Victoria?
 
 ## Model specification
 
-- Model specification in fable supports a formula based interface 
-- A model formula in R is expressed using `response ~ terms`
-    - the formula’s left side describes the response 
-    - the right describes terms used to model the response.
-- `Attention`: MODEL name is in capital letters, e.g. `SNAIVE`
+- Model specification in fable supports a formula-based interface.
+- A model formula in R is expressed using `response ~ terms`:
+    - the left side describes the response;
+    - the right side describes the terms used to model the response.
+- Model names are in capitals, e.g. `SNAIVE(Beer ~ lag("year"))` or `RW(Beer ~ drift())`.
 
 ## Model fitting: example {.code-small}
 
@@ -564,8 +564,8 @@ The `model()` function trains models on data.
 ```{r beer-model}
 beer_fit <- aus_production |>
   model(
-    `Seasonal_naïve` = SNAIVE(Beer),
-    `Naïve` = NAIVE(Beer),
+    Seasonal_naive = SNAIVE(Beer),
+    Naive = NAIVE(Beer),
     Drift = RW(Beer ~ drift()),
     Mean = MEAN(Beer)
   )
@@ -582,14 +582,15 @@ A `mable` is a model table, each cell corresponds to a fitted model.
 ## Extract information from `mable`
 
 ```{r beer-mablea, eval= FALSE, dependson='beer-model'}
-beer_fit |> select(`Seasonal_naïve`) |> report()
+beer_fit |> select(Seasonal_naive) |> report()
 beer_fit |> tidy()
 beer_fit |> glance()
 ```
 
-- The `report()` function gives a formatted model-specific display.
-- The `tidy()` function is used to extract the coefficients from the models.
-- We can extract information about some specific model using the `filter()` and `select()` functions.
+- `report()` gives a formatted model-specific display.
+- `tidy()` extracts the estimated parameters (if any) of each model.
+- `glance()` gives one row of summary statistics per model, such as `sigma2`.
+- `select()` and `filter()` pick out specific models.
 
 # Produce forecasts
 
