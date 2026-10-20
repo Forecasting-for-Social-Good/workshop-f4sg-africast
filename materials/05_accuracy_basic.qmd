@@ -15,11 +15,6 @@ live-questions:
 #| include: false
 #| cache: false
 source("setup.R")
-h02 <- tsibbledata::PBS |>
-  filter(ATC2 == "H02") |>
-  summarise(Cost = sum(Cost))
-melsyd <- tsibbledata::ansett |>
-  filter(Airports == "MEL-SYD")
 ```
 
 
@@ -63,7 +58,10 @@ A model fits the training data perfectly. Will it forecast well?
 
 ## Training and test sets
 
-```{r traintest, fig.height=1, echo=FALSE}
+```{r}
+#| label: traintest
+#| echo: false
+#| fig-height: 1
 train <- 1:18
 test <- 19:24
 par(mar = c(0, 0, 0, 0))
@@ -105,7 +103,10 @@ beer_fit |>
 
 ## Measures of forecast accuracy
 
-```{r beer-fc-1, echo=FALSE, fig.height=4}
+```{r}
+#| label: beer-fc-1
+#| echo: false
+#| fig-height: 4
 beer_fit <- aus_production |>
   filter(between(year(Quarter), 1992, 2007)) |>
   model(
@@ -205,7 +206,8 @@ Used in the M5 forecasting competition (Makridakis et al., IJF, 2022).
 
 ## Measures of forecast accuracy {.code-small}
 
-```{r beer-test-accuracy, dependson='beer-fc-1'}
+```{r}
+#| label: beer-test-accuracy
 beer_fc <- forecast(beer_fit, h = 10)
 accuracy(beer_fc, aus_production)
 ```
@@ -232,10 +234,10 @@ $$\begin{aligned}
 
 ## Prediction interval accuracy {.code-small}
 
-```{r winkler-accuracy, echo=TRUE}
-  # Compute interval accuracy
-beer_fc |> accuracy(aus_production,
-   measures = interval_accuracy_measures) 
+```{r}
+#| label: winkler-accuracy
+beer_fc |>
+  accuracy(aus_production, measures = interval_accuracy_measures)
 ```
 
 
@@ -263,13 +265,17 @@ $$p_j = \int_{-\infty}^{\infty} \left(G_j(x) - F_j(x)\right)^2dx,$$
 
 ## Continuous Ranked Probability Score (CRPS)
 
-```{r crps,echo=FALSE, out.width='60%', fig.align='center'}
+```{r}
+#| label: crps
+#| echo: false
+#| out-width: 60%
 knitr::include_graphics("figs/crps.jpg")
 ```
 
 ## Quantile score and CRPS {.code-small}
 
-```{r qs-crps-accuracy, echo=TRUE}
+```{r}
+#| label: qs-crps-accuracy
 beer_fc |>
   accuracy(aus_production, list(measures=distribution_accuracy_measures))
 ```
@@ -277,10 +283,8 @@ beer_fc |>
 
 ## Quantile score {.code-small}
 
-```{r qs-accuracy, echo=TRUE}
+```{r}
+#| label: qs-accuracy
 beer_fc |>
   accuracy(aus_production, list(qs=quantile_score), probs = .9)
 ```
-
-
-
