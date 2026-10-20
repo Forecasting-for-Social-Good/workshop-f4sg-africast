@@ -224,6 +224,17 @@ With $d=2$ the MA(1) model is for the second differences $y_t - 2y_{t-1} + y_{t-
 $$y_t = 2y_{t-1} - y_{t-2} - 0.661 \varepsilon_{t-1} + \varepsilon_t, \qquad \varepsilon_t \sim \text{NID}(0, 4.06\times10^9)$$
 :::
 
+## Example: National populations
+
+::: {.poll #population-forecast-shape}
+Australia's population model is ARIMA(0,2,1) with no constant. What shape will its long-term forecasts take?
+
+- [ ] Flat line
+- [x] Straight line
+- [ ] Quadratic curve
+- [ ] Decay to zero
+:::
+
 ## Understanding ARIMA models
 
 $c$ is the constant in the ARMA model for the $d$-times differenced series.
@@ -264,35 +275,28 @@ fit_pop |>
 * Use stepwise search to traverse model space.
 :::
 
-::: {.fragment}
+## How does ARIMA() work?
+
 ::: {.block}
 $$\text{AICc} = -2 \log(L) + 2(p+q+k+1)\left[1 + \frac{(p+q+k+2)}{T-p-q-k-2}\right]$$
 where $L$ is the maximised likelihood fitted to the *differenced* data,
 $k=1$ if $c\neq 0$ and $k=0$ otherwise.
 :::
 
-Note: Can't compare AICc for different values of $d$.
+::: {.poll #aicc-different-d prompt="Can you choose between ARIMA(2,1,0) and ARIMA(1,0,1) by comparing their AICc?"}
+- [ ] Yes
+- [x] No
 :::
 
 ## How does ARIMA() work?
 
-Step 1:
-: Select current model (with smallest AICc) from:\
-ARIMA$(2,d,2)$, ARIMA$(0,d,0)$, ARIMA$(1,d,0)$, ARIMA$(0,d,1)$
+1. Fit ARIMA$(2,d,2)$, ARIMA$(0,d,0)$, ARIMA$(1,d,0)$ and ARIMA$(0,d,1)$. The lowest AICc becomes the current model.
+2. Fit variations of the current model: vary $p$, $q$ or both by $\pm1$, and include/exclude $c$. The lowest AICc becomes the current model.
+3. [Repeat step 2 until no lower AICc can be found.]{.alert}
 
-::: {.fragment}
-Step 2:
-: Consider variations of current model:
-
-    * vary one of $p$, $q$ from current model by $\pm1$;
-    * $p$, $q$ both vary from current model by $\pm1$;
-    * include/exclude $c$ from current model.
-
-Model with lowest AICc becomes current model.
-:::
-
-::: {.fragment}
-[Repeat Step 2 until no lower AICc can be found.]{.alert}
+::: {.poll #stepwise-optimal prompt="Is this search guaranteed to find the model with the lowest AICc?"}
+- [ ] Yes
+- [x] No
 :::
 
 ```{r}
@@ -447,6 +451,8 @@ plot_grid_step(4)
 **Step 2 (repeated):** fit the neighbours of ARIMA$(4,d,2)$.
 
 None has a lower AICc, so the search stops and ARIMA$(4,d,2)$ is selected.
+
+The search is local, so a model with a lower AICc may exist elsewhere in the grid.
 :::
 ::::
 
