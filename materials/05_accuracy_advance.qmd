@@ -396,6 +396,25 @@ augment(fit) |>
   labs(x = "Trading day", y = "Residual", title = "Residuals from naïve method")
 ```
 
+## Constant variance? {.nostretch}
+
+```{r}
+#| label: fb-resid-poll
+#| dependson: fb-augment
+#| echo: false
+#| fig-height: 2
+augment(fit) |>
+  autoplot(.resid) +
+  labs(x = "Trading day", y = "Residual")
+```
+
+::: {.poll #resid-variance}
+Do these residuals have constant variance?
+
+- [ ] Yes
+- [x] No
+:::
+
 ## Histogram of residuals
 
 ```{r}
@@ -408,6 +427,26 @@ augment(fit) |>
   labs(x = "Residual", y = "Count", title = "Histogram of residuals")
 ```
 
+## Normally distributed? {.nostretch}
+
+```{r}
+#| label: fb-resid-hist-poll
+#| dependson: fb-augment
+#| echo: false
+#| fig-height: 2
+augment(fit) |>
+  ggplot(aes(x = .resid)) +
+  geom_histogram(bins = 150) +
+  labs(x = "Residual", y = "Count")
+```
+
+::: {.poll #resid-normal}
+Do these residuals look normally distributed?
+
+- [ ] Yes
+- [x] No
+:::
+
 ## ACF of residuals
 
 ```{r}
@@ -418,6 +457,26 @@ augment(fit) |>
   autoplot() +
   labs(x = "Lag", y = "ACF", title = "ACF of residuals")
 ```
+
+## White noise? {.nostretch}
+
+```{r}
+#| label: fb-resid-acf-poll
+#| dependson: fb-augment
+#| echo: false
+#| fig-height: 2
+augment(fit) |>
+  ACF(.resid) |>
+  autoplot() +
+  labs(x = "Lag", y = "ACF")
+```
+
+::: {.poll #resid-white-noise}
+Do these residuals look like white noise?
+
+- [x] Yes
+- [ ] No
+:::
 
 ## Checking the ACF of residuals
 
