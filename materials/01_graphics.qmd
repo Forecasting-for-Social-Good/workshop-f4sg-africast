@@ -373,7 +373,9 @@ aus_production |>
   labs(y = "GWh", title = "Australian electricity production")
 ```
 
-::: {.poll #pattern-electricity prompt="Australian electricity production: seasonal, cyclic, both or neither?"}
+::: {.poll #pattern-electricity}
+Australian electricity production: seasonal, cyclic, both or neither?
+
 - [x] Seasonal
 - [ ] Cyclic
 - [ ] Both
@@ -389,7 +391,9 @@ aus_production |>
        x = "Year", y = "million units")
 ```
 
-::: {.poll #pattern-bricks prompt="Australian clay brick production: seasonal, cyclic, both or neither?"}
+::: {.poll #pattern-bricks}
+Australian clay brick production: seasonal, cyclic, both or neither?
+
 - [ ] Seasonal
 - [ ] Cyclic
 - [x] Both
@@ -405,7 +409,9 @@ us_employment |>
   labs(title = "Retail employment, USA", y = "Million people")
 ```
 
-::: {.poll #pattern-retail prompt="US retail employment: seasonal, cyclic, both or neither?"}
+::: {.poll #pattern-retail}
+US retail employment: seasonal, cyclic, both or neither?
+
 - [ ] Seasonal
 - [ ] Cyclic
 - [x] Both
@@ -421,7 +427,9 @@ gafa_stock |>
   labs(title = "Amazon closing stock price", x = "Day", y = "$")
 ```
 
-::: {.poll #pattern-amazon prompt="Amazon closing stock price: seasonal, cyclic, both or neither?"}
+::: {.poll #pattern-amazon}
+Amazon closing stock price: seasonal, cyclic, both or neither?
+
 - [ ] Seasonal
 - [ ] Cyclic
 - [ ] Both
@@ -437,7 +445,9 @@ pelt |>
        x = "Year", y = "Number trapped")
 ```
 
-::: {.poll #pattern-lynx prompt="Annual Canadian lynx trappings: seasonal, cyclic, both or neither?"}
+::: {.poll #pattern-lynx}
+Annual Canadian lynx trappings: seasonal, cyclic, both or neither?
+
 - [ ] Seasonal
 - [x] Cyclic
 - [ ] Both
@@ -655,7 +665,9 @@ acfc <- ACF(mink, value) |> autoplot() + labs(x = "") + labs(title = "C") + ylim
 (tp1 | tp2 | tp3 | tp4) / (acfa | acfb | acfc | acfd)
 ```
 
-::: {.poll #acf-match prompt="Match each time series (1-4) to its ACF (A-D)"}
+::: {.poll #acf-match}
+Match each time series (1-4) to its ACF (A-D)
+
 - [ ] 1A, 2B, 3C, 4D
 - [x] 1B, 2A, 3D, 4C
 - [ ] 1B, 2D, 3A, 4C
@@ -729,7 +741,9 @@ pigs |>
   autoplot()
 ```
 
-::: {.poll #pigs-white-noise prompt="Is the number of pigs slaughtered a white noise series?"}
+::: {.poll #pigs-white-noise}
+Is the number of pigs slaughtered a white noise series?
+
 - [ ] Yes
 - [x] No
 :::

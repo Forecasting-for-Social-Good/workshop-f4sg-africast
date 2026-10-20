@@ -51,7 +51,9 @@ gafa_stock |>
   labs(x = "Date", y = "Closing price ($US)", title = "Google closing stock price")
 ```
 
-::: {.poll #stationary-goog prompt="Is the Google closing stock price stationary?"}
+::: {.poll #stationary-goog}
+Is the Google closing stock price stationary?
+
 - [ ] Yes
 - [x] No
 :::
@@ -67,7 +69,9 @@ gafa_stock |>
   labs(x = "Date", y = "Change ($US)", title = "Daily change in Google closing stock price")
 ```
 
-::: {.poll #stationary-goog-diff prompt="Is the daily change in Google closing stock price stationary?"}
+::: {.poll #stationary-goog-diff}
+Is the daily change in Google closing stock price stationary?
+
 - [x] Yes
 - [ ] No
 :::
@@ -91,7 +95,9 @@ tibble(
   labs(x = "time", y = "", title = "20 simulated random walks")
 ```
 
-::: {.poll #random-walk-stationary prompt="Is a random walk stationary?"}
+::: {.poll #random-walk-stationary}
+Is a random walk stationary?
+
 - [ ] Yes
 - [x] No
 :::
@@ -224,17 +230,6 @@ With $d=2$ the MA(1) model is for the second differences $y_t - 2y_{t-1} + y_{t-
 $$y_t = 2y_{t-1} - y_{t-2} - 0.661 \varepsilon_{t-1} + \varepsilon_t, \qquad \varepsilon_t \sim \text{NID}(0, 4.06\times10^9)$$
 :::
 
-## Example: National populations
-
-::: {.poll #population-forecast-shape}
-Australia's population model is ARIMA(0,2,1) with no constant. What shape will its long-term forecasts take?
-
-- [ ] Flat line
-- [x] Straight line
-- [ ] Quadratic curve
-- [ ] Decay to zero
-:::
-
 ## Understanding ARIMA models
 
 $c$ is the constant in the ARMA model for the $d$-times differenced series.
@@ -245,6 +240,17 @@ $c$ is the constant in the ARMA model for the $d$-times differenced series.
 * If $c\ne0$ and $d=0$, the long-term forecasts will go to the mean of the data.
 * If $c\ne0$ and $d=1$, the long-term forecasts will follow a straight line.
 * If $c\ne0$ and $d=2$, the long-term forecasts will follow a quadratic trend.
+
+## Example: National populations
+
+::: {.poll #population-forecast-shape}
+Australia's population model is ARIMA(0,2,1) with no constant. What shape will its long-term forecasts take?
+
+- [ ] Flat line
+- [x] Straight line
+- [ ] Quadratic curve
+- [ ] Decay to zero
+:::
 
 ## Understanding ARIMA models
 
@@ -283,7 +289,9 @@ where $L$ is the maximised likelihood fitted to the *differenced* data,
 $k=1$ if $c\neq 0$ and $k=0$ otherwise.
 :::
 
-::: {.poll #aicc-different-d prompt="Can you choose between ARIMA(2,1,0) and ARIMA(1,0,1) by comparing their AICc?"}
+::: {.poll #aicc-different-d}
+Can you choose between ARIMA(2,1,0) and ARIMA(1,0,1) by comparing their AICc?
+
 - [ ] Yes
 - [x] No
 :::
@@ -294,7 +302,9 @@ $k=1$ if $c\neq 0$ and $k=0$ otherwise.
 2. Fit variations of the current model: vary $p$, $q$ or both by $\pm1$, and include/exclude $c$. The lowest AICc becomes the current model.
 3. [Repeat step 2 until no lower AICc can be found.]{.alert}
 
-::: {.poll #stepwise-optimal prompt="Is this search guaranteed to find the model with the lowest AICc?"}
+::: {.poll #stepwise-optimal}
+Is this search guaranteed to find the model with the lowest AICc?
+
 - [ ] Yes
 - [x] No
 :::
