@@ -208,7 +208,8 @@ augment(fit)
 augment(fit) |>
   ggplot(aes(x = trading_day)) +
   geom_line(aes(y = Close, colour = "Data")) +
-  geom_line(aes(y = .fitted, colour = "Fitted"))
+  geom_line(aes(y = .fitted, colour = "Fitted")) +
+  labs(colour = NULL)
 ```
 
 ## Facebook closing stock price
@@ -221,7 +222,8 @@ augment(fit) |>
   filter(trading_day > 1100) |>
   ggplot(aes(x = trading_day)) +
   geom_line(aes(y = Close, colour = "Data")) +
-  geom_line(aes(y = .fitted, colour = "Fitted"))
+  geom_line(aes(y = .fitted, colour = "Fitted")) +
+  labs(colour = NULL)
 ```
 
 ## Facebook closing stock price
@@ -293,6 +295,7 @@ $\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$ $\qquad$ where $\ell=
 
 ```{r}
 #| label: fb-lb-acf
+#| dependson: fb-augment
 #| echo: false
 #| fig-height: 1.65
 augment(fit) |>
