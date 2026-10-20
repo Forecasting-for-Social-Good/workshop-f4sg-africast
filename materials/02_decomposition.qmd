@@ -185,6 +185,12 @@ food |> autoplot(box_cox(Turnover, 0.0895)) +
 
 # Adjusting time series
 
+## Adjusting time series
+
+::: {.wordcloud #useful-adjustments max-words=3 max-answers=3}
+Besides transformations, what adjustments could make a time series easier to forecast?
+:::
+
 ## Per capita adjustments
 
 ```{r gdp-per-capita}
@@ -334,6 +340,28 @@ us_retail_employment |>
   labs(y = "Persons (thousands)", title = "Total employment in US retail")
 ```
 
+
+## US Retail Employment
+
+::: {.poll #retail-peak-month}
+In which month does US retail employment peak?
+
+- [ ] March
+- [ ] July
+- [ ] October
+- [x] December
+:::
+
+## US Retail Employment
+
+::: {.poll #retail-peak-change}
+How is the December peak in US retail employment changing over time?
+
+- [ ] Getting larger
+- [ ] Getting smaller
+- [ ] Staying the same
+- [x] Grew, then shrank
+:::
 
 ## US Retail Employment
 
@@ -540,12 +568,42 @@ tourism |>
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1))
 ```
 
+## Seasonal and trend strength
+
+:::: {.columns}
+::: {.column width="45%"}
+```{r}
+#| label: features-plot-small
+#| echo: false
+#| fig-width: 5
+#| fig-height: 5
+tourism |>
+  features(Trips, feat_stl) |>
+  ggplot(aes(x = trend_strength, y = seasonal_strength_year, col = Purpose)) +
+  geom_point() + facet_wrap(vars(State)) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1)) +
+  theme(legend.position = "bottom")
+```
+
 ::: {.fragment}
-::: {.alertblock .absolute top="530px" left="860px" width="340px" style="font-size:0.7em;"}
+::: {.alertblock style="font-size:0.7em;"}
 * Holidays more seasonal than other travel.
 * WA series tend to have the strongest trends.
 :::
 :::
+:::
+
+::: {.column width="55%"}
+::: {.poll #most-seasonal-purpose}
+Which travel purpose is most seasonal?
+
+- [ ] Business
+- [x] Holiday
+- [ ] Other
+- [ ] Visiting
+:::
+:::
+::::
 
 ## Most seasonal and most trended series {.code-small}
 
