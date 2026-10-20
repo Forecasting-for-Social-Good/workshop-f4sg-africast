@@ -247,7 +247,7 @@ $$\begin{aligned}
 
 * $k=$ integer part of $(h-1)/m$.
 * $\sum_i s_i \approx 0$.
-* Parameters:&nbsp; $0\le \alpha\le 1$,&nbsp; $0\le \beta^*\le 1$,&nbsp; $0\le \gamma\le 1-\alpha$&nbsp;  and $m=$  period of seasonality (e.g. $m=4$ for quarterly data).
+* Parameters:&nbsp; $0\le \alpha\le 1$,&nbsp; $0\le \beta\le \alpha$,&nbsp; $0\le \gamma\le 1-\alpha$&nbsp;  and $m=$  period of seasonality (e.g. $m=4$ for quarterly data).
 
 ## ETS(M,A,M): Holt-Winters multiplicative method
 
@@ -263,7 +263,7 @@ $$\begin{aligned}
 
 * $k$ is integer part of $(h-1)/m$.
 * $\sum_i s_i \approx m$.
-* Parameters:&nbsp; $0\le \alpha\le 1$,&nbsp; $0\le \beta^*\le 1$,&nbsp; $0\le \gamma\le 1-\alpha$&nbsp;  and $m=$  period of seasonality (e.g. $m=4$ for quarterly data).
+* Parameters:&nbsp; $0\le \alpha\le 1$,&nbsp; $0\le \beta\le \alpha$,&nbsp; $0\le \gamma\le 1-\alpha$&nbsp;  and $m=$  period of seasonality (e.g. $m=4$ for quarterly data).
 
 ## Example: Australian holiday tourism
 
