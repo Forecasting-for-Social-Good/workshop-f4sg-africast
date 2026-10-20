@@ -28,7 +28,7 @@ antidiabetic_drug_sale <- PBS |>
 knitr::include_graphics("figs/f_test.jpg")
 ```
 
-## Time series cross-validation
+## Forecasting from a rolling origin
 
 ```{r}
 #| label: f-future
@@ -80,7 +80,7 @@ and `tile_tsibble()`.
 
 For time series cross-validation, stretching windows are most commonly used.
 
-## Time series cross-validation {.code-small}
+## Stretching windows {.code-small}
 
 Monthly antidiabetic drug sales in Australia (\$ millions), from 2000.
 Stretch with a minimum length of 24, growing by 1 each step.
@@ -102,7 +102,7 @@ drug_sale_tcsv <- train |>
 drug_sale_tcsv |> print(n = 4)
 ```
 
-## Time series cross-validation {.code-small}
+## Fit models to each window {.code-small}
 
 Estimate seasonal naïve, naïve and drift models for each window.
 
@@ -122,7 +122,7 @@ drug_fit_tr <- drug_sale_tcsv |>
 print(drug_fit_tr, n = 4)
 ```
 
-## Time series cross-validation {.code-small}
+## Forecasts from each window {.code-small}
 
 Produce 12-step-ahead forecasts from each model and window.
 
@@ -138,7 +138,7 @@ drug_fc_tr <- drug_fit_tr |>
 drug_fc_tr |> print(n = 4)
 ```
 
-## Time series cross-validation {.code-small}
+## Cross-validated accuracy {.code-small}
 
 ```{r}
 #| label: cv-accuracy
@@ -188,7 +188,7 @@ fb_stock <- gafa_stock |>
 fb_stock |> autoplot(Close)
 ```
 
-## Facebook closing stock price {.code-small}
+## Naïve model of Facebook's stock price {.code-small}
 
 ```{r}
 #| label: fb-augment
@@ -199,7 +199,7 @@ fit <- fb_stock |> model(NAIVE(Close))
 augment(fit)
 ```
 
-## Facebook closing stock price
+## Fitted values
 
 ```{r}
 #| label: fb-fitted
@@ -212,7 +212,7 @@ augment(fit) |>
   labs(colour = NULL)
 ```
 
-## Facebook closing stock price
+## Fitted values (last 158 trading days)
 
 ```{r}
 #| label: fb-fitted-zoom
@@ -226,7 +226,7 @@ augment(fit) |>
   labs(colour = NULL)
 ```
 
-## Facebook closing stock price
+## Residuals over time
 
 ```{r}
 #| label: fb-resid
@@ -236,7 +236,7 @@ augment(fit) |>
   labs(x = "Day", y = "", title = "Residuals from naïve method")
 ```
 
-## Facebook closing stock price
+## Histogram of residuals
 
 ```{r}
 #| label: fb-resid-hist
@@ -248,7 +248,7 @@ augment(fit) |>
   labs(title = "Histogram of residuals")
 ```
 
-## Facebook closing stock price
+## ACF of residuals
 
 ```{r}
 #| label: fb-resid-acf
@@ -258,7 +258,7 @@ augment(fit) |>
   autoplot() + labs(title = "ACF of residuals")
 ```
 
-## ACF of residuals
+## Checking the ACF of residuals
 
 * We assume that the residuals are white noise (uncorrelated, mean zero, constant variance). If they aren't, then there is information left in  the residuals that should be used in computing forecasts.
 
@@ -290,7 +290,7 @@ $\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$ $\qquad$ where $\ell=
 * If data are WN and $T$ large, $Q \sim \chi^2$ with $\ell$ degrees of freedom.
 * For residuals of a model with $K$ estimated parameters, use $\ell - K$ degrees of freedom (`dof` argument).
 
-## Ljung-Box test {.code-small}
+## Ljung-Box test of the naïve residuals {.code-small}
 
 
 ```{r}
