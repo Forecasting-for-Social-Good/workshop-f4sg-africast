@@ -85,7 +85,7 @@ austa <- readxl::read_excel("data/340101.xlsx", sheet = "Data1", skip = 9) |>
 fit <- austa |>
   filter(Month < yearmonth("2018 Jan")) |>
   model(ETS(Visitors))
-# Product forecasts
+# Produce forecasts
 fc <- forecast(fit, h = 48) |>
   mutate(Month = as.Date(Month))
 # Simulate 100 future sample paths
@@ -362,7 +362,7 @@ knitr::include_graphics("figs/forecasts_probabilistic_perspective.png")
 - Google stock price tomorrow
 - Google stock price in 6 months time
 - maximum temperature tomorrow
-- exchange rate of \$US/AUS next week
+- \$AUD/USD exchange rate next week
 - total sales of drugs in Australian pharmacies next month
 :::
 
@@ -375,7 +375,7 @@ knitr::include_graphics("figs/forecasts_probabilistic_perspective.png")
 - Google stock price tomorrow
 - Google stock price in 6 months time
 - maximum temperature tomorrow
-- exchange rate of \$US/AUS next week
+- \$AUD/USD exchange rate next week
 - total sales of drugs in Australian pharmacies next month
 :::
 
@@ -383,11 +383,11 @@ knitr::include_graphics("figs/forecasts_probabilistic_perspective.png")
 
 Something is easier to forecast if:
 
- - we have a good understanding of the factors that contribute to it
+ - we have a good understanding of the factors that contribute to it;
  - there is lots of data available;
- - the forecasts cannot affect the thing we are trying to forecast.
- - there is relatively low natural/unexplainable random variation.
- - the future is somewhat similar to the past
+ - the forecasts cannot affect the thing we are trying to forecast;
+ - there is relatively low natural/unexplainable random variation;
+ - the future is somewhat similar to the past.
 
 
 # Benchmark methods
