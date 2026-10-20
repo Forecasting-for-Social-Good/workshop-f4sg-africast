@@ -222,7 +222,9 @@ aus_economy |>
 
 ## Example: Nigerian population {.code-small}
 
-```{r nigeria-aicc, echo=TRUE}
+:::: {.columns}
+::: {.column width="68%"}
+```{r nigeria-aicc, echo=TRUE, eval=FALSE}
 global_economy |>
   filter(Country == "Nigeria") |>
   mutate(Pop = Population / 1e6) |>
@@ -234,6 +236,13 @@ global_economy |>
   glance() |>
   select(.model, AICc)
 ```
+:::
+
+::: {.column width="32%"}
+```{r nigeria-aicc-output, ref.label="nigeria-aicc", echo=FALSE}
+```
+:::
+::::
 
 ::: {.poll #nigeria-best-ets prompt="Which ETS model is best for Nigeria's population?"}
 - [ ] ETS(A,N,N)
@@ -462,6 +471,7 @@ vic_cafe |> autoplot(box_cox(Turnover, lambda = 0.2))
 ## Forecasting with transformations {.code-small}
 
 ```{r cafe-log-aicc}
+#| output-location: column
 vic_cafe |>
   model(
     raw = ETS(Turnover),
