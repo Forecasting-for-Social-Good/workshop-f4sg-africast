@@ -257,7 +257,7 @@ There are a series of plots that should be produced in order to check different 
 Useful for spotting outliers and whether the linear model was
 appropriate.
 
-* Scatterplot of residuals $\varepsilon_t$ against each predictor $x_{j,t}$.
+* Scatterplot of residuals $e_t$ against each predictor $x_{j,t}$.
 
 * Scatterplot residuals against the fitted values $\hat y_t$
 
@@ -325,7 +325,7 @@ where $k=$ no. predictors and $T=$ no. observations.
 
 ::: {.center-text}
 $\displaystyle
-\hat{\sigma}^2 = \frac{1}{T-k-1}\sum_{t=1}^T \varepsilon_t^2$
+\hat{\sigma}^2 = \frac{1}{T-k-1}\sum_{t=1}^T e_t^2$
 :::
 :::
 :::
