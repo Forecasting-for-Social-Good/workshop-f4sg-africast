@@ -67,7 +67,11 @@ $$
 * There are many ways that a straight line can be laid on the scatter
 * Best known criterion is called Ordinary Least Squares (OLS)
 
-```{r SLR, echo=FALSE, fig.align='center', out.width= "70%"}
+```{r}
+#| label: SLR
+#| echo: false
+#| fig-align: center
+#| out-width: "70%"
 knitr::include_graphics("figs/SLRpop1-1.png")
 ```
 
@@ -87,7 +91,10 @@ $$
 
 ## Example: US consumption expenditure
 
-```{r ConsInc, echo=TRUE, fig.height=3.5}
+```{r}
+#| label: ConsInc
+#| echo: true
+#| fig-height: 3.5
 us_change |>
   pivot_longer(c(Consumption, Income), names_to = "Measure", values_to = "Change") |>
   autoplot(Change) +
@@ -96,7 +103,9 @@ us_change |>
 
 ## Example: US consumption expenditure
 
-```{r ConsInc2, echo=FALSE}
+```{r}
+#| label: ConsInc2
+#| echo: false
 us_change |>
   ggplot(aes(x=Income, y=Consumption)) +
     labs(x = "Income (quarterly % change)", y = "Consumption (quarterly % change)") +
@@ -106,7 +115,8 @@ us_change |>
 
 ## Example: US consumption expenditure {.code-small}
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
 fit_cons <- us_change |>
   model(lm = TSLM(Consumption ~ Income))
 report(fit_cons)
@@ -173,7 +183,9 @@ $$
 
 ## Example: US consumption expenditure
 
-```{r MultiPredictors, echo=FALSE}
+```{r}
+#| label: MultiPredictors
+#| echo: false
 us_change |>
   pivot_longer(-Time, names_to = "Measure", values_to = "Change") |>
   ggplot(aes(x = Time, y = Change, colour = Measure)) +
@@ -185,7 +197,9 @@ us_change |>
 
 ## Example: US consumption expenditure
 
-```{r ScatterMatrix, echo=FALSE}
+```{r}
+#| label: ScatterMatrix
+#| echo: false
 us_change |>
   as_tibble() |>
   select(-Time) |>
@@ -194,7 +208,9 @@ us_change |>
 
 ## Example: US consumption expenditure {.code-tiny}
 
-```{r usestim, echo=TRUE}
+```{r}
+#| label: usestim
+#| echo: true
 fit_consMR <- us_change |>
   model(lm = TSLM(Consumption ~ Income + Production + Unemployment + Savings))
 report(fit_consMR)
@@ -203,7 +219,9 @@ report(fit_consMR)
 
 ## Example: US consumption expenditure
 
-```{r usfitted1, echo=FALSE}
+```{r}
+#| label: usfitted1
+#| echo: false
 augment(fit_consMR) |>
   ggplot(aes(x = Time)) +
   geom_line(aes(y = Consumption, colour = "Data")) +
@@ -214,7 +232,11 @@ augment(fit_consMR) |>
 
 ## Example: US consumption expenditure
 
-```{r usfitted2, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
+#| label: usfitted2
+#| echo: false
+#| message: false
+#| warning: false
 augment(fit_consMR) |>
   ggplot(aes(x=.fitted, y=Consumption)) +
     geom_point() +
@@ -246,7 +268,8 @@ There are a series of plots that should be produced in order to check different 
 
 ## Example: US consumption expenditure
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
 gg_tsresiduals(fit_consMR)
 ```
 
@@ -264,7 +287,9 @@ no values too far from the band and no patterns such as curvature or increasing 
 
 ## Example: US consumption expenditure {.code-small}
 
-```{r scatterplot-residuals, fig.height=4.5}
+```{r}
+#| label: scatterplot-residuals
+#| fig-height: 4.5
 us_change |>
   left_join(residuals(fit_consMR), by = "Time") |>
   pivot_longer(c(Income, Production, Savings, Unemployment)) |>
@@ -362,7 +387,8 @@ As with the AIC, the AIC$_{\text{C}}$ should be minimised.
 
 ## Comparing regression models
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
 glance(fit_consMR) |>
   select(r_squared, adj_r_squared, AIC, AICc, CV)
 ```
@@ -415,7 +441,9 @@ $$
 
 ## US Consumption
 
-```{r usconsumptionf, echo=TRUE}
+```{r}
+#| label: usconsumptionf
+#| echo: true
 fit_consBest <- us_change |>
   model(
     TSLM(Consumption ~ Income + Savings + Unemployment)
@@ -433,7 +461,10 @@ fc <- forecast(fit_consBest, new_data = future_scenarios)
 
 ## US Consumption
 
-```{r usconsumptionf2, echo=TRUE, fig.height=3.5}
+```{r}
+#| label: usconsumptionf2
+#| echo: true
+#| fig-height: 3.5
 us_change |> autoplot(Consumption) +
   autolayer(fc) +
   labs(y = "% change in US consumption")
@@ -445,7 +476,10 @@ us_change |> autoplot(Consumption) +
 
 Check out [https://www.tylervigen.com/spurious-correlations](https://www.tylervigen.com/spurious-correlations)
 
-```{r,echo=FALSE, fig.align='center', out.width="80%"}
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "80%"
 knitr::include_graphics("figs/corr_not_caus.jpeg")
 ```
 
@@ -620,13 +654,16 @@ $$\begin{aligned}
 
 ## Example: Insurance quotes and TV adverts
 
-```{r tvadvertdata2}
+```{r}
+#| label: tvadvertdata2
 insurance
 ```
 
 ## Example: Insurance quotes and TV adverts
 
-```{r tvadvert, echo=FALSE}
+```{r}
+#| label: tvadvert
+#| echo: false
 insurance |>
   pivot_longer(c(Quotes, TVadverts)) |>
   ggplot(aes(x = Month, y = value)) +
@@ -637,7 +674,9 @@ insurance |>
 
 ## Example: Insurance quotes and TV adverts
 
-```{r tvadvertpairs, echo=FALSE}
+```{r}
+#| label: tvadvertpairs
+#| echo: false
 insurance |>
   mutate(
     lag1 = lag(TVadverts),
@@ -655,7 +694,8 @@ insurance |>
 
 ## Example: Insurance quotes and TV adverts {.code-small}
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
 fit <- insurance |>
   # Restrict data so models use same fitting period
   mutate(Quotes = c(NA, NA, NA, Quotes[4:40])) |>
@@ -675,10 +715,13 @@ fit <- insurance |>
 
 ## Example: Insurance quotes and TV adverts
 
-```{r, echo=TRUE, results = 'hide'}
+```{r}
+#| echo: true
+#| results: hide
 glance(fit)
 ```
-```{r, echo = FALSE}
+```{r}
+#| echo: false
 glance(fit) |>
   transmute(`Lag order` = 0:3, sigma2, log_lik, AIC, AICc, BIC) |>
   knitr::kable()
@@ -686,14 +729,19 @@ glance(fit) |>
 
 ## Example: Insurance quotes and TV adverts {.code-small}
 
-```{r tvadvertagain, echo=TRUE}
+```{r}
+#| label: tvadvertagain
+#| echo: true
 # Re-fit to all data
 fit <- insurance |>
   model(ARIMA(Quotes ~ TVadverts + lag(TVadverts) + pdq(d = 0)))
 report(fit)
 ```
 
-```{r tvadvertparam, echo=FALSE, dependson='tvadvertagain'}
+```{r}
+#| label: tvadvertparam
+#| echo: false
+#| dependson: tvadvertagain
 # Store coefficients
 cf <- rlang::set_names(tidy(fit)$estimate, tidy(fit)$term)
 phi1 <- cf["ar1"]
@@ -718,7 +766,9 @@ $$\begin{aligned}
 
 ## Example: Insurance quotes and TV adverts
 
-```{r, echo=TRUE, fig.height=3}
+```{r}
+#| echo: true
+#| fig-height: 3
 future_adverts <- scenarios(
   `10 adverts` = new_data(insurance, 20) |> mutate(TVadverts = 10),
   `8 adverts` = new_data(insurance, 20) |> mutate(TVadverts = 8),
