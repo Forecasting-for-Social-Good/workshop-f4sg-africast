@@ -552,7 +552,7 @@ Continue for lags 5, 6, ... The seasonal lags 8, 12 and 16 also align the same q
 :::
 
 ::: {.morph-step .fragment .fade-in-then-out}
-The ACF plot. Dashed blue lines: the range expected for white noise.
+The ACF plot. Dashed blue lines indicate 95% significance thresholds to help identify white noise.
 :::
 
 ::::
