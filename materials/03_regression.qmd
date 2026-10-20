@@ -378,6 +378,16 @@ $R^2 = \frac{\sum(\hat{y}_t - \bar{y})^2}{\sum(y_t-\bar{y})^2}$
 
 * It is the proportion of variance accounted for (explained) by the predictors.
 
+## Adding predictors
+
+::: {.poll #r-squared-useless-predictor}
+Adding a useless predictor to a regression model makes R²…
+
+- [x] Increase or stay the same
+- [ ] Decrease
+- [ ] Change unpredictably
+:::
+
 ## Comparing regression models {style="font-size:0.78em"}
 
 However …
