@@ -52,6 +52,17 @@ Choose the model whose forecasts lead to better decisions, such as:
 * Fallback: choose the most accurate forecast.
 :::
 
+## Which error costs more?
+
+::: {.poll #error-cost}
+In your work, which forecast error is more costly?
+
+- Forecasting too high (waste, idle staff, excess stock)
+- Forecasting too low (stock-outs, unmet need, overloaded services)
+- About the same
+- It depends on the situation
+:::
+
 ## A perfect fit
 
 ::: {.poll #perfect-fit}
