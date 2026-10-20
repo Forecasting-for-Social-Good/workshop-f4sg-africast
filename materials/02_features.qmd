@@ -14,7 +14,6 @@ live-questions:
 * Transforming time series
 * Adjusting time series
 * Time series decompositions
-* Multiple seasonality
 * STL Features
 * Dimension reduction for features
 
@@ -492,29 +491,6 @@ dcmp |> gg_subseries(season_year)
 autoplot(dcmp, trend, scale_bars = FALSE) +
   autolayer(holidays, alpha = 0.4)
 ```
-
-
-# Multiple seasonality
-
-## Multiple seasonality {.code-small}
-
-```r
-vic_elec |>
-  model(STL(Demand)) |>
-  components() |>
-  autoplot()
-```
-
-```{r vic_elec, echo=FALSE}
-png("figs/vic_elec_stl.png", width = 18, height = 18, res = 300, units = "cm", type = "cairo-png")
-vic_elec |>
-  model(STL(Demand)) |>
-  components() |>
-  autoplot()
-crop::dev.off.crop("figs/vic_elec_stl.png")
-```
-
-![](figs/vic_elec_stl.png){.absolute top="20px" right="40px" height="620px"}
 
 
 # STL Features
