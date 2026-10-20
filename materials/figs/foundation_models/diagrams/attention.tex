@@ -1,0 +1,12 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{preamble}
+\begin{document}
+\begin{tikzpicture}[>=stealth,every node/.style={font=\fontsize{9}{10}\selectfont,align=center},
+box/.style={draw=MonashBlue,fill=MonashBlue!8,text width=3.3cm,minimum height=.9cm}]
+\node[box] (a) at (0,0) {An earlier part\\of the tourism history};
+\node[box] (b) at (4.5,0) {Another part\\of the history};
+\node[box] (c) at (9,0) {The most recent\\observations};
+\node[box,fill=Orange!12,text width=6cm] (out) at (4.5,-1.8) {Attention forms a weighted combination};
+\draw[->] (a)--(out);\draw[->] (b)--(out);\draw[->] (c)--(out);
+\end{tikzpicture}
+\end{document}

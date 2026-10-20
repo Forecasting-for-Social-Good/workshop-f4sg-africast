@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 980 310" width="980" height="310">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F2A36"/></marker>
+<marker id="ac" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B5570F"/></marker>
+</defs>
+<rect x="222" y="16" width="538" height="298" rx="14" fill="#EEF4DF" stroke="#D9E2C8"/>
+<text x="236" y="38" font-family="'Fira Sans', 'Helvetica Neue', Arial, sans-serif" font-size="10" fill="#6B7480" font-weight="bold" letter-spacing="1">MODELLING CYCLE</text>
+<path d="M184,165 H232" fill="none" stroke="#1F2A36" stroke-width="1.5" stroke-linecap="round" marker-end="url(#ah)"/>
+<path d="M320,140 C320,96 360,66 400,64" fill="none" stroke="#B5570F" stroke-width="1.5" stroke-linecap="round" marker-end="url(#ac)"/>
+<path d="M574,64 C620,66 660,96 660,136" fill="none" stroke="#B5570F" stroke-width="1.5" stroke-linecap="round" marker-end="url(#ac)"/>
+<path d="M660,190 C660,234 620,264 580,266" fill="none" stroke="#B5570F" stroke-width="1.5" stroke-linecap="round" marker-end="url(#ac)"/>
+<path d="M406,266 C360,264 320,234 320,194" fill="none" stroke="#B5570F" stroke-width="1.5" stroke-linecap="round" marker-end="url(#ac)"/>
+<path d="M744,165 H810" fill="none" stroke="#1F2A36" stroke-width="1.5" stroke-linecap="round" marker-end="url(#ah)"/>
+<rect x="436" y="143" width="108" height="44" rx="22" fill="#FBFCF7" stroke="#D9E2C8"/>
+<text x="490" y="170" font-family="'Source Code Pro', 'Fira Code', Menlo, Consolas, monospace" font-size="13" fill="#1F2A36" font-weight="bold" text-anchor="middle">fabletools</text>
+<rect x="16" y="140" width="168" height="50" rx="6" fill="#FBFCF7" stroke="#D9E2C8"/>
+<text x="100" y="162" font-family="'Fira Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2A36" font-weight="bold" text-anchor="middle">Prepare</text>
+<text x="100" y="180" font-family="'Source Code Pro', 'Fira Code', Menlo, Consolas, monospace" font-size="11.5" fill="#6B7480" font-weight="normal" text-anchor="middle">tsibble · mixtime</text>
+<rect x="236" y="140" width="168" height="50" rx="6" fill="#FBFCF7" stroke="#D9E2C8"/>
+<text x="320" y="162" font-family="'Fira Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2A36" font-weight="bold" text-anchor="middle">Explore</text>
+<text x="320" y="180" font-family="'Source Code Pro', 'Fira Code', Menlo, Consolas, monospace" font-size="11.5" fill="#6B7480" font-weight="normal" text-anchor="middle">feasts · ggtime</text>
+<rect x="406" y="39" width="168" height="50" rx="6" fill="#FBFCF7" stroke="#D9E2C8"/>
+<text x="490" y="61" font-family="'Fira Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2A36" font-weight="bold" text-anchor="middle">Specify</text>
+<text x="490" y="79" font-family="'Source Code Pro', 'Fira Code', Menlo, Consolas, monospace" font-size="11.5" fill="#6B7480" font-weight="normal" text-anchor="middle">fable · ...</text>
+<rect x="576" y="140" width="168" height="50" rx="6" fill="#FBFCF7" stroke="#D9E2C8"/>
+<text x="660" y="162" font-family="'Fira Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2A36" font-weight="bold" text-anchor="middle">Estimate</text>
+<text x="660" y="180" font-family="'Source Code Pro', 'Fira Code', Menlo, Consolas, monospace" font-size="11.5" fill="#6B7480" font-weight="normal" text-anchor="middle">fable · ...</text>
+<rect x="406" y="241" width="168" height="50" rx="6" fill="#FBFCF7" stroke="#D9E2C8"/>
+<text x="490" y="263" font-family="'Fira Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2A36" font-weight="bold" text-anchor="middle">Evaluate</text>
+<text x="490" y="281" font-family="'Source Code Pro', 'Fira Code', Menlo, Consolas, monospace" font-size="11.5" fill="#6B7480" font-weight="normal" text-anchor="middle">feasts · ggtime</text>
+<rect x="816" y="140" width="168" height="50" rx="6" fill="#FBFCF7" stroke="#D9E2C8"/>
+<text x="900" y="162" font-family="'Fira Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2A36" font-weight="bold" text-anchor="middle">Forecast</text>
+<text x="900" y="180" font-family="'Source Code Pro', 'Fira Code', Menlo, Consolas, monospace" font-size="11.5" fill="#6B7480" font-weight="normal" text-anchor="middle">distributional</text>
+</svg>

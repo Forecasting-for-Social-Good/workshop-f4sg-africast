@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="02_decomposition_files/libs/clipboard/clipboard.min.js"></script>
-<script src="02_decomposition_files/libs/quarto-html/tabby.min.js"></script>
-<script src="02_decomposition_files/libs/quarto-html/popper.min.js"></script>
-<script src="02_decomposition_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="02_decomposition_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="02_decomposition_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="02_decomposition_files/libs/quarto-html/quarto-syntax-highlighting-806d16d6947d3f83c724220677ca5bc4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="libs/clipboard/clipboard.min.js"></script>
+<script src="libs/quarto-html/tabby.min.js"></script>
+<script src="libs/quarto-html/popper.min.js"></script>
+<script src="libs/quarto-html/tippy.umd.min.js"></script>
+<link href="libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="libs/quarto-html/quarto-syntax-highlighting-806d16d6947d3f83c724220677ca5bc4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="dcterms.date" content="2026-10-20">
@@ -14,8 +14,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="02_decomposition_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="02_decomposition_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -100,12 +100,12 @@
     code span.vs { color: #4e7a27; } /* VerbatimString */
     code span.wa { color: #b5570f; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="02_decomposition_files/libs/revealjs/dist/theme/quarto-305720ab217f99ea1c76de09633be50b.css">
-  <link href="02_decomposition_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="02_decomposition_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="02_decomposition_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="02_decomposition_files/libs/revealjs/plugin/reveal-live-questions/live-questions.css" rel="stylesheet">
-  <link href="02_decomposition_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-4e7c356efd1f4dd38912d787c06695e6.css">
+  <link href="libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/reveal-live-questions/live-questions.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -193,19 +193,36 @@
       margin-right: 0; 
     }
   </style>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      Macros: {
+        E: "{\\text{E}}",
+        Var: "{\\text{Var}}",
+        pred: ["{\\hat{#1}_{#2|#3}}", 3],
+        damped: "{_\\text{d}}"
+      }
+    }
+  });
+  </script>
+  <link rel="stylesheet" href="fonts/fonts.css">
   <script type="application/json" id="lq-config">{"closeOnLeave":true,"qr":true,"results":"live","server":"https://poll.nectric.com.au","session":"africast-transforming"}</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" class="center">
+  <div class="title-brand"><img src="figs/africast-mark.png" alt=""><span>AFRICAST</span></div>
+  <p class="title-kicker">Tidy time series &amp; forecasting in R</p>
   <h1 class="title">Transformations, decompositions and features</h1>
-
-<div class="quarto-title-authors">
-</div>
-
-  <p class="date">20 October 2026</p>
+  <div class="title-hexes">
+    <img src="figs/tsibble.png" alt="tsibble">
+    <img src="figs/feasts.png" alt="feasts">
+    <img src="figs/fable.png" alt="fable">
+  </div>
+  <img class="africast-savanna" src="figs/savanna.png" alt="">
+  <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
 </section>
 <section class="slide level2">
 
@@ -225,12 +242,9 @@
 <p>Denote original observations as <span class="math inline">\(y_1,\dots,y_n\)</span> and transformed observations as <span class="math inline">\(w_1, \dots, w_n\)</span>.</p>
 </div>
 <div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
 <p><strong>Mathematical transformations for stabilising variation</strong></p>
 </div>
 <div class="callout-content">
@@ -250,44 +264,44 @@
 <section id="variance-stabilisation-1" class="slide level2">
 <h2>Variance stabilisation</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-label="1"></a>food <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
-<span id="cb1-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(Industry <span class="sc">==</span> <span class="st">"Food retailing"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-3"><a href="" aria-label="3"></a>  <span class="fu">summarise</span>(<span class="at">Turnover =</span> <span class="fu">sum</span>(Turnover))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Industry <span class="sc">==</span> <span class="st">"Food retailing"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Turnover =</span> <span class="fu">sum</span>(Turnover))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
-<img data-src="_figures/02_decomposition/food-plot-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/food-plot-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="variance-stabilisation-2" class="slide level2">
 <h2>Variance stabilisation</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-label="1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">sqrt</span>(Turnover)) <span class="sc">+</span></span>
-<span id="cb2-2"><a href="" aria-label="2"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Square root turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">sqrt</span>(Turnover)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Square root turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/food-sqrt1-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/food-sqrt1-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="variance-stabilisation-3" class="slide level2">
 <h2>Variance stabilisation</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-label="1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Turnover<span class="sc">^</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb3-2"><a href="" aria-label="2"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Cube root turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Turnover<span class="sc">^</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Cube root turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/food-cbrt-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/food-cbrt-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="variance-stabilisation-4" class="slide level2">
 <h2>Variance stabilisation</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-label="1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover)) <span class="sc">+</span></span>
-<span id="cb4-2"><a href="" aria-label="2"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Log turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Log turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/food-log-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/food-log-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="variance-stabilisation-5" class="slide level2">
 <h2>Variance stabilisation</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-label="1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="sc">-</span><span class="dv">1</span> <span class="sc">/</span> Turnover) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="" aria-label="2"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Negative inverse turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="sc">-</span><span class="dv">1</span> <span class="sc">/</span> Turnover) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Negative inverse turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/food-inverse-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/food-inverse-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="variance-stabilisation-6" class="slide level2">
 <h2>Variance stabilisation</h2>
 <div id="food-transformation" class="lq-question lq-poll" data-lq="{&quot;id&quot;:&quot;food-transformation&quot;,&quot;options&quot;:[&quot;Square root&quot;,&quot;Cube root&quot;,&quot;Logarithm&quot;,&quot;Inverse&quot;],&quot;prompt&quot;:&quot;Which transformation best stabilises the variance of food turnover?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
@@ -341,8 +355,8 @@
 <section id="box-cox-transformations-3" class="slide level2">
 <h2>Box-Cox transformations</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-label="1"></a>food <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="" aria-label="2"></a>  <span class="fu">features</span>(Turnover, <span class="at">features =</span> guerrero)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>food <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(Turnover, <span class="at">features =</span> guerrero)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   lambda_guerrero
@@ -361,11 +375,11 @@
 <section id="box-cox-transformations-4" class="slide level2">
 <h2>Box-Cox transformations</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-label="1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">box_cox</span>(Turnover, <span class="fl">0.0895</span>)) <span class="sc">+</span></span>
-<span id="cb8-2"><a href="" aria-label="2"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Box-Cox transformed turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>food <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">box_cox</span>(Turnover, <span class="fl">0.0895</span>)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Box-Cox transformed turnover"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/food-bc-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/food-bc-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="transformations" class="slide level2">
 <h2>Transformations</h2>
 <ul>
@@ -394,41 +408,41 @@
 <section id="per-capita-adjustments" class="slide level2">
 <h2>Per capita adjustments</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-label="1"></a>global_economy <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Australia"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="" aria-label="3"></a>  <span class="fu">autoplot</span>(GDP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a>global_economy <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Australia"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(GDP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/gdp-per-capita-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/gdp-per-capita-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="per-capita-adjustments-1" class="slide level2">
 <h2>Per capita adjustments</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-label="1"></a>global_economy <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Australia"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="" aria-label="3"></a>  <span class="fu">autoplot</span>(GDP <span class="sc">/</span> Population)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>global_economy <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Australia"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(GDP <span class="sc">/</span> Population)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/gdp-per-capita2-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/gdp-per-capita2-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="inflation-adjustments" class="slide level2 code-small">
 <h2>Inflation adjustments</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-label="1"></a>print_retail <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(Industry <span class="sc">==</span> <span class="st">"Newspaper and book retailing"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="" aria-label="3"></a>  <span class="fu">group_by</span>(Industry) <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="" aria-label="4"></a>  <span class="fu">index_by</span>(<span class="at">Year =</span> <span class="fu">year</span>(Month)) <span class="sc">|&gt;</span></span>
-<span id="cb11-5"><a href="" aria-label="5"></a>  <span class="fu">summarise</span>(<span class="at">Turnover =</span> <span class="fu">sum</span>(Turnover))</span>
-<span id="cb11-6"><a href="" aria-label="6"></a>aus_economy <span class="ot">&lt;-</span> <span class="fu">filter</span>(global_economy, Country <span class="sc">==</span> <span class="st">"Australia"</span>)</span>
-<span id="cb11-7"><a href="" aria-label="7"></a>print_retail <span class="sc">|&gt;</span></span>
-<span id="cb11-8"><a href="" aria-label="8"></a>  <span class="fu">left_join</span>(aus_economy, <span class="at">by =</span> <span class="st">"Year"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-9"><a href="" aria-label="9"></a>  <span class="fu">mutate</span>(<span class="at">Adj_turnover =</span> Turnover <span class="sc">/</span> CPI) <span class="sc">|&gt;</span></span>
-<span id="cb11-10"><a href="" aria-label="10"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(Turnover, Adj_turnover),</span>
-<span id="cb11-11"><a href="" aria-label="11"></a>    <span class="at">names_to =</span> <span class="st">"Type"</span>, <span class="at">values_to =</span> <span class="st">"Turnover"</span></span>
-<span id="cb11-12"><a href="" aria-label="12"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb11-13"><a href="" aria-label="13"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Turnover)) <span class="sc">+</span></span>
-<span id="cb11-14"><a href="" aria-label="14"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb11-15"><a href="" aria-label="15"></a>  <span class="fu">facet_grid</span>(<span class="fu">vars</span>(Type), <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb11-16"><a href="" aria-label="16"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Years"</span>, <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb11-17"><a href="" aria-label="17"></a>       <span class="at">title =</span> <span class="st">"Turnover: Australian print media industry"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>print_retail <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Industry <span class="sc">==</span> <span class="st">"Newspaper and book retailing"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Industry) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Year =</span> <span class="fu">year</span>(Month)) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Turnover =</span> <span class="fu">sum</span>(Turnover))</span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>aus_economy <span class="ot">&lt;-</span> <span class="fu">filter</span>(global_economy, Country <span class="sc">==</span> <span class="st">"Australia"</span>)</span>
+<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>print_retail <span class="sc">|&gt;</span></span>
+<span id="cb11-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(aus_economy, <span class="at">by =</span> <span class="st">"Year"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Adj_turnover =</span> Turnover <span class="sc">/</span> CPI) <span class="sc">|&gt;</span></span>
+<span id="cb11-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(Turnover, Adj_turnover),</span>
+<span id="cb11-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"Type"</span>, <span class="at">values_to =</span> <span class="st">"Turnover"</span></span>
+<span id="cb11-12"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-13"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Turnover)) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb11-15"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="fu">vars</span>(Type), <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb11-16"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Years"</span>, <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb11-17"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Turnover: Australian print media industry"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="inflation-adjustments-1" class="slide level2">
@@ -452,12 +466,9 @@ aperiodic changes in level over time.
 (almost) periodic changes in level due to seasonal factors (e.g., the quarter of the year, the month, or day of the week).
 </dd>
 </dl>
-<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
 <p><strong>Additive decomposition</strong></p>
 </div>
 <div class="callout-content">
@@ -489,10 +500,10 @@ aperiodic changes in level over time.
 <section id="us-retail-employment" class="slide level2 code-small">
 <h2>US Retail Employment</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-label="1"></a>us_retail_employment <span class="ot">&lt;-</span> us_employment <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(Month) <span class="sc">&gt;=</span> <span class="dv">1990</span>, Title <span class="sc">==</span> <span class="st">"Retail Trade"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="" aria-label="3"></a>  <span class="fu">select</span>(<span class="sc">-</span>Series_ID)</span>
-<span id="cb12-4"><a href="" aria-label="4"></a>us_retail_employment</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>us_retail_employment <span class="ot">&lt;-</span> us_employment <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(Month) <span class="sc">&gt;=</span> <span class="dv">1990</span>, Title <span class="sc">==</span> <span class="st">"Retail Trade"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Series_ID)</span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>us_retail_employment</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 357 x 3 [1M]
       Month Title        Employed
@@ -514,18 +525,18 @@ aperiodic changes in level over time.
 <section id="us-retail-employment-1" class="slide level2">
 <h2>US Retail Employment</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-label="1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="" aria-label="2"></a>  <span class="fu">autoplot</span>(Employed) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="" aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Persons (thousands)"</span>, <span class="at">title =</span> <span class="st">"Total employment in US retail"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Employed) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Persons (thousands)"</span>, <span class="at">title =</span> <span class="st">"Total employment in US retail"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/dable1-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/dable1-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="us-retail-employment-2" class="slide level2 code-small">
 <h2>US Retail Employment</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-label="1"></a>dcmp <span class="ot">&lt;-</span> us_retail_employment <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="" aria-label="2"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(Employed))</span>
-<span id="cb15-3"><a href="" aria-label="3"></a>dcmp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>dcmp <span class="ot">&lt;-</span> us_retail_employment <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(Employed))</span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>dcmp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A mable: 1 x 1
       stl
@@ -537,7 +548,7 @@ aperiodic changes in level over time.
 <section id="us-retail-employment-3" class="slide level2 code-small">
 <h2>US Retail Employment</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-label="1"></a><span class="fu">components</span>(dcmp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">components</span>(dcmp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A dable: 357 x 7 [1M]
 # Key:     .model [1]
@@ -561,20 +572,20 @@ aperiodic changes in level over time.
 <section id="us-retail-employment-4" class="slide level2">
 <h2>US Retail Employment</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-label="1"></a><span class="fu">components</span>(dcmp) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">components</span>(dcmp) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/usretail-stl-1.png" width="768" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/usretail-stl-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="us-retail-employment-5" class="slide level2">
 <h2>US Retail Employment</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-label="1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="" aria-label="2"></a>  <span class="fu">autoplot</span>(Employed, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb20-3"><a href="" aria-label="3"></a>  <span class="fu">autolayer</span>(<span class="fu">components</span>(dcmp), trend, <span class="at">color =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
-<span id="cb20-4"><a href="" aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Persons (thousands)"</span>, <span class="at">title =</span> <span class="st">"Total employment in US retail"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Employed, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(<span class="fu">components</span>(dcmp), trend, <span class="at">color =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Persons (thousands)"</span>, <span class="at">title =</span> <span class="st">"Total employment in US retail"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/dable4-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/dable4-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="us-retail-employment-6" class="slide level2">
 <h2>US Retail Employment</h2>
 <div id="retail-peak-month" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[3],&quot;id&quot;:&quot;retail-peak-month&quot;,&quot;options&quot;:[&quot;March&quot;,&quot;July&quot;,&quot;October&quot;,&quot;December&quot;],&quot;prompt&quot;:&quot;In which month does US retail employment peak?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
@@ -606,10 +617,10 @@ aperiodic changes in level over time.
 <section id="us-retail-employment-8" class="slide level2">
 <h2>US Retail Employment</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-label="1"></a><span class="fu">components</span>(dcmp) <span class="sc">|&gt;</span> <span class="fu">gg_subseries</span>(season_year)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">components</span>(dcmp) <span class="sc">|&gt;</span> <span class="fu">gg_subseries</span>(season_year)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/usretail3-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/usretail3-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="seasonal-adjustment" class="slide level2">
 <h2>Seasonal adjustment</h2>
 <ul>
@@ -621,13 +632,13 @@ aperiodic changes in level over time.
 <section id="us-retail-employment-9" class="slide level2">
 <h2>US Retail Employment</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-label="1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="" aria-label="2"></a>  <span class="fu">autoplot</span>(Employed, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="" aria-label="3"></a>  <span class="fu">autolayer</span>(<span class="fu">components</span>(dcmp), season_adjust, <span class="at">color =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="" aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Persons (thousands)"</span>, <span class="at">title =</span> <span class="st">"Total employment in US retail"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Employed, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(<span class="fu">components</span>(dcmp), season_adjust, <span class="at">color =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Persons (thousands)"</span>, <span class="at">title =</span> <span class="st">"Total employment in US retail"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/usretail-sa-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/usretail-sa-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="seasonal-adjustment-1" class="slide level2">
 <h2>Seasonal adjustment</h2>
 <ul>
@@ -647,11 +658,11 @@ aperiodic changes in level over time.
 <section id="stl-decomposition-2" class="slide level2">
 <h2>STL decomposition</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-label="1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="" aria-label="2"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(Employed <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">window =</span> <span class="dv">15</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="at">window =</span> <span class="st">"periodic"</span>),</span>
-<span id="cb23-3"><a href="" aria-label="3"></a>    <span class="at">robust =</span> <span class="cn">TRUE</span></span>
-<span id="cb23-4"><a href="" aria-label="4"></a>  )) <span class="sc">|&gt;</span></span>
-<span id="cb23-5"><a href="" aria-label="5"></a>  <span class="fu">components</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(Employed <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">window =</span> <span class="dv">15</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="at">window =</span> <span class="st">"periodic"</span>),</span>
+<span id="cb23-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">robust =</span> <span class="cn">TRUE</span></span>
+<span id="cb23-4"><a href="" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb23-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><code>trend(window = ?)</code> controls wiggliness of trend component.</li>
@@ -662,13 +673,13 @@ aperiodic changes in level over time.
 <section id="stl-decomposition-3" class="slide level2">
 <h2>STL decomposition</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-label="1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="" aria-label="2"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(Employed)) <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="" aria-label="3"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="" aria-label="4"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>us_retail_employment <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(Employed)) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/mstl-1.png" width="816" class="r-stretch"><div class="fragment">
+<img data-src="_figures/02_decomposition/mstl-1.png" style="width:100.0%" class="r-stretch"><div class="fragment">
 <div class="alertblock absolute" style="font-size:0.7em;top: 0px; right: 0px; width: 500px; ">
 <ul>
 <li><code>STL()</code> chooses <code>season(window=13)</code> by default</li>
@@ -694,29 +705,29 @@ aperiodic changes in level over time.
 <section id="australian-holidays" class="slide level2">
 <h2>Australian holidays</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-label="1"></a>holidays <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Trips) <span class="sc">+</span></span>
-<span id="cb25-2"><a href="" aria-label="2"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"thousands of trips"</span>, <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb25-3"><a href="" aria-label="3"></a>       <span class="at">title =</span> <span class="st">"Australian domestic holiday trips"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a>holidays <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Trips) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"thousands of trips"</span>, <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Australian domestic holiday trips"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/holidays-plot2-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/holidays-plot2-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="australian-holidays-1" class="slide level2">
 <h2>Australian holidays</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-label="1"></a>holidays <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a href="" aria-label="2"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(Trips)) <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a href="" aria-label="3"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span></span>
-<span id="cb26-4"><a href="" aria-label="4"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a>holidays <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(Trips)) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/stlagain2-1.png" width="768" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/stlagain2-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="holidays-decomposition" class="slide level2 code-small">
 <h2>Holidays decomposition</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a>dcmp <span class="ot">&lt;-</span> holidays <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a href="" aria-label="2"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(Trips)) <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="" aria-label="3"></a>  <span class="fu">components</span>()</span>
-<span id="cb27-4"><a href="" aria-label="4"></a>dcmp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a>dcmp <span class="ot">&lt;-</span> holidays <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(Trips)) <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>()</span>
+<span id="cb27-4"><a href="" aria-hidden="true" tabindex="-1"></a>dcmp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A dable: 640 x 8 [1Q]
 # Key:     State, .model [8]
@@ -740,18 +751,18 @@ aperiodic changes in level over time.
 <section id="holidays-decomposition-1" class="slide level2">
 <h2>Holidays decomposition</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-label="1"></a>dcmp <span class="sc">|&gt;</span> <span class="fu">gg_subseries</span>(season_year)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a>dcmp <span class="sc">|&gt;</span> <span class="fu">gg_subseries</span>(season_year)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/holidays3-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/holidays3-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="holidays-decomposition-2" class="slide level2">
 <h2>Holidays decomposition</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-label="1"></a><span class="fu">autoplot</span>(dcmp, trend, <span class="at">scale_bars =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb30-2"><a href="" aria-label="2"></a>  <span class="fu">autolayer</span>(holidays, <span class="at">alpha =</span> <span class="fl">0.4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dcmp, trend, <span class="at">scale_bars =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(holidays, <span class="at">alpha =</span> <span class="fl">0.4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/holidays-trend-1.png" width="864" class="r-stretch"></section></section>
+<img data-src="_figures/02_decomposition/holidays-trend-1.png" style="width:100.0%" class="r-stretch"></section></section>
 <section>
 <section id="stl-features" class="title-slide slide level1 center">
 <h1>STL Features</h1>
@@ -759,12 +770,9 @@ aperiodic changes in level over time.
 </section>
 <section id="strength-of-seasonality-and-trend" class="slide level2">
 <h2>Strength of seasonality and trend</h2>
-<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout callout-important no-icon callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
 <p><strong>STL decomposition</strong></p>
 </div>
 <div class="callout-content">
@@ -784,7 +792,7 @@ aperiodic changes in level over time.
 <h2>STL features</h2>
 <p><code>tourism</code>: quarterly overnight trips (thousands) for 304 Australian domestic series, keyed by Region, State and Purpose.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-label="1"></a>tourism <span class="sc">|&gt;</span> <span class="fu">features</span>(Trips, feat_stl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a>tourism <span class="sc">|&gt;</span> <span class="fu">features</span>(Trips, feat_stl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 304 × 12
    Region         State Purpose trend_strength seasonal_strength_year seasonal_peak_year
@@ -819,14 +827,14 @@ aperiodic changes in level over time.
 <section id="seasonal-and-trend-strength" class="slide level2 code-tiny">
 <h2>Seasonal and trend strength</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-label="1"></a>tourism <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="" aria-label="2"></a>  <span class="fu">features</span>(Trips, feat_stl) <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="" aria-label="3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trend_strength, <span class="at">y =</span> seasonal_strength_year, <span class="at">col =</span> Purpose)) <span class="sc">+</span></span>
-<span id="cb33-4"><a href="" aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(State)) <span class="sc">+</span></span>
-<span id="cb33-5"><a href="" aria-label="5"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a>tourism <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(Trips, feat_stl) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trend_strength, <span class="at">y =</span> seasonal_strength_year, <span class="at">col =</span> Purpose)) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(State)) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/02_decomposition/features-plot-1.png" width="864" class="r-stretch"></section>
+<img data-src="_figures/02_decomposition/features-plot-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="seasonal-and-trend-strength-1" class="slide level2">
 <h2>Seasonal and trend strength</h2>
 <div class="columns">
@@ -835,7 +843,7 @@ aperiodic changes in level over time.
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="_figures/02_decomposition/features-plot-small-1.png" width="480"></p>
+<p><img data-src="_figures/02_decomposition/features-plot-small-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -865,25 +873,25 @@ aperiodic changes in level over time.
 <section id="most-seasonal-and-most-trended-series" class="slide level2 code-small">
 <h2>Most seasonal and most trended series</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-label="1"></a>stl_features <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span> <span class="fu">features</span>(Trips, feat_stl)</span>
-<span id="cb34-2"><a href="" aria-label="2"></a>extremes <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb34-3"><a href="" aria-label="3"></a>  <span class="st">"Most seasonal"</span> <span class="ot">=</span> <span class="fu">slice_max</span>(stl_features, seasonal_strength_year),</span>
-<span id="cb34-4"><a href="" aria-label="4"></a>  <span class="st">"Most trended"</span> <span class="ot">=</span> <span class="fu">slice_max</span>(stl_features, trend_strength),</span>
-<span id="cb34-5"><a href="" aria-label="5"></a>  <span class="at">.id =</span> <span class="st">"Feature"</span></span>
-<span id="cb34-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>stl_features <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span> <span class="fu">features</span>(Trips, feat_stl)</span>
+<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a>extremes <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb34-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Most seasonal"</span> <span class="ot">=</span> <span class="fu">slice_max</span>(stl_features, seasonal_strength_year),</span>
+<span id="cb34-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Most trended"</span> <span class="ot">=</span> <span class="fu">slice_max</span>(stl_features, trend_strength),</span>
+<span id="cb34-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"Feature"</span></span>
+<span id="cb34-6"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-label="1"></a>tourism <span class="sc">|&gt;</span></span>
-<span id="cb35-2"><a href="" aria-label="2"></a>  <span class="fu">inner_join</span>(extremes, <span class="at">by =</span> <span class="fu">join_by</span>(State, Region, Purpose)) <span class="sc">|&gt;</span></span>
-<span id="cb35-3"><a href="" aria-label="3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Quarter, <span class="at">y =</span> Trips)) <span class="sc">+</span></span>
-<span id="cb35-4"><a href="" aria-label="4"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb35-5"><a href="" aria-label="5"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(Feature, State, Region, Purpose), <span class="at">scales =</span> <span class="st">"free_y"</span>,</span>
-<span id="cb35-6"><a href="" aria-label="6"></a>    <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">.multi_line =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a>tourism <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(extremes, <span class="at">by =</span> <span class="fu">join_by</span>(State, Region, Purpose)) <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Quarter, <span class="at">y =</span> Trips)) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb35-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(Feature, State, Region, Purpose), <span class="at">scales =</span> <span class="st">"free_y"</span>,</span>
+<span id="cb35-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">.multi_line =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="_figures/02_decomposition/extremes-plot-1.png" width="864"></p>
+<p><img data-src="_figures/02_decomposition/extremes-plot-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -893,7 +901,7 @@ aperiodic changes in level over time.
 <section id="acf-features" class="slide level2 code-small">
 <h2>ACF features</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-label="1"></a>tourism <span class="sc">|&gt;</span> <span class="fu">features</span>(Trips, feat_acf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>tourism <span class="sc">|&gt;</span> <span class="fu">features</span>(Trips, feat_acf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 304 × 10
    Region     State Purpose     acf1 acf10 diff1_acf1 diff1_acf10 diff2_acf1 diff2_acf10
@@ -932,9 +940,9 @@ aperiodic changes in level over time.
 <h2>All feasts features</h2>
 <p>All features from the feasts package:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-label="1"></a>tourism_features <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a href="" aria-label="2"></a>  <span class="fu">features</span>(Trips, <span class="fu">feature_set</span>(<span class="at">pkgs =</span> <span class="st">"feasts"</span>))</span>
-<span id="cb38-3"><a href="" aria-label="3"></a>tourism_features</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a>tourism_features <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(Trips, <span class="fu">feature_set</span>(<span class="at">pkgs =</span> <span class="st">"feasts"</span>))</span>
+<span id="cb38-3"><a href="" aria-hidden="true" tabindex="-1"></a>tourism_features</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 304 × 51
    Region         State Purpose trend_strength seasonal_strength_year seasonal_peak_year
@@ -963,11 +971,11 @@ aperiodic changes in level over time.
 <h2>Principal components</h2>
 <p>Principal components are combinations of the 48 features with the most variation, so the 304 series can be compared in two dimensions:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-label="1"></a>pcs <span class="ot">&lt;-</span> tourism_features <span class="sc">|&gt;</span></span>
-<span id="cb40-2"><a href="" aria-label="2"></a>  <span class="fu">select</span>(<span class="sc">-</span>State, <span class="sc">-</span>Region, <span class="sc">-</span>Purpose) <span class="sc">|&gt;</span></span>
-<span id="cb40-3"><a href="" aria-label="3"></a>  <span class="fu">prcomp</span>(<span class="at">scale. =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb40-4"><a href="" aria-label="4"></a>  broom<span class="sc">::</span><span class="fu">augment</span>(tourism_features)</span>
-<span id="cb40-5"><a href="" aria-label="5"></a>pcs <span class="sc">|&gt;</span> <span class="fu">select</span>(Region, State, Purpose, .fittedPC1, .fittedPC2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a>pcs <span class="ot">&lt;-</span> tourism_features <span class="sc">|&gt;</span></span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>State, <span class="sc">-</span>Region, <span class="sc">-</span>Purpose) <span class="sc">|&gt;</span></span>
+<span id="cb40-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prcomp</span>(<span class="at">scale. =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb40-4"><a href="" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">augment</span>(tourism_features)</span>
+<span id="cb40-5"><a href="" aria-hidden="true" tabindex="-1"></a>pcs <span class="sc">|&gt;</span> <span class="fu">select</span>(Region, State, Purpose, .fittedPC1, .fittedPC2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 304 × 5
    Region         State Purpose  .fittedPC1 .fittedPC2
@@ -990,10 +998,10 @@ aperiodic changes in level over time.
 <h2>PC1 vs PC2</h2>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-label="1"></a>pcs <span class="sc">|&gt;</span></span>
-<span id="cb42-2"><a href="" aria-label="2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fittedPC1, <span class="at">y =</span> .fittedPC2)) <span class="sc">+</span></span>
-<span id="cb42-3"><a href="" aria-label="3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb42-4"><a href="" aria-label="4"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a>pcs <span class="sc">|&gt;</span></span>
+<span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fittedPC1, <span class="at">y =</span> .fittedPC2)) <span class="sc">+</span></span>
+<span id="cb42-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb42-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
@@ -1008,11 +1016,11 @@ aperiodic changes in level over time.
 <h2>PCs coloured by State</h2>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-label="1"></a>pcs <span class="sc">|&gt;</span></span>
-<span id="cb43-2"><a href="" aria-label="2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fittedPC1, <span class="at">y =</span> .fittedPC2,</span>
-<span id="cb43-3"><a href="" aria-label="3"></a>             <span class="at">col =</span> State)) <span class="sc">+</span></span>
-<span id="cb43-4"><a href="" aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb43-5"><a href="" aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a>pcs <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fittedPC1, <span class="at">y =</span> .fittedPC2,</span>
+<span id="cb43-3"><a href="" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> State)) <span class="sc">+</span></span>
+<span id="cb43-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb43-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
@@ -1028,11 +1036,11 @@ aperiodic changes in level over time.
 <p>Holiday series sit higher on both PCs than other travel purposes.</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-label="1"></a>pcs <span class="sc">|&gt;</span></span>
-<span id="cb44-2"><a href="" aria-label="2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fittedPC1, <span class="at">y =</span> .fittedPC2,</span>
-<span id="cb44-3"><a href="" aria-label="3"></a>             <span class="at">col =</span> Purpose)) <span class="sc">+</span></span>
-<span id="cb44-4"><a href="" aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb44-5"><a href="" aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a>pcs <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fittedPC1, <span class="at">y =</span> .fittedPC2,</span>
+<span id="cb44-3"><a href="" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> Purpose)) <span class="sc">+</span></span>
+<span id="cb44-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb44-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
@@ -1048,16 +1056,16 @@ aperiodic changes in level over time.
 <p>Four outlying series: PC1 &gt; 12, or PC1 &gt; 10 and PC2 &gt; 0.</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-label="1"></a>outliers <span class="ot">&lt;-</span> pcs <span class="sc">|&gt;</span></span>
-<span id="cb45-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(.fittedPC1 <span class="sc">&gt;</span> <span class="dv">12</span> <span class="sc">|</span></span>
-<span id="cb45-3"><a href="" aria-label="3"></a>           (.fittedPC1 <span class="sc">&gt;</span> <span class="dv">10</span> <span class="sc">&amp;</span> .fittedPC2 <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
-<span id="cb45-4"><a href="" aria-label="4"></a>pcs <span class="sc">|&gt;</span></span>
-<span id="cb45-5"><a href="" aria-label="5"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fittedPC1, <span class="at">y =</span> .fittedPC2,</span>
-<span id="cb45-6"><a href="" aria-label="6"></a>             <span class="at">col =</span> Purpose)) <span class="sc">+</span></span>
-<span id="cb45-7"><a href="" aria-label="7"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb45-8"><a href="" aria-label="8"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> outliers, <span class="at">col =</span> <span class="st">"black"</span>,</span>
-<span id="cb45-9"><a href="" aria-label="9"></a>             <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb45-10"><a href="" aria-label="10"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">&lt;-</span> pcs <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.fittedPC1 <span class="sc">&gt;</span> <span class="dv">12</span> <span class="sc">|</span></span>
+<span id="cb45-3"><a href="" aria-hidden="true" tabindex="-1"></a>           (.fittedPC1 <span class="sc">&gt;</span> <span class="dv">10</span> <span class="sc">&amp;</span> .fittedPC2 <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb45-4"><a href="" aria-hidden="true" tabindex="-1"></a>pcs <span class="sc">|&gt;</span></span>
+<span id="cb45-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fittedPC1, <span class="at">y =</span> .fittedPC2,</span>
+<span id="cb45-6"><a href="" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> Purpose)) <span class="sc">+</span></span>
+<span id="cb45-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb45-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> outliers, <span class="at">col =</span> <span class="st">"black"</span>,</span>
+<span id="cb45-9"><a href="" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb45-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
@@ -1071,16 +1079,16 @@ aperiodic changes in level over time.
 <section id="outlying-series" class="slide level2">
 <h2>Outlying series</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-label="1"></a>tourism <span class="sc">|&gt;</span></span>
-<span id="cb46-2"><a href="" aria-label="2"></a>  <span class="fu">semi_join</span>(outliers, <span class="at">by =</span> <span class="fu">join_by</span>(State, Region, Purpose)) <span class="sc">|&gt;</span></span>
-<span id="cb46-3"><a href="" aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">Series =</span> <span class="fu">glue</span>(<span class="st">"{State}"</span>, <span class="st">"{Region}"</span>, <span class="st">"{Purpose}"</span>, <span class="at">.sep =</span> <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb46-4"><a href="" aria-label="4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Quarter, <span class="at">y =</span> Trips)) <span class="sc">+</span></span>
-<span id="cb46-5"><a href="" aria-label="5"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(Series <span class="sc">~</span> .) <span class="sc">+</span></span>
-<span id="cb46-6"><a href="" aria-label="6"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Outlying time series in PC space"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-hidden="true" tabindex="-1"></a>tourism <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(outliers, <span class="at">by =</span> <span class="fu">join_by</span>(State, Region, Purpose)) <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Series =</span> <span class="fu">glue</span>(<span class="st">"{State}"</span>, <span class="st">"{Region}"</span>, <span class="st">"{Purpose}"</span>, <span class="at">.sep =</span> <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb46-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Quarter, <span class="at">y =</span> Trips)) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(Series <span class="sc">~</span> .) <span class="sc">+</span></span>
+<span id="cb46-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Outlying time series in PC space"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 
-<img data-src="_figures/02_decomposition/outliers2-1.png" width="1152" class="r-stretch"></section></section>
+<img data-src="_figures/02_decomposition/outliers2-1.png" style="width:100.0%" class="r-stretch"></section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -1089,20 +1097,20 @@ aperiodic changes in level over time.
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="02_decomposition_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="02_decomposition_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="02_decomposition_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="02_decomposition_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="02_decomposition_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="02_decomposition_files/libs/revealjs/plugin/reveal-live-questions/live-questions.js"></script>
-  <script src="02_decomposition_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="libs/revealjs/plugin/reveal-live-questions/live-questions.js"></script>
+  <script src="libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="02_decomposition_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="02_decomposition_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="02_decomposition_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="02_decomposition_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="libs/revealjs/plugin/search/search.js"></script>
+  <script src="libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1117,7 +1125,7 @@ aperiodic changes in level over time.
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":false},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1138,7 +1146,7 @@ aperiodic changes in level over time.
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -1263,9 +1271,9 @@ aperiodic changes in level over time.
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1280,
 
-        height: 700,
+        height: 720,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -1296,6 +1304,202 @@ aperiodic changes in level over time.
           RevealZoom
         ]
       });
+    </script>
+    <script>
+    // Copy over background colors to new div
+    divs = document.querySelectorAll('[data-background-color]');
+
+    Array.from(divs).map(function (x) {
+      const color = x.dataset.backgroundColor;
+
+      var new_div = document.createElement('div');
+      new_div.setAttribute("class", "background-color-div");
+      new_div.style.backgroundColor = color;
+      x.appendChild(new_div);
+      x.removeAttribute("data-background-color");
+    })
+
+    // Remove background colors from backgrounds div
+    Array.from(
+      document.querySelectorAll("[data-background-hash]")
+    ).map(function (x) {
+      x.removeAttribute("data-background-hash");
+      x.style.backgroundColor = null;
+    })
+    </script>
+
+    <script>
+    // Copy over background images to new div
+    divs = document.querySelectorAll('[data-background-image]');
+
+    Array.from(divs).map(function (x) {
+      var new_div = document.createElement('div');
+      new_div.setAttribute("class", "background-image-div");
+
+      if (x.dataset.backgroundImage != undefined) {
+        new_div.style.backgroundImage = "url(" + x.dataset.backgroundImage + ")";
+        x.removeAttribute("data-background-image");
+      }
+      if (x.dataset.backgroundSize != undefined) {
+        new_div.style.backgroundSize = x.dataset.backgroundSize;
+        x.removeAttribute("data-background-size");
+      }
+      if (x.dataset.backgroundPosition != undefined) {
+        new_div.style.backgroundPosition = x.dataset.backgroundPosition;
+        x.removeAttribute("data-background-position");
+      }
+      if (x.dataset.backgroundRepeat != undefined) {
+        new_div.style.backgroundRepeat = x.dataset.backgroundRepeat;
+        x.removeAttribute("data-background-repeat");
+      }
+      if (x.dataset.backgroundOpacity != undefined) {
+        new_div.style.backgroundOpacity = x.dataset.backgroundOpacity;
+        x.removeAttribute("data-background-opacity");
+      }
+
+      x.appendChild(new_div);
+    })
+    </script>
+
+    <script>
+    // Copy over background vidoes
+
+    // Run once when we load
+    var video_div = document.querySelectorAll(".backgrounds video");
+    var slide_div = document.querySelectorAll("[data-background-video]");
+
+    for (let i = 0; i < video_div.length; i++) {
+      video_div[i].setAttribute("class", "background-video-div");
+
+      slide_div[i].appendChild(video_div[i]);
+      slide_div[i].removeAttribute("data-background-video");
+    }
+
+    Reveal.getCurrentSlide().querySelectorAll("video").forEach(x => x.play());
+
+    // Each time we advance slides, as the background videos aren't loaded
+    // unless they are a few slides away
+    Reveal.on('slidechanged', event => {
+      var video_div = document.querySelectorAll(".backgrounds video");
+      var slide_div = document.querySelectorAll("[data-background-video]");
+
+      for (let i = 0; i < video_div.length; i++) {
+        video_div[i].setAttribute("class", "background-video-div");
+
+        slide_div[i].appendChild(video_div[i]);
+        slide_div[i].removeAttribute("data-background-video");
+      }
+
+      Reveal.getCurrentSlide().querySelectorAll("video").forEach(x => x.play());
+    });
+    </script>
+
+    <script>
+    // Copy over background vidoes
+
+    // Run once when we load
+    var iframe_div = document.querySelectorAll(".backgrounds iframe");
+    var slide_div = document.querySelectorAll("[data-background-iframe]");
+
+    for (let i = 0; i < iframe_div.length; i++) {
+      iframe_div[i].setAttribute("class", "background-iframe-div");
+
+      slide_div[i].appendChild(iframe_div[i]);
+      slide_div[i].removeAttribute("data-background-iframe");
+    }
+
+    // Each time we advance slides, as the background videos aren't loaded
+    // unless they are a few slides away
+    Reveal.on('slidechanged', event => {
+      var iframe_div = document.querySelectorAll(".backgrounds iframe");
+      var slide_div = document.querySelectorAll("[data-background-iframe]");
+
+      for (let i = 0; i < iframe_div.length; i++) {
+        iframe_div[i].setAttribute("class", "background-iframe-div");
+
+        slide_div[i].appendChild(iframe_div[i]);
+        slide_div[i].removeAttribute("data-background-iframe");
+      }
+    });
+    </script>
+
+    <script>
+    // Clean up slide background styles
+    divs = document.querySelectorAll('.slide-background-content');
+    Array.from(divs).map(function (x) {
+      x.style = null;
+    })
+    </script>
+
+    <script>
+    // Move menu button
+    menu_div = document.querySelector(".slide-menu-button");
+    document.querySelector(".slides").appendChild(menu_div);
+
+    // Move progress bar
+    menu_div = document.querySelector(".progress");
+    document.querySelector(".slides").appendChild(menu_div);
+    </script>
+
+    <script>
+    // AFRICAST slide furniture: section dividers that show the deck's outline,
+    // and a running footer naming the session on every content slide.
+    (function () {
+      function decorate() {
+        var titleSlide = document.getElementById("title-slide");
+        var title = titleSlide ? titleSlide.querySelector("h1.title").textContent.trim() : "";
+        var sessionEl = titleSlide && titleSlide.querySelector(".title-session");
+        var session = sessionEl ? sessionEl.dataset.session + " " : "";
+        // Reuse the title slide's images, which embed-resources has inlined
+        var savannaImg = titleSlide && titleSlide.querySelector("img.africast-savanna");
+        var markImg = titleSlide && titleSlide.querySelector(".title-brand img");
+
+        // Section dividers: "Section i of n", the outline track and the skyline
+        var sections = Array.from(document.querySelectorAll(".reveal .slides section.slide.level1"));
+        var names = sections.map(function (s) {
+          var h = s.querySelector("h1");
+          return h ? h.textContent.trim() : "";
+        });
+        sections.forEach(function (s, i) {
+          s.classList.remove("center");
+          s.classList.add("africast-section");
+          var kicker = document.createElement("p");
+          kicker.className = "section-kicker";
+          kicker.textContent = "Section " + (i + 1) + " of " + sections.length;
+          s.insertBefore(kicker, s.firstChild);
+          var track = document.createElement("ol");
+          track.className = "section-track";
+          names.forEach(function (name, j) {
+            var li = document.createElement("li");
+            if (j < i) li.className = "done";
+            if (j === i) li.className = "now";
+            var n = document.createElement("i");
+            n.textContent = j + 1;
+            li.appendChild(n);
+            li.appendChild(document.createTextNode(name));
+            track.appendChild(li);
+          });
+          s.appendChild(track);
+          if (savannaImg) s.appendChild(savannaImg.cloneNode());
+        });
+
+        // Running footer on content slides
+        document.querySelectorAll(".reveal .slides section.slide:not(.level1):not(#title-slide)").forEach(function (s) {
+          var foot = document.createElement("div");
+          foot.className = "africast-foot";
+          if (markImg) foot.appendChild(markImg.cloneNode());
+          var brand = document.createElement("b");
+          brand.textContent = "AFRICAST";
+          foot.appendChild(brand);
+          foot.appendChild(document.createTextNode(" · " + session + title));
+          s.appendChild(foot);
+        });
+
+        Reveal.layout();
+      }
+      if (Reveal.isReady()) decorate();
+      else Reveal.on("ready", decorate);
+    })();
     </script>
     
     <script>
