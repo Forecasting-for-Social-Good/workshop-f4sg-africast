@@ -749,9 +749,10 @@ forecast(fit, advert_c) |> autoplot(insurance)
 
 Sometimes $y_t$ responds to a change in $x$ before it happens, because the change is anticipated. Then $y_t$ depends on future values $x_{t+1}, x_{t+2}, \dots$
 
-* Lead values of a predictor:
-    * Create new variables by shifting the existing variable forwards
-    
-::: {.block}
-* $y_t=$ sales, $x_t=$ tax policy announcement
-:::
+$$
+y_{t} = \beta_0 + \gamma_{0} x_{t} + \gamma_{1} x_{t+1} + \dots + \gamma_{k} x_{t+k} + \varepsilon_{t}
+$$
+
+* Create lead values by shifting the existing variable forwards with `lead()`
+* e.g. sales $y_t$ rise before an announced tax increase $x_t$ takes effect
+* Only usable for forecasting when the future $x$ is known in advance (e.g. announced)
