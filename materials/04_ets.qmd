@@ -354,10 +354,10 @@ fit |>
 
 ::: {.callout-note}
 ## Akaike's Information Criterion
-$$\text{AIC} = -2\log(\text{L}) + 2k$$
+$$\text{AIC} = -2\log(L) + 2k$$
 :::
 
-where $L$ is the likelihood and $k$ is the number of parameters & initial states estimated in the model.
+where $L$ is the likelihood and $k$ is the number of parameters and initial states estimated in the model.
 
 ::: {.fragment}
 ::: {.callout-note}
