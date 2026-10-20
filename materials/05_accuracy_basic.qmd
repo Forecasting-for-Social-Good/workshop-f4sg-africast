@@ -24,13 +24,13 @@ source("setup.R")
 
 * In order to evaluate the performance of a forecasting model, we compute its forecast accuracy.
 * Forecast accuracy is compared by measuring errors based on the test set.
-* Ideally it should allow comparing benefits from improved accuracy with the cost of obtaining the improvement.
+* Ideally, compare the benefit of improved accuracy with the cost of obtaining it.
 
 ## Evaluate forecast accuracy: business impact
 
 * We should be choosing forecast models that lead to better business decisions
     - least staffing costs, lowest emissions, highest service level, least stock-out, least inventory, fastest response, least change in planning, for example.
-* However, this is not always easy to obtain, therefore we might simply use methods that provide the most accurate forecast.
+* However, such measures are not always easy to obtain, so we often use the most accurate forecast instead.
 
 ## A perfect fit
 
@@ -44,7 +44,7 @@ A model fits the training data perfectly. Will it forecast well?
 
 ## In-sample (training) vs. out-of-sample (test)
 
-* Fitting and its residual are not a reliable indication of forecast accuracy
+* Residuals (in-sample errors) are not a reliable indication of forecast accuracy
 * A model which fits the training data well will not necessarily forecast well
 * A perfect fit can always be obtained by using a model with enough parameters
 * Over-fitting a model to data is just as bad as failing to identify a systematic pattern in the data
@@ -55,6 +55,7 @@ A model fits the training data perfectly. Will it forecast well?
 * We pretend we don't know some part of data (new data)
 * It must not be used for *any* aspect of model training
 * Forecast accuracy is computed only based on the test set
+* The test set should ideally be at least as long as the maximum forecast horizon
 
 ## Training and test sets
 
