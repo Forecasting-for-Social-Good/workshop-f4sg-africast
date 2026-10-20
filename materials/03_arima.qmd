@@ -541,6 +541,32 @@ fit_h02_best |> report()
 Same differencing and transformation, so the AICc is comparable: $-487$ vs $-483$ for the automatic model, using nine coefficients instead of three.
 :::
 
+## Corticosteroid drug sales: residuals
+
+```{r}
+#| label: h02resid
+#| echo: true
+#| fig-height: 3.2
+gg_tsresiduals(fit_h02_best, lag_max = 36)
+```
+
+## Corticosteroid drug sales: residuals
+
+Ljung-Box tests, with `dof` set to the number of estimated coefficients.
+
+```{r}
+#| label: h02lb
+#| echo: true
+bind_rows(
+  augment(fit_h02) |> features(.innov, ljung_box, lag = 36, dof = 3),
+  augment(fit_h02_best) |> features(.innov, ljung_box, lag = 36, dof = 9)
+)
+```
+
+::: {.fragment}
+The automatic model leaves autocorrelation in its residuals; the wider search does not, so we prefer it.
+:::
+
 ## Corticosteroid drug sales: forecasts
 
 ```{r}
