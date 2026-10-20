@@ -709,20 +709,16 @@ insurance |>
 ## Example: Insurance quotes and TV adverts {.code-small}
 
 ```{r}
+#| label: tvadvert-lags
 #| echo: true
-fit <- insurance |>
+fit_lags <- insurance |>
   # Restrict data so models use same fitting period
   mutate(Quotes = c(NA, NA, NA, Quotes[4:40])) |>
   model(
-    ARIMA(Quotes ~ pdq(d = 0) + TVadverts),
-    ARIMA(Quotes ~ pdq(d = 0) + TVadverts +
-      lag(TVadverts)),
-    ARIMA(Quotes ~ pdq(d = 0) + TVadverts +
-      lag(TVadverts) +
-      lag(TVadverts, 2)),
-    ARIMA(Quotes ~ pdq(d = 0) + TVadverts +
-      lag(TVadverts) +
-      lag(TVadverts, 2) +
+    lag0 = TSLM(Quotes ~ TVadverts),
+    lag1 = TSLM(Quotes ~ TVadverts + lag(TVadverts)),
+    lag2 = TSLM(Quotes ~ TVadverts + lag(TVadverts) + lag(TVadverts, 2)),
+    lag3 = TSLM(Quotes ~ TVadverts + lag(TVadverts) + lag(TVadverts, 2) +
       lag(TVadverts, 3))
   )
 ```
@@ -730,57 +726,40 @@ fit <- insurance |>
 ## Example: Insurance quotes and TV adverts
 
 ```{r}
+#| label: tvadvert-glance
 #| echo: true
-#| results: hide
-glance(fit)
-```
-```{r}
-#| echo: false
-glance(fit) |>
-  transmute(`Lag order` = 0:3, sigma2, log_lik, AIC, AICc, BIC) |>
-  knitr::kable()
+glance(fit_lags) |>
+  select(.model, adj_r_squared, CV, AIC, AICc)
 ```
 
 ## Example: Insurance quotes and TV adverts {.code-small}
 
 ```{r}
-#| label: tvadvertagain
+#| label: tvadvert-fit
 #| echo: true
 # Re-fit to all data
-fit <- insurance |>
-  model(ARIMA(Quotes ~ TVadverts + lag(TVadverts) + pdq(d = 0)))
-report(fit)
+fit_adverts <- insurance |>
+  model(TSLM(Quotes ~ TVadverts))
+report(fit_adverts)
 ```
 
 ```{r}
-#| label: tvadvertparam
+#| label: tvadvert-coef
 #| echo: false
-#| dependson: tvadvertagain
-# Store coefficients
-cf <- rlang::set_names(tidy(fit)$estimate, tidy(fit)$term)
-phi1 <- cf["ar1"]
-theta1 <- cf["ma1"]
-theta2 <- cf["ma2"]
-intercept <- cf["intercept"]
-gamma0 <- cf["TVadverts"]
-gamma1 <- cf["lag(TVadverts)"]
+#| dependson: tvadvert-fit
+cf <- rlang::set_names(tidy(fit_adverts)$estimate, tidy(fit_adverts)$term)
 ```
 
 ::: {.fragment}
-$$\begin{aligned}
-  y_t &= `r format(intercept, digits=3)` +
-         `r format(gamma0, digits=3)` x_t +
-         `r format(gamma1, digits=2)` x_{t-1} + \eta_t,\\
-  \eta_t &= `r format(phi1, digits=3)` \eta_{t-1} +
-        \varepsilon_t +
-        `r format(theta1, digits=2)` \varepsilon_{t-1} +
-        `r format(theta2, digits=2)` \varepsilon_{t-2}.
-\end{aligned}$$
+$$
+  y_t = `r format(cf["(Intercept)"], digits = 2)` + `r format(cf["TVadverts"], digits = 3)` x_t + \varepsilon_t
+$$
 :::
 
 ## Example: Insurance quotes and TV adverts
 
 ```{r}
+#| label: tvadvert-scenarios
 #| echo: true
 #| fig-height: 3
 future_adverts <- scenarios(
@@ -790,7 +769,7 @@ future_adverts <- scenarios(
   names_to = "Scenario"
 )
 insurance |> autoplot(Quotes) +
-  autolayer(forecast(fit, future_adverts), level = 80)
+  autolayer(forecast(fit_adverts, future_adverts), level = 80)
 ```
 
 ## Lead predictors
