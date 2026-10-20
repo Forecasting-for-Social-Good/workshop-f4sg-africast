@@ -734,6 +734,8 @@ beer_fc |>
 ### For example:
 
  - $\hat{y}_{t} = \bar{y}$ for average method.
+ - $\hat{y}_{t} = y_{t-1}$ for naïve method.
+ - $\hat{y}_{t} = y_{t-m}$ for seasonal naïve method.
  - $\hat{y}_{t} = y_{t-1} + (y_{T}-y_1)/(T-1)$ for drift method.
 
 ## Forecasting residuals
@@ -741,6 +743,9 @@ beer_fc |>
 ::: {.block}
 **Residuals in forecasting:** difference between observed value and its fitted value: $e_t = y_t-\hat{y}_{t|t-1}$.
 :::
+
+ - Residuals are one-step errors on the training data; forecast errors are on unseen test data.
+ - `augment()` gives both `.resid` and `.innov` (innovation residuals); they are equal unless the response is transformed.
 
 
 
@@ -757,7 +762,8 @@ augment(fit)
 augment(fit) |>
   ggplot(aes(x = Quarter)) +
   geom_line(aes(y = Beer, colour = "Data")) +
-  geom_line(aes(y = .fitted, colour = "Fitted"))
+  geom_line(aes(y = .fitted, colour = "Fitted")) +
+  labs(colour = NULL)
 ```
 
 ## Beer production - residuals
