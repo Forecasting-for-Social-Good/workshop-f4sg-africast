@@ -290,7 +290,7 @@ Simulated futures from an ETS model
 ## Prediction interval
 
 ::: {.alertblock style="font-size:0.7em"}
-A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+A 90% prediction interval contains the future value with 90% probability.
 :::
 
 ```{r austa9, dependson='austa', echo=FALSE}
