@@ -206,6 +206,14 @@ where $m$ is the seasonal frequency, and $Q$ is computed on the training data
 Proposed by Hyndman and Koehler (IJF, 2006).
 :::
 
+## Slow-selling items
+
+::: {.poll #slow-seller-measure prompt="Which measure suits daily sales of a slow-selling item with many zero days?"}
+- [ ] MAPE
+- [x] MASE
+- [ ] Either
+:::
+
 ## Scaled errors: RMSSE {.smaller}
 
 ::: {.callout-note}
