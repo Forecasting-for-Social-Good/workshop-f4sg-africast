@@ -122,6 +122,21 @@ fit_income <- us_change |>
 report(fit_income)
 ```
 
+```{r}
+#| label: fit-income-coef
+#| echo: false
+cf_income <- rlang::set_names(tidy(fit_income)$estimate, tidy(fit_income)$term)
+```
+
+::: {.absolute .fragment top="210px" right="0px" width="400px"}
+::: {.callout-note}
+## Interpretation
+A 1 percentage point rise in income growth goes with a `r format(cf_income["Income"], digits = 2)` point rise in consumption growth.
+
+Income alone explains little: $R^2 = `r format(glance(fit_income)$r_squared, digits = 2)`$.
+:::
+:::
+
 ## Multiple regression
 
 * In multiple regression there is one variable to be forecast and several predictor variables.
@@ -214,8 +229,18 @@ us_change |>
 fit_full <- us_change |>
   model(lm = TSLM(Consumption ~ Income + Production + Unemployment + Savings))
 report(fit_full)
-
 ```
+
+::: {.absolute .fragment top="210px" right="0px" width="400px"}
+::: {.callout-note}
+## Interpretation
+Each coefficient holds the other predictors fixed.
+
+Production and unemployment are borderline ($p \approx 0.05$ to $0.08$).
+
+$\bar{R}^2 = `r format(glance(fit_full)$adj_r_squared, digits = 2)`$, far above income alone.
+:::
+:::
 
 ## Example: US consumption expenditure
 
@@ -269,9 +294,30 @@ There are a series of plots that should be produced in order to check different 
 ## Example: US consumption expenditure
 
 ```{r}
+#| label: fit-full-lb
+#| echo: false
+lb_full <- augment(fit_full) |> features(.innov, ljung_box, lag = 8)
+```
+
+::: columns
+::: {.column width="66%"}
+```{r}
 #| echo: true
+#| fig-width: 7
+#| fig-height: 5.4
 gg_tsresiduals(fit_full)
 ```
+:::
+
+::: {.column width="34%"}
+::: {.callout-note .fragment}
+## Interpretation
+A few ACF spikes outside the bounds (Ljung-Box $p = `r format(lb_full$lb_pvalue, digits = 2)`$), and a slightly skewed histogram.
+
+Not perfect, but fine for forecasting. Intervals may be slightly off.
+:::
+:::
+:::
 
 ## Residual scatterplots
 
@@ -287,9 +333,12 @@ no values too far from the band and no patterns such as curvature or increasing 
 
 ## Example: US consumption expenditure {.code-small}
 
+::: columns
+::: {.column width="66%"}
 ```{r}
 #| label: scatterplot-residuals
-#| fig-height: 4.5
+#| fig-width: 6
+#| fig-height: 3.6
 us_change |>
   left_join(residuals(fit_full), by = "Time") |>
   pivot_longer(c(Income, Production, Savings, Unemployment)) |>
@@ -298,6 +347,15 @@ us_change |>
   facet_wrap(vars(name), scales = "free_x") +
   labs(x = NULL, y = "Residuals")
 ```
+:::
+
+::: {.column width="34%"}
+::: {.callout-note .fragment}
+## Interpretation
+No curvature or fanning: linear terms look adequate.
+:::
+:::
+:::
 
 ## Residual patterns
 
@@ -430,6 +488,13 @@ glance(fit_candidates) |>
   arrange(AICc)
 ```
 
+::: {.callout-note .fragment}
+## Interpretation
+The full model has the lowest AICc and CV, so keep all four predictors.
+
+Dropping production is almost as good; dropping income or savings is much worse.
+:::
+
 # Forecasting with regression
 
 ## Ex-ante versus ex-post forecasts
@@ -483,6 +548,11 @@ us_change |> autoplot(Consumption) +
   autolayer(fc_scenarios) +
   labs(y = "% change in US consumption")
 ```
+
+::: {.callout-note .fragment}
+## Interpretation
+Scenarios shift the point forecasts. The intervals ignore uncertainty in the future predictors.
+:::
 
 # Correlation, causation and forecasting
 
@@ -732,6 +802,11 @@ glance(fit_lags) |>
   select(.model, adj_r_squared, CV, AIC, AICc)
 ```
 
+::: {.callout-note .fragment}
+## Interpretation
+No lag (`lag0`) has the lowest AICc and CV: quotes respond to advertising in the same month.
+:::
+
 ## Example: Insurance quotes and TV adverts {.code-small}
 
 ```{r}
@@ -747,13 +822,16 @@ report(fit_adverts)
 #| label: tvadvert-coef
 #| echo: false
 #| dependson: tvadvert-fit
-cf <- rlang::set_names(tidy(fit_adverts)$estimate, tidy(fit_adverts)$term)
+cf_adverts <- rlang::set_names(tidy(fit_adverts)$estimate, tidy(fit_adverts)$term)
 ```
 
-::: {.fragment}
-$$
-  y_t = `r format(cf["(Intercept)"], digits = 2)` + `r format(cf["TVadverts"], digits = 3)` x_t + \varepsilon_t
-$$
+::: {.absolute .fragment top="210px" right="0px" width="400px"}
+::: {.callout-note}
+## Interpretation
+$\hat{y}_t = `r format(cf_adverts["(Intercept)"], digits = 2)` + `r format(cf_adverts["TVadverts"], digits = 3)` x_t$: each extra unit of spend brings about `r format(cf_adverts["TVadverts"], digits = 2)` more quotes that month.
+
+Residuals are strongly autocorrelated (Ljung-Box $p < 0.001$), so prediction intervals will be too narrow.
+:::
 :::
 
 ## Example: Insurance quotes and TV adverts
