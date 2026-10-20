@@ -521,9 +521,20 @@ Both range from 0 (no seasonality or trend) to 1 (strong), and are computed from
 
 ## STL features {.code-small}
 
+`tourism`: quarterly overnight trips (thousands) for 304 Australian domestic series, keyed by Region, State and Purpose.
+
 ```{r features}
 tourism |> features(Trips, feat_stl)
 ```
+
+## STL features
+
+* `trend_strength`, `seasonal_strength_year`: strength of the trend and seasonal components.
+* `seasonal_peak_year`, `seasonal_trough_year`: the quarter with the largest and smallest seasonal component.
+* `spikiness`: prevalence of spikes in the remainder.
+* `linearity`, `curvature`: shape of the trend, from a quadratic regression on time.
+* `stl_e_acf1`: first autocorrelation of the remainder.
+* `stl_e_acf10`: sum of squares of the first ten autocorrelations of the remainder.
 
 ## Seasonal and trend strength {.code-tiny}
 
@@ -586,6 +597,14 @@ tourism |>
 ```{r featuresacf}
 tourism |> features(Trips, feat_acf)
 ```
+
+## ACF features
+
+* `acf1`: first autocorrelation of the series.
+* `acf10`: sum of squares of the first ten autocorrelations.
+* `diff1_acf1`, `diff1_acf10`: the same, for the differenced series.
+* `diff2_acf1`, `diff2_acf10`: the same, for the twice differenced series.
+* `season_acf1`: autocorrelation at the first seasonal lag.
 
 # Clustering features
 
