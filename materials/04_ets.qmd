@@ -319,7 +319,7 @@ fit |>
   forecast() |>
   filter(Region == "Snowy Mountains") |>
   autoplot(holidays) +
-  labs(x = "Year", y = "Overnight trips (thousands)")
+  labs(x = "Quarter", y = "Overnight trips (thousands)")
 ```
 
 # ETS taxonomy
@@ -405,7 +405,8 @@ vic_cafe <- aus_retail |>
          Industry == "Cafes, restaurants and catering services") |>
   select(Month, Turnover)
 vic_cafe |>
-  autoplot(Turnover) + labs(title = "Monthly turnover of Victorian cafes")
+  autoplot(Turnover) +
+  labs(title = "Monthly turnover of Victorian cafes", y = "Turnover ($AUD million)")
 ```
 
 ## Forecasting with transformations {.code-small}
