@@ -7,7 +7,7 @@ listing:
     - sessions/day*/*.qmd
   template: sessions-grid.ejs
   fields: [title, subtitle, author, date, order]
-  date-format: "ddd D MMM"
+  date-format: "YYYY-MM-DD"
   sort: false
 ---
 
@@ -158,3 +158,49 @@ usethis::use_course("https://workshop.f4sg.org/africast/exercises.zip")
 [![Nectric](images/orgs/nectric.svg)](https://nectric.com.au/)
 :::
 :::
+
+```{=html}
+<script>
+// Show session times in the viewer's local time, with the zone beneath
+(function () {
+  var times = document.querySelectorAll(".sessions-grid .sg-local");
+  if (!times.length) return;
+  var clock = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+  var day = new Intl.DateTimeFormat("en-CA", { year: "numeric", month: "2-digit", day: "2-digit" });
+
+  function zone(d) {
+    var off = -d.getTimezoneOffset();
+    var utc = "UTC" + (off < 0 ? "-" : "+") + Math.floor(Math.abs(off) / 60) +
+      (off % 60 ? ":" + String(Math.abs(off) % 60).padStart(2, "0") : "");
+    // A locale only names its own region's zones (otherwise "GMT+11"), so try
+    // the viewer's locales then regional English ones, else show the offset alone
+    var locales = (navigator.languages || []).concat(["en-KE", "en-GB", "en-US", "en-AU", "en-IN"]);
+    var abbr = "";
+    locales.some(function (l) {
+      try {
+        var name = (new Intl.DateTimeFormat(l, { timeZoneName: "short" })
+          .formatToParts(d).find(function (p) { return p.type === "timeZoneName"; }) || {}).value;
+        if (name && !/^(GMT|UTC)/.test(name)) abbr = name;
+      } catch (e) {}
+      return abbr;
+    });
+    return { abbr: abbr, utc: utc };
+  }
+
+  times.forEach(function (el) {
+    var d = new Date(el.dataset.time);
+    if (isNaN(d)) return;
+    el.textContent = clock.format(d);
+    // Flag sessions that fall on a different calendar day locally
+    var shift = Math.round((Date.parse(day.format(d)) - Date.parse(el.dataset.time.slice(0, 10))) / 864e5);
+    if (shift) el.insertAdjacentHTML("beforeend", "<sup>" + (shift > 0 ? "+" : "") + shift + "</sup>");
+    el.title = d.toLocaleString(undefined, { dateStyle: "full", timeStyle: "short" });
+    var tz = el.parentNode.querySelector(".sg-tz");
+    if (!tz || tz.dataset.done) return;
+    var z = zone(d);
+    tz.innerHTML = el.closest(".sg-time") ? [z.abbr, z.utc].filter(Boolean).join("<br>") : (z.abbr || z.utc);
+    tz.dataset.done = 1;
+  });
+})();
+</script>
+```
