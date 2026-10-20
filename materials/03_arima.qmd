@@ -72,6 +72,30 @@ gafa_stock |>
 - [ ] No
 :::
 
+## Random walks {.nostretch}
+
+A random walk, $y_t = y_{t-1} + \varepsilon_t$ with white noise $\varepsilon_t$, has no trend or seasonality.
+
+```{r}
+#| label: random-walks
+#| echo: false
+#| fig-height: 2
+set.seed(3)
+tibble(
+  path = rep(1:20, each = 100),
+  t = rep(1:100, times = 20),
+  y = unlist(lapply(1:20, function(i) cumsum(rnorm(100))))
+) |>
+  ggplot(aes(x = t, y = y, group = path)) +
+  geom_line(alpha = 0.5) +
+  labs(x = "time", y = "", title = "20 simulated random walks")
+```
+
+::: {.poll #random-walk-stationary prompt="Is a random walk stationary?"}
+- [ ] Yes
+- [x] No
+:::
+
 ## Differencing
 
 ::: {.callout-note}
@@ -84,9 +108,8 @@ Seasonal difference: $y_t - y_{t-m}$, where $m$ is the seasonal period
 :::
 
 * Differencing helps to **stabilise the mean**.
-* The differenced series is the change between each observation in the original series.
-* Occasionally the differenced data will not appear stationary and it may be necessary to difference the data a second time.
-* In practice, it is almost never necessary to go beyond second-order differences.
+* A random walk is not stationary (its variance grows over time), but its first difference is white noise, which is stationary. The Google stock price behaves like a random walk.
+* Occasionally a second difference is needed; it is almost never necessary to go further.
 
 ## Autoregressive models
 
