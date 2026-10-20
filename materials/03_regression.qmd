@@ -816,6 +816,17 @@ fit_lags <- insurance |>
 
 ## Example: Insurance quotes and TV adverts
 
+::: {.poll #advert-lags}
+How many months of lagged TV advertising should the model include?
+
+- [x] 0
+- [ ] 1
+- [ ] 2
+- [ ] 3
+:::
+
+## Example: Insurance quotes and TV adverts
+
 ```{r}
 #| label: tvadvert-glance
 #| echo: true
