@@ -188,7 +188,7 @@ food |> autoplot(box_cox(Turnover, 0.0895)) +
 ## Adjusting time series
 
 ::: {.wordcloud #useful-adjustments max-words=3 max-answers=3}
-Besides transformations, what adjustments could make a time series easier to forecast?
+Besides purely mathematical transformations, what adjustments could make a time series easier to forecast?
 :::
 
 ## Per capita adjustments
@@ -584,13 +584,6 @@ tourism |>
   coord_cartesian(xlim = c(0, 1), ylim = c(0, 1)) +
   theme(legend.position = "bottom")
 ```
-
-::: {.fragment}
-::: {.alertblock style="font-size:0.7em;"}
-* Holidays more seasonal than other travel.
-* WA series tend to have the strongest trends.
-:::
-:::
 :::
 
 ::: {.column width="55%"}
@@ -601,6 +594,13 @@ Which travel purpose is most seasonal?
 - [x] Holiday
 - [ ] Other
 - [ ] Visiting
+:::
+
+::: {.fragment}
+::: {.alertblock style="font-size:0.7em;"}
+* Holidays more seasonal than other travel.
+* WA series tend to have the strongest trends.
+:::
 :::
 :::
 ::::
