@@ -190,13 +190,22 @@ where $m$ is the seasonal frequency, and $Q$ is computed on the training data
 Used in the M5 forecasting competition (Makridakis et al., IJF, 2022).
 :::
 
-## Measures of forecast accuracy {.code-small}
+## Test-set accuracy {.code-small}
 
 ```{r}
 #| label: beer-test-accuracy
 beer_fc <- forecast(beer_fit, h = 10)
-accuracy(beer_fc, aus_production)
+beer_fc |>
+  accuracy(
+    aus_production,
+    measures = list(RMSE = RMSE, MAE = MAE, MAPE = MAPE, MASE = MASE, RMSSE = RMSSE)
+  )
 ```
+
+::: {.fragment}
+* Seasonal naïve beats the mean on every measure.
+* Its MASE and RMSSE are below 1: smaller errors than in-sample seasonal naïve.
+:::
 
 # Evaluating distributional forecast accuracy
 
