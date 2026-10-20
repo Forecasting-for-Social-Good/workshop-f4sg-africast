@@ -198,7 +198,7 @@ $$\begin{aligned}
 :::
 
 ::: {.fragment}
-  * Damping parameter $0<\phi<1$.
+  * Damping parameter $0<\phi\le 1$.
   * If $\phi=1$, identical to Holt's linear trend.
   * As $h\rightarrow\infty$, $\pred{y}{T+h}{T}\rightarrow \ell_T+\phi b_T/(1-\phi)$.
   * Short-run forecasts trended, long-run forecasts constant.
