@@ -84,28 +84,11 @@ $$
 $$
 where the training data is given by $\{y_1,\dots,y_T\}$
 
-## Measures of forecast accuracy {.code-small}
-
-```r
-beer_fit <- aus_production |>
-  filter(between(year(Quarter), 1992, 2007)) |>
-  model(
-    snaive = SNAIVE(Beer),
-    mean = MEAN(Beer)
-  )
-beer_fit |>
-  forecast(h = 10) |>
-  autoplot(aus_production, level = NULL) +
-  labs(title ="Forecasts for quarterly beer production",
-       x ="Year", y ="Megalitres") +
-  guides(colour = guide_legend(title = "Forecast"))
-```
-
-## Measures of forecast accuracy
+## Forecasting beer production {.code-small}
 
 ```{r}
 #| label: beer-fc-1
-#| echo: false
+#| output-location: slide
 #| fig-height: 4
 beer_fit <- aus_production |>
   filter(between(year(Quarter), 1992, 2007)) |>
@@ -115,10 +98,10 @@ beer_fit <- aus_production |>
   )
 beer_fit |>
   forecast(h = 10) |>
-  autoplot(aus_production, level = NULL) +
+  autoplot(filter(aus_production, year(Quarter) >= 1990), level = NULL) +
   labs(
     title = "Forecasts for quarterly beer production",
-    x = "Year", y = "Megalitres"
+    x = "Quarter", y = "Megalitres"
   ) +
   guides(colour = guide_legend(title = "Forecast"))
 ```
