@@ -311,6 +311,17 @@ augment(fit) |> features(.resid, ljung_box, lag = 10)
 
 $p = 0.276 > 0.05$: no evidence against white noise.
 
+## What the residuals tell us
+
+* Mean close to zero: the forecasts are unbiased.
+* Uncorrelated: no information is left in the residuals.
+* Variance is not constant: it grows later in the series.
+* Heavy tails and a large outlier: the residuals are not normal.
+
+::: {.fragment}
+The point forecasts are fine, but the prediction intervals may be inaccurate.
+:::
+
 
 
 # Recap
