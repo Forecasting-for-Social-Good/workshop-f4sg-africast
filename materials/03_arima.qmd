@@ -266,17 +266,9 @@ Step 2:
 [Repeat Step 2 until no lower AICc can be found.]{.alert}
 :::
 
-## How does ARIMA() work?
-
 ```{r}
 #| label: ARMAgridsearch
-#| echo: false
-#| message: false
-#| warning: false
-#| fig-asp: 1
-#| out-width: "60%"
-#| fig-width: 4
-#| fig-height: 4
+#| include: false
 start <- tribble(
   ~p, ~q,
   0, 0,
@@ -290,186 +282,144 @@ selected <- tribble(
   3, 3,
   4, 2
 )
-griddf <- expand.grid(p = 0:6, q = 0:6) |>
-  as_tibble() |>
-  left_join(start |> mutate(start = TRUE)) |>
-  left_join(selected |> mutate(chosen = TRUE)) |>
+griddf <- expand_grid(p = 0:6, q = 0:6) |>
+  left_join(start |> mutate(start = TRUE), by = c("p", "q")) |>
+  left_join(selected |> mutate(chosen = TRUE), by = c("p", "q")) |>
   replace_na(list(start = FALSE, chosen = FALSE)) |>
   mutate(
     step = case_when(
       start ~ 1,
       (p - selected$p[1])^2 + (q - selected$q[1])^2 <= 2 ~ 2,
       (p - selected$p[2])^2 + (q - selected$q[2])^2 <= 2 ~ 3,
-      (p - selected$p[3])^2 + (q - selected$q[3])^2 <= 2 ~ 4,
-      TRUE ~ NA_real_
+      (p - selected$p[3])^2 + (q - selected$q[3])^2 <= 2 ~ 4
     )
   ) |>
-  left_join(selected |>
-    mutate(step = row_number() + 1) |>
-    rename(fromp = p, fromq = q)) |>
+  left_join(
+    selected |>
+      mutate(step = row_number() + 1) |>
+      rename(fromp = p, fromq = q),
+    by = "step"
+  ) |>
   mutate(step = as.character(step))
-griddf |>
-  ggplot(aes(x = q, y = p)) +
-  geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
-  geom_segment(aes(x = fromq, y = fromp, xend = q, yend = p, col = step),
-    data = griddf |> filter(step %in% "1"),
-    arrow = arrow(length = unit(0.15, "inches"), type = "open"),
-    linewidth = 1, lineend = "butt"
-  ) +
-  geom_point(aes(col = step),
-    size = 5, shape = 19,
-    data = griddf |> filter(step == "1")
-  ) +
-  geom_point(data = filter(griddf |> filter(step == "1"), chosen), size = 12, shape = 21, stroke = 1.4) +
-  scale_y_reverse(breaks = 0:6) +
-  scale_x_continuous(position = "top", breaks = 0:6) +
-  theme_minimal() +
-  theme(
-    panel.grid.minor = element_blank(),
-    axis.text = element_text(size = 10),
-    axis.title.x = element_text(size = 12, hjust = 0),
-    axis.title.y = element_text(
-      size = 12, hjust = 1,
-      angle = 0, margin = margin(t = 0, r = 10, b = 0, l = 0)
+
+# Models considered up to step k: arrows from the previous best model, with the
+# best model so far circled
+plot_grid_step <- function(k) {
+  steps <- as.character(seq_len(k))
+  griddf |>
+    ggplot(aes(x = q, y = p)) +
+    geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
+    geom_segment(aes(x = fromq, y = fromp, xend = q, yend = p, col = step),
+      data = griddf |> filter(step == as.character(k)),
+      arrow = arrow(length = unit(0.15, "inches"), type = "open"),
+      linewidth = 1, lineend = "butt"
+    ) +
+    geom_point(aes(col = step),
+      size = 5, shape = 19,
+      data = griddf |> filter(step %in% steps)
+    ) +
+    geom_point(
+      data = griddf |> filter(step %in% steps, chosen),
+      size = 12, shape = 21, stroke = 1.4
+    ) +
+    scale_y_reverse(breaks = 0:6) +
+    scale_x_continuous(position = "top", breaks = 0:6) +
+    theme(
+      panel.grid.minor = element_blank(),
+      axis.text = element_text(size = 10),
+      axis.title.x = element_text(size = 12, hjust = 0),
+      axis.title.y = element_text(
+        size = 12, hjust = 1,
+        angle = 0, margin = margin(t = 0, r = 10, b = 0, l = 0)
+      ),
+      legend.position = "none"
+    ) +
+    scale_colour_manual(
+      breaks = paste(1:4),
+      values = c("#D55E00", "#0072B2", "#009E73", "#CC79A7")
     )
-  ) +
-  scale_colour_manual(
-    breaks = paste(1:4),
-    values = c("#D55E00", "#0072B2", "#009E73", "#CC79A7")
-  )
+}
 ```
 
 ## How does ARIMA() work?
 
+:::: columns
+::: {.column width="50%"}
+```{r}
+#| label: ARMAgridsearch1
+#| echo: false
+#| fig-width: 4
+#| fig-height: 4
+plot_grid_step(1)
+```
+:::
+
+::: {.column width="50%"}
+**Step 1:** fit the four starting models.
+
+ARIMA$(2,d,2)$ has the lowest AICc, so it becomes the current model (circled).
+:::
+::::
+
+## How does ARIMA() work?
+
+:::: columns
+::: {.column width="50%"}
 ```{r}
 #| label: ARMAgridsearch2
 #| echo: false
-#| message: false
-#| warning: false
-#| fig-asp: 1
-#| out-width: "60%"
 #| fig-width: 4
 #| fig-height: 4
-griddf |>
-  ggplot(aes(x = q, y = p)) +
-  geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
-  geom_segment(aes(x = fromq, y = fromp, xend = q, yend = p, col = step),
-    data = griddf |> filter(step == "2"),
-    arrow = arrow(length = unit(0.15, "inches"), type = "open"),
-    linewidth = 1, lineend = "butt"
-  ) +
-  geom_point(aes(col = step),
-    size = 5, shape = 19,
-    data = griddf |> filter(step %in% c("1", "2"))
-  ) +
-  geom_point(data = filter(griddf |> filter(step %in% c("1", "2")), chosen), size = 12, shape = 21, stroke = 1.4) +
-  scale_y_reverse(breaks = 0:6) +
-  scale_x_continuous(position = "top", breaks = 0:6) +
-  theme_minimal() +
-  theme(
-    panel.grid.minor = element_blank(),
-    axis.text = element_text(size = 10),
-    axis.title.x = element_text(size = 12, hjust = 0),
-    axis.title.y = element_text(
-      size = 12, hjust = 1,
-      angle = 0, margin = margin(t = 0, r = 10, b = 0, l = 0)
-    )
-  ) +
-  scale_colour_manual(
-    breaks = paste(1:4),
-    values = c("#D55E00", "#0072B2", "#009E73", "#CC79A7")
-  )
+plot_grid_step(2)
 ```
+:::
+
+::: {.column width="50%"}
+**Step 2:** fit the neighbours of ARIMA$(2,d,2)$.
+
+ARIMA$(3,d,3)$ has a lower AICc, so it becomes the current model.
+:::
+::::
 
 ## How does ARIMA() work?
 
+:::: columns
+::: {.column width="50%"}
 ```{r}
 #| label: ARMAgridsearch3
 #| echo: false
-#| message: false
-#| warning: false
-#| fig-asp: 1
-#| out-width: "60%"
 #| fig-width: 4
 #| fig-height: 4
-griddf |>
-  ggplot(aes(x = q, y = p)) +
-  geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
-  geom_segment(aes(x = fromq, y = fromp, xend = q, yend = p, col = step),
-    data = griddf |> filter(step %in% "3"),
-    arrow = arrow(length = unit(0.15, "inches"), type = "open"),
-    linewidth = 1, lineend = "butt"
-  ) +
-  geom_point(aes(col = step),
-    size = 5, shape = 19,
-    data = griddf |> filter(step %in% c("1", "2", "3"))
-  ) +
-  geom_point(
-    data = griddf |> filter(step %in% c("1", "2", "3"), chosen),
-    size = 12, shape = 21, stroke = 1.4
-  ) +
-  scale_y_reverse(breaks = 0:6) +
-  scale_x_continuous(position = "top", breaks = 0:6) +
-  theme_minimal() +
-  theme(
-    panel.grid.minor = element_blank(),
-    axis.text = element_text(size = 10),
-    axis.title.x = element_text(size = 12, hjust = 0),
-    axis.title.y = element_text(
-      size = 12, hjust = 1,
-      angle = 0, margin = margin(t = 0, r = 10, b = 0, l = 0)
-    )
-  ) +
-  scale_colour_manual(
-    breaks = paste(1:4),
-    values = c("#D55E00", "#0072B2", "#009E73", "#CC79A7")
-  )
+plot_grid_step(3)
 ```
+:::
+
+::: {.column width="50%"}
+**Step 2 (repeated):** fit the neighbours of ARIMA$(3,d,3)$.
+
+ARIMA$(4,d,2)$ has a lower AICc, so it becomes the current model.
+:::
+::::
 
 ## How does ARIMA() work?
 
+:::: columns
+::: {.column width="50%"}
 ```{r}
 #| label: ARMAgridsearch4
 #| echo: false
-#| message: false
-#| warning: false
-#| fig-asp: 1
-#| out-width: "60%"
 #| fig-width: 4
 #| fig-height: 4
-griddf |>
-  ggplot(aes(x = q, y = p)) +
-  geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
-  geom_segment(aes(x = fromq, y = fromp, xend = q, yend = p, col = step),
-    data = griddf |> filter(step %in% "4"),
-    arrow = arrow(length = unit(0.15, "inches"), type = "open"),
-    linewidth = 1, lineend = "butt"
-  ) +
-  geom_point(aes(col = step),
-    size = 5, shape = 19,
-    data = griddf |> filter(step %in% c("1", "2", "3", "4"))
-  ) +
-  geom_point(
-    data = griddf |> filter(step %in% c("1", "2", "3", "4"), chosen),
-    size = 12, shape = 21, stroke = 1.4
-  ) +
-  scale_y_reverse(breaks = 0:6) +
-  scale_x_continuous(position = "top", breaks = 0:6) +
-  theme_minimal() +
-  theme(
-    panel.grid.minor = element_blank(),
-    axis.text = element_text(size = 10),
-    axis.title.x = element_text(size = 12, hjust = 0),
-    axis.title.y = element_text(
-      size = 12, hjust = 1,
-      angle = 0, margin = margin(t = 0, r = 10, b = 0, l = 0)
-    )
-  ) +
-  scale_colour_manual(
-    breaks = paste(1:4),
-    values = c("#D55E00", "#0072B2", "#009E73", "#CC79A7")
-  )
+plot_grid_step(4)
 ```
+:::
+
+::: {.column width="50%"}
+**Step 2 (repeated):** fit the neighbours of ARIMA$(4,d,2)$.
+
+None has a lower AICc, so the search stops and ARIMA$(4,d,2)$ is selected.
+:::
+::::
 
 
 # Seasonal ARIMA models
