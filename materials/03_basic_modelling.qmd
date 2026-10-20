@@ -19,11 +19,18 @@ live-questions:
 * Produce forecasts
 * Fitted values and residuals
 
+## Your forecasting
+
+::: {.wordcloud #what-you-forecast max-words=3 max-answers=3}
+What do you forecast (or wish you could) in your work?
+:::
+
 ```{r}
 #| label: setup
 #| include: false
 #| cache: false
 source("setup.R")
+set.seed(2026)
 h02 <- tsibbledata::PBS |>
   filter(ATC2 == "H02") |>
   summarise(Cost = sum(Cost))
@@ -55,11 +62,7 @@ knitr::include_graphics("figs/forecasting_workflow.png")
 
 ## Statistical forecasting steps
 
-* Prepare data.
-* Visualise data.
-* Choosing and fitting models (specify and train models).
-* Produce forecast.
-* Evaluate quality.
+![](figs/workflow.svg){fig-align="center" width="100%"}
 
 ## What is a forecast?
 
@@ -159,6 +162,31 @@ A forecast is an estimate of the probability distribution of a variable to be ob
 ```{r austa1, dependson="austa", echo=FALSE}
 aligned_plots[[1]]
 ```
+:::
+
+## What is a forecast?
+
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
+
+```{r austa9b, dependson='austa', echo=FALSE}
+aligned_plots[[9]] +
+  geom_line(
+    colour = "black",
+    data = austa |> filter(Month >= yearmonth("2018 Jan")) |> mutate(Month = as.Date(Month))
+  )
+```
+
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
+
+## Was this a good forecast?
+
+::: {.poll #good-forecast}
+- Yes
+- No
 :::
 
 ## What is a forecast?
@@ -299,24 +327,6 @@ knitr::include_graphics("figs/forecasts_probabilistic_perspective.png")
 
 ## What can we forecast?
 
-::: {.alertblock style="font-size:0.7em"}
-A forecast is an estimate of the probability distribution of a variable to be observed in the future.
-:::
-
-```{r austa9b, dependson='austa', echo=FALSE}
-aligned_plots[[9]] +
-  geom_line(
-    colour = "black",
-    data = austa |> filter(Month >= yearmonth("2018 Jan")) |> mutate(Month = as.Date(Month))
-  )
-```
-
-::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
-Simulated futures from an ETS model
-:::
-
-## What can we forecast?
-
 ![](figs/nasdaq-stock-market.jpg){.photo}
 
 ## What can we forecast?
@@ -367,11 +377,6 @@ Simulated futures from an ETS model
 - maximum temperature tomorrow
 - exchange rate of \$US/AUS next week
 - total sales of drugs in Australian pharmacies next month
-:::
-
-::: {.fragment}
- - how do we measure "easiest"?
- - what makes something easy/difficult to forecast?
 :::
 
 ## Factors affecting forecastability
@@ -528,6 +533,17 @@ aus_production |>
   labs(title = "Clay brick production in Australia")
 ```
 
+## Which benchmark suits the pigs series?
+
+::: {.poll #pigs-benchmark}
+Which benchmark method is best for the number of pigs slaughtered in Victoria?
+
+- `MEAN()`
+- `NAIVE()`
+- `SNAIVE()`
+- `RW(~ drift())`
+:::
+
 # Specify and estimate
 
 ## Model specification
@@ -537,25 +553,6 @@ aus_production |>
     - the formula’s left side describes the response 
     - the right describes terms used to model the response.
 - `Attention`: MODEL name is in capital letters, e.g. `SNAIVE`
-
-## Model estimation {.code-small}
-
-The `model()` function trains models on data.
-
-- It returns a `mable` object.
-
-
-```{r model_template, eval=FALSE, echo=TRUE}
-# Fit the models
-my_mable <- my_data |>
-  model(
-    choose_name1 = MODEL1(response ~ term1+...),
-    choose_name2 = MODEL2(response ~ term1+...),
-    choose_name3 = MODEL3(response ~ term1+...),
-    choose_name4 = MODEL4(response ~ term1+...)
-  )
-```
-
 
 ## Model fitting: example {.code-small}
 
@@ -592,10 +589,6 @@ beer_fit |> glance()
 - The `report()` function gives a formatted model-specific display.
 - The `tidy()` function is used to extract the coefficients from the models.
 - We can extract information about some specific model using the `filter()` and `select()` functions.
-
-## Check model performance
-
-Once a model has been fitted, it is important to check how well it has performed on the data. We come back to this later.
 
 # Produce forecasts
 
@@ -673,6 +666,7 @@ When a normal distribution for the residuals is an unreasonable assumption, one 
 beer_2000 <- aus_production |> filter(year(Quarter) >= 2000) |> select(Beer)
 fit <- beer_2000 |>
   model(NAIVE(Beer))
+set.seed(2024)
 sim <- fit |> generate(h = 12, times = 5, bootstrap = TRUE)
 sim
 ```
@@ -702,21 +696,21 @@ fc
 
 ```{r fb-fc, echo=TRUE}
 fit <- aus_production |> select(Beer) |> model(NAIVE(Beer))
-forecast(fit) |> hilo(level = 95) |> unpack_hilo("95%")
+forecast(fit) |> mutate(`95%` = hilo(Beer, 95))
 ```
 
 ## Prediction intervals {.code-small}
 
 ```{r beer-fc-interval, dependson='beer-fc'}
 beer_fc |>
-  hilo(level = c(50, 75))
+  mutate(hilo(Beer, list(`50%` = 50, `75%` = 75)))
 ```
 
 ## Prediction intervals {.code-small}
 
 ```{r beer-fc-interval2, dependson='beer-fc'}
 beer_fc |>
-  hilo(level = c(50, 75)) |>
+  mutate(`50%` = hilo(Beer, 50)) |>
   mutate(lower = `50%`$lower, upper = `50%`$upper)
 ```
 
@@ -765,3 +759,13 @@ augment(fit) |>
   autoplot(.resid) +
   labs(x = "Quarter", y = "", title = "Residuals from snaïve method")
 ```
+
+## Beer production - residual ACF {.nostretch}
+
+```{r dj6, echo=TRUE, fig.height=2.2, out.width="70%", fig.align="center", dependson="augment"}
+augment(fit) |> ACF(.resid) |> autoplot()
+```
+
+::: {.likert #beer-resid-noise}
+These residuals look like random noise
+:::
