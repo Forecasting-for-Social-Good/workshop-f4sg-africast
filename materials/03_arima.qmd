@@ -88,7 +88,7 @@ gafa_stock |>
 ## Autoregressive models
 
 ::: {.callout-note}
-## Autoregressive (AR) models:
+## Autoregressive (AR) models
 $$
   y_{t} = c + \phi_{1}y_{t - 1} + \phi_{2}y_{t - 2} + \cdots + \phi_{p}y_{t - p} + \varepsilon_{t},
 $$
@@ -109,15 +109,15 @@ p1 + p2
 
 * Cyclic behaviour is possible when $p\ge 2$.
 
-## Moving Average (MA) models
+## Moving average models
 
 ::: {.callout-note}
-## Moving Average (MA) models:
+## Moving average (MA) models
 $$
   y_{t} = c + \varepsilon_t + \theta_{1}\varepsilon_{t - 1} + \theta_{2}\varepsilon_{t - 2} + \cdots + \theta_{q}\varepsilon_{t - q},
 $$
 where $\varepsilon_t$ is white noise.
-A multiple regression with **lagged *errors*** as predictors. *Don't confuse with moving average smoothing!*
+A multiple regression with **lagged errors** as predictors. Don't confuse with moving average smoothing!
 :::
 
 ```{r}
@@ -136,7 +136,7 @@ p1 + p2
 ## ARIMA models
 
 ::: {.callout-note}
-## Autoregressive Moving Average models:
+## Autoregressive moving average (ARMA) models
 $$\begin{aligned}
   y_{t} &= c + \phi_{1}y_{t - 1} + \cdots + \phi_{p}y_{t - p} \\
         & \qquad + \theta_{1}\varepsilon_{t - 1} + \cdots + \theta_{q}\varepsilon_{t - q} + \varepsilon_{t}.
@@ -144,13 +144,13 @@ $$\begin{aligned}
 :::
 
 ::: {.fragment}
-* Predictors include both **lagged values of $y_t$ and lagged errors.**
+* Predictors include both lagged values of $y_t$ and lagged errors.
 :::
 
 ::: {.fragment}
-### Autoregressive Integrated Moving Average models
+### Autoregressive integrated moving average models
 
-* Combine ARMA model with **differencing**.
+* Combine ARMA model with differencing.
 * $d$-differenced series follows an ARMA model.
 * Need to choose $p$, $d$, $q$ and whether or not to include $c$.
 :::
