@@ -451,47 +451,36 @@ Seasonal and non-seasonal terms combine multiplicatively
 
 ## Corticosteroid drug sales
 
+Monthly Australian Pharmaceutical Benefits Scheme (PBS) expenditure on corticosteroid (H02) drugs.
+
 ```{r}
 #| echo: true
+#| fig-height: 3
 h02 <- PBS |>
   filter(ATC2 == "H02") |>
   summarise(Cost = sum(Cost) / 1e6)
+h02 |> autoplot(Cost) + labs(y = "$AUD million")
 ```
 
-## Corticosteroid drug sales
+## Corticosteroid drug sales: log transform
 
 ```{r}
 #| echo: true
-h02 |> autoplot(
-  Cost
-)
+h02 |> autoplot(log(Cost))
 ```
 
-## Corticosteroid drug sales
+## Corticosteroid drug sales: seasonal difference
 
 ```{r}
 #| echo: true
-h02 |> autoplot(
-  log(Cost)
-)
+h02 |> autoplot(log(Cost) |> difference(12))
 ```
 
-## Corticosteroid drug sales
+## Corticosteroid drug sales: seasonal and first difference
 
 ```{r}
 #| echo: true
-h02 |> autoplot(
-  log(Cost) |> difference(12)
-)
-```
-
-## Corticosteroid drug sales
-
-```{r}
-#| echo: true
-h02 |> autoplot(
-  log(Cost) |> difference(12) |> difference(1)
-)
+h02 |> autoplot(log(Cost) |> difference(12) |> difference(1))
 ```
 
 ## Corticosteroid drug sales
