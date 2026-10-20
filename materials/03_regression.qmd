@@ -385,14 +385,6 @@ $$
 
 As with the AIC, the AIC$_{\text{C}}$ should be minimised.
 
-## Comparing regression models
-
-```{r}
-#| echo: true
-glance(fit_full) |>
-  select(r_squared, adj_r_squared, AIC, AICc, CV)
-```
-
 ## Choosing regression variables
 
 **Best subsets regression**
@@ -410,6 +402,33 @@ glance(fit_full) |>
 has lower CV or AICc.
 * Iterate until no further improvement.
 * You can also do forward stepwise
+
+## Example: candidate models {.code-small}
+
+Start from the full model, then drop one predictor at a time.
+
+```{r}
+#| label: candidates
+#| echo: true
+fit_candidates <- us_change |>
+  model(
+    full = TSLM(Consumption ~ Income + Production + Unemployment + Savings),
+    no_income = TSLM(Consumption ~ Production + Unemployment + Savings),
+    no_production = TSLM(Consumption ~ Income + Unemployment + Savings),
+    no_unemployment = TSLM(Consumption ~ Income + Production + Savings),
+    no_savings = TSLM(Consumption ~ Income + Production + Unemployment)
+  )
+```
+
+## Example: comparing candidate models
+
+```{r}
+#| label: candidates-glance
+#| echo: true
+glance(fit_candidates) |>
+  select(.model, adj_r_squared, CV, AIC, AICc) |>
+  arrange(AICc)
+```
 
 # Forecasting with regression
 
@@ -444,19 +463,14 @@ $$
 ```{r}
 #| label: usconsumptionf
 #| echo: true
-fit_consBest <- us_change |>
-  model(
-    TSLM(Consumption ~ Income + Savings + Unemployment)
-  )
-
 future_scenarios <- scenarios(
   Increase = new_data(us_change, 4) |>
-    mutate(Income = 1, Savings = 0.5, Unemployment = 0),
+    mutate(Income = 1, Savings = 0.5, Unemployment = 0, Production = 0),
   Decrease = new_data(us_change, 4) |>
-    mutate(Income = -1, Savings = -0.5, Unemployment = 0),
+    mutate(Income = -1, Savings = -0.5, Unemployment = 0, Production = 0),
   names_to = "Scenario"
 )
-fc_scenarios <- forecast(fit_consBest, new_data = future_scenarios)
+fc_scenarios <- forecast(fit_full, new_data = future_scenarios)
 ```
 
 ## US Consumption
