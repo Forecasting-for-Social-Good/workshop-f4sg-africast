@@ -275,6 +275,22 @@ fit <- holidays |> model(ets = ETS(Trips))
 fit
 ```
 
+## Example: Australian holiday tourism {.nostretch}
+
+```{r ausholidays-snowy-plot, echo=FALSE, fig.height=2}
+holidays |>
+  filter(Region == "Snowy Mountains") |>
+  autoplot(Trips) +
+  labs(y = "Thousands", title = "Snowy Mountains holiday trips")
+```
+
+::: {.poll #snowy-ets-pattern prompt="Based on the time plot, which ETS model suits Snowy Mountains holiday trips?"}
+- [ ] ETS(?,A,A)
+- [x] ETS(?,N,A)
+- [ ] ETS(?,N,M)
+- [ ] ETS(?,N,N)
+:::
+
 ## Example: Australian holiday tourism
 
 
