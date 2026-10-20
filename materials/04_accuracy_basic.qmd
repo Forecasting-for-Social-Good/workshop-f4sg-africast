@@ -82,7 +82,9 @@ A model fits the training data perfectly. Will it forecast well?
 
 ## How long a test set?
 
-::: {.poll #test-set-length prompt="You need forecasts 12 months ahead. What is the shortest sensible test set?"}
+::: {.poll #test-set-length}
+You need forecasts 12 months ahead. What is the shortest sensible test set?
+
 - [ ] 3 months
 - [x] 12 months
 - [ ] 36 months
@@ -168,7 +170,9 @@ $$\begin{aligned}
 
 ## Comparing across districts
 
-::: {.poll #compare-districts prompt="You forecast clinic visits in 50 districts of very different sizes. Which measure lets you compare your method's accuracy across all of them?"}
+::: {.poll #compare-districts}
+You forecast clinic visits in 50 districts of very different sizes. Which measure lets you compare your method's accuracy across all of them?
+
 - [ ] RMSE
 - [ ] MAE
 - [x] MASE
@@ -208,7 +212,9 @@ Proposed by Hyndman and Koehler (IJF, 2006).
 
 ## Slow-selling items
 
-::: {.poll #slow-seller-measure prompt="Which measure suits daily sales of a slow-selling item with many zero days?"}
+::: {.poll #slow-seller-measure}
+Which measure suits daily sales of a slow-selling item with many zero days?
+
 - [ ] MAPE
 - [x] MASE
 - [ ] Either
