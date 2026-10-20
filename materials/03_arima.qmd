@@ -497,6 +497,22 @@ fit_h02 |> report()
 $d=1$ and $D=1$ match the differencing above, leaving an AR(2) and a seasonal MA(1) at lag 12.
 :::
 
+## Corticosteroid drug sales: manual ARIMA
+
+Specify the orders with `pdq()` and `PDQ()`, and the constant with `0 +` (exclude) or `1 +` (include).
+
+```{r}
+#| label: h02manual
+#| echo: true
+h02 |>
+  model(manual = ARIMA(log(Cost) ~ 0 + pdq(2, 1, 0) + PDQ(0, 1, 1))) |>
+  report()
+```
+
+::: {.fragment}
+Orders can be chosen manually by inspecting the ACF and PACF of the differenced data.
+:::
+
 ## Corticosteroid drug sales: forecasts
 
 ```{r}
