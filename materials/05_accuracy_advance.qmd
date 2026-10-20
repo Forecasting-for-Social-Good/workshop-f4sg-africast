@@ -38,12 +38,10 @@ knitr::include_graphics("figs/f_future.jpg")
 
 ## Time series cross-validation
 
-**Time series cross-validation**
-
 ```{r}
 #| label: cv-diagram
 #| echo: false
-#| fig-height: 4
+#| fig-height: 3
 par(mar=c(0,0,0,0))
 plot(0,0,xlim=c(0,28),ylim=c(0,1),
        xaxt="n",yaxt="n",bty="n",xlab="",ylab="",type="n")
