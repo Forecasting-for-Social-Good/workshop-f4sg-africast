@@ -162,7 +162,7 @@ Errors are averaged over all origins and all 12 horizons.
 ## Forecasting residuals
 
 ::: {.block}
-**Residuals in forecasting:** difference between observed value and its fitted value: $e_t = y_t-\hat{y}_{t|t-1}$.
+**Residuals in forecasting:** difference between observed value and its fitted value (one-step forecast) on the training data: $e_t = y_t-\hat{y}_{t|t-1}$.
 :::
 
 ::: {.fragment}
@@ -284,16 +284,11 @@ $\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$ $\qquad$ where $\ell=
 
 * If each $r_k$ close to zero, $Q$ will be **small**.
 * If some $r_k$ values large ($+$ or $-$), $Q$ will be **large**.
-* My preferences: $h=10$ for non-seasonal data, $h=2m$ for seasonal data.
+* Suggested lags: $\ell=10$ for non-seasonal data, $\ell=2m$ for seasonal data (but at most $T/5$).
 * If data are WN and $T$ large, $Q \sim \chi^2$ with $\ell$ degrees of freedom.
+* For residuals of a model with $K$ estimated parameters, use $\ell - K$ degrees of freedom (`dof` argument).
 
 ## Ljung-Box test {.code-small}
-
-::: {.block}
-::: {.center-text}
-$\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$ $\qquad$ where $\ell=$ max lag and $T=$ # observations.
-:::
-:::
 
 
 ```{r}
@@ -308,9 +303,10 @@ augment(fit) |>
 ```{r}
 #| label: fb-ljung-box
 #| dependson: fb-augment
-# lag = h
 augment(fit) |> features(.resid, ljung_box, lag = 10)
 ```
+
+$p = 0.276 > 0.05$: no evidence against white noise.
 
 
 
