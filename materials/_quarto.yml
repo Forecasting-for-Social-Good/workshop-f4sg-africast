@@ -42,4 +42,4 @@ execute:
   message: false
   warning: false
   cache: true
-  freeze: true
+  freeze: auto
