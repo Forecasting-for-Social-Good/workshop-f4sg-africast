@@ -550,7 +550,7 @@ tourism |>
 ::: {.fragment}
 ::: {.alertblock .absolute top="530px" left="860px" width="340px" style="font-size:0.7em;"}
 * Holidays more seasonal than other travel.
-* WA has strongest trends.
+* WA series tend to have the strongest trends.
 :::
 :::
 
