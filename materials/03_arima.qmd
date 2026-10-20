@@ -54,7 +54,7 @@ A **stationary series** is:
 gafa_stock |>
   filter(Symbol == "GOOG", year(Date) == 2018) |>
   autoplot(Close) +
-  labs(y = "Closing price ($US)", title = "Google closing stock price")
+  labs(x = "Date", y = "Closing price ($US)", title = "Google closing stock price")
 ```
 
 ::: {.poll #stationary-goog prompt="Is the Google closing stock price stationary?"}
@@ -70,7 +70,7 @@ gafa_stock |>
 gafa_stock |>
   filter(Symbol == "GOOG", year(Date) == 2018) |>
   autoplot(difference(Close)) +
-  labs(y = "Change ($US)", title = "Daily change in Google closing stock price")
+  labs(x = "Date", y = "Change ($US)", title = "Daily change in Google closing stock price")
 ```
 
 ::: {.poll #stationary-goog-diff prompt="Is the daily change in Google closing stock price stationary?"}
