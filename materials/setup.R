@@ -10,8 +10,8 @@ options(
 )
 knitr::opts_chunk$set(
   dev.args = list(pointsize = 11, bg = "transparent"),
-  # Keep figures outside *_files/, which is removed after embedding resources,
-  # so cached chunks still have their figures on re-render
+  # Keep figures in one folder (not per-deck *_files/) so cached chunks still
+  # have their figures on re-render and the site can publish them as resources
   fig.path = file.path(
     "_figures",
     tools::file_path_sans_ext(knitr::current_input()),

@@ -2,7 +2,13 @@ project:
   type: website
   resources:
     - "images/twitter-card.png"
+    # Slide decks and the files they link to (shared libs, figures, fonts, images)
     - "materials/[0-9]*.html"
+    - "materials/libs"
+    - "materials/_figures"
+    - "materials/fonts"
+    - "materials/figs"
+    - "materials/webr-slider.js"
     - "exercises.zip"
     - "demo"
   render:

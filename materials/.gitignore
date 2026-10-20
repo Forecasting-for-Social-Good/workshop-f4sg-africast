@@ -1,4 +1,5 @@
 /.quarto/
+/libs/
 *_files/
 *_cache/
 _freeze
