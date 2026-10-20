@@ -84,6 +84,7 @@ For time series cross-validation, stretching windows are most commonly used.
 
 ## Time series cross-validation {.code-small}
 
+Monthly antidiabetic drug sales in Australia (\$ millions), from 2000.
 Stretch with a minimum length of 24, growing by 1 each step.
 
 ```{r}
@@ -105,12 +106,16 @@ drug_sale_tcsv |> print(n = 4)
 
 ## Time series cross-validation {.code-small}
 
-Estimate seasonal naïve models for each window.
+Estimate seasonal naïve, naïve and drift models for each window.
 
 ```{r}
 #| label: cv-fit
 drug_fit_tr <- drug_sale_tcsv |> 
-  model(snaive=SNAIVE(Cost))
+  model(
+    snaive = SNAIVE(Cost),
+    naive = NAIVE(Cost),
+    drift = RW(Cost ~ drift())
+  )
 ```
 
 ```{r}
@@ -121,12 +126,12 @@ print(drug_fit_tr, n = 4)
 
 ## Time series cross-validation {.code-small}
 
-Produce 12-step-ahead forecasts from each window.
+Produce 12-step-ahead forecasts from each model and window.
 
 ```{r}
 #| label: cv-fc
 drug_fc_tr <- drug_fit_tr |> 
-  forecast(h=forecast_horizon)
+  forecast(h = forecast_horizon)
 ```
 
 ```{r}
@@ -139,13 +144,19 @@ drug_fc_tr |> print(n = 4)
 
 ```{r}
 #| label: cv-accuracy
-# Cross-validated
-drug_fc_tr |> 
-  accuracy(antidiabetic_drug_sale,
-           measures = list( point_accuracy_measures, 
-                            interval_accuracy_measures,
-                            distribution_accuracy_measures))
+drug_fc_tr |>
+  accuracy(
+    antidiabetic_drug_sale,
+    measures = list(
+      point_accuracy_measures,
+      interval_accuracy_measures,
+      distribution_accuracy_measures
+    )
+  ) |>
+  select(.model, RMSE, MAE, MASE, winkler, CRPS)
 ```
+
+Errors are averaged over all origins and all 12 horizons.
 
 
 # Residual diagnostics
