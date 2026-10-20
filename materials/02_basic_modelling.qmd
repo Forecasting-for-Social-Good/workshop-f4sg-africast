@@ -418,8 +418,8 @@ aus_livestock |>
   ) |>
   autoplot(Count) +
   labs(
-    x = "Year", y = "thousands",
-    title = "Number of pigs slaughtered in Victoria, 1990-1995"
+    x = "Year", y = "Number of pigs",
+    title = "Number of pigs slaughtered in Victoria, 1992-1996"
   )
 ```
 
