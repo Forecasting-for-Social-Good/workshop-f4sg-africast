@@ -308,14 +308,19 @@ $$p_t = \int_{-\infty}^{\infty} \left(G_t(x) - F_t(x)\right)^2dx$$
 * $F_t(x)$ is the observation's distribution function: a step from 0 to 1 at $y_t$
 * Lower is better; for a point forecast it reduces to the MAE.
 
-## Continuous Ranked Probability Score (CRPS)
+## CRPS: the gap between forecast and outcome
 
-```{r}
-#| label: crps
-#| echo: false
-#| out-width: 60%
-knitr::include_graphics("figs/crps.jpg")
+```{=html}
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js"></script>
+<script src="crps-slider.js"></script>
+<div class="crps-slider" data-prevent-swipe></div>
 ```
+
+::: {.crps-notes}
+* CRPS adds up the squared gap (shaded) between the forecast $G$ and the outcome $F$.
+* Mean away from $y$, or spread too wide: larger. Lower is better.
+:::
 
 ## Percentile score and CRPS {.code-small}
 

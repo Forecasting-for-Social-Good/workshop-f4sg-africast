@@ -514,12 +514,19 @@ $bleed-width: calc(var(--slide-width) + 160px);
   width: 9.5em;
 }
 
-// Interactive webR slider plots (webr-slider.js): ggplot2-style titles above
+// Interactive webR slider plots (webr-slider.js) and the CRPS explainer
+// (crps-slider.js, which reuses these styles): ggplot2-style titles above
 // the plot and the sliders below it, no wider than the plot (WIDTH in the JS)
-.reveal .webr-slider {
+.reveal .webr-slider,
+.reveal .crps-slider {
   max-width: 1256px;
   font-size: 17px;
   color: $slate;
+  .crps-readout {
+    font-size: 40px;
+    line-height: 1.2;
+    strong { font-weight: 700; font-variant-numeric: tabular-nums; }
+  }
   .webr-slider-title {
     font-size: 25px;
     line-height: 1.2;
@@ -658,4 +665,10 @@ $bleed-width: calc(var(--slide-width) + 160px);
     white-space: nowrap;
     font-size: 0.8em;
   }
+}
+
+.reveal .crps-notes ul {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.3;
 }
