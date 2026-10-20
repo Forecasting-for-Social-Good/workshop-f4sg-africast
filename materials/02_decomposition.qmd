@@ -536,7 +536,8 @@ tourism |> features(Trips, feat_stl)
 tourism |>
   features(Trips, feat_stl) |>
   ggplot(aes(x = trend_strength, y = seasonal_strength_year, col = Purpose)) +
-  geom_point() + facet_wrap(vars(State))
+  geom_point() + facet_wrap(vars(State)) +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 1))
 ```
 
 ::: {.fragment}
