@@ -15,31 +15,9 @@ antidiabetic_drug_sale <- PBS |>
   summarise(Cost = sum(Cost) / 1e6) |>
   filter(year(Month) >= 2000)
 
-# Animate the windows of a rolled tsibble of `n` time points, adding one window
-# (row) per frame and holding the last frame for `pause` frames. Points in each
-# window are blue, the rest are grey.
-roll_anim <- function(windows, n = 20, pause = 4) {
-  windows <- as_tibble(windows)
-  ids <- unique(windows$.id)
-  frames <- seq_len(length(ids) + pause)
-  # Each frame shows every window up to that frame
-  shown <- function(data) {
-    tidyr::expand_grid(frame = frames, data) |>
-      filter(.id <= frame)
-  }
-  all_points <- shown(tidyr::expand_grid(.id = ids, t = seq_len(n)))
-  p <- ggplot(mapping = aes(x = t, y = .id)) +
-    geom_point(data = all_points, colour = "grey80", size = 3) +
-    geom_point(data = shown(windows), colour = "#0072B2", size = 3) +
-    scale_y_reverse(breaks = ids, limits = rev(range(ids))) +
-    labs(x = "Time", y = "Window (.id)") +
-    theme(
-      panel.grid.minor = element_blank(),
-      # MP4 has no transparency, so match the slide's background gradient
-      plot.background = element_rect(fill = "#F8FAF2", colour = NA)
-    ) +
-    gganimate::transition_manual(frame)
-  anim_video(p, nframes = length(frames), fps = 2)
+# Animations of the windows made by rolling a tsibble
+for (f in c("common/morph.R", "roll.R")) {
+  source(file.path("R", "morph", f))
 }
 ```
 
@@ -112,15 +90,40 @@ x <- tsibble(t = 1:20, index = t)
 stretch <- x |> stretch_tsibble(.init = 6, .step = 2)
 ```
 
+:::::: {.morph-slide}
+
 ```{r}
-#| label: roll-stretch-anim
-#| dependson: roll-stretch
+#| label: roll-stretch-morph
 #| echo: false
-#| fig-height: 3
-roll_anim(stretch)
+#| output: asis
+#| cache: false
+roll_morph(
+  stretch, n = 20, id = "roll-stretch-morph",
+  alt = "Animation adding the windows made by stretch_tsibble() one at a time, each starting at the first observation and two observations longer than the last."
+)
 ```
 
-Starts with `.init` observations and grows by `.step` each window.
+::::: {.morph-captions}
+
+:::: {.morph-step}
+A tsibble `x` of 20 observations.
+::::
+
+:::: {.morph-step .fragment .fade-in-then-out}
+The first window holds the first `.init = 6` observations.
+::::
+
+:::: {.morph-step .fragment .fade-in-then-out}
+The next window adds `.step = 2` observations.
+::::
+
+:::: {.morph-step .fragment .fade-in-then-out}
+Keep growing until the window reaches the end of the data: 8 windows, numbered by `.id`.
+::::
+
+:::::
+
+::::::
 
 ## Slide: `slide_tsibble()` {.code-small}
 
@@ -130,15 +133,40 @@ Starts with `.init` observations and grows by `.step` each window.
 slide <- x |> slide_tsibble(.size = 8, .step = 2)
 ```
 
+:::::: {.morph-slide}
+
 ```{r}
-#| label: roll-slide-anim
-#| dependson: roll-slide
+#| label: roll-slide-morph
 #| echo: false
-#| fig-height: 3
-roll_anim(slide)
+#| output: asis
+#| cache: false
+roll_morph(
+  slide, n = 20, id = "roll-slide-morph",
+  alt = "Animation adding the windows made by slide_tsibble() one at a time, each eight observations long and starting two observations after the last."
+)
 ```
 
-Keeps `.size` observations and shifts by `.step` each window.
+::::: {.morph-captions}
+
+:::: {.morph-step}
+A tsibble `x` of 20 observations.
+::::
+
+:::: {.morph-step .fragment .fade-in-then-out}
+The first window holds the first `.size = 8` observations.
+::::
+
+:::: {.morph-step .fragment .fade-in-then-out}
+The next window moves along by `.step = 2` observations, keeping its size.
+::::
+
+:::: {.morph-step .fragment .fade-in-then-out}
+Keep sliding until the window reaches the end of the data: 7 windows.
+::::
+
+:::::
+
+::::::
 
 ## Tile: `tile_tsibble()` {.code-small}
 
@@ -148,15 +176,40 @@ Keeps `.size` observations and shifts by `.step` each window.
 tile <- x |> tile_tsibble(.size = 5)
 ```
 
+:::::: {.morph-slide}
+
 ```{r}
-#| label: roll-tile-anim
-#| dependson: roll-tile
+#| label: roll-tile-morph
 #| echo: false
-#| fig-height: 3
-roll_anim(tile)
+#| output: asis
+#| cache: false
+roll_morph(
+  tile, n = 20, id = "roll-tile-morph",
+  alt = "Animation adding the windows made by tile_tsibble() one at a time, each five observations long and starting where the last ended."
+)
 ```
 
-Splits the data into non-overlapping windows of `.size` observations.
+::::: {.morph-captions}
+
+:::: {.morph-step}
+A tsibble `x` of 20 observations.
+::::
+
+:::: {.morph-step .fragment .fade-in-then-out}
+The first tile holds the first `.size = 5` observations.
+::::
+
+:::: {.morph-step .fragment .fade-in-then-out}
+The next tile starts where the last ended, so the tiles never overlap.
+::::
+
+:::: {.morph-step .fragment .fade-in-then-out}
+Keep tiling until the data are used up: 4 tiles.
+::::
+
+:::::
+
+::::::
 
 ## Rolling origins for drug sales {.code-small}
 
