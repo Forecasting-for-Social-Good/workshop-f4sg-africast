@@ -1,5 +1,6 @@
 ---
 title: "Transformations, decompositions and features"
+session: 3
 filters:
   - live-questions
 revealjs-plugins:
@@ -19,16 +20,15 @@ library(ggtime)
 library(glue)
 ```
 
+# Transforming time series
+
+## Variance stabilisation
+
 ```{=html}
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js"></script>
 <script src="webr-slider.js"></script>
 ```
-
-
-# Transforming time series
-
-## Variance stabilisation
 
 If the data show different variation at different levels of the series, then a transformation can be useful.
 
