@@ -126,7 +126,7 @@ $$\begin{aligned}
 * MAPE is scale independent but is only sensible if $y_t\gg 0$ for all $t$, and $y$ has a natural zero.
 :::
 
-## Measures of forecast accuracy {.smaller}
+## Scaled errors: MASE {.smaller}
 
 ::: {.callout-note}
 ## Mean Absolute Scaled Error
@@ -150,7 +150,7 @@ $Q = \frac{1}{T-m}\displaystyle\sum_{t=m+1}^T |y_{t}-y_{t-m}|$
 :::
 
 ::: {style="text-align:right"}
-where $m$ is the seasonal frequency
+where $m$ is the seasonal frequency, and $Q$ is computed on the training data
 :::
 :::
 
@@ -158,7 +158,7 @@ where $m$ is the seasonal frequency
 Proposed by Hyndman and Koehler (IJF, 2006).
 :::
 
-## Measures of forecast accuracy {.smaller}
+## Scaled errors: RMSSE {.smaller}
 
 ::: {.callout-note}
 ## Root Mean Squared Scaled Error
@@ -166,6 +166,8 @@ $$
   \text{RMSSE} = \sqrt{\text{mean}(e^2_{T+h}/Q)}
 $$
 :::
+
+::: {.fragment}
 
 - For non-seasonal series, scale uses naïve forecasts:
 
@@ -180,10 +182,13 @@ $Q = \frac{1}{T-m}\displaystyle\sum_{t=m+1}^T (y_{t}-y_{t-m})^2$
 :::
 
 ::: {style="text-align:right"}
-where $m$ is the seasonal frequency
+where $m$ is the seasonal frequency, and $Q$ is computed on the training data
+:::
 :::
 
+::: {.fragment}
 Used in the M5 forecasting competition (Makridakis et al., IJF, 2022).
+:::
 
 ## Measures of forecast accuracy {.code-small}
 
