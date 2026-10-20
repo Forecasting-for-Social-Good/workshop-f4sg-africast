@@ -1,6 +1,13 @@
 ---
 title: "Cross-validation and residual diagnostics"
 session: 9
+filters:
+  - live-questions
+revealjs-plugins:
+  - live-questions
+live-questions:
+  server: https://poll.nectric.com.au
+  session: africast-cv-residuals
 ---
 
 ```{r}
@@ -269,6 +276,16 @@ drug_fc_tr <- drug_fit_tr |>
 drug_fc_tr |> print(n = 4)
 ```
 
+## Which method will win?
+
+::: {.poll #cv-winner}
+Which method do you expect to forecast antidiabetic drug sales best?
+
+- [x] Seasonal naïve
+- [ ] Naïve
+- [ ] Drift
+:::
+
 ## Cross-validated accuracy {.code-small}
 
 ```{r}
@@ -286,6 +303,16 @@ drug_fc_tr |>
 ```
 
 Errors are averaged over all origins and all 12 horizons.
+
+## From cross-validation to forecasts
+
+::: {.poll #after-cv}
+Seasonal naïve wins the cross-validation. How do you produce the forecasts you deliver?
+
+- [ ] Use the forecasts from the last window
+- [x] Refit seasonal naïve on all the data
+- [ ] Average the forecasts from every window
+:::
 
 
 # Residual diagnostics
