@@ -228,10 +228,10 @@ fit |>
 ## How does ARIMA() work?
 
 ::: {.callout-important}
-## Hyndman and Khandakar (JSS, 2008) algorithm:
+## Hyndman and Khandakar (JSS, 2008) algorithm
 
-* Select no. differences $d$ via KPSS test.
-* Select $p$, $q$ and inclusion of $c$ by minimising AICc.
+* Select the number of seasonal differences $D$ via a seasonal strength test, then the number of differences $d$ via KPSS tests.
+* Select $p$, $q$ (and $P$, $Q$ for seasonal models) and inclusion of $c$ by minimising AICc.
 * Use stepwise search to traverse model space.
 :::
 
@@ -255,11 +255,11 @@ ARIMA$(2,d,2)$, ARIMA$(0,d,0)$, ARIMA$(1,d,0)$, ARIMA$(0,d,1)$
 Step 2:
 : Consider variations of current model:
 
-    * vary one of $p,q,$ from current model by $\pm1$;
-    * $p,q$ both vary from current model by $\pm1$;
-    * Include/exclude $c$ from current model.
+    * vary one of $p$, $q$ from current model by $\pm1$;
+    * $p$, $q$ both vary from current model by $\pm1$;
+    * include/exclude $c$ from current model.
 
-    Model with lowest AICc becomes current model.
+Model with lowest AICc becomes current model.
 :::
 
 ::: {.fragment}
