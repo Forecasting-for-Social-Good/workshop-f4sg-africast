@@ -9,6 +9,14 @@ live-questions:
   session: africast-transforming
 ---
 
+```{r}
+#| label: setup
+#| include: false
+#| cache: false
+source("setup.R")
+library(glue)
+```
+
 ## Outline
 
 * Transforming time series
@@ -16,16 +24,6 @@ live-questions:
 * Time series decompositions
 * STL Features
 * Clustering features
-
-```{r}
-#| label: setup
-#| include: false
-#| cache: false
-source("setup.R")
-library(purrr)
-library(glue)
-library(stringr)
-```
 
 ```{=html}
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
