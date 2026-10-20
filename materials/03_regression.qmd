@@ -631,7 +631,7 @@ If a categorical variable takes only two values (e.g., "Yes" or "No"), then an e
 :::
 
 ::: {.column width="50%"}
-![](figs/dummy2.jpg){height="600px"}
+![](figs/regression/dummy_binary.svg){height="460px" fig-alt="A Market day? column of Yes and No recoded to a dummy column of 1s and 0s"}
 :::
 :::
 
@@ -643,7 +643,7 @@ If there are more than two categories, then the variable can be coded using seve
 :::
 
 ::: {.column width="60%"}
-![](figs/dummy3.jpg)
+![](figs/regression/dummy_categories.svg){width="100%" fig-alt="Days Monday to Friday coded as four dummy columns; Friday rows are all zeros as the baseline"}
 :::
 :::
 

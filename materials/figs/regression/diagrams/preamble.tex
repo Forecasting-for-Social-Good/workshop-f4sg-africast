@@ -1,0 +1,24 @@
+% Shared setup for the regression diagrams, in the AFRICAST palette
+\usepackage{fontspec}
+\usepackage[sfdefault,lining]{FiraSans}
+\usepackage{amsmath}
+\usepackage{unicode-math}
+\setmathfont{Fira Math}
+\usetikzlibrary{arrows.meta}
+\definecolor{ink}{HTML}{1F2A36}
+\definecolor{slate}{HTML}{434A5C}
+\definecolor{AfricastBlue}{HTML}{3B75AC}
+\definecolor{ochre}{HTML}{B5570F}
+\definecolor{sageline}{HTML}{D9E2C8}
+\definecolor{muted}{HTML}{6B7480}
+\color{ink}
+\tikzset{
+  every picture/.style={>=stealth},
+  every node/.style={font=\fontsize{9}{10}\selectfont},
+  cell/.style={draw=sageline,fill=white,minimum width=#1,minimum height=.6cm,inner sep=0pt},
+  cell/.default=1.2cm,
+  head/.style={cell=#1,draw=slate,fill=slate,text=white,font=\fontsize{9}{10}\selectfont\bfseries},
+  head/.default=1.2cm,
+  on/.style={fill=AfricastBlue!15,text=AfricastBlue,font=\fontsize{9}{10}\selectfont\bfseries},
+  base/.style={fill=ochre!12}
+}
