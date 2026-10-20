@@ -100,10 +100,11 @@
     code span.vs { color: #4e7a27; } /* VerbatimString */
     code span.wa { color: #b5570f; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-4e7c356efd1f4dd38912d787c06695e6.css">
+  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-7ed1ffe4fe887a0fbe0ad48dd205e4a9.css">
   <link href="libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/reveal-live-questions/live-questions.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -205,6 +206,7 @@
   });
   </script>
   <link rel="stylesheet" href="fonts/fonts.css">
+  <script type="application/json" id="lq-config">{"closeOnLeave":true,"qr":true,"results":"live","server":"https://poll.nectric.com.au","session":"africast-ets"}</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -231,11 +233,11 @@
 <section id="from-simple-methods-to-exponential-smoothing" class="slide level2">
 <h2>From simple methods to Exponential Smoothing</h2>
 <ul>
-<li>Naive method: Use only the last observation</li>
-<li>Average method: Use all observations</li>
+<li>Naive method: Use only the last observation.</li>
+<li>Average method: Use all observations.</li>
 <li>Want something in between naive and average methods.</li>
 <li>Most recent data should have more weight.</li>
-<li>This is exactly the concept behind exponential smoothing</li>
+<li>This is exactly the concept behind exponential smoothing.</li>
 </ul>
 </section>
 <section id="pegels-classification" class="slide level2">
@@ -484,7 +486,7 @@ Model: ETS(A,A,N)
 </div>
 <div class="fragment">
 <ul>
-<li>Damping parameter <span class="math inline">\(0&lt;\phi&lt;1\)</span>.</li>
+<li>Damping parameter <span class="math inline">\(0&lt;\phi\le 1\)</span>.</li>
 <li>If <span class="math inline">\(\phi=1\)</span>, identical to Holt’s linear trend.</li>
 <li>As <span class="math inline">\(h\rightarrow\infty\)</span>, <span class="math inline">\(\pred{y}{T+h}{T}\rightarrow \ell_T+\phi b_T/(1-\phi)\)</span>.</li>
 <li>Short-run forecasts trended, long-run forecasts constant.</li>
@@ -501,13 +503,52 @@ Model: ETS(A,A,N)
 
 </div>
 <img data-src="_figures/04_ets/unnamed-chunk-1-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="example-nigerian-population" class="slide level2 code-small">
+<h2>Example: Nigerian population</h2>
+<div class="columns">
+<div class="column" style="width:68%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>global_economy <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Nigeria"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> Population <span class="sc">/</span> <span class="fl">1e6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANN =</span> <span class="fu">ETS</span>(Pop <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">AAN =</span> <span class="fu">ETS</span>(Pop <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb8-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">AAdN =</span> <span class="fu">ETS</span>(Pop <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"Ad"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>))</span>
+<span id="cb8-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb8-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.model, AICc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column" style="width:32%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  .model  AICc
+  &lt;chr&gt;  &lt;dbl&gt;
+1 ANN    360. 
+2 AAN    -37.7
+3 AAdN    26.9</code></pre>
+</div>
+</div>
+</div></div>
+<div id="nigeria-best-ets" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;nigeria-best-ets&quot;,&quot;options&quot;:[&quot;ETS(A,N,N)&quot;,&quot;ETS(A,A,N)&quot;,&quot;ETS(A,Ad,N)&quot;],&quot;prompt&quot;:&quot;Which ETS model is best for Nigeria’s population?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Which ETS model is best for Nigeria’s population?</p>
+</div>
+<ul>
+<li>ETS(A,N,N)</li>
+<li>ETS(A,A,N)</li>
+<li>ETS(A,Ad,N)</li>
+</ul>
+</div>
+</section>
 <section id="example-national-populations" class="slide level2">
 <h2>Example: National populations</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> Population <span class="sc">/</span> <span class="fl">1e6</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">ets =</span> <span class="fu">ETS</span>(Pop))</span>
-<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> Population <span class="sc">/</span> <span class="fl">1e6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">ets =</span> <span class="fu">ETS</span>(Pop))</span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A mable: 263 x 2
 # Key:     Country [263]
@@ -530,24 +571,25 @@ Model: ETS(A,A,N)
 <section id="example-national-populations-1" class="slide level2 code-small">
 <h2>Example: National populations</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 1,315 x 5 [1Y]
 # Key:     Country, .model [263]
-   Country     .model  Year             Pop .mean
-   &lt;fct&gt;       &lt;chr&gt;  &lt;dbl&gt;          &lt;dist&gt; &lt;dbl&gt;
- 1 Afghanistan ets     2018    N(36, 0.012) 36.4 
- 2 Afghanistan ets     2019    N(37, 0.059) 37.3 
- 3 Afghanistan ets     2020     N(38, 0.16) 38.2 
- 4 Afghanistan ets     2021     N(39, 0.35) 39.0 
- 5 Afghanistan ets     2022     N(40, 0.64) 39.9 
- 6 Albania     ets     2018 N(2.9, 0.00012)  2.87
- 7 Albania     ets     2019   N(2.9, 6e-04)  2.87
- 8 Albania     ets     2020  N(2.9, 0.0017)  2.87
- 9 Albania     ets     2021  N(2.9, 0.0036)  2.86
-10 Albania     ets     2022  N(2.9, 0.0066)  2.86
-# ℹ 1,305 more rows</code></pre>
+   Country     .model  Year
+   &lt;fct&gt;       &lt;chr&gt;  &lt;dbl&gt;
+ 1 Afghanistan ets     2018
+ 2 Afghanistan ets     2019
+ 3 Afghanistan ets     2020
+ 4 Afghanistan ets     2021
+ 5 Afghanistan ets     2022
+ 6 Albania     ets     2018
+ 7 Albania     ets     2019
+ 8 Albania     ets     2020
+ 9 Albania     ets     2021
+10 Albania     ets     2022
+# ℹ 1,305 more rows
+# ℹ 2 more variables: Pop &lt;dist&gt;, .mean &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section></section>
@@ -560,8 +602,8 @@ Model: ETS(A,A,N)
 <h2>ETS(A,A,A): Holt-Winters additive method</h2>
 <div class="block">
 <p><span class="math display">\[\begin{aligned}
-\text{Forecast equation} &amp;&amp; \hat{y}_{t+h|t} &amp;= \ell_{t} + hb_{t} + s_{t+h-m(k+1)}\\
-\text{Observation equation}&amp;&amp; y_t&amp;=\ell_{t-1}+b_{t-1}+s_{t-m} + \varepsilon_t\\
+\text{Forecast equation} &amp;&amp; \hat{y}_{T+h|T} &amp;= \ell_{T} + hb_{T} + s_{T+h-m(k+1)}\\
+\text{Measurement equation}&amp;&amp; y_t&amp;=\ell_{t-1}+b_{t-1}+s_{t-m} + \varepsilon_t\\
 \text{State equations}&amp;&amp; \ell_t&amp;=\ell_{t-1}+b_{t-1}+\alpha \varepsilon_t\\
 &amp;&amp;        b_t&amp;=b_{t-1}+\beta \varepsilon_t \\
 &amp;&amp;s_t &amp;= s_{t-m} + \gamma\varepsilon_t
@@ -570,15 +612,15 @@ Model: ETS(A,A,N)
 <ul>
 <li><span class="math inline">\(k=\)</span> integer part of <span class="math inline">\((h-1)/m\)</span>.</li>
 <li><span class="math inline">\(\sum_i s_i \approx 0\)</span>.</li>
-<li>Parameters:&nbsp; <span class="math inline">\(0\le \alpha\le 1\)</span>,&nbsp; <span class="math inline">\(0\le \beta^*\le 1\)</span>,&nbsp; <span class="math inline">\(0\le \gamma\le 1-\alpha\)</span>&nbsp; and <span class="math inline">\(m=\)</span> period of seasonality (e.g.&nbsp;<span class="math inline">\(m=4\)</span> for quarterly data).</li>
+<li>Parameters:&nbsp; <span class="math inline">\(0\le \alpha\le 1\)</span>,&nbsp; <span class="math inline">\(0\le \beta\le \alpha\)</span>,&nbsp; <span class="math inline">\(0\le \gamma\le 1-\alpha\)</span>&nbsp; and <span class="math inline">\(m=\)</span> period of seasonality (e.g.&nbsp;<span class="math inline">\(m=4\)</span> for quarterly data).</li>
 </ul>
 </section>
 <section id="etsmam-holt-winters-multiplicative-method" class="slide level2">
 <h2>ETS(M,A,M): Holt-Winters multiplicative method</h2>
 <div class="block">
 <p><span class="math display">\[\begin{aligned}
-\text{Forecast equation} &amp;&amp; \hat{y}_{t+h|t} &amp;= (\ell_{t} + hb_{t}) s_{t+h-m(k+1)}\\
-\text{Observation equation}&amp;&amp; y_t&amp;= (\ell_{t-1}+b_{t-1})s_{t-m}(1 + \varepsilon_t)\\
+\text{Forecast equation} &amp;&amp; \hat{y}_{T+h|T} &amp;= (\ell_{T} + hb_{T}) s_{T+h-m(k+1)}\\
+\text{Measurement equation}&amp;&amp; y_t&amp;= (\ell_{t-1}+b_{t-1})s_{t-m}(1 + \varepsilon_t)\\
 \text{State equations}&amp;&amp; \ell_t&amp;=(\ell_{t-1}+b_{t-1})(1+\alpha \varepsilon_t)\\
 &amp;&amp;        b_t&amp;=b_{t-1}+\beta(\ell_{t-1}+b_{t-1})\varepsilon_t \\
 &amp;&amp;s_t &amp;= s_{t-m}(1 + \gamma\varepsilon_t)
@@ -587,16 +629,16 @@ Model: ETS(A,A,N)
 <ul>
 <li><span class="math inline">\(k\)</span> is integer part of <span class="math inline">\((h-1)/m\)</span>.</li>
 <li><span class="math inline">\(\sum_i s_i \approx m\)</span>.</li>
-<li>Parameters:&nbsp; <span class="math inline">\(0\le \alpha\le 1\)</span>,&nbsp; <span class="math inline">\(0\le \beta^*\le 1\)</span>,&nbsp; <span class="math inline">\(0\le \gamma\le 1-\alpha\)</span>&nbsp; and <span class="math inline">\(m=\)</span> period of seasonality (e.g.&nbsp;<span class="math inline">\(m=4\)</span> for quarterly data).</li>
+<li>Parameters:&nbsp; <span class="math inline">\(0\le \alpha\le 1\)</span>,&nbsp; <span class="math inline">\(0\le \beta\le \alpha\)</span>,&nbsp; <span class="math inline">\(0\le \gamma\le 1-\alpha\)</span>&nbsp; and <span class="math inline">\(m=\)</span> period of seasonality (e.g.&nbsp;<span class="math inline">\(m=4\)</span> for quarterly data).</li>
 </ul>
 </section>
 <section id="example-australian-holiday-tourism" class="slide level2">
 <h2>Example: Australian holiday tourism</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>holidays <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Purpose <span class="sc">==</span> <span class="st">"Holiday"</span>)</span>
-<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> holidays <span class="sc">|&gt;</span> <span class="fu">model</span>(<span class="at">ets =</span> <span class="fu">ETS</span>(Trips))</span>
-<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>holidays <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Purpose <span class="sc">==</span> <span class="st">"Holiday"</span>)</span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> holidays <span class="sc">|&gt;</span> <span class="fu">model</span>(<span class="at">ets =</span> <span class="fu">ETS</span>(Trips))</span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A mable: 76 x 4
 # Key:     Region, State, Purpose [76]
@@ -616,12 +658,35 @@ Model: ETS(A,A,N)
 </div>
 </div>
 </section>
-<section id="example-australian-holiday-tourism-1" class="slide level2">
+<section id="example-australian-holiday-tourism-1" class="slide level2 nostretch">
 <h2>Example: Australian holiday tourism</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="_figures/04_ets/ausholidays-snowy-plot-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="snowy-ets-pattern" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;snowy-ets-pattern&quot;,&quot;options&quot;:[&quot;ETS(?,A,A)&quot;,&quot;ETS(?,N,A)&quot;,&quot;ETS(?,N,M)&quot;,&quot;ETS(?,N,N)&quot;],&quot;prompt&quot;:&quot;Which ETS model suits Snowy Mountains holiday trips?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Which ETS model suits Snowy Mountains holiday trips?</p>
+</div>
+<ul>
+<li>ETS(?,A,A)</li>
+<li>ETS(?,N,A)</li>
+<li>ETS(?,N,M)</li>
+<li>ETS(?,N,N)</li>
+</ul>
+</div>
+</section>
+<section id="example-australian-holiday-tourism-2" class="slide level2">
+<h2>Example: Australian holiday tourism</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Trips 
 Model: ETS(M,N,A) 
@@ -640,12 +705,12 @@ Model: ETS(M,N,A)
 </div>
 </div>
 </section>
-<section id="example-australian-holiday-tourism-2" class="slide level2">
+<section id="example-australian-holiday-tourism-3" class="slide level2">
 <h2>Example: Australian holiday tourism</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A dable: 84 x 9 [1Q]
 # Key:     Region, State, Purpose, .model [1]
@@ -666,47 +731,48 @@ Model: ETS(M,N,A)
 </div>
 </div>
 </section>
-<section id="example-australian-holiday-tourism-3" class="slide level2">
-<h2>Example: Australian holiday tourism</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span></span>
-<span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="_figures/04_ets/ausholidays-components-plot-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="example-australian-holiday-tourism-4" class="slide level2">
 <h2>Example: Australian holiday tourism</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A fable: 608 x 7 [1Q]
-# Key:     Region, State, Purpose, .model [76]
-   Region         State Purpose .model Quarter       Trips .mean
-   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;qtr&gt;      &lt;dist&gt; &lt;dbl&gt;
- 1 Adelaide       SA    Holiday ets    2018 Q1 N(210, 457) 210. 
- 2 Adelaide       SA    Holiday ets    2018 Q2 N(173, 473) 173. 
- 3 Adelaide       SA    Holiday ets    2018 Q3 N(169, 489) 169. 
- 4 Adelaide       SA    Holiday ets    2018 Q4 N(186, 505) 186. 
- 5 Adelaide       SA    Holiday ets    2019 Q1 N(210, 521) 210. 
- 6 Adelaide       SA    Holiday ets    2019 Q2 N(173, 537) 173. 
- 7 Adelaide       SA    Holiday ets    2019 Q3 N(169, 553) 169. 
- 8 Adelaide       SA    Holiday ets    2019 Q4 N(186, 569) 186. 
- 9 Adelaide Hills SA    Holiday ets    2018 Q1   N(19, 36)  19.4
-10 Adelaide Hills SA    Holiday ets    2018 Q2   N(20, 36)  19.6
-# ℹ 598 more rows</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
 </div>
-</div>
-</section>
+<img data-src="_figures/04_ets/ausholidays-components-plot-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="example-australian-holiday-tourism-5" class="slide level2">
 <h2>Example: Australian holiday tourism</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(holidays) <span class="sc">+</span></span>
-<span id="cb21-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Overnight trips (thousands)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A fable: 608 x 7 [1Q]
+# Key:     Region, State, Purpose, .model [76]
+   Region         State Purpose .model Quarter
+   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;qtr&gt;
+ 1 Adelaide       SA    Holiday ets    2018 Q1
+ 2 Adelaide       SA    Holiday ets    2018 Q2
+ 3 Adelaide       SA    Holiday ets    2018 Q3
+ 4 Adelaide       SA    Holiday ets    2018 Q4
+ 5 Adelaide       SA    Holiday ets    2019 Q1
+ 6 Adelaide       SA    Holiday ets    2019 Q2
+ 7 Adelaide       SA    Holiday ets    2019 Q3
+ 8 Adelaide       SA    Holiday ets    2019 Q4
+ 9 Adelaide Hills SA    Holiday ets    2018 Q1
+10 Adelaide Hills SA    Holiday ets    2018 Q2
+# ℹ 598 more rows
+# ℹ 2 more variables: Trips &lt;dist&gt;, .mean &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="example-australian-holiday-tourism-6" class="slide level2">
+<h2>Example: Australian holiday tourism</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>() <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(holidays) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Quarter"</span>, <span class="at">y =</span> <span class="st">"Overnight trips (thousands)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="_figures/04_ets/ausholidays-forecast-plot-1.png" style="width:100.0%" class="r-stretch"></section></section>
@@ -834,11 +900,11 @@ Model: ETS(M,N,A)
 <p><strong>Akaike’s Information Criterion</strong></p>
 </div>
 <div class="callout-content">
-<p><span class="math display">\[\text{AIC} = -2\log(\text{L}) + 2k\]</span></p>
+<p><span class="math display">\[\text{AIC} = -2\log(L) + 2k\]</span></p>
 </div>
 </div>
 </div>
-<p>where <span class="math inline">\(L\)</span> is the likelihood and <span class="math inline">\(k\)</span> is the number of parameters &amp; initial states estimated in the model.</p>
+<p>where <span class="math inline">\(L\)</span> is the likelihood and <span class="math inline">\(k\)</span> is the number of parameters and initial states estimated in the model.</p>
 <div class="fragment">
 <div class="callout callout-note no-icon callout-titled callout-style-default">
 <div class="callout-body">
@@ -893,28 +959,60 @@ Model: ETS(M,N,A)
 <section id="non-gaussian-forecast-distributions-1" class="slide level2 code-small">
 <h2>Non-Gaussian forecast distributions</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>,</span>
-<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>         Industry <span class="sc">==</span> <span class="st">"Cafes, restaurants and catering services"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Month, Turnover)</span>
-<span id="cb22-5"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="sc">|&gt;</span></span>
-<span id="cb22-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly turnover of Victorian cafes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>,</span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a>         Industry <span class="sc">==</span> <span class="st">"Cafes, restaurants and catering services"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Month, Turnover)</span>
+<span id="cb24-5"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="sc">|&gt;</span></span>
+<span id="cb24-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Turnover) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly turnover of Victorian cafes"</span>, <span class="at">y =</span> <span class="st">"Turnover ($AUD million)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="_figures/04_ets/cafe-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="forecasting-with-transformations" class="slide level2 code-small">
 <h2>Forecasting with transformations</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">box_cox</span>(Turnover, <span class="at">lambda =</span> <span class="fl">0.2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">box_cox</span>(Turnover, <span class="at">lambda =</span> <span class="fl">0.2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="_figures/04_ets/unnamed-chunk-2-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="forecasting-with-transformations-1" class="slide level2 code-small">
 <h2>Forecasting with transformations</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">raw =</span> <span class="fu">ETS</span>(Turnover),</span>
+<span id="cb26-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="fu">ETS</span>(<span class="fu">log</span>(Turnover))</span>
+<span id="cb26-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb26-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.model, AICc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  .model   AICc
+  &lt;chr&gt;   &lt;dbl&gt;
+1 raw    4613. 
+2 log      82.8</code></pre>
+</div>
+</div></div>
+<div id="cafe-log-aicc" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[2],&quot;id&quot;:&quot;cafe-log-aicc&quot;,&quot;options&quot;:[&quot;ETS(log(Turnover))&quot;,&quot;ETS(Turnover)&quot;,&quot;Can’t tell from AICc&quot;],&quot;prompt&quot;:&quot;Which model is better for Victorian cafe turnover?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Which model is better for Victorian cafe turnover?</p>
+</div>
+<ul>
+<li>ETS(log(Turnover))</li>
+<li>ETS(Turnover)</li>
+<li>Can’t tell from AICc</li>
+</ul>
+</div>
+</section>
+<section id="forecasting-with-transformations-2" class="slide level2 code-small">
+<h2>Forecasting with transformations</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> vic_cafe <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">ets =</span> <span class="fu">ETS</span>(<span class="fu">box_cox</span>(Turnover, <span class="fl">0.2</span>)))</span>
-<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> vic_cafe <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">ets =</span> <span class="fu">ETS</span>(<span class="fu">box_cox</span>(Turnover, <span class="fl">0.2</span>)))</span>
+<span id="cb28-3"><a href="" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A mable: 1 x 1
            ets
@@ -923,7 +1021,7 @@ Model: ETS(M,N,A)
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a>(fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a>(fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 36 x 4 [1M]
 # Key:     .model [1]
@@ -945,37 +1043,37 @@ Model: ETS(M,N,A)
 <div class="alertblock fragment absolute" style="top: 420px; right: 0px; width: 440px; ">
 <ul>
 <li><code>t(N)</code> denotes a transformed normal distribution.</li>
-<li>back-transformation and bias adjustment is done automatically.</li>
+<li>The distribution is back-transformed and the mean (<code>.mean</code>) is bias-adjusted automatically.</li>
 </ul>
 </div>
 </section>
-<section id="forecasting-with-transformations-2" class="slide level2 code-small">
+<section id="forecasting-with-transformations-3" class="slide level2 code-small">
 <h2>Forecasting with transformations</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(vic_cafe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(vic_cafe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="_figures/04_ets/unnamed-chunk-6-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="bootstrapped-forecast-distributions" class="slide level2 code-small">
 <h2>Bootstrapped forecast distributions</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a>sim <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">generate</span>(<span class="at">h =</span> <span class="st">"3 years"</span>, <span class="at">times =</span> <span class="dv">5</span>, <span class="at">bootstrap =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a>sim</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a>sim <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">generate</span>(<span class="at">h =</span> <span class="st">"3 years"</span>, <span class="at">times =</span> <span class="dv">5</span>, <span class="at">bootstrap =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a>sim</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 180 x 4 [1M]
 # Key:       .model, .rep [5]
    .model    Month .rep   .sim
    &lt;chr&gt;     &lt;mth&gt; &lt;chr&gt; &lt;dbl&gt;
- 1 ets    2019 Jan 1      594.
- 2 ets    2019 Feb 1      541.
- 3 ets    2019 Mar 1      643.
- 4 ets    2019 Apr 1      613.
- 5 ets    2019 May 1      620.
- 6 ets    2019 Jun 1      597.
- 7 ets    2019 Jul 1      628.
- 8 ets    2019 Aug 1      677.
- 9 ets    2019 Sep 1      672.
-10 ets    2019 Oct 1      631.
+ 1 ets    2019 Jan 1      584.
+ 2 ets    2019 Feb 1      560.
+ 3 ets    2019 Mar 1      635.
+ 4 ets    2019 Apr 1      601.
+ 5 ets    2019 May 1      586.
+ 6 ets    2019 Jun 1      567.
+ 7 ets    2019 Jul 1      589.
+ 8 ets    2019 Aug 1      640.
+ 9 ets    2019 Sep 1      597.
+10 ets    2019 Oct 1      651.
 # ℹ 170 more rows</code></pre>
 </div>
 </div>
@@ -983,32 +1081,32 @@ Model: ETS(M,N,A)
 <section id="bootstrapped-forecast-distributions-1" class="slide level2 code-small">
 <h2>Bootstrapped forecast distributions</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="sc">|&gt;</span></span>
-<span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(Month) <span class="sc">&gt;=</span> <span class="dv">2008</span>) <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Month)) <span class="sc">+</span></span>
-<span id="cb31-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Turnover)) <span class="sc">+</span></span>
-<span id="cb31-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .sim, <span class="at">colour =</span> <span class="fu">as.factor</span>(.rep)), <span class="at">data =</span> sim) <span class="sc">+</span></span>
-<span id="cb31-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly turnover of Victorian cafes"</span>) <span class="sc">+</span></span>
-<span id="cb31-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(Month) <span class="sc">&gt;=</span> <span class="dv">2008</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Month)) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Turnover)) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .sim, <span class="at">colour =</span> <span class="fu">as.factor</span>(.rep)), <span class="at">data =</span> sim) <span class="sc">+</span></span>
+<span id="cb35-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly turnover of Victorian cafes"</span>) <span class="sc">+</span></span>
+<span id="cb35-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="_figures/04_ets/unnamed-chunk-8-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="bootstrapped-forecast-distributions-2" class="slide level2 code-small">
 <h2>Bootstrapped forecast distributions</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>, <span class="at">bootstrap =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a>fc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>, <span class="at">bootstrap =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a>fc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 36 x 4 [1M]
 # Key:     .model [1]
    .model    Month     Turnover .mean
    &lt;chr&gt;     &lt;mth&gt;       &lt;dist&gt; &lt;dbl&gt;
  1 ets    2019 Jan sample[5000]  608.
- 2 ets    2019 Feb sample[5000]  563.
+ 2 ets    2019 Feb sample[5000]  562.
  3 ets    2019 Mar sample[5000]  629.
  4 ets    2019 Apr sample[5000]  615.
- 5 ets    2019 May sample[5000]  613.
- 6 ets    2019 Jun sample[5000]  594.
+ 5 ets    2019 May sample[5000]  612.
+ 6 ets    2019 Jun sample[5000]  593.
  7 ets    2019 Jul sample[5000]  624.
  8 ets    2019 Aug sample[5000]  640.
  9 ets    2019 Sep sample[5000]  630.
@@ -1020,8 +1118,8 @@ Model: ETS(M,N,A)
 <section id="bootstrapped-forecast-distributions-3" class="slide level2 code-small">
 <h2>Bootstrapped forecast distributions</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(vic_cafe) <span class="sc">+</span></span>
-<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly turnover of Victorian cafes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(vic_cafe) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly turnover of Victorian cafes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 
@@ -1040,6 +1138,7 @@ Model: ETS(M,N,A)
   <script src="libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="libs/revealjs/plugin/reveal-live-questions/live-questions.js"></script>
   <script src="libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -1232,7 +1331,7 @@ Model: ETS(M,N,A)
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealLiveQuestions, QuartoSupport,
 
           RevealMath,
           RevealNotes,

@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="libs/clipboard/clipboard.min.js"></script>
+<script src="libs/quarto-html/tabby.min.js"></script>
+<script src="libs/quarto-html/popper.min.js"></script>
+<script src="libs/quarto-html/tippy.umd.min.js"></script>
+<link href="libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="libs/quarto-html/quarto-syntax-highlighting-806d16d6947d3f83c724220677ca5bc4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="dcterms.date" content="2026-10-21">
+  <title>Basic training and test accuracy</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #8a939c;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #8a939c;  padding-left: 4px; }
+    div.sourceCode
+      { color: #1f2a36;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #a40000; font-weight: bold; } /* Alert */
+    code span.an { color: #8a939c; font-style: italic; } /* Annotation */
+    code span.at { color: #434a5c; font-style: italic; } /* Attribute */
+    code span.bn { color: #7a4a9c; } /* BaseN */
+    code span.bu { color: #2e5f8e; } /* BuiltIn */
+    code span.cf { color: #2e5f8e; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4e7a27; } /* Char */
+    code span.cn { color: #7a4a9c; } /* Constant */
+    code span.co { color: #8a939c; font-style: italic; } /* Comment */
+    code span.cv { color: #8a939c; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #8a939c; font-style: italic; } /* Documentation */
+    code span.dt { color: #2e5f8e; } /* DataType */
+    code span.dv { color: #7a4a9c; } /* DecVal */
+    code span.er { color: #a40000; font-weight: bold; } /* Error */
+    code span.ex { color: #2e5f8e; } /* Extension */
+    code span.fl { color: #7a4a9c; } /* Float */
+    code span.fu { color: #2e5f8e; font-weight: bold; } /* Function */
+    code span.im { color: #2e5f8e; } /* Import */
+    code span.in { color: #8a939c; font-style: italic; } /* Information */
+    code span.kw { color: #2e5f8e; font-weight: bold; } /* Keyword */
+    code span.op { color: #b5570f; } /* Operator */
+    code span.ot { color: #434a5c; } /* Other */
+    code span.pp { color: #8a939c; font-style: italic; } /* Preprocessor */
+    code span.sc { color: #b5570f; } /* SpecialChar */
+    code span.ss { color: #4e7a27; } /* SpecialString */
+    code span.st { color: #4e7a27; } /* String */
+    code span.va { color: #1f2a36; } /* Variable */
+    code span.vs { color: #4e7a27; } /* VerbatimString */
+    code span.wa { color: #b5570f; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-7ed1ffe4fe887a0fbe0ad48dd205e4a9.css">
+  <link href="libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/reveal-live-questions/live-questions.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      Macros: {
+        E: "{\\text{E}}",
+        Var: "{\\text{Var}}",
+        pred: ["{\\hat{#1}_{#2|#3}}", 3],
+        damped: "{_\\text{d}}"
+      }
+    }
+  });
+  </script>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <script type="application/json" id="lq-config">{"closeOnLeave":true,"qr":true,"results":"live","server":"https://poll.nectric.com.au","session":"africast-accuracy"}</script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <div class="title-brand"><img src="figs/africast-mark.png" alt=""><span>AFRICAST</span></div>
+  <p class="title-kicker">Tidy time series &amp; forecasting in R</p>
+  <h1 class="title">Basic training and test accuracy</h1>
+  <p class="title-session" data-session="8">Session 8 of 10</p>
+  <div class="title-hexes">
+    <img src="figs/tsibble.png" alt="tsibble">
+    <img src="figs/feasts.png" alt="feasts">
+    <img src="figs/fable.png" alt="fable">
+  </div>
+  <img class="africast-savanna" src="figs/savanna.png" alt="">
+  <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
+</section>
+<section>
+<section id="evaluating-forecast-accuracy" class="title-slide slide level1 center">
+<h1>Evaluating forecast accuracy</h1>
+
+</section>
+<section id="evaluate-forecast-accuracy" class="slide level2">
+<h2>Evaluate forecast accuracy</h2>
+<ul>
+<li>In order to evaluate the performance of a forecasting model, we compute its forecast accuracy.</li>
+<li>Forecast accuracy is compared by measuring errors based on the test set.</li>
+<li>Ideally, compare the benefit of improved accuracy with the cost of obtaining it.</li>
+</ul>
+</section>
+<section id="evaluate-forecast-accuracy-decision-impact" class="slide level2">
+<h2>Evaluate forecast accuracy: decision impact</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Best forecast = best decisions</strong></p>
+</div>
+<div class="callout-content">
+<p>Choose the model whose forecasts lead to better decisions, such as:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>lower staffing costs</li>
+<li>lower emissions</li>
+<li>higher service levels</li>
+<li>fewer stock-outs</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>less excess inventory</li>
+<li>faster response</li>
+<li>more stable plans</li>
+</ul>
+</div></div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Decision impact is often hard to measure.</li>
+<li>Fallback: choose the most accurate forecast.</li>
+</ul>
+</div>
+</section>
+<section id="which-error-costs-more" class="slide level2">
+<h2>Which error costs more?</h2>
+<div id="error-cost" class="lq-question lq-poll" data-lq="{&quot;id&quot;:&quot;error-cost&quot;,&quot;options&quot;:[&quot;Forecasting too high (waste, idle staff, excess stock)&quot;,&quot;Forecasting too low (stock-outs, unmet need, overloaded services)&quot;,&quot;About the same&quot;,&quot;It depends on the situation&quot;],&quot;prompt&quot;:&quot;In your work, which forecast error is more costly?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>In your work, which forecast error is more costly?</p>
+</div>
+<ul>
+<li>Forecasting too high (waste, idle staff, excess stock)</li>
+<li>Forecasting too low (stock-outs, unmet need, overloaded services)</li>
+<li>About the same</li>
+<li>It depends on the situation</li>
+</ul>
+</div>
+</section>
+<section id="a-perfect-fit" class="slide level2">
+<h2>A perfect fit</h2>
+<div id="perfect-fit" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;perfect-fit&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;Not necessarily&quot;,&quot;No&quot;],&quot;prompt&quot;:&quot;A model fits the training data perfectly. Will it forecast well?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>A model fits the training data perfectly. Will it forecast well?</p>
+</div>
+<ul>
+<li>Yes</li>
+<li>Not necessarily</li>
+<li>No</li>
+</ul>
+</div>
+</section>
+<section id="in-sample-training-vs.-out-of-sample-test" class="slide level2">
+<h2>In-sample (training) vs.&nbsp;out-of-sample (test)</h2>
+<ul>
+<li>Residuals (in-sample errors) are not a reliable indication of forecast accuracy</li>
+<li>A model which fits the training data well will not necessarily forecast well</li>
+<li>A perfect fit can always be obtained by using a model with enough parameters</li>
+<li>Over-fitting a model to data is just as bad as failing to identify a systematic pattern in the data</li>
+</ul>
+</section>
+<section id="how-long-a-test-set" class="slide level2">
+<h2>How long a test set?</h2>
+<div id="test-set-length" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;test-set-length&quot;,&quot;options&quot;:[&quot;3 months&quot;,&quot;12 months&quot;,&quot;36 months&quot;],&quot;prompt&quot;:&quot;You need forecasts 12 months ahead. What is the shortest sensible test set?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>You need forecasts 12 months ahead. What is the shortest sensible test set?</p>
+</div>
+<ul>
+<li>3 months</li>
+<li>12 months</li>
+<li>36 months</li>
+</ul>
+</div>
+</section>
+<section id="forecast-accuracy-evaluation-using-test-sets" class="slide level2">
+<h2>Forecast accuracy evaluation using test sets</h2>
+<ul>
+<li>We mimic the real life situation</li>
+<li>We pretend we don’t know some part of data (new data)</li>
+<li>It must not be used for <em>any</em> aspect of model training</li>
+<li>Forecast accuracy is computed only based on the test set</li>
+<li>The test set should ideally be at least as long as the maximum forecast horizon</li>
+</ul>
+</section>
+<section id="training-and-test-sets" class="slide level2">
+<h2>Training and test sets</h2>
+
+<img data-src="_figures/04_accuracy_basic/traintest-1.png" width="864" class="r-stretch"></section></section>
+<section>
+<section id="evaluating-point-forecast-accuracy" class="title-slide slide level1 center">
+<h1>Evaluating point forecast accuracy</h1>
+
+</section>
+<section id="forecast-errors" class="slide level2">
+<h2>Forecast errors</h2>
+<p>Forecast “error”: the difference between an observed value and its forecast. <span class="math display">\[
+  e_{T+h} = y_{T+h} - \hat{y}_{T+h|T},
+\]</span> where</p>
+<ul>
+<li>the training data is <span class="math inline">\(\{y_1,\dots,y_T\}\)</span></li>
+<li><span class="math inline">\(y_{T+h}\)</span> is the <span class="math inline">\(h\)</span>th test observation, <span class="math inline">\(h=1,\dots,H\)</span></li>
+<li><span class="math inline">\(\hat{y}_{T+h|T}\)</span> is its forecast based on data up to time <span class="math inline">\(T\)</span></li>
+</ul>
+</section>
+<section id="forecasting-beer-production" class="slide level2 code-small">
+<h2>Forecasting beer production</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fit <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(<span class="fu">year</span>(Quarter), <span class="dv">1992</span>, <span class="dv">2007</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">snaive =</span> <span class="fu">SNAIVE</span>(Beer),</span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">MEAN</span>(Beer)</span>
+<span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-7"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fit <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">filter</span>(aus_production, <span class="fu">year</span>(Quarter) <span class="sc">&gt;=</span> <span class="dv">1990</span>), <span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb1-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Forecasts for quarterly beer production"</span>,</span>
+<span id="cb1-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Quarter"</span>, <span class="at">y =</span> <span class="st">"Megalitres"</span></span>
+<span id="cb1-13"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Forecast"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+
+</section>
+<section id="forecasting-beer-production-output" class="slide level2 code-small output-location-slide"><h2>Forecasting beer production</h2><div class="cell output-location-slide">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="_figures/04_accuracy_basic/beer-fc-1-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="scale-dependent-and-percentage-errors" class="slide level2">
+<h2>Scale-dependent and percentage errors</h2>
+<div class="block">
+<p><span class="math display">\[\begin{aligned}
+\text{MAE} &amp;= \text{mean}(|e_{T+h}|) \\
+\text{MSE} &amp;= \text{mean}(e_{T+h}^2) \\
+\text{RMSE} &amp;= \sqrt{\text{mean}(e_{T+h}^2)} \\
+\text{MAPE} &amp;= 100\,\text{mean}(|e_{T+h}|/|y_{T+h}|)
+\end{aligned}\]</span></p>
+</div>
+<div class="fragment">
+<ul>
+<li>MAE, MSE, RMSE are all scale dependent.</li>
+<li>MAPE is scale independent but is only sensible if <span class="math inline">\(y_t\gg 0\)</span> for all <span class="math inline">\(t\)</span>, and <span class="math inline">\(y\)</span> has a natural zero.</li>
+</ul>
+</div>
+</section>
+<section id="comparing-across-districts" class="slide level2">
+<h2>Comparing across districts</h2>
+<div id="compare-districts" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[2],&quot;id&quot;:&quot;compare-districts&quot;,&quot;options&quot;:[&quot;RMSE&quot;,&quot;MAE&quot;,&quot;MASE&quot;],&quot;prompt&quot;:&quot;You forecast clinic visits in 50 districts of very different sizes. Which measure lets you compare your method’s accuracy across all of them?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>You forecast clinic visits in 50 districts of very different sizes. Which measure lets you compare your method’s accuracy across all of them?</p>
+</div>
+<ul>
+<li>RMSE</li>
+<li>MAE</li>
+<li>MASE</li>
+</ul>
+</div>
+</section>
+<section id="scaled-errors-mase" class="slide level2 smaller">
+<h2>Scaled errors: MASE</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Mean Absolute Scaled Error</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[
+  \Large \text{MASE} = \text{mean}(|e_{T+h}|/Q)
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>For non-seasonal series, scale uses naïve forecasts:</li>
+</ul>
+<div class="center-text">
+<p><span class="math inline">\(Q = \frac{1}{T-1}\displaystyle\sum_{t=2}^T |y_{t}-y_{t-1}|\)</span></p>
+</div>
+<ul>
+<li>For seasonal series, scale uses seasonal naïve forecasts:</li>
+</ul>
+<div class="center-text">
+<p><span class="math inline">\(Q = \frac{1}{T-m}\displaystyle\sum_{t=m+1}^T |y_{t}-y_{t-m}|\)</span></p>
+</div>
+<div style="text-align:right">
+<p>where <span class="math inline">\(m\)</span> is the seasonal frequency, and <span class="math inline">\(Q\)</span> is computed on the training data</p>
+</div>
+</div>
+<div class="fragment">
+<p>Proposed by Hyndman and Koehler (IJF, 2006).</p>
+</div>
+</section>
+<section id="slow-selling-items" class="slide level2">
+<h2>Slow-selling items</h2>
+<div id="slow-seller-measure" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;slow-seller-measure&quot;,&quot;options&quot;:[&quot;MAPE&quot;,&quot;MASE&quot;,&quot;Either&quot;],&quot;prompt&quot;:&quot;Which measure suits daily sales of a slow-selling item with many zero days?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Which measure suits daily sales of a slow-selling item with many zero days?</p>
+</div>
+<ul>
+<li>MAPE</li>
+<li>MASE</li>
+<li>Either</li>
+</ul>
+</div>
+</section>
+<section id="scaled-errors-rmsse" class="slide level2 smaller">
+<h2>Scaled errors: RMSSE</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Root Mean Squared Scaled Error</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[
+  \Large \text{RMSSE} = \sqrt{\text{mean}(e^2_{T+h}/Q)}
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>For non-seasonal series, scale uses naïve forecasts:</li>
+</ul>
+<div class="center-text">
+<p><span class="math inline">\(Q = \frac{1}{T-1}\displaystyle\sum_{t=2}^T (y_{t}-y_{t-1})^2\)</span></p>
+</div>
+<ul>
+<li>For seasonal series, scale uses seasonal naïve forecasts:</li>
+</ul>
+<div class="center-text">
+<p><span class="math inline">\(Q = \frac{1}{T-m}\displaystyle\sum_{t=m+1}^T (y_{t}-y_{t-m})^2\)</span></p>
+</div>
+<div style="text-align:right">
+<p>where <span class="math inline">\(m\)</span> is the seasonal frequency, and <span class="math inline">\(Q\)</span> is computed on the training data</p>
+</div>
+</div>
+<div class="fragment">
+<p>Used in the M5 forecasting competition (Makridakis et al., IJF, 2022).</p>
+</div>
+</section>
+<section id="test-set-accuracy" class="slide level2 code-small">
+<h2>Test-set accuracy</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="ot">&lt;-</span> <span class="fu">forecast</span>(beer_fit, <span class="at">h =</span> <span class="dv">10</span>)</span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(</span>
+<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a>    aus_production,</span>
+<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">measures =</span> <span class="fu">list</span>(<span class="at">RMSE =</span> RMSE, <span class="at">MAE =</span> MAE, <span class="at">MAPE =</span> MAPE, <span class="at">MASE =</span> MASE, <span class="at">RMSSE =</span> RMSSE)</span>
+<span id="cb2-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 7
+  .model .type  RMSE   MAE  MAPE  MASE RMSSE
+  &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 mean   Test   38.4  34.8  8.28 2.20  1.96 
+2 snaive Test   14.3  13.4  3.17 0.847 0.729</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Seasonal naïve beats the mean on every measure.</li>
+<li>Its MASE and RMSSE are below 1: smaller errors than in-sample seasonal naïve.</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="evaluating-distributional-forecast-accuracy" class="title-slide slide level1 center">
+<h1>Evaluating distributional forecast accuracy</h1>
+
+</section>
+<section id="prediction-interval-accuracy-using-winkler-score" class="slide level2">
+<h2>Prediction interval accuracy using Winkler score</h2>
+<p>Winkler (1972) proposed a scoring method to enable comparisons between prediction intervals:</p>
+<ul>
+<li>it takes account of both coverage and width of the intervals.</li>
+</ul>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Winkler score</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[\begin{aligned}
+  W(l_t,u_t,y_t) =
+    \begin{cases}
+      u_t-l_t &amp; \text{if $l_t \le y_t \le u_t$}\\
+      (u_t-l_t)+ \frac{2}{\alpha}(l_t-y_t) &amp; \text{if $y_t &lt; l_t$}\\
+      (u_t-l_t) + \frac{2}{\alpha}(y_t-u_t) &amp; \text{if $y_t &gt; u_t$}
+    \end{cases}
+\end{aligned}\]</span></p>
+</div>
+</div>
+</div>
+<p>where <span class="math inline">\([l_t, u_t]\)</span> is a <span class="math inline">\(100(1-\alpha)\%\)</span> prediction interval.</p>
+<ul>
+<li>Lower is better.</li>
+<li>Misses are penalised by <span class="math inline">\(2/\alpha\)</span> times the distance outside the interval.</li>
+</ul>
+</section>
+<section id="prediction-interval-accuracy" class="slide level2 code-small">
+<h2>Prediction interval accuracy</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="at">measures =</span> <span class="fu">list</span>(<span class="at">winkler =</span> winkler_score), <span class="at">level =</span> <span class="dv">95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  .model .type winkler
+  &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;
+1 mean   Test    174. 
+2 snaive Test     86.3</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Winkler scores for 95% prediction intervals (<span class="math inline">\(\alpha = 0.05\)</span>).</li>
+<li>Both cover every test observation, but seasonal naïve intervals are half as wide.</li>
+</ul>
+</div>
+</section>
+<section id="quantile-score" class="slide level2">
+<h2>Quantile score</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Quantile score</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[\begin{aligned}
+  Q_{p,t} =
+    \begin{cases}
+    2(1 - p) \big(f_{p,t} - y_{t}\big), &amp; \text{if $y_{t} &lt; f_{p,t}$}\\
+    2p \big(y_{t} - f_{p,t}\big), &amp; \text{if $y_{t} \ge f_{p,t}$}
+    \end{cases}
+\end{aligned}\]</span></p>
+</div>
+</div>
+</div>
+<p>where <span class="math inline">\(f_{p,t}\)</span> is the <span class="math inline">\(p\)</span>-quantile of the forecast distribution for time <span class="math inline">\(t\)</span>.</p>
+<ul>
+<li>Lower is better.</li>
+</ul>
+</section>
+<section id="quantile-score-2" class="slide level2 code-small">
+<h2>Quantile score</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="fu">list</span>(<span class="at">qs =</span> quantile_score), <span class="at">probs =</span> <span class="fl">0.9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  .model .type    qs
+  &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;
+1 mean   Test  14.1 
+2 snaive Test   4.60</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Quantile score of the 90th percentile forecasts (<span class="math inline">\(p = 0.9\)</span>).</li>
+</ul>
+</div>
+</section>
+<section id="continuous-ranked-probability-score-crps" class="slide level2">
+<h2>Continuous Ranked Probability Score (CRPS)</h2>
+<p><span class="math display">\[\large \text{CRPS} = \text{mean}(p_t),\]</span></p>
+<p>where</p>
+<p><span class="math display">\[p_t = \int_{-\infty}^{\infty} \left(G_t(x) - F_t(x)\right)^2dx\]</span></p>
+<ul>
+<li><span class="math inline">\(G_t(x)\)</span> is the forecast distribution function for time <span class="math inline">\(t\)</span></li>
+<li><span class="math inline">\(F_t(x)\)</span> is the observation’s distribution function: a step from 0 to 1 at <span class="math inline">\(y_t\)</span></li>
+<li>Lower is better; for a point forecast it reduces to the MAE.</li>
+</ul>
+</section>
+<section id="crps-the-gap-between-forecast-and-outcome" class="slide level2">
+<h2>CRPS: the gap between forecast and outcome</h2>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js"></script>
+<script src="crps-slider.js"></script>
+<div class="crps-slider" data-prevent-swipe=""></div>
+<div class="crps-notes">
+<ul>
+<li>CRPS adds up the squared gap (shaded) between the forecast <span class="math inline">\(G\)</span> and the outcome <span class="math inline">\(F\)</span>.</li>
+<li>Mean away from <span class="math inline">\(y\)</span>, or spread too wide: larger. Lower is better.</li>
+</ul>
+</div>
+</section>
+<section id="percentile-score-and-crps" class="slide level2 code-small">
+<h2>Percentile score and CRPS</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="at">measures =</span> distribution_accuracy_measures)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  .model .type percentile  CRPS
+  &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
+1 mean   Test       22.7  22.4 
+2 snaive Test        8.80  8.71</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Percentile score: quantile score averaged over <span class="math inline">\(p = 0.01, 0.02, \dots, 0.99\)</span>.</li>
+<li>Seasonal naïve has the better distributional forecasts on both measures.</li>
+</ul>
+</div>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="libs/revealjs/plugin/reveal-live-questions/live-questions.js"></script>
+  <script src="libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="libs/revealjs/plugin/search/search.js"></script>
+  <script src="libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":false},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealLiveQuestions, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script>
+    // Copy over background colors to new div
+    divs = document.querySelectorAll('[data-background-color]');
+
+    Array.from(divs).map(function (x) {
+      const color = x.dataset.backgroundColor;
+
+      var new_div = document.createElement('div');
+      new_div.setAttribute("class", "background-color-div");
+      new_div.style.backgroundColor = color;
+      x.appendChild(new_div);
+      x.removeAttribute("data-background-color");
+    })
+
+    // Remove background colors from backgrounds div
+    Array.from(
+      document.querySelectorAll("[data-background-hash]")
+    ).map(function (x) {
+      x.removeAttribute("data-background-hash");
+      x.style.backgroundColor = null;
+    })
+    </script>
+
+    <script>
+    // Copy over background images to new div
+    divs = document.querySelectorAll('[data-background-image]');
+
+    Array.from(divs).map(function (x) {
+      var new_div = document.createElement('div');
+      new_div.setAttribute("class", "background-image-div");
+
+      if (x.dataset.backgroundImage != undefined) {
+        new_div.style.backgroundImage = "url(" + x.dataset.backgroundImage + ")";
+        x.removeAttribute("data-background-image");
+      }
+      if (x.dataset.backgroundSize != undefined) {
+        new_div.style.backgroundSize = x.dataset.backgroundSize;
+        x.removeAttribute("data-background-size");
+      }
+      if (x.dataset.backgroundPosition != undefined) {
+        new_div.style.backgroundPosition = x.dataset.backgroundPosition;
+        x.removeAttribute("data-background-position");
+      }
+      if (x.dataset.backgroundRepeat != undefined) {
+        new_div.style.backgroundRepeat = x.dataset.backgroundRepeat;
+        x.removeAttribute("data-background-repeat");
+      }
+      if (x.dataset.backgroundOpacity != undefined) {
+        new_div.style.backgroundOpacity = x.dataset.backgroundOpacity;
+        x.removeAttribute("data-background-opacity");
+      }
+
+      x.appendChild(new_div);
+    })
+    </script>
+
+    <script>
+    // Copy over background vidoes
+
+    // Run once when we load
+    var video_div = document.querySelectorAll(".backgrounds video");
+    var slide_div = document.querySelectorAll("[data-background-video]");
+
+    for (let i = 0; i < video_div.length; i++) {
+      video_div[i].setAttribute("class", "background-video-div");
+
+      slide_div[i].appendChild(video_div[i]);
+      slide_div[i].removeAttribute("data-background-video");
+    }
+
+    Reveal.getCurrentSlide().querySelectorAll("video").forEach(x => x.play());
+
+    // Each time we advance slides, as the background videos aren't loaded
+    // unless they are a few slides away
+    Reveal.on('slidechanged', event => {
+      var video_div = document.querySelectorAll(".backgrounds video");
+      var slide_div = document.querySelectorAll("[data-background-video]");
+
+      for (let i = 0; i < video_div.length; i++) {
+        video_div[i].setAttribute("class", "background-video-div");
+
+        slide_div[i].appendChild(video_div[i]);
+        slide_div[i].removeAttribute("data-background-video");
+      }
+
+      Reveal.getCurrentSlide().querySelectorAll("video").forEach(x => x.play());
+    });
+    </script>
+
+    <script>
+    // Copy over background vidoes
+
+    // Run once when we load
+    var iframe_div = document.querySelectorAll(".backgrounds iframe");
+    var slide_div = document.querySelectorAll("[data-background-iframe]");
+
+    for (let i = 0; i < iframe_div.length; i++) {
+      iframe_div[i].setAttribute("class", "background-iframe-div");
+
+      slide_div[i].appendChild(iframe_div[i]);
+      slide_div[i].removeAttribute("data-background-iframe");
+    }
+
+    // Each time we advance slides, as the background videos aren't loaded
+    // unless they are a few slides away
+    Reveal.on('slidechanged', event => {
+      var iframe_div = document.querySelectorAll(".backgrounds iframe");
+      var slide_div = document.querySelectorAll("[data-background-iframe]");
+
+      for (let i = 0; i < iframe_div.length; i++) {
+        iframe_div[i].setAttribute("class", "background-iframe-div");
+
+        slide_div[i].appendChild(iframe_div[i]);
+        slide_div[i].removeAttribute("data-background-iframe");
+      }
+    });
+    </script>
+
+    <script>
+    // Clean up slide background styles
+    divs = document.querySelectorAll('.slide-background-content');
+    Array.from(divs).map(function (x) {
+      x.style = null;
+    })
+    </script>
+
+    <script>
+    // Move menu button
+    menu_div = document.querySelector(".slide-menu-button");
+    document.querySelector(".slides").appendChild(menu_div);
+
+    // Move progress bar
+    menu_div = document.querySelector(".progress");
+    document.querySelector(".slides").appendChild(menu_div);
+    </script>
+
+    <script>
+    // AFRICAST slide furniture: section dividers that show the deck's outline,
+    // and a running footer naming the session on every content slide.
+    (function () {
+      function decorate() {
+        var titleSlide = document.getElementById("title-slide");
+        var title = titleSlide ? titleSlide.querySelector("h1.title").textContent.trim() : "";
+        var sessionEl = titleSlide && titleSlide.querySelector(".title-session");
+        var session = sessionEl ? sessionEl.dataset.session + " " : "";
+        // Reuse the title slide's images, which embed-resources has inlined
+        var savannaImg = titleSlide && titleSlide.querySelector("img.africast-savanna");
+        var markImg = titleSlide && titleSlide.querySelector(".title-brand img");
+
+        // Section dividers: "Section i of n", the outline track and the skyline
+        var sections = Array.from(document.querySelectorAll(".reveal .slides section.slide.level1"));
+        var names = sections.map(function (s) {
+          var h = s.querySelector("h1");
+          return h ? h.textContent.trim() : "";
+        });
+        sections.forEach(function (s, i) {
+          s.classList.remove("center");
+          s.classList.add("africast-section");
+          var kicker = document.createElement("p");
+          kicker.className = "section-kicker";
+          kicker.textContent = "Section " + (i + 1) + " of " + sections.length;
+          s.insertBefore(kicker, s.firstChild);
+          var track = document.createElement("ol");
+          track.className = "section-track";
+          names.forEach(function (name, j) {
+            var li = document.createElement("li");
+            if (j < i) li.className = "done";
+            if (j === i) li.className = "now";
+            var n = document.createElement("i");
+            n.textContent = j + 1;
+            li.appendChild(n);
+            li.appendChild(document.createTextNode(name));
+            track.appendChild(li);
+          });
+          s.appendChild(track);
+          if (savannaImg) s.appendChild(savannaImg.cloneNode());
+        });
+
+        // Running footer on content slides
+        document.querySelectorAll(".reveal .slides section.slide:not(.level1):not(#title-slide)").forEach(function (s) {
+          var foot = document.createElement("div");
+          foot.className = "africast-foot";
+          if (markImg) foot.appendChild(markImg.cloneNode());
+          var brand = document.createElement("b");
+          brand.textContent = "AFRICAST";
+          foot.appendChild(brand);
+          foot.appendChild(document.createTextNode(" · " + session + title));
+          s.appendChild(foot);
+        });
+
+        Reveal.layout();
+      }
+      if (Reveal.isReady()) decorate();
+      else Reveal.on("ready", decorate);
+    })();
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
