@@ -31,25 +31,6 @@ What do you forecast (or wish you could) in your work?
 #| cache: false
 source("setup.R")
 set.seed(2026)
-h02 <- tsibbledata::PBS |>
-  filter(ATC2 == "H02") |>
-  summarise(Cost = sum(Cost))
-melsyd <- tsibbledata::ansett |>
-  filter(Airports == "MEL-SYD")
-
-austa <- readxl::read_excel("data/340101.xlsx", sheet = "Data1", skip = 9) |>
-  rename(date = `Series ID`, value = A85375847A) |>
-  select(date, value) |>
-  transmute(
-    Month = yearmonth(date),
-    Visitors = value / 1e3
-  ) |>
-  bind_rows(tibble(
-    Month = yearmonth(seq(as.Date("2021-11-01"), by = "1 month", length = 2)),
-    Visitors = NA_real_
-  )) |>
-  as_tsibble(index = Month) |>
-  filter(Month >= yearmonth("2000 Jan"))
 ```
 
 # Statistical forecasting
@@ -80,7 +61,6 @@ austa <- readxl::read_excel("data/340101.xlsx", sheet = "Data1", skip = 9) |>
   )) |>
   as_tsibble(index = Month) |>
   filter(Month >= yearmonth("2000 Jan"))
-# Grab ABS data
 # Fit ETS model
 fit <- austa |>
   filter(Month < yearmonth("2018 Jan")) |>
