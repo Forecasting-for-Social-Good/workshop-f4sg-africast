@@ -156,7 +156,8 @@ $$\begin{aligned}
 aus_economy <- global_economy |>
   filter(Country == "Australia") |>
   mutate(Pop = Population / 1e6)
-fit <- aus_economy |> model(AAN = ETS(Pop))
+fit <- aus_economy |>
+  model(AAN = ETS(Pop ~ error("A") + trend("A") + season("N")))
 report(fit)
 ```
 
@@ -207,7 +208,7 @@ $$\begin{aligned}
 
 ```{r, echo=TRUE, fig.height=3.4}
 aus_economy |>
-  model(holt = ETS(Pop ~ trend("Ad"))) |>
+  model(damped = ETS(Pop ~ error("A") + trend("Ad") + season("N"))) |>
   forecast(h = 20) |>
   autoplot(aus_economy)
 ```
