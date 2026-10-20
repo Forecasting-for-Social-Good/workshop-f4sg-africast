@@ -9,7 +9,7 @@
 <link href="libs/quarto-html/quarto-syntax-highlighting-806d16d6947d3f83c724220677ca5bc4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <meta name="dcterms.date" content="2026-10-18">
+  <meta name="dcterms.date" content="2026-10-21">
   <title>Basic training and test accuracy</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -100,7 +100,7 @@
     code span.vs { color: #4e7a27; } /* VerbatimString */
     code span.wa { color: #b5570f; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-4e7c356efd1f4dd38912d787c06695e6.css">
+  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-7ed1ffe4fe887a0fbe0ad48dd205e4a9.css">
   <link href="libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -225,14 +225,6 @@
   <img class="africast-savanna" src="figs/savanna.png" alt="">
   <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
 </section>
-<section id="outline" class="slide level2">
-<h2>Outline</h2>
-<ul>
-<li>Evaluating forecast accuracy</li>
-<li>Evaluating point forecast accuracy</li>
-<li>Evaluating distributional forecast accuracy</li>
-</ul>
-</section>
 <section>
 <section id="evaluating-forecast-accuracy" class="title-slide slide level1 center">
 <h1>Evaluating forecast accuracy</h1>
@@ -243,18 +235,56 @@
 <ul>
 <li>In order to evaluate the performance of a forecasting model, we compute its forecast accuracy.</li>
 <li>Forecast accuracy is compared by measuring errors based on the test set.</li>
-<li>Ideally it should allow comparing benefits from improved accuracy with the cost of obtaining the improvement.</li>
+<li>Ideally, compare the benefit of improved accuracy with the cost of obtaining it.</li>
 </ul>
 </section>
-<section id="evaluate-forecast-accuracy-business-impact" class="slide level2">
-<h2>Evaluate forecast accuracy: business impact</h2>
+<section id="evaluate-forecast-accuracy-decision-impact" class="slide level2">
+<h2>Evaluate forecast accuracy: decision impact</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Best forecast = best decisions</strong></p>
+</div>
+<div class="callout-content">
+<p>Choose the model whose forecasts lead to better decisions, such as:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <ul>
-<li>We should be choosing forecast models that lead to better business decisions
-<ul>
-<li>least staffing costs, lowest emissions, highest service level, least stock-out, least inventory, fastest response, least change in planning, for example.</li>
-</ul></li>
-<li>However, this is not always easy to obtain, therefore we might simply use methods that provide the most accurate forecast.</li>
+<li>lower staffing costs</li>
+<li>lower emissions</li>
+<li>higher service levels</li>
+<li>fewer stock-outs</li>
 </ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>less excess inventory</li>
+<li>faster response</li>
+<li>more stable plans</li>
+</ul>
+</div></div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Decision impact is often hard to measure.</li>
+<li>Fallback: choose the most accurate forecast.</li>
+</ul>
+</div>
+</section>
+<section id="which-error-costs-more" class="slide level2">
+<h2>Which error costs more?</h2>
+<div id="error-cost" class="lq-question lq-poll" data-lq="{&quot;id&quot;:&quot;error-cost&quot;,&quot;options&quot;:[&quot;Forecasting too high (waste, idle staff, excess stock)&quot;,&quot;Forecasting too low (stock-outs, unmet need, overloaded services)&quot;,&quot;About the same&quot;,&quot;It depends on the situation&quot;],&quot;prompt&quot;:&quot;In your work, which forecast error is more costly?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>In your work, which forecast error is more costly?</p>
+</div>
+<ul>
+<li>Forecasting too high (waste, idle staff, excess stock)</li>
+<li>Forecasting too low (stock-outs, unmet need, overloaded services)</li>
+<li>About the same</li>
+<li>It depends on the situation</li>
+</ul>
+</div>
 </section>
 <section id="a-perfect-fit" class="slide level2">
 <h2>A perfect fit</h2>
@@ -272,11 +302,24 @@
 <section id="in-sample-training-vs.-out-of-sample-test" class="slide level2">
 <h2>In-sample (training) vs.&nbsp;out-of-sample (test)</h2>
 <ul>
-<li>Fitting and its residual are not a reliable indication of forecast accuracy</li>
+<li>Residuals (in-sample errors) are not a reliable indication of forecast accuracy</li>
 <li>A model which fits the training data well will not necessarily forecast well</li>
 <li>A perfect fit can always be obtained by using a model with enough parameters</li>
 <li>Over-fitting a model to data is just as bad as failing to identify a systematic pattern in the data</li>
 </ul>
+</section>
+<section id="how-long-a-test-set" class="slide level2">
+<h2>How long a test set?</h2>
+<div id="test-set-length" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;test-set-length&quot;,&quot;options&quot;:[&quot;3 months&quot;,&quot;12 months&quot;,&quot;36 months&quot;],&quot;prompt&quot;:&quot;You need forecasts 12 months ahead. What is the shortest sensible test set?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>You need forecasts 12 months ahead. What is the shortest sensible test set?</p>
+</div>
+<ul>
+<li>3 months</li>
+<li>12 months</li>
+<li>36 months</li>
+</ul>
+</div>
 </section>
 <section id="forecast-accuracy-evaluation-using-test-sets" class="slide level2">
 <h2>Forecast accuracy evaluation using test sets</h2>
@@ -285,12 +328,13 @@
 <li>We pretend we don’t know some part of data (new data)</li>
 <li>It must not be used for <em>any</em> aspect of model training</li>
 <li>Forecast accuracy is computed only based on the test set</li>
+<li>The test set should ideally be at least as long as the maximum forecast horizon</li>
 </ul>
 </section>
 <section id="training-and-test-sets" class="slide level2">
 <h2>Training and test sets</h2>
 
-<img data-src="_figures/05_accuracy_basic/traintest-1.png" style="width:100.0%" class="r-stretch"></section></section>
+<img data-src="_figures/04_accuracy_basic/traintest-1.png" width="864" class="r-stretch"></section></section>
 <section>
 <section id="evaluating-point-forecast-accuracy" class="title-slide slide level1 center">
 <h1>Evaluating point forecast accuracy</h1>
@@ -300,11 +344,17 @@
 <h2>Forecast errors</h2>
 <p>Forecast “error”: the difference between an observed value and its forecast. <span class="math display">\[
   e_{T+h} = y_{T+h} - \hat{y}_{T+h|T},
-\]</span> where the training data is given by <span class="math inline">\(\{y_1,\dots,y_T\}\)</span></p>
+\]</span> where</p>
+<ul>
+<li>the training data is <span class="math inline">\(\{y_1,\dots,y_T\}\)</span></li>
+<li><span class="math inline">\(y_{T+h}\)</span> is the <span class="math inline">\(h\)</span>th test observation, <span class="math inline">\(h=1,\dots,H\)</span></li>
+<li><span class="math inline">\(\hat{y}_{T+h|T}\)</span> is its forecast based on data up to time <span class="math inline">\(T\)</span></li>
+</ul>
 </section>
-<section id="measures-of-forecast-accuracy" class="slide level2 code-small">
-<h2>Measures of forecast accuracy</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fit <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
+<section id="forecasting-beer-production" class="slide level2 code-small">
+<h2>Forecasting beer production</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fit <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
 <span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(<span class="fu">year</span>(Quarter), <span class="dv">1992</span>, <span class="dv">2007</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">snaive =</span> <span class="fu">SNAIVE</span>(Beer),</span>
@@ -312,28 +362,31 @@
 <span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb1-7"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fit <span class="sc">|&gt;</span></span>
 <span id="cb1-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_production, <span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb1-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span><span class="st">"Forecasts for quarterly beer production"</span>,</span>
-<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span><span class="st">"Year"</span>, <span class="at">y =</span><span class="st">"Megalitres"</span>) <span class="sc">+</span></span>
-<span id="cb1-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Forecast"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="measures-of-forecast-accuracy-1" class="slide level2">
-<h2>Measures of forecast accuracy</h2>
+<span id="cb1-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">filter</span>(aus_production, <span class="fu">year</span>(Quarter) <span class="sc">&gt;=</span> <span class="dv">1990</span>), <span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb1-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Forecasts for quarterly beer production"</span>,</span>
+<span id="cb1-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Quarter"</span>, <span class="at">y =</span> <span class="st">"Megalitres"</span></span>
+<span id="cb1-13"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Forecast"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
-<img data-src="_figures/05_accuracy_basic/beer-fc-1-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="measures-of-forecast-accuracy-2" class="slide level2">
-<h2>Measures of forecast accuracy</h2>
-<p><span class="math display">\[\begin{aligned}
-y_{T+h} &amp;= (T+h)\text{th observation, } h=1,\dots,H \\
-\hat{y}_{T+h|T} &amp;= \text{its forecast based on data up to time } T. \\
-e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
-\end{aligned}\]</span></p>
+</section>
+<section id="forecasting-beer-production-output" class="slide level2 code-small output-location-slide"><h2>Forecasting beer production</h2><div class="cell output-location-slide">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="_figures/04_accuracy_basic/beer-fc-1-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="scale-dependent-and-percentage-errors" class="slide level2">
+<h2>Scale-dependent and percentage errors</h2>
 <div class="block">
 <p><span class="math display">\[\begin{aligned}
 \text{MAE} &amp;= \text{mean}(|e_{T+h}|) \\
-\text{MSE} &amp;= \text{mean}(e_{T+h}^2) \qquad
-&amp;\text{RMSE} &amp;= \sqrt{\text{mean}(e_{T+h}^2)} \\
-\text{MAPE} &amp;= 100\text{mean}(|e_{T+h}|/ |y_{T+h}|)
+\text{MSE} &amp;= \text{mean}(e_{T+h}^2) \\
+\text{RMSE} &amp;= \sqrt{\text{mean}(e_{T+h}^2)} \\
+\text{MAPE} &amp;= 100\,\text{mean}(|e_{T+h}|/|y_{T+h}|)
 \end{aligned}\]</span></p>
 </div>
 <div class="fragment">
@@ -343,8 +396,21 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 </ul>
 </div>
 </section>
-<section id="measures-of-forecast-accuracy-3" class="slide level2 smaller">
-<h2>Measures of forecast accuracy</h2>
+<section id="comparing-across-districts" class="slide level2">
+<h2>Comparing across districts</h2>
+<div id="compare-districts" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[2],&quot;id&quot;:&quot;compare-districts&quot;,&quot;options&quot;:[&quot;RMSE&quot;,&quot;MAE&quot;,&quot;MASE&quot;],&quot;prompt&quot;:&quot;You forecast clinic visits in 50 districts of very different sizes. Which measure lets you compare your method’s accuracy across all of them?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>You forecast clinic visits in 50 districts of very different sizes. Which measure lets you compare your method’s accuracy across all of them?</p>
+</div>
+<ul>
+<li>RMSE</li>
+<li>MAE</li>
+<li>MASE</li>
+</ul>
+</div>
+</section>
+<section id="scaled-errors-mase" class="slide level2 smaller">
+<h2>Scaled errors: MASE</h2>
 <div class="callout callout-note no-icon callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -352,7 +418,7 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 </div>
 <div class="callout-content">
 <p><span class="math display">\[
-  \text{MASE} = \text{mean}(|e_{T+h}|/Q)
+  \Large \text{MASE} = \text{mean}(|e_{T+h}|/Q)
 \]</span></p>
 </div>
 </div>
@@ -371,15 +437,28 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 <p><span class="math inline">\(Q = \frac{1}{T-m}\displaystyle\sum_{t=m+1}^T |y_{t}-y_{t-m}|\)</span></p>
 </div>
 <div style="text-align:right">
-<p>where <span class="math inline">\(m\)</span> is the seasonal frequency</p>
+<p>where <span class="math inline">\(m\)</span> is the seasonal frequency, and <span class="math inline">\(Q\)</span> is computed on the training data</p>
 </div>
 </div>
 <div class="fragment">
 <p>Proposed by Hyndman and Koehler (IJF, 2006).</p>
 </div>
 </section>
-<section id="measures-of-forecast-accuracy-4" class="slide level2 smaller">
-<h2>Measures of forecast accuracy</h2>
+<section id="slow-selling-items" class="slide level2">
+<h2>Slow-selling items</h2>
+<div id="slow-seller-measure" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;slow-seller-measure&quot;,&quot;options&quot;:[&quot;MAPE&quot;,&quot;MASE&quot;,&quot;Either&quot;],&quot;prompt&quot;:&quot;Which measure suits daily sales of a slow-selling item with many zero days?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Which measure suits daily sales of a slow-selling item with many zero days?</p>
+</div>
+<ul>
+<li>MAPE</li>
+<li>MASE</li>
+<li>Either</li>
+</ul>
+</div>
+</section>
+<section id="scaled-errors-rmsse" class="slide level2 smaller">
+<h2>Scaled errors: RMSSE</h2>
 <div class="callout callout-note no-icon callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -387,11 +466,12 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 </div>
 <div class="callout-content">
 <p><span class="math display">\[
-  \text{RMSSE} = \sqrt{\text{mean}(e^2_{T+h}/Q)}
+  \Large \text{RMSSE} = \sqrt{\text{mean}(e^2_{T+h}/Q)}
 \]</span></p>
 </div>
 </div>
 </div>
+<div class="fragment">
 <ul>
 <li>For non-seasonal series, scale uses naïve forecasts:</li>
 </ul>
@@ -405,22 +485,35 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 <p><span class="math inline">\(Q = \frac{1}{T-m}\displaystyle\sum_{t=m+1}^T (y_{t}-y_{t-m})^2\)</span></p>
 </div>
 <div style="text-align:right">
-<p>where <span class="math inline">\(m\)</span> is the seasonal frequency</p>
+<p>where <span class="math inline">\(m\)</span> is the seasonal frequency, and <span class="math inline">\(Q\)</span> is computed on the training data</p>
 </div>
+</div>
+<div class="fragment">
 <p>Used in the M5 forecasting competition (Makridakis et al., IJF, 2022).</p>
+</div>
 </section>
-<section id="measures-of-forecast-accuracy-5" class="slide level2 code-small">
-<h2>Measures of forecast accuracy</h2>
+<section id="test-set-accuracy" class="slide level2 code-small">
+<h2>Test-set accuracy</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="ot">&lt;-</span> <span class="fu">forecast</span>(beer_fit, <span class="at">h =</span> <span class="dv">10</span>)</span>
-<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(beer_fc, aus_production)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(</span>
+<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a>    aus_production,</span>
+<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">measures =</span> <span class="fu">list</span>(<span class="at">RMSE =</span> RMSE, <span class="at">MAE =</span> MAE, <span class="at">MAPE =</span> MAPE, <span class="at">MASE =</span> MASE, <span class="at">RMSSE =</span> RMSSE)</span>
+<span id="cb2-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 10
-  .model .type    ME  RMSE   MAE   MPE  MAPE  MASE RMSSE    ACF1
-  &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-1 mean   Test  -13.8  38.4  34.8 -3.97  8.28 2.20  1.96  -0.0691
-2 snaive Test    5.2  14.3  13.4  1.15  3.17 0.847 0.729  0.132 </code></pre>
+<pre><code># A tibble: 2 × 7
+  .model .type  RMSE   MAE  MAPE  MASE RMSSE
+  &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 mean   Test   38.4  34.8  8.28 2.20  1.96 
+2 snaive Test   14.3  13.4  3.17 0.847 0.729</code></pre>
 </div>
+</div>
+<div class="fragment">
+<ul>
+<li>Seasonal naïve beats the mean on every measure.</li>
+<li>Its MASE and RMSSE are below 1: smaller errors than in-sample seasonal naïve.</li>
+</ul>
 </div>
 </section></section>
 <section>
@@ -429,8 +522,8 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 
 </section>
 <section id="prediction-interval-accuracy-using-winkler-score" class="slide level2">
-<h2>Prediction interval accuracy using winkler score</h2>
-<p>Winkler proposed a scoring method to enable comparisons between prediction intervals:</p>
+<h2>Prediction interval accuracy using Winkler score</h2>
+<p>Winkler (1972) proposed a scoring method to enable comparisons between prediction intervals:</p>
 <ul>
 <li>it takes account of both coverage and width of the intervals.</li>
 </ul>
@@ -443,7 +536,7 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 <p><span class="math display">\[\begin{aligned}
   W(l_t,u_t,y_t) =
     \begin{cases}
-      u_t-l_t &amp; \text{if $l_t &lt; y_t &lt;u_t$}\\
+      u_t-l_t &amp; \text{if $l_t \le y_t \le u_t$}\\
       (u_t-l_t)+ \frac{2}{\alpha}(l_t-y_t) &amp; \text{if $y_t &lt; l_t$}\\
       (u_t-l_t) + \frac{2}{\alpha}(y_t-u_t) &amp; \text{if $y_t &gt; u_t$}
     \end{cases}
@@ -451,20 +544,30 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 </div>
 </div>
 </div>
+<p>where <span class="math inline">\([l_t, u_t]\)</span> is a <span class="math inline">\(100(1-\alpha)\%\)</span> prediction interval.</p>
+<ul>
+<li>Lower is better.</li>
+<li>Misses are penalised by <span class="math inline">\(2/\alpha\)</span> times the distance outside the interval.</li>
+</ul>
 </section>
 <section id="prediction-interval-accuracy" class="slide level2 code-small">
 <h2>Prediction interval accuracy</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute interval accuracy</span></span>
-<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span> <span class="fu">accuracy</span>(aus_production,</span>
-<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="at">measures =</span> interval_accuracy_measures) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="at">measures =</span> <span class="fu">list</span>(<span class="at">winkler =</span> winkler_score), <span class="at">level =</span> <span class="dv">95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 5
-  .model .type winkler pinball scaled_pinball
-  &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;          &lt;dbl&gt;
-1 mean   Test    174.     8.67         0.274 
-2 snaive Test     86.3    3.10         0.0980</code></pre>
+<pre><code># A tibble: 2 × 3
+  .model .type winkler
+  &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;
+1 mean   Test    174. 
+2 snaive Test     86.3</code></pre>
 </div>
+</div>
+<div class="fragment">
+<ul>
+<li>Winkler scores for 95% prediction intervals (<span class="math inline">\(\alpha = 0.05\)</span>).</li>
+<li>Both cover every test observation, but seasonal naïve intervals are half as wide.</li>
+</ul>
 </div>
 </section>
 <section id="quantile-score" class="slide level2">
@@ -485,36 +588,16 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 </div>
 </div>
 </div>
-</section>
-<section id="continuous-ranked-probability-score-crps" class="slide level2">
-<h2>Continuous Ranked Probability Score (CRPS)</h2>
-<p><span class="math display">\[\large \text{CRPS} = \text{mean}(p_j),\]</span></p>
-<p>where</p>
-<p><span class="math display">\[p_j = \int_{-\infty}^{\infty} \left(G_j(x) - F_j(x)\right)^2dx,\]</span></p>
-</section>
-<section id="continuous-ranked-probability-score-crps-1" class="slide level2">
-<h2>Continuous Ranked Probability Score (CRPS)</h2>
-
-<img data-src="figs/crps.jpg" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
-<section id="quantile-score-and-crps" class="slide level2 code-small">
-<h2>Quantile score and CRPS</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="fu">list</span>(<span class="at">measures=</span>distribution_accuracy_measures))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-  .model .type measures.percentile measures.CRPS
-  &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;         &lt;dbl&gt;
-1 mean   Test                22.7          22.4 
-2 snaive Test                 8.80          8.71</code></pre>
-</div>
-</div>
+<p>where <span class="math inline">\(f_{p,t}\)</span> is the <span class="math inline">\(p\)</span>-quantile of the forecast distribution for time <span class="math inline">\(t\)</span>.</p>
+<ul>
+<li>Lower is better.</li>
+</ul>
 </section>
 <section id="quantile-score-2" class="slide level2 code-small">
 <h2>Quantile score</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="fu">list</span>(<span class="at">qs=</span>quantile_score), <span class="at">probs =</span> .<span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="fu">list</span>(<span class="at">qs =</span> quantile_score), <span class="at">probs =</span> <span class="fl">0.9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   .model .type    qs
@@ -522,6 +605,55 @@ e_{T+h} &amp;= y_{T+h} - \hat{y}_{T+h|T}
 1 mean   Test  14.1 
 2 snaive Test   4.60</code></pre>
 </div>
+</div>
+<div class="fragment">
+<ul>
+<li>Quantile score of the 90th percentile forecasts (<span class="math inline">\(p = 0.9\)</span>).</li>
+</ul>
+</div>
+</section>
+<section id="continuous-ranked-probability-score-crps" class="slide level2">
+<h2>Continuous Ranked Probability Score (CRPS)</h2>
+<p><span class="math display">\[\large \text{CRPS} = \text{mean}(p_t),\]</span></p>
+<p>where</p>
+<p><span class="math display">\[p_t = \int_{-\infty}^{\infty} \left(G_t(x) - F_t(x)\right)^2dx\]</span></p>
+<ul>
+<li><span class="math inline">\(G_t(x)\)</span> is the forecast distribution function for time <span class="math inline">\(t\)</span></li>
+<li><span class="math inline">\(F_t(x)\)</span> is the observation’s distribution function: a step from 0 to 1 at <span class="math inline">\(y_t\)</span></li>
+<li>Lower is better; for a point forecast it reduces to the MAE.</li>
+</ul>
+</section>
+<section id="crps-the-gap-between-forecast-and-outcome" class="slide level2">
+<h2>CRPS: the gap between forecast and outcome</h2>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js"></script>
+<script src="crps-slider.js"></script>
+<div class="crps-slider" data-prevent-swipe=""></div>
+<div class="crps-notes">
+<ul>
+<li>CRPS adds up the squared gap (shaded) between the forecast <span class="math inline">\(G\)</span> and the outcome <span class="math inline">\(F\)</span>.</li>
+<li>Mean away from <span class="math inline">\(y\)</span>, or spread too wide: larger. Lower is better.</li>
+</ul>
+</div>
+</section>
+<section id="percentile-score-and-crps" class="slide level2 code-small">
+<h2>Percentile score and CRPS</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>beer_fc <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="at">measures =</span> distribution_accuracy_measures)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  .model .type percentile  CRPS
+  &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
+1 mean   Test       22.7  22.4 
+2 snaive Test        8.80  8.71</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Percentile score: quantile score averaged over <span class="math inline">\(p = 0.01, 0.02, \dots, 0.99\)</span>.</li>
+<li>Seasonal naïve has the better distributional forecasts on both measures.</li>
+</ul>
 </div>
 
 </section></section>

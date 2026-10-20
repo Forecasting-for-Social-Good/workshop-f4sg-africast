@@ -100,7 +100,7 @@
     code span.vs { color: #4e7a27; } /* VerbatimString */
     code span.wa { color: #b5570f; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-4e7c356efd1f4dd38912d787c06695e6.css">
+  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-7ed1ffe4fe887a0fbe0ad48dd205e4a9.css">
   <link href="libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -216,6 +216,7 @@
   <div class="title-brand"><img src="figs/africast-mark.png" alt=""><span>AFRICAST</span></div>
   <p class="title-kicker">Tidy time series &amp; forecasting in R</p>
   <h1 class="title">Transformations, decompositions and features</h1>
+  <p class="title-session" data-session="3">Session 3 of 10</p>
   <div class="title-hexes">
     <img src="figs/tsibble.png" alt="tsibble">
     <img src="figs/feasts.png" alt="feasts">
@@ -224,12 +225,6 @@
   <img class="africast-savanna" src="figs/savanna.png" alt="">
   <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
 </section>
-<section class="slide level2">
-
-<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js"></script>
-<script src="webr-slider.js"></script>
-</section>
 <section>
 <section id="transforming-time-series" class="title-slide slide level1 center">
 <h1>Transforming time series</h1>
@@ -237,6 +232,9 @@
 </section>
 <section id="variance-stabilisation" class="slide level2">
 <h2>Variance stabilisation</h2>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js"></script>
+<script src="webr-slider.js"></script>
 <p>If the data show different variation at different levels of the series, then a transformation can be useful.</p>
 <div class="fragment">
 <p>Denote original observations as <span class="math inline">\(y_1,\dots,y_n\)</span> and transformed observations as <span class="math inline">\(w_1, \dots, w_n\)</span>.</p>

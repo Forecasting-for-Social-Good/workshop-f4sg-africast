@@ -9,7 +9,7 @@
 <link href="libs/quarto-html/quarto-syntax-highlighting-806d16d6947d3f83c724220677ca5bc4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <meta name="dcterms.date" content="2026-10-19">
+  <meta name="dcterms.date" content="2026-10-20">
   <title>Time series patterns and basic graphics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -100,7 +100,7 @@
     code span.vs { color: #4e7a27; } /* VerbatimString */
     code span.wa { color: #b5570f; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-4e7c356efd1f4dd38912d787c06695e6.css">
+  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-7ed1ffe4fe887a0fbe0ad48dd205e4a9.css">
   <link href="libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -224,17 +224,6 @@
   </div>
   <img class="africast-savanna" src="figs/savanna.png" alt="">
   <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
-</section>
-<section id="outline" class="slide level2">
-<h2>Outline</h2>
-<ul>
-<li>Time series patterns</li>
-<li>Time plots</li>
-<li>Seasonal plots</li>
-<li>Seasonal or cyclic?</li>
-<li>Lag plots and autocorrelation</li>
-<li>White noise</li>
-</ul>
 </section>
 <section>
 <section id="time-series-patterns" class="title-slide slide level1 center">
@@ -2183,7 +2172,7 @@ PlotMorph.register("acf", function (svg, data, h) {
 <p>Continue for lags 5, 6, … The seasonal lags 8, 12 and 16 also align the same quarters, so they are strongly positive too.</p>
 </div>
 <div class="morph-step fragment fade-in-then-out">
-<p>The ACF plot. Dashed blue lines: the range expected for white noise.</p>
+<p>The ACF plot. Dashed blue lines indicate 95% significance thresholds to help identify white noise.</p>
 </div>
 </div>
 </div>
@@ -2195,17 +2184,17 @@ PlotMorph.register("acf", function (svg, data, h) {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a>new_production <span class="sc">|&gt;</span> <span class="fu">ACF</span>(Beer, <span class="at">lag_max =</span> <span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 9 x 2 [1Q]
-       lag     acf
-  &lt;cf_lag&gt;   &lt;dbl&gt;
-1       1Q -0.102 
-2       2Q -0.657 
-3       3Q -0.0603
-4       4Q  0.869 
-5       5Q -0.0892
-6       6Q -0.635 
-7       7Q -0.0542
-8       8Q  0.832 
-9       9Q -0.108 </code></pre>
+        lag     acf
+   &lt;cf_lag&gt;   &lt;dbl&gt;
+1 1 quarter -0.102 
+2 2 quarter -0.657 
+3 3 quarter -0.0603
+4 4 quarter  0.869 
+5 5 quarter -0.0892
+6 6 quarter -0.635 
+7 7 quarter -0.0542
+8 8 quarter  0.832 
+9 9 quarter -0.108 </code></pre>
 </div>
 </div>
 </section>
@@ -2235,18 +2224,18 @@ PlotMorph.register("acf", function (svg, data, h) {
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 152 x 3 [1Q]
 # Key:       State [8]
-   State      lag      acf
-   &lt;chr&gt; &lt;cf_lag&gt;    &lt;dbl&gt;
- 1 ACT         1Q  0.0877 
- 2 ACT         2Q  0.252  
- 3 ACT         3Q -0.0496 
- 4 ACT         4Q  0.300  
- 5 ACT         5Q -0.0741 
- 6 ACT         6Q  0.269  
- 7 ACT         7Q -0.00504
- 8 ACT         8Q  0.236  
- 9 ACT         9Q -0.0953 
-10 ACT        10Q  0.0750 
+   State        lag      acf
+   &lt;chr&gt;   &lt;cf_lag&gt;    &lt;dbl&gt;
+ 1 ACT    1 quarter  0.0877 
+ 2 ACT    2 quarter  0.252  
+ 3 ACT    3 quarter -0.0496 
+ 4 ACT    4 quarter  0.300  
+ 5 ACT    5 quarter -0.0741 
+ 6 ACT    6 quarter  0.269  
+ 7 ACT    7 quarter -0.00504
+ 8 ACT    8 quarter  0.236  
+ 9 ACT    9 quarter -0.0953 
+10 ACT   10 quarter  0.0750 
 # ℹ 142 more rows</code></pre>
 </div>
 </div>

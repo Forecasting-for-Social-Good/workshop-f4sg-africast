@@ -9,8 +9,8 @@
 <link href="libs/quarto-html/quarto-syntax-highlighting-806d16d6947d3f83c724220677ca5bc4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <meta name="dcterms.date" content="2026-10-18">
-  <title>Residual diagnostics and cross validation</title>
+  <meta name="dcterms.date" content="2026-10-21">
+  <title>Cross-validation and residual diagnostics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -100,10 +100,11 @@
     code span.vs { color: #4e7a27; } /* VerbatimString */
     code span.wa { color: #b5570f; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-4e7c356efd1f4dd38912d787c06695e6.css">
+  <link rel="stylesheet" href="libs/revealjs/dist/theme/quarto-7ed1ffe4fe887a0fbe0ad48dd205e4a9.css">
   <link href="libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="libs/revealjs/plugin/reveal-live-questions/live-questions.css" rel="stylesheet">
   <link href="libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -205,6 +206,7 @@
   });
   </script>
   <link rel="stylesheet" href="fonts/fonts.css">
+  <script type="application/json" id="lq-config">{"closeOnLeave":true,"qr":true,"results":"live","server":"https://poll.nectric.com.au","session":"africast-cv-residuals"}</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -213,7 +215,7 @@
 <section id="title-slide" class="center">
   <div class="title-brand"><img src="figs/africast-mark.png" alt=""><span>AFRICAST</span></div>
   <p class="title-kicker">Tidy time series &amp; forecasting in R</p>
-  <h1 class="title">Residual diagnostics and cross validation</h1>
+  <h1 class="title">Cross-validation and residual diagnostics</h1>
   <p class="title-session" data-session="9">Session 9 of 10</p>
   <div class="title-hexes">
     <img src="figs/tsibble.png" alt="tsibble">
@@ -222,14 +224,6 @@
   </div>
   <img class="africast-savanna" src="figs/savanna.png" alt="">
   <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
-</section>
-<section id="outline" class="slide level2">
-<h2>Outline</h2>
-<ul>
-<li>Time series cross-validation</li>
-<li>Residual diagnostics</li>
-<li>Recap</li>
-</ul>
 </section>
 <section>
 <section id="time-series-cross-validation" class="title-slide slide level1 center">
@@ -240,15 +234,14 @@
 <h2>Issue with traditional train/test split</h2>
 
 <img data-src="figs/f_test.jpg" style="width:90.0%" class="r-stretch"></section>
+<section id="forecasting-from-a-rolling-origin" class="slide level2">
+<h2>Forecasting from a rolling origin</h2>
+
+<img data-src="figs/f_future.jpg" style="width:100.0%" class="r-stretch"></section>
 <section id="time-series-cross-validation-1" class="slide level2">
 <h2>Time series cross-validation</h2>
 
-<img data-src="figs/f_future.jpg" style="width:100.0%" class="r-stretch"></section>
-<section id="time-series-cross-validation-2" class="slide level2">
-<h2>Time series cross-validation</h2>
-<p><strong>Time series cross-validation</strong></p>
-
-<img data-src="_figures/05_accuracy_advance/cv1-1.png" style="width:100.0%" class="r-stretch"><div class="fragment">
+<img data-src="_figures/05_accuracy_advance/cv-diagram-1.png" style="width:100.0%" class="r-stretch"><div class="fragment">
 <ul>
 <li>Forecast accuracy averaged over test sets.</li>
 <li>Also known as “evaluation on a rolling forecasting origin”</li>
@@ -257,26 +250,986 @@
 </section>
 <section id="creating-the-rolling-training-sets" class="slide level2">
 <h2>Creating the rolling training sets</h2>
-<p>There are three main rolling types which can be used.</p>
+<p>Three functions roll a tsibble into windows, numbered by a new <code>.id</code> column.</p>
 <ul>
-<li>Stretch: extends a growing length window with new data.</li>
-<li>Slide: shifts a fixed length window through the data.</li>
-<li>Tile: moves a fixed length window without overlap.</li>
+<li><code>stretch_tsibble()</code>: extends a growing window with new data.</li>
+<li><code>slide_tsibble()</code>: shifts a fixed length window through the data.</li>
+<li><code>tile_tsibble()</code>: moves a fixed length window without overlap.</li>
 </ul>
-<p>Three functions to roll a tsibble: <code>stretch_tsibble()</code>, <code>slide_tsibble()</code>, and <code>tile_tsibble()</code>.</p>
 <p>For time series cross-validation, stretching windows are most commonly used.</p>
 </section>
-<section id="time-series-cross-validation-3" class="slide level2 code-small">
-<h2>Time series cross-validation</h2>
-<p>Stretch with a minimum length of 24, growing by 1 each step.</p>
+<section id="stretch-stretch_tsibble" class="slide level2 code-small">
+<h2>Stretch: <code>stretch_tsibble()</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>forecast_horizon <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> antidiabetic_drug_sale <span class="sc">|&gt;</span> </span>
-<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>((<span class="fu">n</span>()<span class="sc">-</span>forecast_horizon<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span><span class="fu">n</span>())</span>
-<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> antidiabetic_drug_sale <span class="sc">|&gt;</span> </span>
-<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>(<span class="fu">n</span>()<span class="sc">-</span>forecast_horizon))</span>
-<span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a>drug_sale_tcsv <span class="ot">&lt;-</span> train <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stretch_tsibble</span>(<span class="at">.init =</span> <span class="dv">24</span>, <span class="at">.step =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tsibble</span>(<span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">index =</span> t)</span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a>stretch <span class="ot">&lt;-</span> x <span class="sc">|&gt;</span> <span class="fu">stretch_tsibble</span>(<span class="at">.init =</span> <span class="dv">6</span>, <span class="at">.step =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="morph-slide">
+<style>/* Layout for staged plot animations in revealjs slides (see morph_widget()) */
+.morph-slide {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.morph-figure {
+  flex: none;
+  width: 860px;
+  margin: 0;
+}
+
+.morph-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Only while scaled: it changes how strokes rasterise even at 1:1 */
+.morph-svg .morph-grill.is-scaled * {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Captions share one box; the current step's caption is shown */
+.morph-captions {
+  position: relative;
+  flex: 1;
+  align-self: stretch;
+  font-size: 27px;
+  line-height: 1.3;
+}
+
+.reveal .morph-captions .morph-step {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px 0 4px 16px;
+  border-left: 4px solid #3B75AC;
+  text-align: left;
+}
+
+/* Step 0 is not a fragment, so it follows the active step instead */
+.reveal .morph-captions .morph-step:not(.fragment) {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.reveal .morph-captions .morph-step:not(.fragment).is-active {
+  opacity: 1;
+}
+
+.morph-step > :last-child {
+  margin-bottom: 0;
+}</style>
+<figure class="morph-figure" id="roll-stretch-morph" data-scene="roll" data-steps="4" data-durations="1100,1100,3000" role="img" aria-label="Animation adding the windows made by stretch_tsibble() one at a time, each starting at the first observation and two observations longer than the last."></figure>
+<script type="application/json" id="roll-stretch-morph-data">{"width":648,"height":360,"chrome":"<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='360.00pt' viewBox='0 0 648.00 360.00'>\n<g class='svglite'>\n<defs>\n  <style type='text/css'><![CDATA[\n    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {\n      fill: none;\n      stroke: #000000;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n      stroke-miterlimit: 10.00;\n    }\n    .svglite text {\n      white-space: pre;\n    }\n    .svglite g.glyphgroup path {\n      fill: inherit;\n      stroke: none;\n    }\n  ]]><\/style>\n<\/defs>\n<rect width='100%' height='100%' style='stroke: none; fill: none;'/>\n<defs>\n  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA='>\n    <rect x='0.00' y='0.00' width='648.00' height='360.00' />\n  <\/clipPath>\n<\/defs>\n<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>\n<rect x='0.00' y='0.00' width='648.00' height='360.00' style='stroke-width: 1.07; stroke: none;' />\n<text x='22.99' y='23.22' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='3.81px' lengthAdjust='spacingAndGlyphs'>1<\/text>\n<text x='22.99' y='65.23' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.36px' lengthAdjust='spacingAndGlyphs'>2<\/text>\n<text x='22.99' y='107.24' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.39px' lengthAdjust='spacingAndGlyphs'>3<\/text>\n<text x='22.99' y='149.25' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.69px' lengthAdjust='spacingAndGlyphs'>4<\/text>\n<text x='22.99' y='191.27' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.41px' lengthAdjust='spacingAndGlyphs'>5<\/text>\n<text x='22.99' y='233.28' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.69px' lengthAdjust='spacingAndGlyphs'>6<\/text>\n<text x='22.99' y='275.29' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='3.91px' lengthAdjust='spacingAndGlyphs'>7<\/text>\n<text x='22.99' y='317.31' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.84px' lengthAdjust='spacingAndGlyphs'>8<\/text>\n<text x='173.49' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.41px' lengthAdjust='spacingAndGlyphs'>5<\/text>\n<text x='320.52' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='8.72px' lengthAdjust='spacingAndGlyphs'>10<\/text>\n<text x='467.55' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='8.22px' lengthAdjust='spacingAndGlyphs'>15<\/text>\n<text x='614.58' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='9.27px' lengthAdjust='spacingAndGlyphs'>20<\/text>\n<text x='335.22' y='352.17' text-anchor='middle' style='font-size: 11.00px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='24.22px' lengthAdjust='spacingAndGlyphs'>Time<\/text>\n<text transform='translate(13.06,167.23) rotate(-90)' text-anchor='middle' style='font-size: 11.00px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='61.92px' lengthAdjust='spacingAndGlyphs'>Window (.id)<\/text>\n<\/g>\n<\/g>\n<\/svg>","grill":"<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='360.00pt' viewBox='0 0 648.00 360.00'>\n<g class='svglite'>\n<defs>\n  <style type='text/css'><![CDATA[\n    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {\n      fill: none;\n      stroke: #000000;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n      stroke-miterlimit: 10.00;\n    }\n    .svglite text {\n      white-space: pre;\n    }\n    .svglite g.glyphgroup path {\n      fill: inherit;\n      stroke: none;\n    }\n  ]]><\/style>\n<\/defs>\n<rect width='100%' height='100%' style='stroke: none; fill: none;'/>\n<defs>\n  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA='>\n    <rect x='0.00' y='0.00' width='648.00' height='360.00' />\n  <\/clipPath>\n<\/defs>\n<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>\n<\/g>\n<defs>\n  <clipPath id='cpMjcuOTJ8NjQyLjUyfDUuNDh8MzI4Ljk4'>\n    <rect x='27.92' y='5.48' width='614.60' height='323.50' />\n  <\/clipPath>\n<\/defs>\n<g clip-path='url(#cpMjcuOTJ8NjQyLjUyfDUuNDh8MzI4Ljk4)'>\n<rect x='27.92' y='5.48' width='614.60' height='323.50' style='stroke-width: 1.07; stroke: none;' />\n<polyline points='27.92,20.18 642.52,20.18 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.92,62.20 642.52,62.20 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.92,104.21 642.52,104.21 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.92,146.22 642.52,146.22 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.92,188.24 642.52,188.24 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.92,230.25 642.52,230.25 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.92,272.26 642.52,272.26 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.92,314.27 642.52,314.27 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='173.49,328.98 173.49,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='320.52,328.98 320.52,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='467.55,328.98 467.55,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='614.58,328.98 614.58,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<\/g>\n<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>\n<\/g>\n<\/g>\n<\/svg>","panel":{"panel":1,"label":"","x":27.9232349315068,"y":5.47945205479459,"w":614.597313013699,"h":323.499463013699,"xrange":[0.0499999999999999,20.95],"yrange":[-8.35,-0.65]},"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"rows":[{"y":-1,"members":[1,2,3,4,5,6]},{"y":-2,"members":[1,2,3,4,5,6,7,8]},{"y":-3,"members":[1,2,3,4,5,6,7,8,9,10]},{"y":-4,"members":[1,2,3,4,5,6,7,8,9,10,11,12]},{"y":-5,"members":[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},{"y":-6,"members":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]},{"y":-7,"members":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]},{"y":-8,"members":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]}],"radius":3.56,"grey":"#CCCCCC","colour":"#0072B2"}</script>
+<script>// Engine for staged plot animations created by morph_widget() in morph.R.
+//
+// A scene is registered with PlotMorph.register(name, factory). The factory
+// receives the <svg> element, the data exported from R, and helpers, and
+// returns a render(progress) function. Progress is a number from 0 to
+// (steps - 1), where whole numbers are the storyboard steps. The engine moves
+// progress towards the active step, which is set by the revealjs fragments (.fragment.morph-step) on the slide.
+(function () {
+  if (window.PlotMorph) return;
+
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const scenes = {};
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const helpers = {
+    SVGNS,
+    el(name, attrs = {}, parent = null) {
+      const node = document.createElementNS(SVGNS, name);
+      for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+      if (parent) parent.appendChild(node);
+      return node;
+    },
+    // Parse an SVG string from R into a nested <svg> element
+    svg(markup, attrs = {}, parent = null) {
+      const doc = new DOMParser().parseFromString(markup, "image/svg+xml");
+      const node = document.importNode(doc.documentElement, true);
+      for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+      if (parent) parent.appendChild(node);
+      return node;
+    },
+    clamp: (x, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, x)),
+    lerp: (a, b, t) => a + (b - a) * t,
+    ease: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+    // Local progress of a phase spanning [from, to] of the overall progress
+    phase(p, from, to) {
+      return helpers.clamp((p - from) / (to - from));
+    },
+    lerpBox(a, b, t) {
+      return {
+        x: helpers.lerp(a.x, b.x, t),
+        y: helpers.lerp(a.y, b.y, t),
+        w: helpers.lerp(a.w, b.w, t),
+        h: helpers.lerp(a.h, b.h, t),
+      };
+    },
+    lerpColour(a, b, t) {
+      const pa = helpers.parseHex(a);
+      const pb = helpers.parseHex(b);
+      const c = pa.map((v, i) => Math.round(helpers.lerp(v, pb[i], t)));
+      return "#" + c.map((v) => v.toString(16).padStart(2, "0")).join("");
+    },
+    parseHex(hex) {
+      const h = hex.replace("#", "");
+      return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+    },
+  };
+
+  function init(figure) {
+    if (figure.dataset.morphReady) return;
+    const factory = scenes[figure.dataset.scene];
+    if (!factory) return;
+    figure.dataset.morphReady = "true";
+    figure.tabIndex = 0;
+
+    const data = JSON.parse(
+      document.getElementById(figure.id + "-data").textContent
+    );
+    const nSteps = Number(figure.dataset.steps);
+    // The slide holding this figure; its fragments are the steps
+    const slide = figure.closest("section");
+    const stepEls = slide ? Array.from(slide.querySelectorAll(".morph-step")) : [];
+
+    const svg = helpers.el("svg", {
+      viewBox: `0 0 ${data.width} ${data.height}`,
+      class: "morph-svg",
+    });
+    figure.appendChild(svg);
+    const render = factory(svg, data, helpers);
+
+    let progress = 0;
+    let target = 0;
+    let last = null;
+    let frame = null;
+    const stepDuration = 1100; // default ms per step
+    const durations = (figure.dataset.durations || "")
+      .split(",")
+      .filter(Boolean)
+      .map(Number);
+    // Duration of the step being animated through, in the given direction
+    function duration(direction) {
+      const seg = direction > 0 ? Math.floor(progress) : Math.ceil(progress) - 1;
+      return durations[helpers.clamp(seg, 0, nSteps - 2)] || stepDuration;
+    }
+
+    function tick(now) {
+      const dt = last === null ? 16 : now - last;
+      last = now;
+      const delta = target - progress;
+      const stepSize = reduceMotion.matches ? Infinity : dt / duration(Math.sign(delta));
+      progress =
+        Math.abs(delta) <= stepSize ? target : progress + Math.sign(delta) * stepSize;
+      render(progress);
+      if (progress !== target) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        frame = null;
+        last = null;
+      }
+    }
+
+    function goTo(step, { jump = false } = {}) {
+      target = helpers.clamp(step, 0, nSteps - 1);
+      stepEls.forEach((el, i) => el.classList.toggle("is-active", i === target));
+      if (jump || reduceMotion.matches) {
+        progress = target;
+        render(progress);
+        return;
+      }
+      if (frame === null) frame = requestAnimationFrame(tick);
+    }
+
+    // The current step is the number of this slide's step fragments shown
+    function sync(jump) {
+      const shown = slide
+        ? slide.querySelectorAll(".fragment.morph-step.visible").length
+        : 0;
+      goTo(shown, { jump });
+    }
+    figure.morphSync = sync;
+
+    // Handle for scripting and testing the animation
+    figure.plotMorph = { goTo, render };
+
+    render(0);
+    sync(true);
+  }
+
+  // Step the figures on the current slide as fragments are shown and hidden
+  function figuresOf(event) {
+    const slide = event && event.fragment ? event.fragment.closest("section") : null;
+    return slide ? slide.querySelectorAll(".morph-figure") : [];
+  }
+  function wireReveal() {
+    if (typeof Reveal === "undefined" || window.PlotMorphWired) return;
+    window.PlotMorphWired = true;
+    const step = (e) => figuresOf(e).forEach((f) => f.morphSync && f.morphSync(false));
+    Reveal.on("fragmentshown", step);
+    Reveal.on("fragmenthidden", step);
+    // Arriving on a slide (forwards or back) shows its last-seen step at once
+    Reveal.on("slidechanged", (e) =>
+      e.currentSlide.querySelectorAll(".morph-figure").forEach((f) => f.morphSync && f.morphSync(true))
+    );
+    const all = () => document.querySelectorAll(".morph-figure").forEach((f) => f.morphSync && f.morphSync(true));
+    Reveal.on("ready", all);
+    if (Reveal.isReady && Reveal.isReady()) all();
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", wireReveal);
+  } else {
+    wireReveal();
+  }
+
+  window.PlotMorph = {
+    helpers,
+    register(name, factory) {
+      scenes[name] = factory;
+      // Wait for the steps, which follow the inline scripts in the page
+      const initAll = () => document.querySelectorAll(".morph-figure").forEach(init);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initAll);
+      } else {
+        initAll();
+      }
+    },
+  };
+})();</script>
+<script>// Scene: building the windows of a rolled tsibble (stretch_tsibble(),
+// slide_tsibble() or tile_tsibble()), one row per window.
+//
+// The axes and panel never move, so the chrome and grill are drawn once in
+// place. Each window is a row of observations, coloured if they are in the
+// window and grey if not. A new window starts as a copy of the one before it,
+// and moves down to its own row while its observations change colour.
+//
+// Steps:
+//   0. The observations, in the first row.
+//   1. The first window is coloured.
+//   2. The second window is copied from the first.
+//   3. The remaining windows are copied in turn, giving the static plot.
+PlotMorph.register("roll", function (svg, data, h) {
+  const { el, ease, phase, lerp, lerpColour } = h;
+  const size = { width: data.width, height: data.height };
+  h.svg(data.chrome, size, svg);
+  h.svg(data.grill, size, svg);
+
+  const box = data.panel;
+  const sx = (v) => box.x + ((v - box.xrange[0]) / (box.xrange[1] - box.xrange[0])) * box.w;
+  const sy = (v) => box.y + ((box.yrange[1] - v) / (box.yrange[1] - box.yrange[0])) * box.h;
+
+  const rows = data.rows.map((row) => {
+    const members = new Set(row.members);
+    const g = el("g", {}, svg);
+    const points = data.x.map((x) =>
+      el("circle", { cx: sx(x).toFixed(2), r: data.radius }, g)
+    );
+    return { y: sy(row.y), inside: data.x.map((x) => members.has(x)), g, points };
+  });
+  const nRows = rows.length;
+
+  // Progress of adding each window: the first row is present from the
+  // start, the second is added in step 2, and the rest share step 3
+  function progress(p, k) {
+    if (k === 0) return 1;
+    if (k === 1) return ease(phase(p, 1, 2));
+    const from = 2 + (k - 2) / (nRows - 2);
+    const to = 2 + (k - 1) / (nRows - 2);
+    return ease(phase(p, from, to));
+  }
+
+  return function render(p) {
+    const first = ease(phase(p, 0, 1));
+    rows.forEach((row, k) => {
+      const q = progress(p, k);
+      row.g.style.display = q > 0 ? "" : "none";
+      if (q <= 0) return;
+      const prev = k > 0 ? rows[k - 1] : null;
+      const y = prev ? lerp(prev.y, row.y, q) : row.y;
+      row.points.forEach((point, i) => {
+        // How coloured each observation is, moving from the previous window's
+        // membership to this window's
+        const was = prev ? (prev.inside[i] ? 1 : 0) : 0;
+        const now = row.inside[i] ? 1 : 0;
+        const c = k === 0 ? now * first : lerp(was, now, q);
+        point.setAttribute("cy", y.toFixed(2));
+        point.setAttribute("fill", lerpColour(data.grey, data.colour, c));
+      });
+    });
+  };
+});</script>
+<div class="morph-captions">
+<div class="morph-step">
+<p>A tsibble <code>x</code> of 20 observations.</p>
+</div>
+<div class="morph-step fragment fade-in-then-out">
+<p>The first window holds the first <code>.init = 6</code> observations.</p>
+</div>
+<div class="morph-step fragment fade-in-then-out">
+<p>The next window adds <code>.step = 2</code> observations.</p>
+</div>
+<div class="morph-step fragment fade-in-then-out">
+<p>Keep growing until the window reaches the end of the data: 8 windows, numbered by <code>.id</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="slide-slide_tsibble" class="slide level2 code-small">
+<h2>Slide: <code>slide_tsibble()</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>slide <span class="ot">&lt;-</span> x <span class="sc">|&gt;</span> <span class="fu">slide_tsibble</span>(<span class="at">.size =</span> <span class="dv">8</span>, <span class="at">.step =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="morph-slide">
+<style>/* Layout for staged plot animations in revealjs slides (see morph_widget()) */
+.morph-slide {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.morph-figure {
+  flex: none;
+  width: 860px;
+  margin: 0;
+}
+
+.morph-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Only while scaled: it changes how strokes rasterise even at 1:1 */
+.morph-svg .morph-grill.is-scaled * {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Captions share one box; the current step's caption is shown */
+.morph-captions {
+  position: relative;
+  flex: 1;
+  align-self: stretch;
+  font-size: 27px;
+  line-height: 1.3;
+}
+
+.reveal .morph-captions .morph-step {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px 0 4px 16px;
+  border-left: 4px solid #3B75AC;
+  text-align: left;
+}
+
+/* Step 0 is not a fragment, so it follows the active step instead */
+.reveal .morph-captions .morph-step:not(.fragment) {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.reveal .morph-captions .morph-step:not(.fragment).is-active {
+  opacity: 1;
+}
+
+.morph-step > :last-child {
+  margin-bottom: 0;
+}</style>
+<figure class="morph-figure" id="roll-slide-morph" data-scene="roll" data-steps="4" data-durations="1100,1100,2500" role="img" aria-label="Animation adding the windows made by slide_tsibble() one at a time, each eight observations long and starting two observations after the last."></figure>
+<script type="application/json" id="roll-slide-morph-data">{"width":648,"height":360,"chrome":"<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='360.00pt' viewBox='0 0 648.00 360.00'>\n<g class='svglite'>\n<defs>\n  <style type='text/css'><![CDATA[\n    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {\n      fill: none;\n      stroke: #000000;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n      stroke-miterlimit: 10.00;\n    }\n    .svglite text {\n      white-space: pre;\n    }\n    .svglite g.glyphgroup path {\n      fill: inherit;\n      stroke: none;\n    }\n  ]]><\/style>\n<\/defs>\n<rect width='100%' height='100%' style='stroke: none; fill: none;'/>\n<defs>\n  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA='>\n    <rect x='0.00' y='0.00' width='648.00' height='360.00' />\n  <\/clipPath>\n<\/defs>\n<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>\n<rect x='0.00' y='0.00' width='648.00' height='360.00' style='stroke-width: 1.07; stroke: none;' />\n<text x='22.84' y='23.22' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='3.81px' lengthAdjust='spacingAndGlyphs'>1<\/text>\n<text x='22.84' y='72.23' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.36px' lengthAdjust='spacingAndGlyphs'>2<\/text>\n<text x='22.84' y='121.25' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.39px' lengthAdjust='spacingAndGlyphs'>3<\/text>\n<text x='22.84' y='170.26' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.69px' lengthAdjust='spacingAndGlyphs'>4<\/text>\n<text x='22.84' y='219.28' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.41px' lengthAdjust='spacingAndGlyphs'>5<\/text>\n<text x='22.84' y='268.29' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.69px' lengthAdjust='spacingAndGlyphs'>6<\/text>\n<text x='22.84' y='317.31' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='3.91px' lengthAdjust='spacingAndGlyphs'>7<\/text>\n<text x='173.37' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.41px' lengthAdjust='spacingAndGlyphs'>5<\/text>\n<text x='320.44' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='8.72px' lengthAdjust='spacingAndGlyphs'>10<\/text>\n<text x='467.51' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='8.22px' lengthAdjust='spacingAndGlyphs'>15<\/text>\n<text x='614.58' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='9.27px' lengthAdjust='spacingAndGlyphs'>20<\/text>\n<text x='335.14' y='352.17' text-anchor='middle' style='font-size: 11.00px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='24.22px' lengthAdjust='spacingAndGlyphs'>Time<\/text>\n<text transform='translate(13.06,167.23) rotate(-90)' text-anchor='middle' style='font-size: 11.00px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='61.92px' lengthAdjust='spacingAndGlyphs'>Window (.id)<\/text>\n<\/g>\n<\/g>\n<\/svg>","grill":"<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='360.00pt' viewBox='0 0 648.00 360.00'>\n<g class='svglite'>\n<defs>\n  <style type='text/css'><![CDATA[\n    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {\n      fill: none;\n      stroke: #000000;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n      stroke-miterlimit: 10.00;\n    }\n    .svglite text {\n      white-space: pre;\n    }\n    .svglite g.glyphgroup path {\n      fill: inherit;\n      stroke: none;\n    }\n  ]]><\/style>\n<\/defs>\n<rect width='100%' height='100%' style='stroke: none; fill: none;'/>\n<defs>\n  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA='>\n    <rect x='0.00' y='0.00' width='648.00' height='360.00' />\n  <\/clipPath>\n<\/defs>\n<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>\n<\/g>\n<defs>\n  <clipPath id='cpMjcuNzd8NjQyLjUyfDUuNDh8MzI4Ljk4'>\n    <rect x='27.77' y='5.48' width='614.75' height='323.50' />\n  <\/clipPath>\n<\/defs>\n<g clip-path='url(#cpMjcuNzd8NjQyLjUyfDUuNDh8MzI4Ljk4)'>\n<rect x='27.77' y='5.48' width='614.75' height='323.50' style='stroke-width: 1.07; stroke: none;' />\n<polyline points='27.77,20.18 642.52,20.18 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.77,69.20 642.52,69.20 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.77,118.21 642.52,118.21 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.77,167.23 642.52,167.23 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.77,216.24 642.52,216.24 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.77,265.26 642.52,265.26 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.77,314.27 642.52,314.27 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='173.37,328.98 173.37,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='320.44,328.98 320.44,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='467.51,328.98 467.51,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='614.58,328.98 614.58,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<\/g>\n<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>\n<\/g>\n<\/g>\n<\/svg>","panel":{"panel":1,"label":"","x":27.7669849315068,"y":5.47945205479459,"w":614.753563013699,"h":323.499463013699,"xrange":[0.0499999999999999,20.95],"yrange":[-7.3,-0.7]},"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"rows":[{"y":-1,"members":[1,2,3,4,5,6,7,8]},{"y":-2,"members":[3,4,5,6,7,8,9,10]},{"y":-3,"members":[5,6,7,8,9,10,11,12]},{"y":-4,"members":[7,8,9,10,11,12,13,14]},{"y":-5,"members":[9,10,11,12,13,14,15,16]},{"y":-6,"members":[11,12,13,14,15,16,17,18]},{"y":-7,"members":[13,14,15,16,17,18,19,20]}],"radius":3.56,"grey":"#CCCCCC","colour":"#0072B2"}</script>
+<script>// Engine for staged plot animations created by morph_widget() in morph.R.
+//
+// A scene is registered with PlotMorph.register(name, factory). The factory
+// receives the <svg> element, the data exported from R, and helpers, and
+// returns a render(progress) function. Progress is a number from 0 to
+// (steps - 1), where whole numbers are the storyboard steps. The engine moves
+// progress towards the active step, which is set by the revealjs fragments (.fragment.morph-step) on the slide.
+(function () {
+  if (window.PlotMorph) return;
+
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const scenes = {};
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const helpers = {
+    SVGNS,
+    el(name, attrs = {}, parent = null) {
+      const node = document.createElementNS(SVGNS, name);
+      for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+      if (parent) parent.appendChild(node);
+      return node;
+    },
+    // Parse an SVG string from R into a nested <svg> element
+    svg(markup, attrs = {}, parent = null) {
+      const doc = new DOMParser().parseFromString(markup, "image/svg+xml");
+      const node = document.importNode(doc.documentElement, true);
+      for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+      if (parent) parent.appendChild(node);
+      return node;
+    },
+    clamp: (x, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, x)),
+    lerp: (a, b, t) => a + (b - a) * t,
+    ease: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+    // Local progress of a phase spanning [from, to] of the overall progress
+    phase(p, from, to) {
+      return helpers.clamp((p - from) / (to - from));
+    },
+    lerpBox(a, b, t) {
+      return {
+        x: helpers.lerp(a.x, b.x, t),
+        y: helpers.lerp(a.y, b.y, t),
+        w: helpers.lerp(a.w, b.w, t),
+        h: helpers.lerp(a.h, b.h, t),
+      };
+    },
+    lerpColour(a, b, t) {
+      const pa = helpers.parseHex(a);
+      const pb = helpers.parseHex(b);
+      const c = pa.map((v, i) => Math.round(helpers.lerp(v, pb[i], t)));
+      return "#" + c.map((v) => v.toString(16).padStart(2, "0")).join("");
+    },
+    parseHex(hex) {
+      const h = hex.replace("#", "");
+      return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+    },
+  };
+
+  function init(figure) {
+    if (figure.dataset.morphReady) return;
+    const factory = scenes[figure.dataset.scene];
+    if (!factory) return;
+    figure.dataset.morphReady = "true";
+    figure.tabIndex = 0;
+
+    const data = JSON.parse(
+      document.getElementById(figure.id + "-data").textContent
+    );
+    const nSteps = Number(figure.dataset.steps);
+    // The slide holding this figure; its fragments are the steps
+    const slide = figure.closest("section");
+    const stepEls = slide ? Array.from(slide.querySelectorAll(".morph-step")) : [];
+
+    const svg = helpers.el("svg", {
+      viewBox: `0 0 ${data.width} ${data.height}`,
+      class: "morph-svg",
+    });
+    figure.appendChild(svg);
+    const render = factory(svg, data, helpers);
+
+    let progress = 0;
+    let target = 0;
+    let last = null;
+    let frame = null;
+    const stepDuration = 1100; // default ms per step
+    const durations = (figure.dataset.durations || "")
+      .split(",")
+      .filter(Boolean)
+      .map(Number);
+    // Duration of the step being animated through, in the given direction
+    function duration(direction) {
+      const seg = direction > 0 ? Math.floor(progress) : Math.ceil(progress) - 1;
+      return durations[helpers.clamp(seg, 0, nSteps - 2)] || stepDuration;
+    }
+
+    function tick(now) {
+      const dt = last === null ? 16 : now - last;
+      last = now;
+      const delta = target - progress;
+      const stepSize = reduceMotion.matches ? Infinity : dt / duration(Math.sign(delta));
+      progress =
+        Math.abs(delta) <= stepSize ? target : progress + Math.sign(delta) * stepSize;
+      render(progress);
+      if (progress !== target) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        frame = null;
+        last = null;
+      }
+    }
+
+    function goTo(step, { jump = false } = {}) {
+      target = helpers.clamp(step, 0, nSteps - 1);
+      stepEls.forEach((el, i) => el.classList.toggle("is-active", i === target));
+      if (jump || reduceMotion.matches) {
+        progress = target;
+        render(progress);
+        return;
+      }
+      if (frame === null) frame = requestAnimationFrame(tick);
+    }
+
+    // The current step is the number of this slide's step fragments shown
+    function sync(jump) {
+      const shown = slide
+        ? slide.querySelectorAll(".fragment.morph-step.visible").length
+        : 0;
+      goTo(shown, { jump });
+    }
+    figure.morphSync = sync;
+
+    // Handle for scripting and testing the animation
+    figure.plotMorph = { goTo, render };
+
+    render(0);
+    sync(true);
+  }
+
+  // Step the figures on the current slide as fragments are shown and hidden
+  function figuresOf(event) {
+    const slide = event && event.fragment ? event.fragment.closest("section") : null;
+    return slide ? slide.querySelectorAll(".morph-figure") : [];
+  }
+  function wireReveal() {
+    if (typeof Reveal === "undefined" || window.PlotMorphWired) return;
+    window.PlotMorphWired = true;
+    const step = (e) => figuresOf(e).forEach((f) => f.morphSync && f.morphSync(false));
+    Reveal.on("fragmentshown", step);
+    Reveal.on("fragmenthidden", step);
+    // Arriving on a slide (forwards or back) shows its last-seen step at once
+    Reveal.on("slidechanged", (e) =>
+      e.currentSlide.querySelectorAll(".morph-figure").forEach((f) => f.morphSync && f.morphSync(true))
+    );
+    const all = () => document.querySelectorAll(".morph-figure").forEach((f) => f.morphSync && f.morphSync(true));
+    Reveal.on("ready", all);
+    if (Reveal.isReady && Reveal.isReady()) all();
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", wireReveal);
+  } else {
+    wireReveal();
+  }
+
+  window.PlotMorph = {
+    helpers,
+    register(name, factory) {
+      scenes[name] = factory;
+      // Wait for the steps, which follow the inline scripts in the page
+      const initAll = () => document.querySelectorAll(".morph-figure").forEach(init);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initAll);
+      } else {
+        initAll();
+      }
+    },
+  };
+})();</script>
+<script>// Scene: building the windows of a rolled tsibble (stretch_tsibble(),
+// slide_tsibble() or tile_tsibble()), one row per window.
+//
+// The axes and panel never move, so the chrome and grill are drawn once in
+// place. Each window is a row of observations, coloured if they are in the
+// window and grey if not. A new window starts as a copy of the one before it,
+// and moves down to its own row while its observations change colour.
+//
+// Steps:
+//   0. The observations, in the first row.
+//   1. The first window is coloured.
+//   2. The second window is copied from the first.
+//   3. The remaining windows are copied in turn, giving the static plot.
+PlotMorph.register("roll", function (svg, data, h) {
+  const { el, ease, phase, lerp, lerpColour } = h;
+  const size = { width: data.width, height: data.height };
+  h.svg(data.chrome, size, svg);
+  h.svg(data.grill, size, svg);
+
+  const box = data.panel;
+  const sx = (v) => box.x + ((v - box.xrange[0]) / (box.xrange[1] - box.xrange[0])) * box.w;
+  const sy = (v) => box.y + ((box.yrange[1] - v) / (box.yrange[1] - box.yrange[0])) * box.h;
+
+  const rows = data.rows.map((row) => {
+    const members = new Set(row.members);
+    const g = el("g", {}, svg);
+    const points = data.x.map((x) =>
+      el("circle", { cx: sx(x).toFixed(2), r: data.radius }, g)
+    );
+    return { y: sy(row.y), inside: data.x.map((x) => members.has(x)), g, points };
+  });
+  const nRows = rows.length;
+
+  // Progress of adding each window: the first row is present from the
+  // start, the second is added in step 2, and the rest share step 3
+  function progress(p, k) {
+    if (k === 0) return 1;
+    if (k === 1) return ease(phase(p, 1, 2));
+    const from = 2 + (k - 2) / (nRows - 2);
+    const to = 2 + (k - 1) / (nRows - 2);
+    return ease(phase(p, from, to));
+  }
+
+  return function render(p) {
+    const first = ease(phase(p, 0, 1));
+    rows.forEach((row, k) => {
+      const q = progress(p, k);
+      row.g.style.display = q > 0 ? "" : "none";
+      if (q <= 0) return;
+      const prev = k > 0 ? rows[k - 1] : null;
+      const y = prev ? lerp(prev.y, row.y, q) : row.y;
+      row.points.forEach((point, i) => {
+        // How coloured each observation is, moving from the previous window's
+        // membership to this window's
+        const was = prev ? (prev.inside[i] ? 1 : 0) : 0;
+        const now = row.inside[i] ? 1 : 0;
+        const c = k === 0 ? now * first : lerp(was, now, q);
+        point.setAttribute("cy", y.toFixed(2));
+        point.setAttribute("fill", lerpColour(data.grey, data.colour, c));
+      });
+    });
+  };
+});</script>
+<div class="morph-captions">
+<div class="morph-step">
+<p>A tsibble <code>x</code> of 20 observations.</p>
+</div>
+<div class="morph-step fragment fade-in-then-out">
+<p>The first window holds the first <code>.size = 8</code> observations.</p>
+</div>
+<div class="morph-step fragment fade-in-then-out">
+<p>The next window moves along by <code>.step = 2</code> observations, keeping its size.</p>
+</div>
+<div class="morph-step fragment fade-in-then-out">
+<p>Keep sliding until the window reaches the end of the data: 7 windows.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="tile-tile_tsibble" class="slide level2 code-small">
+<h2>Tile: <code>tile_tsibble()</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>tile <span class="ot">&lt;-</span> x <span class="sc">|&gt;</span> <span class="fu">tile_tsibble</span>(<span class="at">.size =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="morph-slide">
+<style>/* Layout for staged plot animations in revealjs slides (see morph_widget()) */
+.morph-slide {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.morph-figure {
+  flex: none;
+  width: 860px;
+  margin: 0;
+}
+
+.morph-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Only while scaled: it changes how strokes rasterise even at 1:1 */
+.morph-svg .morph-grill.is-scaled * {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Captions share one box; the current step's caption is shown */
+.morph-captions {
+  position: relative;
+  flex: 1;
+  align-self: stretch;
+  font-size: 27px;
+  line-height: 1.3;
+}
+
+.reveal .morph-captions .morph-step {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px 0 4px 16px;
+  border-left: 4px solid #3B75AC;
+  text-align: left;
+}
+
+/* Step 0 is not a fragment, so it follows the active step instead */
+.reveal .morph-captions .morph-step:not(.fragment) {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.reveal .morph-captions .morph-step:not(.fragment).is-active {
+  opacity: 1;
+}
+
+.morph-step > :last-child {
+  margin-bottom: 0;
+}</style>
+<figure class="morph-figure" id="roll-tile-morph" data-scene="roll" data-steps="4" data-durations="1100,1100,1000" role="img" aria-label="Animation adding the windows made by tile_tsibble() one at a time, each five observations long and starting where the last ended."></figure>
+<script type="application/json" id="roll-tile-morph-data">{"width":648,"height":360,"chrome":"<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='360.00pt' viewBox='0 0 648.00 360.00'>\n<g class='svglite'>\n<defs>\n  <style type='text/css'><![CDATA[\n    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {\n      fill: none;\n      stroke: #000000;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n      stroke-miterlimit: 10.00;\n    }\n    .svglite text {\n      white-space: pre;\n    }\n    .svglite g.glyphgroup path {\n      fill: inherit;\n      stroke: none;\n    }\n  ]]><\/style>\n<\/defs>\n<rect width='100%' height='100%' style='stroke: none; fill: none;'/>\n<defs>\n  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA='>\n    <rect x='0.00' y='0.00' width='648.00' height='360.00' />\n  <\/clipPath>\n<\/defs>\n<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>\n<rect x='0.00' y='0.00' width='648.00' height='360.00' style='stroke-width: 1.07; stroke: none;' />\n<text x='22.84' y='23.22' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='3.81px' lengthAdjust='spacingAndGlyphs'>1<\/text>\n<text x='22.84' y='121.25' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.36px' lengthAdjust='spacingAndGlyphs'>2<\/text>\n<text x='22.84' y='219.28' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.39px' lengthAdjust='spacingAndGlyphs'>3<\/text>\n<text x='22.84' y='317.31' text-anchor='end' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.69px' lengthAdjust='spacingAndGlyphs'>4<\/text>\n<text x='173.37' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='4.41px' lengthAdjust='spacingAndGlyphs'>5<\/text>\n<text x='320.44' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='8.72px' lengthAdjust='spacingAndGlyphs'>10<\/text>\n<text x='467.51' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='8.22px' lengthAdjust='spacingAndGlyphs'>15<\/text>\n<text x='614.58' y='339.97' text-anchor='middle' style='font-size: 8.80px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='9.27px' lengthAdjust='spacingAndGlyphs'>20<\/text>\n<text x='335.14' y='352.17' text-anchor='middle' style='font-size: 11.00px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='24.22px' lengthAdjust='spacingAndGlyphs'>Time<\/text>\n<text transform='translate(13.06,167.23) rotate(-90)' text-anchor='middle' style='font-size: 11.00px;fill: #434A5C; font-family: \"Fira Sans\";' textLength='61.92px' lengthAdjust='spacingAndGlyphs'>Window (.id)<\/text>\n<\/g>\n<\/g>\n<\/svg>","grill":"<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='360.00pt' viewBox='0 0 648.00 360.00'>\n<g class='svglite'>\n<defs>\n  <style type='text/css'><![CDATA[\n    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {\n      fill: none;\n      stroke: #000000;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n      stroke-miterlimit: 10.00;\n    }\n    .svglite text {\n      white-space: pre;\n    }\n    .svglite g.glyphgroup path {\n      fill: inherit;\n      stroke: none;\n    }\n  ]]><\/style>\n<\/defs>\n<rect width='100%' height='100%' style='stroke: none; fill: none;'/>\n<defs>\n  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA='>\n    <rect x='0.00' y='0.00' width='648.00' height='360.00' />\n  <\/clipPath>\n<\/defs>\n<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>\n<\/g>\n<defs>\n  <clipPath id='cpMjcuNzd8NjQyLjUyfDUuNDh8MzI4Ljk4'>\n    <rect x='27.77' y='5.48' width='614.75' height='323.50' />\n  <\/clipPath>\n<\/defs>\n<g clip-path='url(#cpMjcuNzd8NjQyLjUyfDUuNDh8MzI4Ljk4)'>\n<rect x='27.77' y='5.48' width='614.75' height='323.50' style='stroke-width: 1.07; stroke: none;' />\n<polyline points='27.77,20.18 642.52,20.18 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.77,118.21 642.52,118.21 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.77,216.24 642.52,216.24 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='27.77,314.27 642.52,314.27 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='173.37,328.98 173.37,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='320.44,328.98 320.44,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='467.51,328.98 467.51,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<polyline points='614.58,328.98 614.58,5.48 ' style='stroke-width: 1.07; stroke: #D9E2C8; stroke-linecap: butt;' />\n<\/g>\n<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>\n<\/g>\n<\/g>\n<\/svg>","panel":{"panel":1,"label":"","x":27.7669849315068,"y":5.47945205479459,"w":614.753563013699,"h":323.499463013699,"xrange":[0.0499999999999999,20.95],"yrange":[-4.15,-0.85]},"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"rows":[{"y":-1,"members":[1,2,3,4,5]},{"y":-2,"members":[6,7,8,9,10]},{"y":-3,"members":[11,12,13,14,15]},{"y":-4,"members":[16,17,18,19,20]}],"radius":3.56,"grey":"#CCCCCC","colour":"#0072B2"}</script>
+<script>// Engine for staged plot animations created by morph_widget() in morph.R.
+//
+// A scene is registered with PlotMorph.register(name, factory). The factory
+// receives the <svg> element, the data exported from R, and helpers, and
+// returns a render(progress) function. Progress is a number from 0 to
+// (steps - 1), where whole numbers are the storyboard steps. The engine moves
+// progress towards the active step, which is set by the revealjs fragments (.fragment.morph-step) on the slide.
+(function () {
+  if (window.PlotMorph) return;
+
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const scenes = {};
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const helpers = {
+    SVGNS,
+    el(name, attrs = {}, parent = null) {
+      const node = document.createElementNS(SVGNS, name);
+      for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+      if (parent) parent.appendChild(node);
+      return node;
+    },
+    // Parse an SVG string from R into a nested <svg> element
+    svg(markup, attrs = {}, parent = null) {
+      const doc = new DOMParser().parseFromString(markup, "image/svg+xml");
+      const node = document.importNode(doc.documentElement, true);
+      for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+      if (parent) parent.appendChild(node);
+      return node;
+    },
+    clamp: (x, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, x)),
+    lerp: (a, b, t) => a + (b - a) * t,
+    ease: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+    // Local progress of a phase spanning [from, to] of the overall progress
+    phase(p, from, to) {
+      return helpers.clamp((p - from) / (to - from));
+    },
+    lerpBox(a, b, t) {
+      return {
+        x: helpers.lerp(a.x, b.x, t),
+        y: helpers.lerp(a.y, b.y, t),
+        w: helpers.lerp(a.w, b.w, t),
+        h: helpers.lerp(a.h, b.h, t),
+      };
+    },
+    lerpColour(a, b, t) {
+      const pa = helpers.parseHex(a);
+      const pb = helpers.parseHex(b);
+      const c = pa.map((v, i) => Math.round(helpers.lerp(v, pb[i], t)));
+      return "#" + c.map((v) => v.toString(16).padStart(2, "0")).join("");
+    },
+    parseHex(hex) {
+      const h = hex.replace("#", "");
+      return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+    },
+  };
+
+  function init(figure) {
+    if (figure.dataset.morphReady) return;
+    const factory = scenes[figure.dataset.scene];
+    if (!factory) return;
+    figure.dataset.morphReady = "true";
+    figure.tabIndex = 0;
+
+    const data = JSON.parse(
+      document.getElementById(figure.id + "-data").textContent
+    );
+    const nSteps = Number(figure.dataset.steps);
+    // The slide holding this figure; its fragments are the steps
+    const slide = figure.closest("section");
+    const stepEls = slide ? Array.from(slide.querySelectorAll(".morph-step")) : [];
+
+    const svg = helpers.el("svg", {
+      viewBox: `0 0 ${data.width} ${data.height}`,
+      class: "morph-svg",
+    });
+    figure.appendChild(svg);
+    const render = factory(svg, data, helpers);
+
+    let progress = 0;
+    let target = 0;
+    let last = null;
+    let frame = null;
+    const stepDuration = 1100; // default ms per step
+    const durations = (figure.dataset.durations || "")
+      .split(",")
+      .filter(Boolean)
+      .map(Number);
+    // Duration of the step being animated through, in the given direction
+    function duration(direction) {
+      const seg = direction > 0 ? Math.floor(progress) : Math.ceil(progress) - 1;
+      return durations[helpers.clamp(seg, 0, nSteps - 2)] || stepDuration;
+    }
+
+    function tick(now) {
+      const dt = last === null ? 16 : now - last;
+      last = now;
+      const delta = target - progress;
+      const stepSize = reduceMotion.matches ? Infinity : dt / duration(Math.sign(delta));
+      progress =
+        Math.abs(delta) <= stepSize ? target : progress + Math.sign(delta) * stepSize;
+      render(progress);
+      if (progress !== target) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        frame = null;
+        last = null;
+      }
+    }
+
+    function goTo(step, { jump = false } = {}) {
+      target = helpers.clamp(step, 0, nSteps - 1);
+      stepEls.forEach((el, i) => el.classList.toggle("is-active", i === target));
+      if (jump || reduceMotion.matches) {
+        progress = target;
+        render(progress);
+        return;
+      }
+      if (frame === null) frame = requestAnimationFrame(tick);
+    }
+
+    // The current step is the number of this slide's step fragments shown
+    function sync(jump) {
+      const shown = slide
+        ? slide.querySelectorAll(".fragment.morph-step.visible").length
+        : 0;
+      goTo(shown, { jump });
+    }
+    figure.morphSync = sync;
+
+    // Handle for scripting and testing the animation
+    figure.plotMorph = { goTo, render };
+
+    render(0);
+    sync(true);
+  }
+
+  // Step the figures on the current slide as fragments are shown and hidden
+  function figuresOf(event) {
+    const slide = event && event.fragment ? event.fragment.closest("section") : null;
+    return slide ? slide.querySelectorAll(".morph-figure") : [];
+  }
+  function wireReveal() {
+    if (typeof Reveal === "undefined" || window.PlotMorphWired) return;
+    window.PlotMorphWired = true;
+    const step = (e) => figuresOf(e).forEach((f) => f.morphSync && f.morphSync(false));
+    Reveal.on("fragmentshown", step);
+    Reveal.on("fragmenthidden", step);
+    // Arriving on a slide (forwards or back) shows its last-seen step at once
+    Reveal.on("slidechanged", (e) =>
+      e.currentSlide.querySelectorAll(".morph-figure").forEach((f) => f.morphSync && f.morphSync(true))
+    );
+    const all = () => document.querySelectorAll(".morph-figure").forEach((f) => f.morphSync && f.morphSync(true));
+    Reveal.on("ready", all);
+    if (Reveal.isReady && Reveal.isReady()) all();
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", wireReveal);
+  } else {
+    wireReveal();
+  }
+
+  window.PlotMorph = {
+    helpers,
+    register(name, factory) {
+      scenes[name] = factory;
+      // Wait for the steps, which follow the inline scripts in the page
+      const initAll = () => document.querySelectorAll(".morph-figure").forEach(init);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initAll);
+      } else {
+        initAll();
+      }
+    },
+  };
+})();</script>
+<script>// Scene: building the windows of a rolled tsibble (stretch_tsibble(),
+// slide_tsibble() or tile_tsibble()), one row per window.
+//
+// The axes and panel never move, so the chrome and grill are drawn once in
+// place. Each window is a row of observations, coloured if they are in the
+// window and grey if not. A new window starts as a copy of the one before it,
+// and moves down to its own row while its observations change colour.
+//
+// Steps:
+//   0. The observations, in the first row.
+//   1. The first window is coloured.
+//   2. The second window is copied from the first.
+//   3. The remaining windows are copied in turn, giving the static plot.
+PlotMorph.register("roll", function (svg, data, h) {
+  const { el, ease, phase, lerp, lerpColour } = h;
+  const size = { width: data.width, height: data.height };
+  h.svg(data.chrome, size, svg);
+  h.svg(data.grill, size, svg);
+
+  const box = data.panel;
+  const sx = (v) => box.x + ((v - box.xrange[0]) / (box.xrange[1] - box.xrange[0])) * box.w;
+  const sy = (v) => box.y + ((box.yrange[1] - v) / (box.yrange[1] - box.yrange[0])) * box.h;
+
+  const rows = data.rows.map((row) => {
+    const members = new Set(row.members);
+    const g = el("g", {}, svg);
+    const points = data.x.map((x) =>
+      el("circle", { cx: sx(x).toFixed(2), r: data.radius }, g)
+    );
+    return { y: sy(row.y), inside: data.x.map((x) => members.has(x)), g, points };
+  });
+  const nRows = rows.length;
+
+  // Progress of adding each window: the first row is present from the
+  // start, the second is added in step 2, and the rest share step 3
+  function progress(p, k) {
+    if (k === 0) return 1;
+    if (k === 1) return ease(phase(p, 1, 2));
+    const from = 2 + (k - 2) / (nRows - 2);
+    const to = 2 + (k - 1) / (nRows - 2);
+    return ease(phase(p, from, to));
+  }
+
+  return function render(p) {
+    const first = ease(phase(p, 0, 1));
+    rows.forEach((row, k) => {
+      const q = progress(p, k);
+      row.g.style.display = q > 0 ? "" : "none";
+      if (q <= 0) return;
+      const prev = k > 0 ? rows[k - 1] : null;
+      const y = prev ? lerp(prev.y, row.y, q) : row.y;
+      row.points.forEach((point, i) => {
+        // How coloured each observation is, moving from the previous window's
+        // membership to this window's
+        const was = prev ? (prev.inside[i] ? 1 : 0) : 0;
+        const now = row.inside[i] ? 1 : 0;
+        const c = k === 0 ? now * first : lerp(was, now, q);
+        point.setAttribute("cy", y.toFixed(2));
+        point.setAttribute("fill", lerpColour(data.grey, data.colour, c));
+      });
+    });
+  };
+});</script>
+<div class="morph-captions">
+<div class="morph-step">
+<p>A tsibble <code>x</code> of 20 observations.</p>
+</div>
+<div class="morph-step fragment fade-in-then-out">
+<p>The first tile holds the first <code>.size = 5</code> observations.</p>
+</div>
+<div class="morph-step fragment fade-in-then-out">
+<p>The next tile starts where the last ended, so the tiles never overlap.</p>
+</div>
+<div class="morph-step fragment fade-in-then-out">
+<p>Keep tiling until the data are used up: 4 tiles.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="rolling-origins-for-drug-sales" class="slide level2 code-small">
+<h2>Rolling origins for drug sales</h2>
+<p>Monthly antidiabetic drug sales in Australia ($ millions), from 2000. Stretch with a minimum length of 24, growing by 1 each step.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>forecast_horizon <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> antidiabetic_drug_sale <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>((<span class="fu">n</span>()<span class="sc">-</span>forecast_horizon<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span><span class="fu">n</span>())</span>
+<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> antidiabetic_drug_sale <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>(<span class="fu">n</span>()<span class="sc">-</span>forecast_horizon))</span>
+<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a>drug_sale_tcsv <span class="ot">&lt;-</span> train <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stretch_tsibble</span>(<span class="at">.init =</span> <span class="dv">24</span>, <span class="at">.step =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -292,65 +1245,100 @@
 </div>
 </div>
 </section>
-<section id="time-series-cross-validation-4" class="slide level2 code-small">
-<h2>Time series cross-validation</h2>
-<p>Estimate seasonal naïve models for each window.</p>
+<section id="fit-models-to-each-window" class="slide level2 code-small">
+<h2>Fit models to each window</h2>
+<p>Estimate seasonal naïve, naïve and drift models for each window.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>drug_fit_tr <span class="ot">&lt;-</span> drug_sale_tcsv <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">snaive=</span><span class="fu">SNAIVE</span>(Cost))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>drug_fit_tr <span class="ot">&lt;-</span> drug_sale_tcsv <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">snaive =</span> <span class="fu">SNAIVE</span>(Cost),</span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">naive =</span> <span class="fu">NAIVE</span>(Cost),</span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">drift =</span> <span class="fu">RW</span>(Cost <span class="sc">~</span> <span class="fu">drift</span>())</span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A mable: 67 x 2
+<pre><code># A mable: 67 x 4
 # Key:     .id [67]
-    .id   snaive
-  &lt;int&gt;  &lt;model&gt;
-1     1 &lt;SNAIVE&gt;
-2     2 &lt;SNAIVE&gt;
-3     3 &lt;SNAIVE&gt;
-4     4 &lt;SNAIVE&gt;
+    .id   snaive   naive         drift
+  &lt;int&gt;  &lt;model&gt; &lt;model&gt;       &lt;model&gt;
+1     1 &lt;SNAIVE&gt; &lt;NAIVE&gt; &lt;RW w/ drift&gt;
+2     2 &lt;SNAIVE&gt; &lt;NAIVE&gt; &lt;RW w/ drift&gt;
+3     3 &lt;SNAIVE&gt; &lt;NAIVE&gt; &lt;RW w/ drift&gt;
+4     4 &lt;SNAIVE&gt; &lt;NAIVE&gt; &lt;RW w/ drift&gt;
 # ℹ 63 more rows</code></pre>
 </div>
 </div>
 </section>
-<section id="time-series-cross-validation-5" class="slide level2 code-small">
-<h2>Time series cross-validation</h2>
-<p>Produce 12-step-ahead forecasts from each window.</p>
+<section id="forecasts-from-each-window" class="slide level2 code-small">
+<h2>Forecasts from each window</h2>
+<p>Produce 12-step-ahead forecasts from each model and window.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>drug_fc_tr <span class="ot">&lt;-</span> drug_fit_tr <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h=</span>forecast_horizon)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>drug_fc_tr <span class="ot">&lt;-</span> drug_fit_tr <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> forecast_horizon)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A fable: 804 x 5 [1M]
-# Key:     .id, .model [67]
-    .id .model    Month
-  &lt;int&gt; &lt;chr&gt;     &lt;mth&gt;
-1     1 snaive 2002 Jan
-2     1 snaive 2002 Feb
-3     1 snaive 2002 Mar
-4     1 snaive 2002 Apr
-# ℹ 800 more rows
-# ℹ 2 more variables: Cost &lt;dist&gt;, .mean &lt;dbl&gt;</code></pre>
+<pre><code># A fable: 2,412 x 5 [1M]
+# Key:     .id, .model [201]
+    .id .model    Month        Cost .mean
+  &lt;int&gt; &lt;chr&gt;     &lt;mth&gt;      &lt;dist&gt; &lt;dbl&gt;
+1     1 snaive 2002 Jan  N(14, 1.7) 14.5 
+2     1 snaive 2002 Feb   N(8, 1.7)  8.05
+3     1 snaive 2002 Mar  N(10, 1.7) 10.3 
+4     1 snaive 2002 Apr N(9.8, 1.7)  9.75
+# ℹ 2,408 more rows</code></pre>
 </div>
 </div>
 </section>
-<section id="time-series-cross-validation-6" class="slide level2 code-small">
-<h2>Time series cross-validation</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-validated</span></span>
-<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>drug_fc_tr <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(antidiabetic_drug_sale,</span>
-<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>           <span class="at">measures =</span> <span class="fu">list</span>( point_accuracy_measures, </span>
-<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>                            interval_accuracy_measures,</span>
-<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a>                            distribution_accuracy_measures))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 15
-  .model .type    ME  RMSE   MAE   MPE  MAPE  MASE RMSSE  ACF1 winkler pinball
-  &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 snaive Test   1.86  2.42  1.94  10.4  10.9  1.20  1.22 0.395    15.3   0.814
-# ℹ 3 more variables: scaled_pinball &lt;dbl&gt;, percentile &lt;dbl&gt;, CRPS &lt;dbl&gt;</code></pre>
+<section id="which-method-will-win" class="slide level2">
+<h2>Which method will win?</h2>
+<div id="cv-winner" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[0],&quot;id&quot;:&quot;cv-winner&quot;,&quot;options&quot;:[&quot;Seasonal naïve&quot;,&quot;Naïve&quot;,&quot;Drift&quot;],&quot;prompt&quot;:&quot;Which method do you expect to forecast antidiabetic drug sales best?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Which method do you expect to forecast antidiabetic drug sales best?</p>
 </div>
+<ul>
+<li>Seasonal naïve</li>
+<li>Naïve</li>
+<li>Drift</li>
+</ul>
+</div>
+</section>
+<section id="cross-validated-accuracy" class="slide level2 code-small">
+<h2>Cross-validated accuracy</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>drug_fc_tr <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(</span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>    antidiabetic_drug_sale,</span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">measures =</span> <span class="fu">list</span>(</span>
+<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a>      point_accuracy_measures,</span>
+<span id="cb10-6"><a href="" aria-hidden="true" tabindex="-1"></a>      interval_accuracy_measures,</span>
+<span id="cb10-7"><a href="" aria-hidden="true" tabindex="-1"></a>      distribution_accuracy_measures</span>
+<span id="cb10-8"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-9"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.model, RMSE, MAE, MASE, winkler, CRPS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  .model  RMSE   MAE  MASE winkler  CRPS
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 drift   3.95  3.05  1.89    27.0  2.43
+2 naive   3.87  2.96  1.84    25.0  2.31
+3 snaive  2.42  1.94  1.20    15.3  1.42</code></pre>
+</div>
+</div>
+<p>Errors are averaged over all origins and all 12 horizons.</p>
+</section>
+<section id="from-cross-validation-to-forecasts" class="slide level2">
+<h2>From cross-validation to forecasts</h2>
+<div id="after-cv" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;after-cv&quot;,&quot;options&quot;:[&quot;Use the forecasts from the last window&quot;,&quot;Refit seasonal naïve on all the data&quot;,&quot;Average the forecasts from every window&quot;],&quot;prompt&quot;:&quot;Seasonal naïve wins the cross-validation. How do you produce the forecasts you deliver?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Seasonal naïve wins the cross-validation. How do you produce the forecasts you deliver?</p>
+</div>
+<ul>
+<li>Use the forecasts from the last window</li>
+<li>Refit seasonal naïve on all the data</li>
+<li>Average the forecasts from every window</li>
+</ul>
 </div>
 </section></section>
 <section>
@@ -361,7 +1349,7 @@
 <section id="forecasting-residuals" class="slide level2">
 <h2>Forecasting residuals</h2>
 <div class="block">
-<p><strong>Residuals in forecasting:</strong> difference between observed value and its fitted value: <span class="math inline">\(e_t = y_t-\hat{y}_{t|t-1}\)</span>.</p>
+<p><strong>Residuals in forecasting:</strong> difference between observed value and its fitted value (one-step forecast) on the training data: <span class="math inline">\(e_t = y_t-\hat{y}_{t|t-1}\)</span>.</p>
 </div>
 <div class="fragment">
 <p><span class="alert">Assumptions</span></p>
@@ -381,20 +1369,22 @@
 <section id="facebook-closing-stock-price" class="slide level2">
 <h2>Facebook closing stock price</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="ot">&lt;-</span> gafa_stock <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"FB"</span>)</span>
-<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Close)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="ot">&lt;-</span> gafa_stock <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"FB"</span>)</span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Close) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Closing price (US$)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/05_accuracy_advance/fbf-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="facebook-closing-stock-price-1" class="slide level2 code-small">
-<h2>Facebook closing stock price</h2>
+<img data-src="_figures/05_accuracy_advance/fb-stock-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="naïve-model-of-facebooks-stock-price" class="slide level2 code-small">
+<h2>Naïve model of Facebook’s stock price</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="ot">&lt;-</span> fb_stock <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trading_day =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_tsibble</span>(<span class="at">index =</span> trading_day, <span class="at">regular =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> fb_stock <span class="sc">|&gt;</span> <span class="fu">model</span>(<span class="fu">NAIVE</span>(Close))</span>
-<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="ot">&lt;-</span> fb_stock <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trading_day =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_tsibble</span>(<span class="at">index =</span> trading_day, <span class="at">regular =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> fb_stock <span class="sc">|&gt;</span> <span class="fu">model</span>(<span class="fu">NAIVE</span>(Close))</span>
+<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 1,258 x 7 [1]
 # Key:       Symbol, .model [1]
@@ -414,57 +1404,123 @@
 </div>
 </div>
 </section>
-<section id="facebook-closing-stock-price-2" class="slide level2">
-<h2>Facebook closing stock price</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trading_day)) <span class="sc">+</span></span>
-<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Close, <span class="at">colour =</span> <span class="st">"Data"</span>)) <span class="sc">+</span></span>
-<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted, <span class="at">colour =</span> <span class="st">"Fitted"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="_figures/05_accuracy_advance/dj4-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="facebook-closing-stock-price-3" class="slide level2">
-<h2>Facebook closing stock price</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(trading_day <span class="sc">&gt;</span> <span class="dv">1100</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trading_day)) <span class="sc">+</span></span>
-<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Close, <span class="at">colour =</span> <span class="st">"Data"</span>)) <span class="sc">+</span></span>
-<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted, <span class="at">colour =</span> <span class="st">"Fitted"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="_figures/05_accuracy_advance/dj4a-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="facebook-closing-stock-price-4" class="slide level2">
-<h2>Facebook closing stock price</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(.resid) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day"</span>, <span class="at">y =</span> <span class="st">""</span>, <span class="at">title =</span> <span class="st">"Residuals from naïve method"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="_figures/05_accuracy_advance/dj5-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="facebook-closing-stock-price-5" class="slide level2">
-<h2>Facebook closing stock price</h2>
+<section id="fitted-values" class="slide level2">
+<h2>Fitted values</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">150</span>) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of residuals"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trading_day)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Close, <span class="at">colour =</span> <span class="st">"Data"</span>)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted, <span class="at">colour =</span> <span class="st">"Fitted"</span>)) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Trading day"</span>, <span class="at">y =</span> <span class="st">"Closing price (US$)"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/05_accuracy_advance/dj6-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="facebook-closing-stock-price-6" class="slide level2">
-<h2>Facebook closing stock price</h2>
+<img data-src="_figures/05_accuracy_advance/fb-fitted-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="fitted-values-last-158-trading-days" class="slide level2">
+<h2>Fitted values (last 158 trading days)</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ACF</span>(.resid) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ACF of residuals"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(trading_day <span class="sc">&gt;</span> <span class="dv">1100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> trading_day)) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Close, <span class="at">colour =</span> <span class="st">"Data"</span>)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted, <span class="at">colour =</span> <span class="st">"Fitted"</span>)) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Trading day"</span>, <span class="at">y =</span> <span class="st">"Closing price (US$)"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/05_accuracy_advance/dj7-1.png" style="width:100.0%" class="r-stretch"></section>
+<img data-src="_figures/05_accuracy_advance/fb-fitted-zoom-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="residuals-over-time" class="slide level2">
+<h2>Residuals over time</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(.resid) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Trading day"</span>, <span class="at">y =</span> <span class="st">"Residual"</span>, <span class="at">title =</span> <span class="st">"Residuals from naïve method"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="_figures/05_accuracy_advance/fb-resid-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="constant-variance" class="slide level2 nostretch">
+<h2>Constant variance?</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="_figures/05_accuracy_advance/fb-resid-poll-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="resid-variance" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;resid-variance&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;No&quot;],&quot;prompt&quot;:&quot;Do these residuals have constant variance?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Do these residuals have constant variance?</p>
+</div>
+<ul>
+<li>Yes</li>
+<li>No</li>
+</ul>
+</div>
+</section>
+<section id="histogram-of-residuals" class="slide level2">
+<h2>Histogram of residuals</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">150</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Residual"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"Histogram of residuals"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="_figures/05_accuracy_advance/fb-resid-hist-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="normally-distributed" class="slide level2 nostretch">
+<h2>Normally distributed?</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="_figures/05_accuracy_advance/fb-resid-hist-poll-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="resid-normal" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;resid-normal&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;No&quot;],&quot;prompt&quot;:&quot;Do these residuals look normally distributed?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Do these residuals look normally distributed?</p>
+</div>
+<ul>
+<li>Yes</li>
+<li>No</li>
+</ul>
+</div>
+</section>
 <section id="acf-of-residuals" class="slide level2">
 <h2>ACF of residuals</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ACF</span>(.resid) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb19-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Lag"</span>, <span class="at">y =</span> <span class="st">"ACF"</span>, <span class="at">title =</span> <span class="st">"ACF of residuals"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="_figures/05_accuracy_advance/fb-resid-acf-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="white-noise" class="slide level2 nostretch">
+<h2>White noise?</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="_figures/05_accuracy_advance/fb-resid-acf-poll-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="resid-white-noise" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[0],&quot;id&quot;:&quot;resid-white-noise&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;No&quot;],&quot;prompt&quot;:&quot;Do these residuals look like white noise?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Do these residuals look like white noise?</p>
+</div>
+<ul>
+<li>Yes</li>
+<li>No</li>
+</ul>
+</div>
+</section>
+<section id="checking-the-acf-of-residuals" class="slide level2">
+<h2>Checking the ACF of residuals</h2>
 <ul>
 <li><p>We assume that the residuals are white noise (uncorrelated, mean zero, constant variance). If they aren’t, then there is information left in the residuals that should be used in computing forecasts.</p></li>
 <li><p>So a standard residual diagnostic is to check the ACF of the residuals of a forecasting method.</p></li>
@@ -474,10 +1530,10 @@
 <section id="combined-diagnostic-graph" class="slide level2">
 <h2>Combined diagnostic graph</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<img data-src="_figures/05_accuracy_advance/dj8-1.png" style="width:100.0%" class="r-stretch"></section>
+
+<img data-src="_figures/05_accuracy_advance/fb-tsresiduals-plot-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="ljung-box-test" class="slide level2">
 <h2>Ljung-Box test</h2>
 <p>Test whether <em>whole set</em> of <span class="math inline">\(r_{k}\)</span> values is significantly different from zero set.</p>
@@ -489,27 +1545,35 @@
 <ul>
 <li>If each <span class="math inline">\(r_k\)</span> close to zero, <span class="math inline">\(Q\)</span> will be <strong>small</strong>.</li>
 <li>If some <span class="math inline">\(r_k\)</span> values large (<span class="math inline">\(+\)</span> or <span class="math inline">\(-\)</span>), <span class="math inline">\(Q\)</span> will be <strong>large</strong>.</li>
-<li>My preferences: <span class="math inline">\(h=10\)</span> for non-seasonal data, <span class="math inline">\(h=2m\)</span> for seasonal data.</li>
+<li>Suggested lags: <span class="math inline">\(\ell=10\)</span> for non-seasonal data, <span class="math inline">\(\ell=2m\)</span> for seasonal data (but at most <span class="math inline">\(T/5\)</span>).</li>
 <li>If data are WN and <span class="math inline">\(T\)</span> large, <span class="math inline">\(Q \sim \chi^2\)</span> with <span class="math inline">\(\ell\)</span> degrees of freedom.</li>
+<li>For residuals of a model with <span class="math inline">\(K\)</span> estimated parameters, use <span class="math inline">\(\ell - K\)</span> degrees of freedom (<code>dof</code> argument).</li>
 </ul>
 </section>
-<section id="ljung-box-test-1" class="slide level2 code-small">
-<h2>Ljung-Box test</h2>
-<div class="block">
-<div class="center-text">
-<p><span class="math inline">\(\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2\)</span> <span class="math inline">\(\qquad\)</span> where <span class="math inline">\(\ell=\)</span> max lag and <span class="math inline">\(T=\)</span> # observations.</p>
-</div>
-</div>
+<section id="ljung-box-test-of-the-naïve-residuals" class="slide level2 code-small">
+<h2>Ljung-Box test of the naïve residuals</h2>
 
-<img data-src="_figures/05_accuracy_advance/dj9extra-1.png" style="width:100.0%" class="r-stretch"><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># lag = h</span></span>
-<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">features</span>(.resid, ljung_box, <span class="at">lag =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<img data-src="_figures/05_accuracy_advance/fb-lb-acf-1.png" style="width:100.0%" class="r-stretch"><div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">features</span>(.resid, ljung_box, <span class="at">lag =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   Symbol .model       lb_stat lb_pvalue
   &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;
 1 FB     NAIVE(Close)    12.1     0.276</code></pre>
 </div>
+</div>
+<p><span class="math inline">\(p = 0.276 &gt; 0.05\)</span>: no evidence against white noise.</p>
+</section>
+<section id="what-the-residuals-tell-us" class="slide level2">
+<h2>What the residuals tell us</h2>
+<ul>
+<li>Mean close to zero: the forecasts are unbiased.</li>
+<li>Uncorrelated: no information is left in the residuals.</li>
+<li>Variance is not constant: it grows later in the series.</li>
+<li>Heavy tails and a large outlier: the residuals are not normal.</li>
+</ul>
+<div class="fragment">
+<p>The point forecasts are fine, but the prediction intervals may be inaccurate.</p>
 </div>
 </section></section>
 <section>
@@ -519,22 +1583,12 @@
 </section>
 <section id="recap-1" class="slide level2">
 <h2>Recap</h2>
-<ol type="1">
-<li>First, import your data and prepare them using <code>tsibble</code> function.</li>
-<li>Visualise and see whether your series contains key patterns. Use domain knowledge to understand your data and potential driving factors.</li>
-<li>Split the data to create a training set, which you will use as an argument in your forecasting function(s). You can also create a test set to use later.</li>
-<li>Create different rolling origins to evaluate forecast accuracy using time series cross validation</li>
-</ol>
-</section>
-<section id="recap-2" class="slide level2">
-<h2>Recap</h2>
-<ol start="5" type="1">
-<li>Train model to each origin</li>
-<li>Compute forecast accuracy, use the <code>accuracy()</code> function with the <code>fable</code> as the first argument and original data as the second.</li>
-<li>Compare methods using point, prediction interval and distributional accuracy measure; a smaller error indicates higher accuracy.</li>
-<li>Forecast using all data for the future using the best method.</li>
-<li>Use residual diagnostic based on residuals of the best model.</li>
-</ol>
+<ul>
+<li><strong>Time series cross-validation</strong> averages forecast accuracy over many rolling origins, not a single test set.</li>
+<li>Roll the training data into windows with <code>stretch_tsibble()</code>, fit models to each window, forecast and compare with <code>accuracy()</code>.</li>
+<li><strong>Residual diagnostics</strong> check that the best model’s residuals are uncorrelated with mean zero, and ideally have constant variance and are normal.</li>
+<li>Check them with <code>gg_tsresiduals()</code> and the Ljung-Box test before forecasting.</li>
+</ul>
 
 </section></section>
     </div>
@@ -551,6 +1605,7 @@
   <script src="libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="libs/revealjs/plugin/reveal-live-questions/live-questions.js"></script>
   <script src="libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -743,7 +1798,7 @@
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealLiveQuestions, QuartoSupport,
 
           RevealMath,
           RevealNotes,
