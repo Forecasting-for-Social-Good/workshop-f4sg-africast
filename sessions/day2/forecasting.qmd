@@ -9,7 +9,7 @@ order: 2
 <!-- Materials will be distributed sooner to the event. -->
 
 ```{=html}
-<iframe class="slide-deck" src="../../materials/03_basic_modelling.html" title="Slides" allowfullscreen></iframe>
+<iframe class="slide-deck" src="../../materials/02_basic_modelling.html" title="Slides" allowfullscreen></iframe>
 ```
 
-[View slides in full screen](../../materials/03_basic_modelling.html)
+[View slides in full screen](../../materials/02_basic_modelling.html)
