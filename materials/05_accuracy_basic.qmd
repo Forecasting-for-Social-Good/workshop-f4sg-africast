@@ -251,22 +251,41 @@ beer_fc |>
 ::: {.callout-note}
 ## Quantile score
 $$\begin{aligned}
-  Q_{p,t} = 
+  Q_{p,t} =
     \begin{cases}
     2(1 - p) \big(f_{p,t} - y_{t}\big), & \text{if $y_{t} < f_{p,t}$}\\
-    2p \big(y_{t} - f_{p,t}\big), & \text{if $y_{t} \ge f_{p,t}$} 
+    2p \big(y_{t} - f_{p,t}\big), & \text{if $y_{t} \ge f_{p,t}$}
     \end{cases}
 \end{aligned}$$
 :::
 
+where $f_{p,t}$ is the $p$-quantile of the forecast distribution for time $t$.
+
+* Lower is better.
+
+## Quantile score {.code-small}
+
+```{r}
+#| label: qs-accuracy
+beer_fc |>
+  accuracy(aus_production, list(qs = quantile_score), probs = 0.9)
+```
+
+::: {.fragment}
+* Quantile score of the 90th percentile forecasts ($p = 0.9$).
+:::
+
 ## Continuous Ranked Probability Score (CRPS)
 
-$$\large \text{CRPS} = \text{mean}(p_j),$$ 
+$$\large \text{CRPS} = \text{mean}(p_t),$$
 
 where
 
-$$p_j = \int_{-\infty}^{\infty} \left(G_j(x) - F_j(x)\right)^2dx,$$
+$$p_t = \int_{-\infty}^{\infty} \left(G_t(x) - F_t(x)\right)^2dx$$
 
+* $G_t(x)$ is the forecast distribution function for time $t$
+* $F_t(x)$ is the observation's distribution function: a step from 0 to 1 at $y_t$
+* Lower is better; for a point forecast it reduces to the MAE.
 
 ## Continuous Ranked Probability Score (CRPS)
 
@@ -277,19 +296,15 @@ $$p_j = \int_{-\infty}^{\infty} \left(G_j(x) - F_j(x)\right)^2dx,$$
 knitr::include_graphics("figs/crps.jpg")
 ```
 
-## Quantile score and CRPS {.code-small}
+## Percentile score and CRPS {.code-small}
 
 ```{r}
 #| label: qs-crps-accuracy
 beer_fc |>
-  accuracy(aus_production, list(measures=distribution_accuracy_measures))
+  accuracy(aus_production, measures = distribution_accuracy_measures)
 ```
 
-
-## Quantile score {.code-small}
-
-```{r}
-#| label: qs-accuracy
-beer_fc |>
-  accuracy(aus_production, list(qs=quantile_score), probs = .9)
-```
+::: {.fragment}
+* Percentile score: quantile score averaged over $p = 0.01, 0.02, \dots, 0.99$.
+* Seasonal naïve has the better distributional forecasts on both measures.
+:::
