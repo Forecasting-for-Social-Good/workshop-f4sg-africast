@@ -48,7 +48,9 @@ A **stationary series** is:
 
 ## Stationary? {.nostretch}
 
-```{r, echo=FALSE, fig.height=2.2}
+```{r}
+#| echo: false
+#| fig-height: 2.2
 gafa_stock |>
   filter(Symbol == "GOOG", year(Date) == 2018) |>
   autoplot(Close) +
@@ -62,7 +64,9 @@ gafa_stock |>
 
 ## Stationary? {.nostretch}
 
-```{r, echo=FALSE, fig.height=2.2}
+```{r}
+#| echo: false
+#| fig-height: 2.2
 gafa_stock |>
   filter(Symbol == "GOOG", year(Date) == 2018) |>
   autoplot(difference(Close)) +
@@ -91,7 +95,10 @@ $$
 where $\varepsilon_t$ is white noise. A multiple regression with **lagged values** of $y_t$ as predictors.
 :::
 
-```{r arp, echo=FALSE, fig.height=2.3}
+```{r}
+#| label: arp
+#| echo: false
+#| fig-height: 2.3
 set.seed(1)
 p1 <- tsibble(idx = seq_len(100), sim = 10 + arima.sim(list(ar = -0.8), n = 100), index = idx) |>
   autoplot(sim) + labs(x = "time", y = "", title = "AR(1)")
@@ -113,7 +120,10 @@ where $\varepsilon_t$ is white noise.
 A multiple regression with **lagged *errors*** as predictors. *Don't confuse with moving average smoothing!*
 :::
 
-```{r maq, fig.height=2.3, echo=FALSE}
+```{r}
+#| label: maq
+#| fig-height: 2.3
+#| echo: false
 set.seed(2)
 p1 <- tsibble(idx = seq_len(100), sim = 20 + arima.sim(list(ma = 0.8), n = 100), index = idx) |>
   autoplot(sim) + labs(x = "time", y = "", title = "MA(1)")
@@ -165,7 +175,9 @@ $$\begin{aligned}
 
 ## Example: National populations
 
-```{r popfit2, echo=TRUE}
+```{r}
+#| label: popfit2
+#| echo: true
 fit <- global_economy |>
   model(arima = ARIMA(Population))
 fit
@@ -173,7 +185,9 @@ fit
 
 ## Example: National populations
 
-```{r popfit3, echo=TRUE}
+```{r}
+#| label: popfit3
+#| echo: true
 fit |>
   filter(Country == "Australia") |>
   report()
@@ -201,7 +215,10 @@ $$\varepsilon_t \sim \text{NID}(0,4\times10^9)$$
 
 ## Example: National populations {.code-small}
 
-```{r popfc2, echo=TRUE, fig.height=3.4}
+```{r}
+#| label: popfc2
+#| echo: true
+#| fig-height: 3.4
 fit |>
   forecast(h = 10) |>
   filter(Country == "Australia") |>
@@ -251,7 +268,15 @@ Step 2:
 
 ## How does ARIMA() work?
 
-```{r ARMAgridsearch, echo=FALSE, message=FALSE, warning=FALSE, fig.asp=1, out.width="60%", fig.width=4, fig.height=4}
+```{r}
+#| label: ARMAgridsearch
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-asp: 1
+#| out-width: "60%"
+#| fig-width: 4
+#| fig-height: 4
 start <- tribble(
   ~p, ~q,
   0, 0,
@@ -316,7 +341,15 @@ griddf |>
 
 ## How does ARIMA() work?
 
-```{r ARMAgridsearch2, echo=FALSE, message=FALSE, warning=FALSE, fig.asp=1, out.width="60%", fig.width=4, fig.height=4}
+```{r}
+#| label: ARMAgridsearch2
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-asp: 1
+#| out-width: "60%"
+#| fig-width: 4
+#| fig-height: 4
 griddf |>
   ggplot(aes(x = q, y = p)) +
   geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
@@ -350,7 +383,15 @@ griddf |>
 
 ## How does ARIMA() work?
 
-```{r ARMAgridsearch3, echo=FALSE, message=FALSE, warning=FALSE, fig.asp=1, out.width="60%", fig.width=4, fig.height=4}
+```{r}
+#| label: ARMAgridsearch3
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-asp: 1
+#| out-width: "60%"
+#| fig-width: 4
+#| fig-height: 4
 griddf |>
   ggplot(aes(x = q, y = p)) +
   geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
@@ -387,7 +428,15 @@ griddf |>
 
 ## How does ARIMA() work?
 
-```{r ARMAgridsearch4, echo=FALSE, message=FALSE, warning=FALSE, fig.asp=1, out.width="60%", fig.width=4, fig.height=4}
+```{r}
+#| label: ARMAgridsearch4
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-asp: 1
+#| out-width: "60%"
+#| fig-width: 4
+#| fig-height: 4
 griddf |>
   ggplot(aes(x = q, y = p)) +
   geom_point(alpha = 0.2, colour = "gray", size = 5, shape = 19) +
@@ -440,7 +489,8 @@ Seasonal and non-seasonal terms combine multiplicatively
 
 ## Corticosteroid drug sales
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
 h02 <- PBS |>
   filter(ATC2 == "H02") |>
   summarise(Cost = sum(Cost) / 1e6)
@@ -448,7 +498,8 @@ h02 <- PBS |>
 
 ## Corticosteroid drug sales
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
 h02 |> autoplot(
   Cost
 )
@@ -456,7 +507,8 @@ h02 |> autoplot(
 
 ## Corticosteroid drug sales
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
 h02 |> autoplot(
   log(Cost)
 )
@@ -464,7 +516,8 @@ h02 |> autoplot(
 
 ## Corticosteroid drug sales
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
 h02 |> autoplot(
   log(Cost) |> difference(12)
 )
@@ -472,7 +525,8 @@ h02 |> autoplot(
 
 ## Corticosteroid drug sales
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
 h02 |> autoplot(
   log(Cost) |> difference(12) |> difference(1)
 )
@@ -480,7 +534,10 @@ h02 |> autoplot(
 
 ## Corticosteroid drug sales
 
-```{r h02fit, echo=TRUE, fig.height=2.8}
+```{r}
+#| label: h02fit
+#| echo: true
+#| fig-height: 2.8
 h02 |>
   model(arima = ARIMA(log(Cost))) |>
   report()
@@ -488,7 +545,10 @@ h02 |>
 
 ## Corticosteroid drug sales
 
-```{r h02fcst, echo=TRUE, fig.height=2.8}
+```{r}
+#| label: h02fcst
+#| echo: true
+#| fig-height: 2.8
 h02 |>
   model(arima = ARIMA(log(Cost))) |>
   forecast(h = "3 years") |>
@@ -497,7 +557,10 @@ h02 |>
 
 ## Corticosteroid drug sales {.code-small}
 
-```{r h02tryharder, echo=TRUE, fig.height=3.6}
+```{r}
+#| label: h02tryharder
+#| echo: true
+#| fig-height: 3.6
 fit <- h02 |>
   model(best = ARIMA(log(Cost),
     stepwise = FALSE,
@@ -509,7 +572,10 @@ report(fit)
 
 ## Corticosteroid drug sales
 
-```{r h02f, echo=TRUE, fig.height=2.8}
+```{r}
+#| label: h02f
+#| echo: true
+#| fig-height: 2.8
 fit |>
   forecast() |>
   autoplot(h02) +
@@ -521,7 +587,10 @@ fit |>
 
 ## Forecast ensembles {.code-small}
 
-```{r trainall, echo=TRUE, dependson='tourism'}
+```{r}
+#| label: trainall
+#| echo: true
+#| dependson: "tourism"
 train <- tourism |>
   filter(year(Quarter) <= 2014)
 fit <- train |>
@@ -539,7 +608,9 @@ fit <- train |>
 
 ## Forecast ensembles
 
-```{r trainfc, dependson='trainall'}
+```{r}
+#| label: trainfc
+#| dependson: "trainall"
 #| fig-height: 3.6
 fc <- fit |> forecast(h = "3 years")
 fc |>
