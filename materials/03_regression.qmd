@@ -73,15 +73,15 @@ knitr::include_graphics("figs/SLRpop1-1.png")
 
 ## Estimation of the model
 
-That is, we find the values of $\beta_0$ and $\beta_1$ which minimise
+Least squares chooses the values of $\beta_0$ and $\beta_1$ which minimise
 
 ::: {.block}
 $$
-  \sum_{i=1}^N e_{i}^2 = \sum_{i=1}^N (y_{i} - \beta_{0} - \beta_{1}x_{i})^2. 
+  \sum_{t=1}^T e_{t}^2 = \sum_{t=1}^T (y_{t} - \beta_{0} - \beta_{1}x_{t})^2.
 $$
 :::
 
-* This is called *least squares* estimation because it gives the least value of the sum of squared errors. 
+* This is called *least squares* estimation because it gives the smallest value of the sum of squared errors.
 * Finding the best estimates of the coefficients is often called *fitting* the model to the data. 
 * We refer to the *estimated* coefficients using the notation $\hat\beta_{0},\hat\beta_{1}$.
 
@@ -146,13 +146,13 @@ That is, the coefficients measure the **marginal effects**.
 
 ## Estimation of the model
 
-We find the values of $\hat\beta_{0},\dots,\hat\beta_{k}$ which minimise
+Least squares chooses the values of $\beta_{0},\dots,\beta_{k}$ which minimise
 
 $$
-\sum_{i=1}^N e_{i}^2 = \sum_{i=1}^N (y_{i} - \beta_{0} - \beta_{1}x_{1,i} - \cdots - \beta_{k} x_{k,i})^2. 
+\sum_{t=1}^T e_{t}^2 = \sum_{t=1}^T (y_{t} - \beta_{0} - \beta_{1}x_{1,t} - \cdots - \beta_{k} x_{k,t})^2.
 $$
 
-* This is called *least squares* estimation because it gives the least value of the sum of squared errors
+* This is called *least squares* estimation because it gives the smallest value of the sum of squared errors
 * Finding the best estimates of the coefficients is often called *fitting* the model to the data
 * We refer to the *estimated* coefficients using the notation $\hat\beta_{0},\dots,\hat\beta_{k}$.
 
