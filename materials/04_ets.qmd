@@ -290,7 +290,7 @@ fit |>
 ```{r ausholidays-components}
 fit |>
   filter(Region == "Snowy Mountains") |>
-  components(fit)
+  components()
 ```
 
 ## Example: Australian holiday tourism
@@ -300,7 +300,7 @@ fit |>
 #| fig-height: 3.6
 fit |>
   filter(Region == "Snowy Mountains") |>
-  components(fit) |>
+  components() |>
   autoplot()
 ```
 
