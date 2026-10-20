@@ -414,13 +414,13 @@ webr_slider(
   },
   sliders = list(
     t_window = list(
-      label = "Trend window", value = 21, min = 7,
+      label = "Trend window", value = 21, min = 3,
       max = 10 * (n - 2) + 1, step = 2, log = TRUE,
-      ticks = c(7, 13, 25, 51, 101, n, 1001, 10 * (n - 2) + 1)
+      ticks = c(3, 7, 13, 25, 51, 101, n, 1001, 10 * (n - 2) + 1)
     ),
     s_window = list(
-      label = "Seasonal window", value = 13, min = 5, max = 55, step = 2,
-      log = TRUE, ticks = c(5, 7, 9, 13, 19, 27, 39, 55)
+      label = "Seasonal window", value = 13, min = 3, max = 55, step = 2,
+      log = TRUE, ticks = c(3, 5, 7, 9, 13, 19, 27, 39, 55)
     )
   ),
   title = "STL decomposition of US retail employment",
