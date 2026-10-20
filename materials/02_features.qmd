@@ -621,7 +621,7 @@ tourism_features <- tourism |>
 # Compute PCs
 pcs <- tourism_features |>
   select(-State, -Region, -Purpose) |>
-  prcomp(scale = TRUE) |>
+  prcomp(scale. = TRUE) |>
   broom::augment(tourism_features)
 # Find outliers
 outliers <- pcs |>
@@ -649,7 +649,7 @@ All features from the feasts package
 ```{r pcatable}
 pcs <- tourism_features |>
   select(-State, -Region, -Purpose) |>
-  prcomp(scale = TRUE) |>
+  prcomp(scale. = TRUE) |>
   broom::augment(tourism_features)
 ```
 
