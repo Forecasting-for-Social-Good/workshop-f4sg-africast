@@ -317,9 +317,9 @@ knitr::include_graphics("figs/forecasts_probabilistic_perspective.png")
 
 - Thing to be forecast: $y_{T+h}$.
 - What we know: $y_1,\dots,y_T$.
-- Forecast distribution: ${y}_{T+h|t} = y_{T+h} \mid \{y_1,y_2,\dots,y_{T}\}$.
+- Forecast distribution: $y_{T+h|T} = y_{T+h} \mid \{y_1,y_2,\dots,y_{T}\}$.
 - Point forecast: $\hat{y}_{T+h|T} =\text{E}[y_{T+h} \mid y_1,\dots,y_T]$.
-- Forecast variance: $\text{Var}[y_{t}  \mid y_1,\dots,y_T]$
+- Forecast variance: $\text{Var}[y_{T+h} \mid y_1,\dots,y_T]$.
 - Prediction interval is a range of values of $y_{T+h}$ with high probability.
 
 
@@ -640,10 +640,10 @@ Assuming residuals are normal, uncorrelated, sd = $\hat\sigma$:
 ::: {.block}
 | | |
 |:--|:--|
-| **Mean:** | $\hat{y}_{T+h|T} \sim N(\bar{y}, (1 + 1/T)\hat{\sigma}^2)$ |
-| **Naïve:** | $\hat{y}_{T+h|T} \sim N(y_T, h\hat{\sigma}^2)$ |
-| **Seasonal naïve:** | $\hat{y}_{T+h|T} \sim N(y_{T+h-m(k+1)}, (k+1)\hat{\sigma}^2)$ |
-| **Drift:** | $\hat{y}_{T+h|T} \sim N(y_T + \frac{h}{T-1}(y_T - y_1),h\frac{T+h}{T}\hat{\sigma}^2)$ |
+| **Mean:** | $y_{T+h|T} \sim N(\bar{y}, (1 + 1/T)\hat{\sigma}^2)$ |
+| **Naïve:** | $y_{T+h|T} \sim N(y_T, h\hat{\sigma}^2)$ |
+| **Seasonal naïve:** | $y_{T+h|T} \sim N(y_{T+h-m(k+1)}, (k+1)\hat{\sigma}^2)$ |
+| **Drift:** | $y_{T+h|T} \sim N(y_T + \frac{h}{T-1}(y_T - y_1),h\frac{T+h}{T}\hat{\sigma}^2)$ |
 :::
 
 where $k$ is the integer part of $(h-1)/m$.
