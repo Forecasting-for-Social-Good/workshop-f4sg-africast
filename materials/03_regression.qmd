@@ -265,17 +265,14 @@ no values too far from the band and no patterns such as curvature or increasing 
 
 ## Example: US consumption expenditure {.code-small}
 
-```{r scatterplot-residuals, fig.height=3.8}
-df <- left_join(us_change, residuals(fit_consMR), by = "Time")
-p1 <- ggplot(df, aes(x=Income, y=.resid)) +
-  geom_point() + labs(y = "Residuals")
-p2 <- ggplot(df, aes(x=Production, y=.resid)) +
-  geom_point() + labs(y = "Residuals")
-p3 <- ggplot(df, aes(x=Savings, y=.resid)) +
-  geom_point() + labs(y = "Residuals")
-p4 <- ggplot(df, aes(x=Unemployment, y=.resid)) +
-  geom_point() + labs(y = "Residuals")
-(p1 | p2) / (p3 | p4)
+```{r scatterplot-residuals, fig.height=4.5}
+us_change |>
+  left_join(residuals(fit_consMR), by = "Time") |>
+  pivot_longer(c(Income, Production, Savings, Unemployment)) |>
+  ggplot(aes(x = value, y = .resid)) +
+  geom_point() +
+  facet_wrap(vars(name), scales = "free_x") +
+  labs(x = NULL, y = "Residuals")
 ```
 
 ## Residual patterns
