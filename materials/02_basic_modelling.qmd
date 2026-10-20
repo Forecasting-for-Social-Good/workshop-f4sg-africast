@@ -722,7 +722,7 @@ beer_fc |>
 
 ## Beer production - augment {.code-small}
 
-```{r augment}
+```{r augment, cache=FALSE}
 beer_snaive_fit <- aus_production |> select(Beer) |> model(SNAIVE(Beer))
 augment(beer_snaive_fit)
 ```
