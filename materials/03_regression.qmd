@@ -117,9 +117,9 @@ us_change |>
 
 ```{r}
 #| echo: true
-fit_cons <- us_change |>
+fit_income <- us_change |>
   model(lm = TSLM(Consumption ~ Income))
-report(fit_cons)
+report(fit_income)
 ```
 
 ## Multiple regression
@@ -211,9 +211,9 @@ us_change |>
 ```{r}
 #| label: usestim
 #| echo: true
-fit_consMR <- us_change |>
+fit_full <- us_change |>
   model(lm = TSLM(Consumption ~ Income + Production + Unemployment + Savings))
-report(fit_consMR)
+report(fit_full)
 
 ```
 
@@ -222,7 +222,7 @@ report(fit_consMR)
 ```{r}
 #| label: usfitted1
 #| echo: false
-augment(fit_consMR) |>
+augment(fit_full) |>
   ggplot(aes(x = Time)) +
   geom_line(aes(y = Consumption, colour = "Data")) +
   geom_line(aes(y = .fitted, colour = "Fitted")) +
@@ -237,7 +237,7 @@ augment(fit_consMR) |>
 #| echo: false
 #| message: false
 #| warning: false
-augment(fit_consMR) |>
+augment(fit_full) |>
   ggplot(aes(x=.fitted, y=Consumption)) +
     geom_point() +
     labs(x = "Fitted (predicted values)", y = "Data (actual values)",
@@ -270,7 +270,7 @@ There are a series of plots that should be produced in order to check different 
 
 ```{r}
 #| echo: true
-gg_tsresiduals(fit_consMR)
+gg_tsresiduals(fit_full)
 ```
 
 ## Residual scatterplots
@@ -291,7 +291,7 @@ no values too far from the band and no patterns such as curvature or increasing 
 #| label: scatterplot-residuals
 #| fig-height: 4.5
 us_change |>
-  left_join(residuals(fit_consMR), by = "Time") |>
+  left_join(residuals(fit_full), by = "Time") |>
   pivot_longer(c(Income, Production, Savings, Unemployment)) |>
   ggplot(aes(x = value, y = .resid)) +
   geom_point() +
@@ -389,7 +389,7 @@ As with the AIC, the AIC$_{\text{C}}$ should be minimised.
 
 ```{r}
 #| echo: true
-glance(fit_consMR) |>
+glance(fit_full) |>
   select(r_squared, adj_r_squared, AIC, AICc, CV)
 ```
 
@@ -456,7 +456,7 @@ future_scenarios <- scenarios(
     mutate(Income = -1, Savings = -0.5, Unemployment = 0),
   names_to = "Scenario"
 )
-fc <- forecast(fit_consBest, new_data = future_scenarios)
+fc_scenarios <- forecast(fit_consBest, new_data = future_scenarios)
 ```
 
 ## US Consumption
@@ -466,7 +466,7 @@ fc <- forecast(fit_consBest, new_data = future_scenarios)
 #| echo: true
 #| fig-height: 3.5
 us_change |> autoplot(Consumption) +
-  autolayer(fc) +
+  autolayer(fc_scenarios) +
   labs(y = "% change in US consumption")
 ```
 
