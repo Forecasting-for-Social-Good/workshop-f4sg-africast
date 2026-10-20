@@ -141,31 +141,6 @@ aligned_plots[[1]]
 A forecast is an estimate of the probability distribution of a variable to be observed in the future.
 :::
 
-```{r austa9b, dependson='austa', echo=FALSE}
-aligned_plots[[9]] +
-  geom_line(
-    colour = "black",
-    data = austa |> filter(Month >= yearmonth("2018 Jan")) |> mutate(Month = as.Date(Month))
-  )
-```
-
-::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
-Simulated futures from an ETS model
-:::
-
-## Was this a good forecast?
-
-::: {.poll #good-forecast}
-- Yes
-- No
-:::
-
-## What is a forecast?
-
-::: {.alertblock style="font-size:0.7em"}
-A forecast is an estimate of the probability distribution of a variable to be observed in the future.
-:::
-
 ```{r austa2, dependson='austa', echo=FALSE}
 aligned_plots[[2]]
 ```
@@ -257,6 +232,32 @@ aligned_plots[[8]]
 ::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
 Simulated futures from an ETS model
 :::
+
+## What is a forecast?
+
+::: {.alertblock style="font-size:0.7em"}
+A forecast is an estimate of the probability distribution of a variable to be observed in the future.
+:::
+
+```{r austa9b, dependson='austa', echo=FALSE}
+aligned_plots[[9]] +
+  geom_line(
+    colour = "black",
+    data = austa |> filter(Month >= yearmonth("2018 Jan")) |> mutate(Month = as.Date(Month))
+  )
+```
+
+::: {.block .absolute top="640px" right="0px" width="260px" style="font-size:0.6em;"}
+Simulated futures from an ETS model
+:::
+
+## Was this a good forecast?
+
+::: {.poll #good-forecast}
+- Yes
+- No
+:::
+
 
 ## Prediction interval
 
