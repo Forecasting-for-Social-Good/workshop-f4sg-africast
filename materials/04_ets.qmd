@@ -213,6 +213,27 @@ aus_economy |>
   autoplot(aus_economy)
 ```
 
+## Example: Nigerian population {.code-small}
+
+```{r nigeria-aicc, echo=TRUE}
+global_economy |>
+  filter(Country == "Nigeria") |>
+  mutate(Pop = Population / 1e6) |>
+  model(
+    ANN = ETS(Pop ~ error("A") + trend("N") + season("N")),
+    AAN = ETS(Pop ~ error("A") + trend("A") + season("N")),
+    AAdN = ETS(Pop ~ error("A") + trend("Ad") + season("N"))
+  ) |>
+  glance() |>
+  select(.model, AICc)
+```
+
+::: {.poll #nigeria-best-ets prompt="Which ETS model is best for Nigeria's population?"}
+- [ ] ETS(A,N,N)
+- [x] ETS(A,A,N)
+- [ ] ETS(A,Ad,N)
+:::
+
 ## Example: National populations
 
 
