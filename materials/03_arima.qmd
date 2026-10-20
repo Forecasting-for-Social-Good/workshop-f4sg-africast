@@ -21,15 +21,9 @@ source("setup.R")
 
 ## ARIMA models
 
-| | |
-|---:|:---|
-| **AR**: | autoregressive (lagged observations as inputs) |
-| **I**: | integrated (differencing to make series stationary) |
-| **MA**: | moving average (lagged errors as inputs) |
+ARIMA models describe the autocorrelations in the data: how each observation relates to past observations and past errors.
 
-::: {.fragment}
 An ARIMA model is rarely interpretable in terms of visible data structures like trend and seasonality. But it can capture a huge range of time series patterns.
-:::
 
 ## Stationarity
 
