@@ -80,8 +80,17 @@ gafa_stock |>
 
 ## Differencing
 
+::: {.callout-note}
+## Differences
+First difference: $y'_t = y_t - y_{t-1}$
+
+Second difference: $y''_t = y'_t - y'_{t-1} = y_t - 2y_{t-1} + y_{t-2}$
+
+Seasonal difference: $y_t - y_{t-m}$, where $m$ is the seasonal period
+:::
+
 * Differencing helps to **stabilise the mean**.
-* The differenced series is the *change* between each observation in the original series.
+* The differenced series is the change between each observation in the original series.
 * Occasionally the differenced data will not appear stationary and it may be necessary to difference the data a second time.
 * In practice, it is almost never necessary to go beyond second-order differences.
 
@@ -199,6 +208,8 @@ $$\varepsilon_t \sim \text{NID}(0,4\times10^9)$$
 :::
 
 ## Understanding ARIMA models
+
+$c$ is the constant in the ARMA model for the $d$-times differenced series.
 
 * If $c=0$ and $d=0$, the long-term forecasts will go to zero.
 * If $c=0$ and $d=1$, the long-term forecasts will go to a non-zero constant.
@@ -428,10 +439,10 @@ None has a lower AICc, so the search stops and ARIMA$(4,d,2)$ is selected.
 
 $$\text{ARIMA}~\underbrace{(p,d,q)}_{\text{Non-seasonal part}}~\underbrace{(P,D,Q)_m}_{\text{Seasonal part}}$$
 
-  * $m =$ number of observations per year.
+  * $m =$ seasonal period (e.g. 12 for monthly data, 4 for quarterly data).
   * $d$ first differences, $D$ seasonal differences
-  * $p$ AR lags, $q$ MA lags
-  * $P$ seasonal AR lags, $Q$ seasonal MA lags
+  * $p$ AR order, $q$ MA order
+  * $P$ seasonal AR order, $Q$ seasonal MA order
 
 ::: {.alertblock}
 Seasonal and non-seasonal terms combine multiplicatively
