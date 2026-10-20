@@ -547,43 +547,25 @@ tourism |>
 :::
 :::
 
-## Most seasonal series {.code-small}
+## Most seasonal and most trended series {.code-small}
 
-Find the most seasonal time series:
-
-```{r extreme}
-most_seasonal <- tourism |>
-  features(Trips, feat_stl) |>
-  filter(seasonal_strength_year == max(seasonal_strength_year))
+```{r extremes}
+stl_features <- tourism |> features(Trips, feat_stl)
+extremes <- bind_rows(
+  "Most seasonal" = slice_max(stl_features, seasonal_strength_year),
+  "Most trended" = slice_max(stl_features, trend_strength),
+  .id = "Feature"
+)
 ```
 
 ::: {.fragment}
-```{r extreme2, fig.height=2.4}
+```{r extremes-plot, fig.height=2.1}
 tourism |>
-  semi_join(most_seasonal, by = join_by(State, Region, Purpose)) |>
+  inner_join(extremes, by = join_by(State, Region, Purpose)) |>
   ggplot(aes(x = Quarter, y = Trips)) +
   geom_line() +
-  facet_wrap(vars(State, Region, Purpose), labeller = labeller(.multi_line = FALSE))
-```
-:::
-
-## Most trended series {.code-small}
-
-Find the most trended time series:
-
-```{r extreme3}
-most_trended <- tourism |>
-  features(Trips, feat_stl) |>
-  filter(trend_strength == max(trend_strength))
-```
-
-::: {.fragment}
-```{r extreme4, fig.height=2.4}
-tourism |>
-  semi_join(most_trended, by = join_by(State, Region, Purpose)) |>
-  ggplot(aes(x = Quarter, y = Trips)) +
-  geom_line() +
-  facet_wrap(vars(State, Region, Purpose), labeller = labeller(.multi_line = FALSE))
+  facet_wrap(vars(Feature, State, Region, Purpose), scales = "free_y",
+    labeller = labeller(.multi_line = FALSE))
 ```
 :::
 
