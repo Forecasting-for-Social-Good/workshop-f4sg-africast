@@ -166,6 +166,14 @@ $$\begin{aligned}
 * MAPE is scale independent but is only sensible if $y_t\gg 0$ for all $t$, and $y$ has a natural zero.
 :::
 
+## Comparing across districts
+
+::: {.poll #compare-districts prompt="You forecast clinic visits in 50 districts of very different sizes. Which measure lets you compare your method's accuracy across all of them?"}
+- [ ] RMSE
+- [ ] MAE
+- [x] MASE
+:::
+
 ## Scaled errors: MASE {.smaller}
 
 ::: {.callout-note}
