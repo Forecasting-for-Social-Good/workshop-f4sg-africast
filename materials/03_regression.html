@@ -9,7 +9,7 @@
 <link href="libs/quarto-html/quarto-syntax-highlighting-806d16d6947d3f83c724220677ca5bc4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <meta name="dcterms.date" content="2026-10-18">
+  <meta name="dcterms.date" content="2026-10-21">
   <title>Forecasting with regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -226,17 +226,6 @@
   <img class="africast-savanna" src="figs/savanna.png" alt="">
   <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
 </section>
-<section id="outline" class="slide level2">
-<h2>Outline</h2>
-<ul>
-<li>The linear model with time series</li>
-<li>Evaluating the regression model</li>
-<li>Selecting predictors</li>
-<li>Forecasting with regression</li>
-<li>Correlation, causation and forecasting</li>
-<li>Some useful predictors for regression models</li>
-</ul>
-</section>
 <section>
 <section id="the-linear-model-with-time-series" class="title-slide slide level1 center">
 <h1>The linear model with time series</h1>
@@ -247,7 +236,7 @@
 <ul>
 <li><p>To <strong>explain</strong></p></li>
 <li><p>To <strong>forecast</strong></p></li>
-<li><p>Simple linear regression model(SLR)</p></li>
+<li><p>Simple linear regression model (SLR)</p></li>
 <li><p>Multiple linear regression model (MLR)</p></li>
 </ul>
 </section>
@@ -267,14 +256,14 @@
 </section>
 <section id="slr-model-in-practice" class="slide level2">
 <h2>SLR model in practice</h2>
-<p>In practice, of course, we have a collection of observations but we do not know the values of the coefficients <span class="math inline">\(\hat\beta_0\)</span>, <span class="math inline">\(\hat\beta_1\)</span>. These need to be estimated from the data.</p>
+<p>In practice, of course, we have a collection of observations but we do not know the values of the coefficients <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>. These need to be estimated from the data.</p>
 <div class="block">
 <p><span class="math display">\[
-  y_t = \hat\beta_0 + \hat\beta_1 x_{t}.
+  \hat{y}_t = \hat\beta_0 + \hat\beta_1 x_{t}.
 \]</span></p>
 </div>
 <ul>
-<li><span class="math inline">\(y_t\)</span> is the “response” variable</li>
+<li><span class="math inline">\(\hat{y}_t\)</span> is the fitted value of the response</li>
 <li>Each <span class="math inline">\(x_{t}\)</span> is a “predictor”</li>
 <li><span class="math inline">\(\hat\beta_0\)</span> is the estimated intercept</li>
 <li><span class="math inline">\(\hat\beta_1\)</span> is the estimated slope</li>
@@ -284,20 +273,20 @@
 <h2>What is the best fit</h2>
 <ul>
 <li>There are many ways that a straight line can be laid on the scatter</li>
-<li>Best known criterion is called Ordinary Least Squares(OLS)</li>
+<li>Best known criterion is called Ordinary Least Squares (OLS)</li>
 </ul>
 
 <img data-src="figs/SLRpop1-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
 <section id="estimation-of-the-model" class="slide level2">
 <h2>Estimation of the model</h2>
-<p>That is, we find the values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> which minimise</p>
+<p>Least squares chooses the values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> which minimise</p>
 <div class="block">
 <p><span class="math display">\[
-  \sum_{i=1}^N e_{i}^2 = \sum_{i=1}^N (y_{i} - \beta_{0} - \beta_{1}x_{i})^2.
+  \sum_{t=1}^T e_{t}^2 = \sum_{t=1}^T (y_{t} - \beta_{0} - \beta_{1}x_{t})^2.
 \]</span></p>
 </div>
 <ul>
-<li>This is called <em>least squares</em> estimation because it gives the least value of the sum of squared errors.</li>
+<li>This is called <em>least squares</em> estimation because it gives the smallest value of the sum of squared errors.</li>
 <li>Finding the best estimates of the coefficients is often called <em>fitting</em> the model to the data.</li>
 <li>We refer to the <em>estimated</em> coefficients using the notation <span class="math inline">\(\hat\beta_{0},\hat\beta_{1}\)</span>.</li>
 </ul>
@@ -319,9 +308,9 @@
 <section id="example-us-consumption-expenditure-2" class="slide level2 code-small">
 <h2>Example: US consumption expenditure</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit_cons <span class="ot">&lt;-</span> us_change <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit_income <span class="ot">&lt;-</span> us_change <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">lm =</span> <span class="fu">TSLM</span>(Consumption <span class="sc">~</span> Income))</span>
-<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit_cons)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit_income)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Consumption 
 Model: TSLM 
@@ -342,17 +331,30 @@ Multiple R-squared: 0.159,  Adjusted R-squared: 0.154
 F-statistic:   35 on 1 and 185 DF, p-value: 2e-08</code></pre>
 </div>
 </div>
+<div class="absolute fragment" style="top: 210px; right: 0px; width: 400px; ">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Interpretation</strong></p>
+</div>
+<div class="callout-content">
+<p>A 1 percentage point rise in income growth goes with a 0.28 point rise in consumption growth.</p>
+<p>Income alone explains little: <span class="math inline">\(R^2 = 0.16\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="multiple-regression" class="slide level2">
 <h2>Multiple regression</h2>
 <ul>
 <li>In multiple regression there is one variable to be forecast and several predictor variables.</li>
-<li>The basic concept is that we forecast the time series of interest <span class="math inline">\(y\)</span> assuming that it has a linear relationship with other time series <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, …, <span class="math inline">\(x_K\)</span></li>
+<li>The basic concept is that we forecast the time series of interest <span class="math inline">\(y\)</span> assuming that it has a linear relationship with other time series <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, …, <span class="math inline">\(x_k\)</span></li>
 <li>We might forecast daily A&amp;E attendance <span class="math inline">\(y\)</span> using temperature <span class="math inline">\(x_1\)</span> and GP visits <span class="math inline">\(x_2\)</span> as predictors.</li>
 </ul>
 </section>
-<section id="how-many-variable-can-we-add" class="slide level2">
-<h2>How many variable can we add?</h2>
+<section id="how-many-predictors" class="slide level2">
+<h2>How many predictors?</h2>
 <p>You can add as many as you want but be aware of:</p>
 <ul>
 <li>Over-fitting</li>
@@ -369,21 +371,21 @@ F-statistic:   35 on 1 and 185 DF, p-value: 2e-08</code></pre>
 <ul>
 <li><p><span class="math inline">\(y_t\)</span> is the variable we want to predict: the “response” variable</p></li>
 <li><p>Each <span class="math inline">\(x_{j,t}\)</span> is numerical and is called a “predictor”. They are usually assumed to be known for all past and future times.</p></li>
-<li><p>The coefficients <span class="math inline">\(\beta_1,\dots,\beta_k\)</span> measure the effect of each predictor after taking account of the effect of all other predictors in the model.</p></li>
-</ul>
-<p>That is, the coefficients measure the <strong>marginal effects</strong>.</p>
+<li><p>The coefficients <span class="math inline">\(\beta_1,\dots,\beta_k\)</span> measure the effect of each predictor after taking account of the effect of all other predictors in the model.</p>
 <ul>
-<li><span class="math inline">\(\varepsilon_t\)</span> is a white noise error term</li>
+<li>That is, the coefficients measure the <strong>marginal effects</strong>.</li>
+</ul></li>
+<li><p><span class="math inline">\(\varepsilon_t\)</span> is a white noise error term</p></li>
 </ul>
 </section>
 <section id="estimation-of-the-model-1" class="slide level2">
 <h2>Estimation of the model</h2>
-<p>We find the values of <span class="math inline">\(\hat\beta_{0},\dots,\hat\beta_{k}\)</span> which minimise</p>
+<p>Least squares chooses the values of <span class="math inline">\(\beta_{0},\dots,\beta_{k}\)</span> which minimise</p>
 <p><span class="math display">\[
-\sum_{i=1}^N e_{i}^2 = \sum_{i=1}^N (y_{i} - \beta_{0} - \beta_{1}x_{1,i} - \cdots - \beta_{k} x_{k,i})^2.
+\sum_{t=1}^T e_{t}^2 = \sum_{t=1}^T (y_{t} - \beta_{0} - \beta_{1}x_{1,t} - \cdots - \beta_{k} x_{k,t})^2.
 \]</span></p>
 <ul>
-<li>This is called <em>least squares</em> estimation because it gives the least value of the sum of squared errors</li>
+<li>This is called <em>least squares</em> estimation because it gives the smallest value of the sum of squared errors</li>
 <li>Finding the best estimates of the coefficients is often called <em>fitting</em> the model to the data</li>
 <li>We refer to the <em>estimated</em> coefficients using the notation <span class="math inline">\(\hat\beta_{0},\dots,\hat\beta_{k}\)</span>.</li>
 </ul>
@@ -415,9 +417,9 @@ F-statistic:   35 on 1 and 185 DF, p-value: 2e-08</code></pre>
 <section id="example-us-consumption-expenditure-5" class="slide level2 code-tiny">
 <h2>Example: US consumption expenditure</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit_consMR <span class="ot">&lt;-</span> us_change <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> us_change <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">lm =</span> <span class="fu">TSLM</span>(Consumption <span class="sc">~</span> Income <span class="sc">+</span> Production <span class="sc">+</span> Unemployment <span class="sc">+</span> Savings))</span>
-<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit_consMR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Consumption 
 Model: TSLM 
@@ -441,6 +443,20 @@ Multiple R-squared: 0.754,  Adjusted R-squared: 0.749
 F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 </div>
 </div>
+<div class="absolute fragment" style="top: 210px; right: 0px; width: 400px; ">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Interpretation</strong></p>
+</div>
+<div class="callout-content">
+<p>Each coefficient holds the other predictors fixed.</p>
+<p>Production and unemployment are borderline (<span class="math inline">\(p \approx 0.05\)</span> to <span class="math inline">\(0.08\)</span>).</p>
+<p><span class="math inline">\(\bar{R}^2 = 0.75\)</span>, far above income alone.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="example-us-consumption-expenditure-6" class="slide level2">
 <h2>Example: US consumption expenditure</h2>
@@ -449,22 +465,14 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <section id="example-us-consumption-expenditure-7" class="slide level2">
 <h2>Example: US consumption expenditure</h2>
 
-<img data-src="_figures/03_regression/usfitted2-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="example-us-consumption-expenditure-8" class="slide level2">
-<h2>Example: US consumption expenditure</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit_consMR) <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsdisplay</span>(.resid, <span class="at">plot_type=</span><span class="st">"hist"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="_figures/03_regression/unnamed-chunk-2-1.png" style="width:100.0%" class="r-stretch"></section></section>
+<img data-src="_figures/03_regression/usfitted2-1.png" style="width:100.0%" class="r-stretch"></section></section>
 <section>
 <section id="evaluating-the-regression-model" class="title-slide slide level1 center">
 <h1>Evaluating the regression model</h1>
 
 </section>
-<section id="multiple-regression-and-forecasting-1" class="slide level2">
-<h2>Multiple regression and forecasting</h2>
+<section id="assumptions-for-forecasting" class="slide level2">
+<h2>Assumptions for forecasting</h2>
 <p>For forecasting purposes, we require the following assumptions:</p>
 <ul>
 <li><p><span class="math inline">\(\varepsilon_t\)</span> are uncorrelated and zero mean</p></li>
@@ -482,31 +490,80 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <li>Check if residuals are normally distributed</li>
 </ol>
 </section>
+<section id="example-us-consumption-expenditure-8" class="slide level2">
+<h2>Example: US consumption expenditure</h2>
+<div class="columns">
+<div class="column" style="width:66%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_tsresiduals</span>(fit_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="_figures/03_regression/unnamed-chunk-2-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:34%;">
+<div class="fragment">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Interpretation</strong></p>
+</div>
+<div class="callout-content">
+<p>A few ACF spikes outside the bounds (Ljung-Box <span class="math inline">\(p = 0.073\)</span>), and a slightly skewed histogram.</p>
+<p>Not perfect, but fine for forecasting. Intervals may be slightly off.</p>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
 <section id="residual-scatterplots" class="slide level2">
 <h2>Residual scatterplots</h2>
 <p>Useful for spotting outliers and whether the linear model was appropriate.</p>
 <ul>
-<li><p>Scatterplot of residuals <span class="math inline">\(\varepsilon_t\)</span> against each predictor <span class="math inline">\(x_{j,t}\)</span>.</p></li>
+<li><p>Scatterplot of residuals <span class="math inline">\(e_t\)</span> against each predictor <span class="math inline">\(x_{j,t}\)</span>.</p></li>
 <li><p>Scatterplot residuals against the fitted values <span class="math inline">\(\hat y_t\)</span></p></li>
 <li><p>Expect to see scatterplots resembling a horizontal band with no values too far from the band and no patterns such as curvature or increasing spread.</p></li>
 </ul>
 </section>
 <section id="example-us-consumption-expenditure-9" class="slide level2 code-small">
 <h2>Example: US consumption expenditure</h2>
+<div class="columns">
+<div class="column" style="width:66%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(us_change, <span class="fu">residuals</span>(fit_consMR), <span class="at">by =</span> <span class="st">"Time"</span>)</span>
-<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>Income, <span class="at">y=</span>.resid)) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Residuals"</span>)</span>
-<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>Production, <span class="at">y=</span>.resid)) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Residuals"</span>)</span>
-<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>Savings, <span class="at">y=</span>.resid)) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Residuals"</span>)</span>
-<span id="cb7-8"><a href="" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>Unemployment, <span class="at">y=</span>.resid)) <span class="sc">+</span></span>
-<span id="cb7-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Residuals"</span>)</span>
-<span id="cb7-10"><a href="" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">|</span> p2) <span class="sc">/</span> (p3 <span class="sc">|</span> p4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>us_change <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">residuals</span>(fit_full), <span class="at">by =</span> <span class="st">"Time"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(Income, Production, Savings, Unemployment)) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(name), <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Residuals"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="_figures/03_regression/scatterplot-residuals-1.png" style="width:100.0%"></p>
+</figure>
 </div>
-<img data-src="_figures/03_regression/scatterplot-residuals-1.png" style="width:100.0%" class="r-stretch"></section>
+</div>
+</div>
+</div><div class="column" style="width:34%;">
+<div class="fragment">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Interpretation</strong></p>
+</div>
+<div class="callout-content">
+<p>No curvature or fanning: linear terms look adequate.</p>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
 <section id="residual-patterns" class="slide level2">
 <h2>Residual patterns</h2>
 <ul>
@@ -530,11 +587,24 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <li><p>It is the proportion of variance accounted for (explained) by the predictors.</p></li>
 </ul>
 </section>
+<section id="adding-predictors" class="slide level2">
+<h2>Adding predictors</h2>
+<div id="r-squared-useless-predictor" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[0],&quot;id&quot;:&quot;r-squared-useless-predictor&quot;,&quot;options&quot;:[&quot;Increase or stay the same&quot;,&quot;Decrease&quot;,&quot;Change unpredictably&quot;],&quot;prompt&quot;:&quot;Adding a useless predictor to a regression model makes R²…&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Adding a useless predictor to a regression model makes R²…</p>
+</div>
+<ul>
+<li>Increase or stay the same</li>
+<li>Decrease</li>
+<li>Change unpredictably</li>
+</ul>
+</div>
+</section>
 <section id="comparing-regression-models-1" class="slide level2" style="font-size:0.78em">
 <h2>Comparing regression models</h2>
 <p>However …</p>
 <ul>
-<li><p><span class="math inline">\(R^2\)</span> does not allow for <code>degrees of freedom</code>.</p></li>
+<li><p><span class="math inline">\(R^2\)</span> does not penalise model size.</p></li>
 <li><p>Adding <em>any</em> variable tends to increase the value of <span class="math inline">\(R^2\)</span>, even if that variable is irrelevant.</p></li>
 </ul>
 <div class="fragment">
@@ -554,7 +624,7 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <div class="callout-content">
 <div class="center-text">
 <p><span class="math inline">\(\displaystyle
-\hat{\sigma}^2 = \frac{1}{T-k-1}\sum_{t=1}^T \varepsilon_t^2\)</span></p>
+\hat{\sigma}^2 = \frac{1}{T-k-1}\sum_{t=1}^T e_t^2\)</span></p>
 </div>
 </div>
 </div>
@@ -579,8 +649,8 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <p>where <span class="math inline">\(L\)</span> is the likelihood and <span class="math inline">\(k\)</span> is the number of predictors in the model.</p>
 <ul>
 <li>This is a <em>penalised likelihood</em> approach.</li>
-<li><em>Minimising</em> the AIC gives the best model for prediction.</li>
-<li>AIC penalises terms more heavily than <span class="math inline">\(\bar{R}^2\)</span>.</li>
+<li><em>Minimising</em> the AIC tends to give the best model for prediction.</li>
+<li><span class="math inline">\(\bar{R}^2\)</span> tends to select too many predictors, so prefer CV, AIC or AICc.</li>
 <li>Minimising the AIC is asymptotically equivalent to minimising MSE via leave-one-out cross-validation.</li>
 </ul>
 </section>
@@ -593,19 +663,6 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 \]</span></p>
 </div>
 <p>As with the AIC, the AIC<span class="math inline">\(_{\text{C}}\)</span> should be minimised.</p>
-</section>
-<section id="comparing-regression-models-2" class="slide level2">
-<h2>Comparing regression models</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(fit_consMR) <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(r_squared, adj_r_squared, AIC, AICc, CV)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 5
-  r_squared adj_r_squared   AIC  AICc    CV
-      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     0.754         0.749 -409. -409. 0.116</code></pre>
-</div>
-</div>
 </section>
 <section id="choosing-regression-variables" class="slide level2">
 <h2>Choosing regression variables</h2>
@@ -624,6 +681,65 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <li>Iterate until no further improvement.</li>
 <li>You can also do forward stepwise</li>
 </ul>
+</section>
+<section id="example-candidate-models" class="slide level2 code-small">
+<h2>Example: candidate models</h2>
+<p>Start from the full model, then drop one predictor at a time.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit_candidates <span class="ot">&lt;-</span> us_change <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">full =</span> <span class="fu">TSLM</span>(Consumption <span class="sc">~</span> Income <span class="sc">+</span> Production <span class="sc">+</span> Unemployment <span class="sc">+</span> Savings),</span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">no_income =</span> <span class="fu">TSLM</span>(Consumption <span class="sc">~</span> Production <span class="sc">+</span> Unemployment <span class="sc">+</span> Savings),</span>
+<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">no_production =</span> <span class="fu">TSLM</span>(Consumption <span class="sc">~</span> Income <span class="sc">+</span> Unemployment <span class="sc">+</span> Savings),</span>
+<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">no_unemployment =</span> <span class="fu">TSLM</span>(Consumption <span class="sc">~</span> Income <span class="sc">+</span> Production <span class="sc">+</span> Savings),</span>
+<span id="cb8-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">no_savings =</span> <span class="fu">TSLM</span>(Consumption <span class="sc">~</span> Income <span class="sc">+</span> Production <span class="sc">+</span> Unemployment)</span>
+<span id="cb8-8"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="example-candidate-models-1" class="slide level2">
+<h2>Example: candidate models</h2>
+<div id="drop-predictor" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;drop-predictor&quot;,&quot;options&quot;:[&quot;Income&quot;,&quot;Production&quot;,&quot;Unemployment&quot;,&quot;Savings&quot;],&quot;prompt&quot;:&quot;Which predictor can we most afford to drop from the full model?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Which predictor can we most afford to drop from the full model?</p>
+</div>
+<ul>
+<li>Income</li>
+<li>Production</li>
+<li>Unemployment</li>
+<li>Savings</li>
+</ul>
+</div>
+</section>
+<section id="example-comparing-candidate-models" class="slide level2">
+<h2>Example: comparing candidate models</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(fit_candidates) <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.model, adj_r_squared, CV, AIC, AICc) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AICc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  .model          adj_r_squared    CV   AIC  AICc
+  &lt;chr&gt;                   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 full                    0.749 0.116 -409. -409.
+2 no_production           0.746 0.116 -408. -408.
+3 no_unemployment         0.745 0.118 -407. -407.
+4 no_savings              0.386 0.278 -243. -243.
+5 no_income               0.356 0.293 -234. -234.</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Interpretation</strong></p>
+</div>
+<div class="callout-content">
+<p>The full model has the lowest AICc and CV, so keep all four predictors.</p>
+<p>Dropping production is almost as good; dropping income or savings is much worse.</p>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="forecasting-with-regression" class="title-slide slide level1 center">
@@ -668,30 +784,37 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <section id="us-consumption" class="slide level2">
 <h2>US Consumption</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit_consBest <span class="ot">&lt;-</span> us_change <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
-<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">TSLM</span>(Consumption <span class="sc">~</span> Income <span class="sc">+</span> Savings <span class="sc">+</span> Unemployment)</span>
-<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="" aria-hidden="true" tabindex="-1"></a>future_scenarios <span class="ot">&lt;-</span> <span class="fu">scenarios</span>(</span>
-<span id="cb10-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">Increase =</span> <span class="fu">new_data</span>(us_change, <span class="dv">4</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Income =</span> <span class="dv">1</span>, <span class="at">Savings =</span> <span class="fl">0.5</span>, <span class="at">Unemployment =</span> <span class="dv">0</span>),</span>
-<span id="cb10-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">Decrease =</span> <span class="fu">new_data</span>(us_change, <span class="dv">4</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Income =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">Savings =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">Unemployment =</span> <span class="dv">0</span>),</span>
-<span id="cb10-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"Scenario"</span></span>
-<span id="cb10-12"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-13"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit_consBest, <span class="at">new_data =</span> future_scenarios)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>future_scenarios <span class="ot">&lt;-</span> <span class="fu">scenarios</span>(</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">Increase =</span> <span class="fu">new_data</span>(us_change, <span class="dv">4</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Income =</span> <span class="dv">1</span>, <span class="at">Savings =</span> <span class="fl">0.5</span>, <span class="at">Unemployment =</span> <span class="dv">0</span>, <span class="at">Production =</span> <span class="dv">0</span>),</span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">Decrease =</span> <span class="fu">new_data</span>(us_change, <span class="dv">4</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Income =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">Savings =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">Unemployment =</span> <span class="dv">0</span>, <span class="at">Production =</span> <span class="dv">0</span>),</span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"Scenario"</span></span>
+<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="" aria-hidden="true" tabindex="-1"></a>fc_scenarios <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit_full, <span class="at">new_data =</span> future_scenarios)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="us-consumption-1" class="slide level2">
 <h2>US Consumption</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>us_change <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Consumption) <span class="sc">+</span></span>
-<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(fc) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"% change in US consumption"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>us_change <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Consumption) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(fc_scenarios) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"% change in US consumption"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/03_regression/usconsumptionf2-1.png" style="width:100.0%" class="r-stretch"></section></section>
+<img data-src="_figures/03_regression/usconsumptionf2-1.png" style="width:100.0%" class="r-stretch"><div class="fragment">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Interpretation</strong></p>
+</div>
+<div class="callout-content">
+<p>Scenarios shift the point forecasts. The intervals ignore uncertainty in the future predictors.</p>
+</div>
+</div>
+</div>
+</div>
+</section></section>
 <section>
 <section id="correlation-causation-and-forecasting" class="title-slide slide level1 center">
 <h1>Correlation, causation and forecasting</h1>
@@ -720,7 +843,7 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <li><p>When <span class="math inline">\(x\)</span> is useful for predicting <span class="math inline">\(y\)</span>, it is not necessarily causing <span class="math inline">\(y\)</span>.</p></li>
 <li><p>e.g., predict number of drownings <span class="math inline">\(y\)</span> using number of ice-creams sold <span class="math inline">\(x\)</span>.</p></li>
 <li><p>Correlations are useful for forecasting, even when there is no causality.</p></li>
-<li><p>Better models usually involve causal relationships (e.g., temperature <span class="math inline">\(x\)</span> and people <span class="math inline">\(z\)</span> to predict drownings <span class="math inline">\(y\)</span>).</p></li>
+<li><p>Better models usually involve causal relationships (e.g., temperature and number of swimmers to predict drownings).</p></li>
 </ul>
 </section>
 <section id="multicollinearity" class="slide level2">
@@ -736,7 +859,7 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <h2>Multicollinearity</h2>
 <p>If multicollinearity exists…</p>
 <ul>
-<li>the numerical estimates of coefficients may be wrong (worse in Excel than in a statistics package)</li>
+<li>coefficient estimates become unstable and have large standard errors</li>
 <li>don’t rely on the <span class="math inline">\(p\)</span>-values to determine significance.</li>
 <li>there is no problem with model <em>predictions</em> provided the predictors used for forecasting are within the range used for fitting.</li>
 <li>omitting variables can help.</li>
@@ -756,12 +879,12 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <section id="modern-regression-models" class="slide level2">
 <h2>Modern regression models</h2>
 <ul>
-<li>Suppose instead of 3 regressors we had 44.
+<li>Suppose we had 44 predictors instead of 4.
 <ul>
-<li>For example, 44 predictors leads to 18 trillion possible models!</li>
+<li>That gives <span class="math inline">\(2^{44} \approx 18\)</span> trillion possible models!</li>
 </ul></li>
-<li>Stepwise regression cannot solve this problem due to the number of variables.</li>
-<li>We need to use the family of Lasso models: lasso, ridge, elastic net</li>
+<li>Best subsets and stepwise search become infeasible.</li>
+<li>Shrinkage methods (lasso, ridge, elastic net) handle this, but are beyond this workshop.</li>
 </ul>
 </section></section>
 <section>
@@ -775,7 +898,7 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <div class="column" style="width:50%;">
 <p>If a categorical variable takes only two values (e.g., “Yes” or “No”), then an equivalent numerical variable can be constructed taking value 1 if yes and 0 if no. This is called a <strong>dummy variable</strong>.</p>
 </div><div class="column" style="width:50%;">
-<p><img data-src="figs/dummy2.jpg" height="600"></p>
+<p><img data-src="figs/regression/dummy_binary.svg" alt="A Market day? column of Yes and No recoded to a dummy column of 1s and 0s" height="460"></p>
 </div></div>
 </section>
 <section id="dummy-variables-1" class="slide level2">
@@ -784,7 +907,7 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <div class="column" style="width:40%;">
 <p>If there are more than two categories, then the variable can be coded using several dummy variables (one fewer than the total number of categories).</p>
 </div><div class="column" style="width:60%;">
-<p><img data-src="figs/dummy3.jpg"></p>
+<p><img data-src="figs/regression/dummy_categories.svg" style="width:100.0%" alt="Days Monday to Friday coded as four dummy columns; Friday rows are all zeros as the baseline"></p>
 </div></div>
 </section>
 <section id="beware-of-the-dummy-variable-trap" class="slide level2">
@@ -833,12 +956,12 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <p><strong>Change of slope</strong></p>
 <ul>
 <li><p>Variables take values 0 before the intervention and values <span class="math inline">\(\{1,2,3,\dots\}\)</span> afterwards.</p></li>
-<li><p>this could be also handled using <code>trend()</code></p></li>
+<li><p>this could also be handled using a piecewise trend, <code>trend(knots = ...)</code></p></li>
 </ul>
 </div>
 </section>
-<section id="include-special-event-using-dummies" class="slide level2">
-<h2>Include special event using dummies</h2>
+<section id="special-events-as-dummies" class="slide level2">
+<h2>Special events as dummies</h2>
 <ul>
 <li>Christmas Eve: if Christmas Eve, <span class="math inline">\(v_t=1\)</span>, <span class="math inline">\(v_t=0\)</span> otherwise</li>
 <li>New year’s Day: if New year’s Day, <span class="math inline">\(v_t=1\)</span>, <span class="math inline">\(v_t=0\)</span> otherwise.</li>
@@ -850,14 +973,14 @@ F-statistic:  139 on 4 and 182 DF, p-value: &lt;2e-16</code></pre>
 <p>For example, sometimes the effect of a particular event might be different if it is on a weekend or a week day or its effect might be different in each shift:</p>
 <ul>
 <li>you need to introduce an interaction variable</li>
-<li>you can use a new dummy as : <code>v1*v2</code></li>
+<li>in a model formula, <code>v1 * v2</code> includes both main effects and their interaction <code>v1:v2</code></li>
 </ul>
 </section>
 <section id="lagged-predictors" class="slide level2">
 <h2>Lagged predictors</h2>
-<p>The model include present and past values of predictor: <span class="math inline">\(x_t,x_{t-1},x_{t-2},\dots.\)</span></p>
+<p>The model includes present and past values of the predictor: <span class="math inline">\(x_t,x_{t-1},x_{t-2},\dots.\)</span></p>
 <p><span class="math display">\[
-y_{t} = a + \beta_{0} x_{t} + \beta_{1} x_{t-1} + \dots + \beta_{k} x_{t-k} + \varepsilon_{t}
+y_{t} = \beta_0 + \gamma_{0} x_{t} + \gamma_{1} x_{t-1} + \dots + \gamma_{k} x_{t-k} + \varepsilon_{t}
 \]</span></p>
 <ul>
 <li><span class="math inline">\(x\)</span> can influence <span class="math inline">\(y\)</span>, but <span class="math inline">\(y\)</span> is not allowed to influence <span class="math inline">\(x\)</span>.</li>
@@ -882,7 +1005,7 @@ y_{t} = a + \beta_{0} x_{t} + \beta_{1} x_{t-1} + \dots + \beta_{k} x_{t-k} + \v
 <section id="example-insurance-quotes-and-tv-adverts" class="slide level2">
 <h2>Example: Insurance quotes and TV adverts</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>insurance</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a>insurance</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 40 x 3 [1M]
       Month Quotes TVadverts
@@ -912,152 +1035,126 @@ y_{t} = a + \beta_{0} x_{t} + \beta_{1} x_{t-1} + \dots + \beta_{k} x_{t-k} + \v
 <section id="example-insurance-quotes-and-tv-adverts-3" class="slide level2 code-small">
 <h2>Example: Insurance quotes and TV adverts</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> insurance <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Restrict data so models use same fitting period</span></span>
-<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Quotes =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, Quotes[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>])) <span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
-<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ARIMA</span>(Quotes <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">d =</span> <span class="dv">0</span>) <span class="sc">+</span> TVadverts),</span>
-<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ARIMA</span>(Quotes <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">d =</span> <span class="dv">0</span>) <span class="sc">+</span> TVadverts <span class="sc">+</span></span>
-<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lag</span>(TVadverts)),</span>
-<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ARIMA</span>(Quotes <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">d =</span> <span class="dv">0</span>) <span class="sc">+</span> TVadverts <span class="sc">+</span></span>
-<span id="cb14-9"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lag</span>(TVadverts) <span class="sc">+</span></span>
-<span id="cb14-10"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lag</span>(TVadverts, <span class="dv">2</span>)),</span>
-<span id="cb14-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ARIMA</span>(Quotes <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">d =</span> <span class="dv">0</span>) <span class="sc">+</span> TVadverts <span class="sc">+</span></span>
-<span id="cb14-12"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lag</span>(TVadverts) <span class="sc">+</span></span>
-<span id="cb14-13"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lag</span>(TVadverts, <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb14-14"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lag</span>(TVadverts, <span class="dv">3</span>))</span>
-<span id="cb14-15"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit_lags <span class="ot">&lt;-</span> insurance <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Restrict data so models use same fitting period</span></span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Quotes =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, Quotes[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>])) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">lag0 =</span> <span class="fu">TSLM</span>(Quotes <span class="sc">~</span> TVadverts),</span>
+<span id="cb15-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">lag1 =</span> <span class="fu">TSLM</span>(Quotes <span class="sc">~</span> TVadverts <span class="sc">+</span> <span class="fu">lag</span>(TVadverts)),</span>
+<span id="cb15-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">lag2 =</span> <span class="fu">TSLM</span>(Quotes <span class="sc">~</span> TVadverts <span class="sc">+</span> <span class="fu">lag</span>(TVadverts) <span class="sc">+</span> <span class="fu">lag</span>(TVadverts, <span class="dv">2</span>)),</span>
+<span id="cb15-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">lag3 =</span> <span class="fu">TSLM</span>(Quotes <span class="sc">~</span> TVadverts <span class="sc">+</span> <span class="fu">lag</span>(TVadverts) <span class="sc">+</span> <span class="fu">lag</span>(TVadverts, <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lag</span>(TVadverts, <span class="dv">3</span>))</span>
+<span id="cb15-10"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="example-insurance-quotes-and-tv-adverts-4" class="slide level2">
 <h2>Example: Insurance quotes and TV adverts</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="advert-lags" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[0],&quot;id&quot;:&quot;advert-lags&quot;,&quot;options&quot;:[&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;],&quot;prompt&quot;:&quot;How many months of lagged TV advertising should the model include?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>How many months of lagged TV advertising should the model include?</p>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: right;">Lag order</th>
-<th style="text-align: right;">sigma2</th>
-<th style="text-align: right;">log_lik</th>
-<th style="text-align: right;">AIC</th>
-<th style="text-align: right;">AICc</th>
-<th style="text-align: right;">BIC</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.265</td>
-<td style="text-align: right;">-28.3</td>
-<td style="text-align: right;">66.6</td>
-<td style="text-align: right;">68.3</td>
-<td style="text-align: right;">75.0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0.209</td>
-<td style="text-align: right;">-24.0</td>
-<td style="text-align: right;">58.1</td>
-<td style="text-align: right;">59.9</td>
-<td style="text-align: right;">66.5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0.215</td>
-<td style="text-align: right;">-24.0</td>
-<td style="text-align: right;">60.0</td>
-<td style="text-align: right;">62.6</td>
-<td style="text-align: right;">70.2</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0.206</td>
-<td style="text-align: right;">-22.2</td>
-<td style="text-align: right;">60.3</td>
-<td style="text-align: right;">65.0</td>
-<td style="text-align: right;">73.8</td>
-</tr>
-</tbody>
-</table>
-</div>
+<ul>
+<li>0</li>
+<li>1</li>
+<li>2</li>
+<li>3</li>
+</ul>
 </div>
 </section>
-<section id="example-insurance-quotes-and-tv-adverts-5" class="slide level2 code-small">
+<section id="example-insurance-quotes-and-tv-adverts-5" class="slide level2">
 <h2>Example: Insurance quotes and TV adverts</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-fit to all data</span></span>
-<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> insurance <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ARIMA</span>(Quotes <span class="sc">~</span> TVadverts <span class="sc">+</span> <span class="fu">lag</span>(TVadverts) <span class="sc">+</span> <span class="fu">pdq</span>(<span class="at">d =</span> <span class="dv">0</span>)))</span>
-<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(fit_lags) <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.model, adj_r_squared, CV, AIC, AICc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Series: Quotes 
-Model: LM w/ ARIMA(1,0,2) errors 
-
-Coefficients:
-        ar1    ma1    ma2  TVadverts  lag(TVadverts)  intercept
-      0.512  0.917  0.459     1.2527          0.1464       2.16
-s.e.  0.185  0.205  0.190     0.0588          0.0531       0.86
-
-sigma^2 estimated as 0.2166:  log likelihood=-23.9
-AIC=61.9   AICc=65.4   BIC=73.7</code></pre>
+<pre><code># A tibble: 4 × 5
+  .model adj_r_squared    CV    AIC   AICc
+  &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 lag0           0.866 0.864 -3.38  -2.65 
+2 lag1           0.865 0.901 -2.17  -0.919
+3 lag2           0.861 0.958 -0.208  1.73 
+4 lag3           0.859 0.995  1.35   4.15 </code></pre>
 </div>
 </div>
 <div class="fragment">
-<p><span class="math display">\[\begin{aligned}
-  y_t &amp;= 2.16 +
-         1.25 x_t +
-         0.15 x_{t-1} + \eta_t,\\
-  \eta_t &amp;= 0.512 \eta_{t-1} +
-        \varepsilon_t +
-        0.92 \varepsilon_{t-1} +
-        0.46 \varepsilon_{t-2}.
-\end{aligned}\]</span></p>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Interpretation</strong></p>
+</div>
+<div class="callout-content">
+<p>No lag (<code>lag0</code>) has the lowest AICc and CV: quotes respond to advertising in the same month.</p>
+</div>
+</div>
+</div>
 </div>
 </section>
-<section id="example-insurance-quotes-and-tv-adverts-6" class="slide level2">
+<section id="example-insurance-quotes-and-tv-adverts-6" class="slide level2 code-small">
 <h2>Example: Insurance quotes and TV adverts</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>advert_a <span class="ot">&lt;-</span> <span class="fu">new_data</span>(insurance, <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TVadverts =</span> <span class="dv">10</span>)</span>
-<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(fit, advert_a) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(insurance)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-fit to all data</span></span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>fit_adverts <span class="ot">&lt;-</span> insurance <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">TSLM</span>(Quotes <span class="sc">~</span> TVadverts))</span>
+<span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit_adverts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Quotes 
+Model: TSLM 
 
+Residuals:
+   Min     1Q Median     3Q    Max 
+-2.327 -0.543 -0.238  0.754  1.588 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   -0.240      0.901   -0.27     0.79    
+TVadverts      1.693      0.109   15.56   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.895 on 38 degrees of freedom
+Multiple R-squared: 0.864,  Adjusted R-squared: 0.861
+F-statistic:  242 on 1 and 38 DF, p-value: &lt;2e-16</code></pre>
 </div>
-<img data-src="_figures/03_regression/unnamed-chunk-8-1.png" style="width:100.0%" class="r-stretch"></section>
+</div>
+<div class="absolute fragment" style="top: 210px; right: 0px; width: 400px; ">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Interpretation</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\(\hat{y}_t = -0.24 + 1.69 x_t\)</span>: each extra unit of spend brings about 1.7 more quotes that month.</p>
+<p>Residuals are strongly autocorrelated (Ljung-Box <span class="math inline">\(p &lt; 0.001\)</span>), so prediction intervals will be too narrow.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section id="example-insurance-quotes-and-tv-adverts-7" class="slide level2">
 <h2>Example: Insurance quotes and TV adverts</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a>advert_b <span class="ot">&lt;-</span> <span class="fu">new_data</span>(insurance, <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TVadverts =</span> <span class="dv">8</span>)</span>
-<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(fit, advert_b) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(insurance)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>future_adverts <span class="ot">&lt;-</span> <span class="fu">scenarios</span>(</span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Spend 10</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">new_data</span>(insurance, <span class="dv">20</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">TVadverts =</span> <span class="dv">10</span>),</span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Spend 8</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">new_data</span>(insurance, <span class="dv">20</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">TVadverts =</span> <span class="dv">8</span>),</span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Spend 6</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">new_data</span>(insurance, <span class="dv">20</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">TVadverts =</span> <span class="dv">6</span>),</span>
+<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"Scenario"</span></span>
+<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a>insurance <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Quotes) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(<span class="fu">forecast</span>(fit_adverts, future_adverts), <span class="at">level =</span> <span class="dv">80</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="_figures/03_regression/unnamed-chunk-9-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="example-insurance-quotes-and-tv-adverts-8" class="slide level2">
-<h2>Example: Insurance quotes and TV adverts</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>advert_c <span class="ot">&lt;-</span> <span class="fu">new_data</span>(insurance, <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TVadverts =</span> <span class="dv">6</span>)</span>
-<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(fit, advert_c) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(insurance)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="_figures/03_regression/unnamed-chunk-10-1.png" style="width:100.0%" class="r-stretch"></section>
+<img data-src="_figures/03_regression/tvadvert-scenarios-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="lead-predictors" class="slide level2">
 <h2>Lead predictors</h2>
 <p>Sometimes <span class="math inline">\(y_t\)</span> responds to a change in <span class="math inline">\(x\)</span> before it happens, because the change is anticipated. Then <span class="math inline">\(y_t\)</span> depends on future values <span class="math inline">\(x_{t+1}, x_{t+2}, \dots\)</span></p>
+<p><span class="math display">\[
+y_{t} = \beta_0 + \gamma_{0} x_{t} + \gamma_{1} x_{t+1} + \dots + \gamma_{k} x_{t+k} + \varepsilon_{t}
+\]</span></p>
 <ul>
-<li>Lead values of a predictor:
-<ul>
-<li>Create new variables by shifting the existing variable forwards</li>
-</ul></li>
+<li>Create lead values by shifting the existing variable forwards with <code>lead()</code></li>
+<li>e.g.&nbsp;sales <span class="math inline">\(y_t\)</span> rise before an announced tax increase <span class="math inline">\(x_t\)</span> takes effect</li>
+<li>Only usable for forecasting when the future <span class="math inline">\(x\)</span> is known in advance (e.g.&nbsp;announced)</li>
 </ul>
-<div class="block">
-<ul>
-<li><span class="math inline">\(y_t=\)</span> sales, <span class="math inline">\(x_t=\)</span> tax policy announcement</li>
-</ul>
-</div>
 
 </section></section>
     </div>

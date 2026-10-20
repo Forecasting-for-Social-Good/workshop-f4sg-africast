@@ -1,0 +1,20 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{preamble}
+\begin{document}
+\begin{tikzpicture}
+\node[head=2.2cm] at (0,0) {Market day?};
+\node[head=1.2cm] at (3.4,0) {$d_t$};
+\foreach \v [count=\i] in {1,1,0,1,0,0,1,0} {
+  \ifnum\v=1
+    \node[cell=2.2cm,on] at (0,-.6*\i) {Yes};
+    \node[cell=1.2cm,on] at (3.4,-.6*\i) {1};
+  \else
+    \node[cell=2.2cm] at (0,-.6*\i) {No};
+    \node[cell=1.2cm] at (3.4,-.6*\i) {0};
+  \fi
+}
+\draw[->,thick,slate] (1.3,-2.7) -- (2.6,-2.7);
+\node[font=\fontsize{8}{9}\selectfont,text=muted,align=center] at (1.95,-2.25) {recode};
+\node[font=\fontsize{8}{9}\selectfont,text=muted,align=left,anchor=north west] at (-1.1,-5.2) {Yes $\to$ 1, No $\to$ 0};
+\end{tikzpicture}
+\end{document}

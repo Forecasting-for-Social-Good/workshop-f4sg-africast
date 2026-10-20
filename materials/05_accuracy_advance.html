@@ -9,7 +9,7 @@
 <link href="libs/quarto-html/quarto-syntax-highlighting-806d16d6947d3f83c724220677ca5bc4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <meta name="dcterms.date" content="2026-10-18">
+  <meta name="dcterms.date" content="2026-10-20">
   <title>Residual diagnostics and cross validation</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -223,14 +223,6 @@
   <img class="africast-savanna" src="figs/savanna.png" alt="">
   <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
 </section>
-<section id="outline" class="slide level2">
-<h2>Outline</h2>
-<ul>
-<li>Time series cross-validation</li>
-<li>Residual diagnostics</li>
-<li>Recap</li>
-</ul>
-</section>
 <section>
 <section id="time-series-cross-validation" class="title-slide slide level1 center">
 <h1>Time series cross-validation</h1>
@@ -324,14 +316,13 @@
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 804 x 5 [1M]
 # Key:     .id, .model [67]
-    .id .model    Month
-  &lt;int&gt; &lt;chr&gt;     &lt;mth&gt;
-1     1 snaive 2002 Jan
-2     1 snaive 2002 Feb
-3     1 snaive 2002 Mar
-4     1 snaive 2002 Apr
-# ℹ 800 more rows
-# ℹ 2 more variables: Cost &lt;dist&gt;, .mean &lt;dbl&gt;</code></pre>
+    .id .model    Month        Cost .mean
+  &lt;int&gt; &lt;chr&gt;     &lt;mth&gt;      &lt;dist&gt; &lt;dbl&gt;
+1     1 snaive 2002 Jan  N(14, 1.7) 14.5 
+2     1 snaive 2002 Feb   N(8, 1.7)  8.05
+3     1 snaive 2002 Mar  N(10, 1.7) 10.3 
+4     1 snaive 2002 Apr N(9.8, 1.7)  9.75
+# ℹ 800 more rows</code></pre>
 </div>
 </div>
 </section>

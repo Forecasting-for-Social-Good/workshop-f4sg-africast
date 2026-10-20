@@ -9,7 +9,7 @@
 <link href="libs/quarto-html/quarto-syntax-highlighting-806d16d6947d3f83c724220677ca5bc4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <meta name="dcterms.date" content="2026-10-18">
+  <meta name="dcterms.date" content="2026-10-21">
   <title>Exponential smoothing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -223,16 +223,6 @@
   <img class="africast-savanna" src="figs/savanna.png" alt="">
   <div class="title-band"><span>workshop.f4sg.org/africast</span><span>Forecasting for Social Good</span></div>
 </section>
-<section id="outline" class="slide level2">
-<h2>Outline</h2>
-<ul>
-<li>Exponential smoothing</li>
-<li>Trend methods</li>
-<li>Seasonal methods</li>
-<li>ETS taxonomy</li>
-<li>Non-Gaussian forecast distributions</li>
-</ul>
-</section>
 <section>
 <section id="exponential-smoothing" class="title-slide slide level1 center">
 <h1>Exponential smoothing</h1>
@@ -413,8 +403,9 @@
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>aus_economy <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
 <span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Australia"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> Population <span class="sc">/</span> <span class="fl">1e6</span>)</span>
-<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_economy <span class="sc">|&gt;</span> <span class="fu">model</span>(<span class="at">AAN =</span> <span class="fu">ETS</span>(Pop))</span>
-<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_economy <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">AAN =</span> <span class="fu">ETS</span>(Pop <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)))</span>
+<span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Pop 
 Model: ETS(A,A,N) 
@@ -504,7 +495,7 @@ Model: ETS(A,A,N)
 <h2>Example: Australian population</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>aus_economy <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">holt =</span> <span class="fu">ETS</span>(Pop <span class="sc">~</span> <span class="fu">trend</span>(<span class="st">"Ad"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">damped =</span> <span class="fu">ETS</span>(Pop <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"Ad"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>))) <span class="sc">|&gt;</span></span>
 <span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
 <span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_economy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
@@ -544,20 +535,19 @@ Model: ETS(A,A,N)
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 1,315 x 5 [1Y]
 # Key:     Country, .model [263]
-   Country     .model  Year
-   &lt;fct&gt;       &lt;chr&gt;  &lt;dbl&gt;
- 1 Afghanistan ets     2018
- 2 Afghanistan ets     2019
- 3 Afghanistan ets     2020
- 4 Afghanistan ets     2021
- 5 Afghanistan ets     2022
- 6 Albania     ets     2018
- 7 Albania     ets     2019
- 8 Albania     ets     2020
- 9 Albania     ets     2021
-10 Albania     ets     2022
-# ℹ 1,305 more rows
-# ℹ 2 more variables: Pop &lt;dist&gt;, .mean &lt;dbl&gt;</code></pre>
+   Country     .model  Year             Pop .mean
+   &lt;fct&gt;       &lt;chr&gt;  &lt;dbl&gt;          &lt;dist&gt; &lt;dbl&gt;
+ 1 Afghanistan ets     2018    N(36, 0.012) 36.4 
+ 2 Afghanistan ets     2019    N(37, 0.059) 37.3 
+ 3 Afghanistan ets     2020     N(38, 0.16) 38.2 
+ 4 Afghanistan ets     2021     N(39, 0.35) 39.0 
+ 5 Afghanistan ets     2022     N(40, 0.64) 39.9 
+ 6 Albania     ets     2018 N(2.9, 0.00012)  2.87
+ 7 Albania     ets     2019   N(2.9, 6e-04)  2.87
+ 8 Albania     ets     2020  N(2.9, 0.0017)  2.87
+ 9 Albania     ets     2021  N(2.9, 0.0036)  2.86
+10 Albania     ets     2022  N(2.9, 0.0066)  2.86
+# ℹ 1,305 more rows</code></pre>
 </div>
 </div>
 </section></section>
@@ -655,7 +645,7 @@ Model: ETS(M,N,A)
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A dable: 84 x 9 [1Q]
 # Key:     Region, State, Purpose, .model [1]
@@ -681,7 +671,7 @@ Model: ETS(M,N,A)
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span></span>
 <span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
@@ -693,20 +683,19 @@ Model: ETS(M,N,A)
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 608 x 7 [1Q]
 # Key:     Region, State, Purpose, .model [76]
-   Region         State Purpose .model Quarter
-   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;qtr&gt;
- 1 Adelaide       SA    Holiday ets    2018 Q1
- 2 Adelaide       SA    Holiday ets    2018 Q2
- 3 Adelaide       SA    Holiday ets    2018 Q3
- 4 Adelaide       SA    Holiday ets    2018 Q4
- 5 Adelaide       SA    Holiday ets    2019 Q1
- 6 Adelaide       SA    Holiday ets    2019 Q2
- 7 Adelaide       SA    Holiday ets    2019 Q3
- 8 Adelaide       SA    Holiday ets    2019 Q4
- 9 Adelaide Hills SA    Holiday ets    2018 Q1
-10 Adelaide Hills SA    Holiday ets    2018 Q2
-# ℹ 598 more rows
-# ℹ 2 more variables: Trips &lt;dist&gt;, .mean &lt;dbl&gt;</code></pre>
+   Region         State Purpose .model Quarter       Trips .mean
+   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;qtr&gt;      &lt;dist&gt; &lt;dbl&gt;
+ 1 Adelaide       SA    Holiday ets    2018 Q1 N(210, 457) 210. 
+ 2 Adelaide       SA    Holiday ets    2018 Q2 N(173, 473) 173. 
+ 3 Adelaide       SA    Holiday ets    2018 Q3 N(169, 489) 169. 
+ 4 Adelaide       SA    Holiday ets    2018 Q4 N(186, 505) 186. 
+ 5 Adelaide       SA    Holiday ets    2019 Q1 N(210, 521) 210. 
+ 6 Adelaide       SA    Holiday ets    2019 Q2 N(173, 537) 173. 
+ 7 Adelaide       SA    Holiday ets    2019 Q3 N(169, 553) 169. 
+ 8 Adelaide       SA    Holiday ets    2019 Q4 N(186, 569) 186. 
+ 9 Adelaide Hills SA    Holiday ets    2018 Q1   N(19, 36)  19.4
+10 Adelaide Hills SA    Holiday ets    2018 Q2   N(20, 36)  19.6
+# ℹ 598 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -904,7 +893,7 @@ Model: ETS(M,N,A)
 <section id="non-gaussian-forecast-distributions-1" class="slide level2 code-small">
 <h2>Non-Gaussian forecast distributions</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>aus_retail <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>vic_cafe <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>,</span>
 <span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>         Industry <span class="sc">==</span> <span class="st">"Cafes, restaurants and catering services"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Month, Turnover)</span>
@@ -977,16 +966,16 @@ Model: ETS(M,N,A)
 # Key:       .model, .rep [5]
    .model    Month .rep   .sim
    &lt;chr&gt;     &lt;mth&gt; &lt;chr&gt; &lt;dbl&gt;
- 1 ets    2019 Jan 1      576.
- 2 ets    2019 Feb 1      522.
- 3 ets    2019 Mar 1      540.
- 4 ets    2019 Apr 1      539.
- 5 ets    2019 May 1      512.
- 6 ets    2019 Jun 1      511.
- 7 ets    2019 Jul 1      535.
- 8 ets    2019 Aug 1      485.
- 9 ets    2019 Sep 1      491.
-10 ets    2019 Oct 1      506.
+ 1 ets    2019 Jan 1      594.
+ 2 ets    2019 Feb 1      541.
+ 3 ets    2019 Mar 1      643.
+ 4 ets    2019 Apr 1      613.
+ 5 ets    2019 May 1      620.
+ 6 ets    2019 Jun 1      597.
+ 7 ets    2019 Jul 1      628.
+ 8 ets    2019 Aug 1      677.
+ 9 ets    2019 Sep 1      672.
+10 ets    2019 Oct 1      631.
 # ℹ 170 more rows</code></pre>
 </div>
 </div>
@@ -1015,15 +1004,15 @@ Model: ETS(M,N,A)
    .model    Month     Turnover .mean
    &lt;chr&gt;     &lt;mth&gt;       &lt;dist&gt; &lt;dbl&gt;
  1 ets    2019 Jan sample[5000]  608.
- 2 ets    2019 Feb sample[5000]  562.
+ 2 ets    2019 Feb sample[5000]  563.
  3 ets    2019 Mar sample[5000]  629.
  4 ets    2019 Apr sample[5000]  615.
- 5 ets    2019 May sample[5000]  612.
- 6 ets    2019 Jun sample[5000]  592.
- 7 ets    2019 Jul sample[5000]  623.
- 8 ets    2019 Aug sample[5000]  638.
- 9 ets    2019 Sep sample[5000]  629.
-10 ets    2019 Oct sample[5000]  640.
+ 5 ets    2019 May sample[5000]  613.
+ 6 ets    2019 Jun sample[5000]  594.
+ 7 ets    2019 Jul sample[5000]  624.
+ 8 ets    2019 Aug sample[5000]  640.
+ 9 ets    2019 Sep sample[5000]  630.
+10 ets    2019 Oct sample[5000]  642.
 # ℹ 26 more rows</code></pre>
 </div>
 </div>
