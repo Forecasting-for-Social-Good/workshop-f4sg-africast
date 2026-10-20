@@ -328,15 +328,7 @@ The point forecasts are fine, but the prediction intervals may be inaccurate.
 
 ## Recap
 
-1. First, import your data and prepare them using the `tsibble()` function.
-2. Visualise and see whether your series contains key patterns. Use domain knowledge to understand your data and potential driving factors.
-3. Split the data to create a training set, which you will use as an argument in your forecasting function(s). You can also create a test set to use later.
-4. Create different rolling origins to evaluate forecast accuracy using time series cross-validation.
-
-## Recap
-
-5. Train the models on each origin.
-6. Compute forecast accuracy: use the `accuracy()` function with the `fable` as the first argument and the original data as the second.
-7. Compare methods using point, prediction interval and distributional accuracy measures; a smaller error indicates higher accuracy.
-8. Check the residuals of the best model.
-9. Forecast the future using all data and the best model.
+* **Time series cross-validation** averages forecast accuracy over many rolling origins, not a single test set.
+* Roll the training data into windows with `stretch_tsibble()`, fit models to each window, forecast and compare with `accuracy()`.
+* **Residual diagnostics** check that the best model's residuals are uncorrelated with mean zero, and ideally have constant variance and are normal.
+* Check them with `gg_tsresiduals()` and the Ljung-Box test before forecasting.
