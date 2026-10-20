@@ -443,7 +443,7 @@ gafa_stock |>
 How would you forecast these series?
 :::
 
-## Some simple forecasting methods {.code-small}
+## Some simple forecasting methods
 
 ### `MEAN(y)`: Average method
 
@@ -467,13 +467,13 @@ bricks |>
   labs(title = "Clay brick production in Australia")
 ```
 
-## Some simple forecasting methods {.code-small}
+## Some simple forecasting methods
 
 ### `NAIVE(y)`: Naïve method
 
   * Forecasts equal to last observed value.
   * Forecasts: $\hat{y}_{T+h|T} =y_T$.
-  * Consequence of efficient market hypothesis.
+  * Optimal when the series is a random walk (e.g. stock prices).
 
 ```{r naive-method-explained, echo = FALSE, warning = FALSE, fig.height = 3.4}
 bricks |>
@@ -485,12 +485,13 @@ bricks |>
   labs(title = "Clay brick production in Australia")
 ```
 
-## Some simple forecasting methods {.code-small}
+## Some simple forecasting methods
 
 ### `SNAIVE(y ~ lag(m))`: Seasonal naïve method
 
   * Forecasts equal to last value from same season.
   * Forecasts: $\hat{y}_{T+h|T} =y_{T+h-m(k+1)}$, where $m=$ seasonal period and $k$ is the integer part of $(h-1)/m$.
+  * `lag()` defaults to the seasonal period, so `SNAIVE(y)` is enough.
 
 ```{r snaive-method-explained, echo = FALSE, warning = FALSE, fig.height = 3.4}
 bricks |>
@@ -501,7 +502,7 @@ bricks |>
   labs(title = "Clay brick production in Australia")
 ```
 
-## Some simple forecasting methods {.code-small}
+## Some simple forecasting methods
 
 ### `RW(y ~ drift())`: Drift method
 
