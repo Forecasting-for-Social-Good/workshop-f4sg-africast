@@ -763,9 +763,9 @@ $$
 #| echo: true
 #| fig-height: 3
 future_adverts <- scenarios(
-  `10 adverts` = new_data(insurance, 20) |> mutate(TVadverts = 10),
-  `8 adverts` = new_data(insurance, 20) |> mutate(TVadverts = 8),
-  `6 adverts` = new_data(insurance, 20) |> mutate(TVadverts = 6),
+  `Spend 10` = new_data(insurance, 20) |> mutate(TVadverts = 10),
+  `Spend 8` = new_data(insurance, 20) |> mutate(TVadverts = 8),
+  `Spend 6` = new_data(insurance, 20) |> mutate(TVadverts = 6),
   names_to = "Scenario"
 )
 insurance |> autoplot(Quotes) +
