@@ -304,7 +304,7 @@ $R^2 = \frac{\sum(\hat{y}_t - \bar{y})^2}{\sum(y_t-\bar{y})^2}$
 
 However …
 
-* $R^2$  does not allow for `degrees of freedom`.
+* $R^2$ does not penalise model size.
 
 * Adding *any* variable tends to increase the value of $R^2$, even if that variable is irrelevant.
 
@@ -349,8 +349,8 @@ $$
 where $L$ is the likelihood and $k$ is the number of predictors in the model.
 
 * This is a *penalised likelihood* approach.
-* *Minimising* the AIC gives the best model for prediction.
-* AIC penalises terms more heavily than $\bar{R}^2$.
+* *Minimising* the AIC tends to give the best model for prediction.
+* $\bar{R}^2$ tends to select too many predictors, so prefer CV, AIC or AICc.
 * Minimising the AIC is asymptotically equivalent to minimising MSE via leave-one-out cross-validation.
 
 ## Corrected AIC
@@ -471,7 +471,7 @@ Ice-cream sales are strongly correlated with drownings. Are ice-cream sales usef
 
 * Correlations are useful for forecasting, even when there is no causality.
 
-* Better models usually involve causal relationships (e.g., temperature $x$ and people $z$ to predict drownings $y$).
+* Better models usually involve causal relationships (e.g., temperature and number of swimmers to predict drownings).
 
 ## Multicollinearity
 
@@ -486,7 +486,7 @@ In regression analysis, multicollinearity occurs when:
 
 If multicollinearity exists…
 
-* the numerical estimates of coefficients may be wrong (worse in Excel than in a statistics package)
+* coefficient estimates become unstable and have large standard errors
 * don't rely on the $p$-values to determine significance.
 * there is no problem with model *predictions* provided the predictors used for forecasting are within the range used for fitting.
 * omitting variables can help.
@@ -503,10 +503,10 @@ If multicollinearity exists…
 
 ## Modern regression models
 
-* Suppose instead of 3 regressors we had 44.
-    * For example, 44 predictors leads to 18 trillion possible models!
-* Stepwise regression cannot solve this problem due to the number of variables.
-* We need to use the family of Lasso models: lasso, ridge, elastic net
+* Suppose we had 44 predictors instead of 4.
+    * That gives $2^{44} \approx 18$ trillion possible models!
+* Best subsets and stepwise search become infeasible.
+* Shrinkage methods (lasso, ridge, elastic net) handle this, but are beyond this workshop.
 
 # Some useful predictors for regression models
 
@@ -581,7 +581,7 @@ If there are more than two categories, then the variable can be coded using seve
 
 * Variables take values 0 before the intervention and values $\{1,2,3,\dots\}$ afterwards.
 
-* this could be also handled using `trend()`
+* this could also be handled using a piecewise trend, `trend(knots = ...)`
 :::
 
 ##  Include special event using dummies
@@ -595,7 +595,7 @@ If there are more than two categories, then the variable can be coded using seve
 For example, sometimes the effect of a particular event might be different if it is on a weekend or a week day or its effect might be different in each shift:
 
 * you need to introduce an interaction variable
-* you can use a new dummy as : `v1*v2`
+* in a model formula, `v1 * v2` includes both main effects and their interaction `v1:v2`
 
 
 ## Lagged predictors
