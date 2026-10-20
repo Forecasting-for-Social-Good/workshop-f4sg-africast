@@ -187,9 +187,9 @@ $$\begin{aligned}
 ```{r}
 #| label: popfit2
 #| echo: true
-fit <- global_economy |>
+fit_pop <- global_economy |>
   model(arima = ARIMA(Population))
-fit
+fit_pop
 ```
 
 ## Example: National populations
@@ -197,14 +197,14 @@ fit
 ```{r}
 #| label: popfit3
 #| echo: true
-fit |>
+fit_pop |>
   filter(Country == "Australia") |>
   report()
 ```
 
-::: {.alertblock .fragment .absolute top="380px" left="480px" width="520px"}
-$$y_t = 2y_{t-1} - y_{t-2} - 0.7 \varepsilon_{t-1} + \varepsilon_t$$
-$$\varepsilon_t \sim \text{NID}(0,4\times10^9)$$
+::: {.alertblock .fragment}
+With $d=2$ the MA(1) model is for the second differences $y_t - 2y_{t-1} + y_{t-2}$, so
+$$y_t = 2y_{t-1} - y_{t-2} - 0.661 \varepsilon_{t-1} + \varepsilon_t, \qquad \varepsilon_t \sim \text{NID}(0, 4.06\times10^9)$$
 :::
 
 ## Understanding ARIMA models
@@ -224,16 +224,17 @@ $c$ is the constant in the ARMA model for the $d$-times differenced series.
   * The higher the value of $d$, the more rapidly the prediction intervals increase in size.
   * For $d=0$, the long-term forecast standard deviation will go to the standard deviation of the historical data.
 
-## Example: National populations {.code-small}
+## Example: National populations
 
 ```{r}
 #| label: popfc2
 #| echo: true
 #| fig-height: 3.4
-fit |>
+fit_pop |>
   forecast(h = 10) |>
   filter(Country == "Australia") |>
-  autoplot(global_economy)
+  autoplot(global_economy) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M"))
 ```
 
 ## How does ARIMA() work?
