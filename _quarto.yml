@@ -9,6 +9,7 @@ project:
     - "materials/fonts"
     - "materials/figs"
     - "materials/webr-slider.js"
+    - "materials/crps-slider.js"
     - "exercises.zip"
     - "demo"
   render:
