@@ -600,10 +600,10 @@ For example, sometimes the effect of a particular event might be different if it
 
 ## Lagged predictors
 
-The model include present and past values of predictor: $x_t,x_{t-1},x_{t-2},\dots.$
+The model includes present and past values of the predictor: $x_t,x_{t-1},x_{t-2},\dots.$
 
 $$
-y_{t} = a + \beta_{0} x_{t} + \beta_{1} x_{t-1} + \dots + \beta_{k} x_{t-k} + \varepsilon_{t}
+y_{t} = \beta_0 + \gamma_{0} x_{t} + \gamma_{1} x_{t-1} + \dots + \gamma_{k} x_{t-k} + \varepsilon_{t}
 $$
 
 
