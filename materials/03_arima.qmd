@@ -601,7 +601,7 @@ gg_tsresiduals(fit_h02_best, lag_max = 36)
 
 ## Corticosteroid drug sales: residuals
 
-Ljung-Box tests, with `dof` set to the number of estimated coefficients.
+Ljung-Box tests (from the regression session), with `dof` set to the number of estimated coefficients.
 
 ```{r}
 #| label: h02lb

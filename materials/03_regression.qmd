@@ -291,6 +291,22 @@ There are a series of plots that should be produced in order to check different 
 1. check if residuals are uncorrelated using `ACF`
 2. Check if residuals are normally distributed
 
+## Ljung-Box test
+
+Test whether *whole set* of $r_{k}$ values is significantly different from zero set.
+
+::: {.block}
+::: {.center-text}
+$\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$ $\qquad$ where $\ell=$ max lag and $T=$ # observations
+:::
+:::
+
+* If each $r_k$ close to zero, $Q$ will be **small**.
+* If some $r_k$ values large ($+$ or $-$), $Q$ will be **large**.
+* Suggested lags: $\ell=10$ for non-seasonal data, $\ell=2m$ for seasonal data (but at most $T/5$).
+* If data are WN and $T$ large, $Q \sim \chi^2$ with $\ell$ degrees of freedom.
+* For residuals of a model with $K$ estimated parameters, use $\ell - K$ degrees of freedom (`dof` argument).
+
 ## Example: US consumption expenditure
 
 ```{r}

@@ -504,21 +504,18 @@ p[[3]] <- p[[3]] + labs(x = "Residual", y = "Count")
 p
 ```
 
-## Ljung-Box test
+## Ljung-Box test: recap
 
-Test whether *whole set* of $r_{k}$ values is significantly different from zero set.
+Recall from the regression session: test whether the first $\ell$ autocorrelations $r_k$ of the residuals are jointly zero.
 
 ::: {.block}
 ::: {.center-text}
-$\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$ $\qquad$ where $\ell=$ max lag and $T=$ # observations
+$\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$
 :::
 :::
 
-* If each $r_k$ close to zero, $Q$ will be **small**.
-* If some $r_k$ values large ($+$ or $-$), $Q$ will be **large**.
-* Suggested lags: $\ell=10$ for non-seasonal data, $\ell=2m$ for seasonal data (but at most $T/5$).
-* If data are WN and $T$ large, $Q \sim \chi^2$ with $\ell$ degrees of freedom.
-* For residuals of a model with $K$ estimated parameters, use $\ell - K$ degrees of freedom (`dof` argument).
+* Small $Q$ (large $p$-value): consistent with white noise.
+* $\ell=10$ for non-seasonal data, $\ell=2m$ for seasonal data (at most $T/5$); `dof` $= K$ estimated parameters.
 
 ## Ljung-Box test of the naïve residuals {.code-small}
 
