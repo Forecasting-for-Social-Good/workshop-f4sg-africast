@@ -590,7 +590,6 @@ fit |>
 ```{r}
 #| label: trainall
 #| echo: true
-#| dependson: "tourism"
 train <- tourism |>
   filter(year(Quarter) <= 2014)
 fit <- train |>
