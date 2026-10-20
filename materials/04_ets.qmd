@@ -454,6 +454,24 @@ vic_cafe |> autoplot(box_cox(Turnover, lambda = 0.2))
 
 ## Forecasting with transformations {.code-small}
 
+```{r cafe-log-aicc}
+vic_cafe |>
+  model(
+    raw = ETS(Turnover),
+    log = ETS(log(Turnover))
+  ) |>
+  glance() |>
+  select(.model, AICc)
+```
+
+::: {.poll #cafe-log-aicc prompt="Which model is better for Victorian cafe turnover?"}
+- [ ] ETS(log(Turnover))
+- [ ] ETS(Turnover)
+- [x] Can't tell from AICc
+:::
+
+## Forecasting with transformations {.code-small}
+
 ```{r}
 fit <- vic_cafe |>
   model(ets = ETS(box_cox(Turnover, 0.2)))
