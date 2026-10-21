@@ -576,20 +576,19 @@ Model: ETS(A,A,N)
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 1,315 x 5 [1Y]
 # Key:     Country, .model [263]
-   Country     .model  Year
-   &lt;fct&gt;       &lt;chr&gt;  &lt;dbl&gt;
- 1 Afghanistan ets     2018
- 2 Afghanistan ets     2019
- 3 Afghanistan ets     2020
- 4 Afghanistan ets     2021
- 5 Afghanistan ets     2022
- 6 Albania     ets     2018
- 7 Albania     ets     2019
- 8 Albania     ets     2020
- 9 Albania     ets     2021
-10 Albania     ets     2022
-# ℹ 1,305 more rows
-# ℹ 2 more variables: Pop &lt;dist&gt;, .mean &lt;dbl&gt;</code></pre>
+   Country     .model  Year             Pop .mean
+   &lt;fct&gt;       &lt;chr&gt;  &lt;dbl&gt;          &lt;dist&gt; &lt;dbl&gt;
+ 1 Afghanistan ets     2018    N(36, 0.012) 36.4 
+ 2 Afghanistan ets     2019    N(37, 0.059) 37.3 
+ 3 Afghanistan ets     2020     N(38, 0.16) 38.2 
+ 4 Afghanistan ets     2021     N(39, 0.35) 39.0 
+ 5 Afghanistan ets     2022     N(40, 0.64) 39.9 
+ 6 Albania     ets     2018 N(2.9, 0.00012)  2.87
+ 7 Albania     ets     2019   N(2.9, 6e-04)  2.87
+ 8 Albania     ets     2020  N(2.9, 0.0017)  2.87
+ 9 Albania     ets     2021  N(2.9, 0.0036)  2.86
+10 Albania     ets     2022  N(2.9, 0.0066)  2.86
+# ℹ 1,305 more rows</code></pre>
 </div>
 </div>
 </section></section>
@@ -748,20 +747,19 @@ Model: ETS(M,N,A)
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 608 x 7 [1Q]
 # Key:     Region, State, Purpose, .model [76]
-   Region         State Purpose .model Quarter
-   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;qtr&gt;
- 1 Adelaide       SA    Holiday ets    2018 Q1
- 2 Adelaide       SA    Holiday ets    2018 Q2
- 3 Adelaide       SA    Holiday ets    2018 Q3
- 4 Adelaide       SA    Holiday ets    2018 Q4
- 5 Adelaide       SA    Holiday ets    2019 Q1
- 6 Adelaide       SA    Holiday ets    2019 Q2
- 7 Adelaide       SA    Holiday ets    2019 Q3
- 8 Adelaide       SA    Holiday ets    2019 Q4
- 9 Adelaide Hills SA    Holiday ets    2018 Q1
-10 Adelaide Hills SA    Holiday ets    2018 Q2
-# ℹ 598 more rows
-# ℹ 2 more variables: Trips &lt;dist&gt;, .mean &lt;dbl&gt;</code></pre>
+   Region         State Purpose .model Quarter       Trips .mean
+   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;qtr&gt;      &lt;dist&gt; &lt;dbl&gt;
+ 1 Adelaide       SA    Holiday ets    2018 Q1 N(210, 457) 210. 
+ 2 Adelaide       SA    Holiday ets    2018 Q2 N(173, 473) 173. 
+ 3 Adelaide       SA    Holiday ets    2018 Q3 N(169, 489) 169. 
+ 4 Adelaide       SA    Holiday ets    2018 Q4 N(186, 505) 186. 
+ 5 Adelaide       SA    Holiday ets    2019 Q1 N(210, 521) 210. 
+ 6 Adelaide       SA    Holiday ets    2019 Q2 N(173, 537) 173. 
+ 7 Adelaide       SA    Holiday ets    2019 Q3 N(169, 553) 169. 
+ 8 Adelaide       SA    Holiday ets    2019 Q4 N(186, 569) 186. 
+ 9 Adelaide Hills SA    Holiday ets    2018 Q1   N(19, 36)  19.4
+10 Adelaide Hills SA    Holiday ets    2018 Q2   N(20, 36)  19.6
+# ℹ 598 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -936,6 +934,7 @@ Model: ETS(M,N,A)
 <div class="alertblock" style="font-size:1.3em">
 <p>Minimising the AIC assuming Gaussian residuals is asymptotically equivalent to minimising one-step time series cross validation MSE.</p>
 </div>
+<p>Time series cross-validation is covered on Day 5.</p>
 </section>
 <section id="automatic-forecasting" class="slide level2">
 <h2>Automatic forecasting</h2>
@@ -1064,16 +1063,16 @@ Model: ETS(M,N,A)
 # Key:       .model, .rep [5]
    .model    Month .rep   .sim
    &lt;chr&gt;     &lt;mth&gt; &lt;chr&gt; &lt;dbl&gt;
- 1 ets    2019 Jan 1      584.
- 2 ets    2019 Feb 1      560.
- 3 ets    2019 Mar 1      635.
- 4 ets    2019 Apr 1      601.
- 5 ets    2019 May 1      586.
- 6 ets    2019 Jun 1      567.
- 7 ets    2019 Jul 1      589.
- 8 ets    2019 Aug 1      640.
- 9 ets    2019 Sep 1      597.
-10 ets    2019 Oct 1      651.
+ 1 ets    2019 Jan 1      624.
+ 2 ets    2019 Feb 1      541.
+ 3 ets    2019 Mar 1      649.
+ 4 ets    2019 Apr 1      655.
+ 5 ets    2019 May 1      641.
+ 6 ets    2019 Jun 1      646.
+ 7 ets    2019 Jul 1      633.
+ 8 ets    2019 Aug 1      671.
+ 9 ets    2019 Sep 1      681.
+10 ets    2019 Oct 1      655.
 # ℹ 170 more rows</code></pre>
 </div>
 </div>
@@ -1102,14 +1101,14 @@ Model: ETS(M,N,A)
    .model    Month     Turnover .mean
    &lt;chr&gt;     &lt;mth&gt;       &lt;dist&gt; &lt;dbl&gt;
  1 ets    2019 Jan sample[5000]  608.
- 2 ets    2019 Feb sample[5000]  562.
+ 2 ets    2019 Feb sample[5000]  563.
  3 ets    2019 Mar sample[5000]  629.
  4 ets    2019 Apr sample[5000]  615.
- 5 ets    2019 May sample[5000]  612.
+ 5 ets    2019 May sample[5000]  613.
  6 ets    2019 Jun sample[5000]  593.
  7 ets    2019 Jul sample[5000]  624.
  8 ets    2019 Aug sample[5000]  640.
- 9 ets    2019 Sep sample[5000]  630.
+ 9 ets    2019 Sep sample[5000]  631.
 10 ets    2019 Oct sample[5000]  642.
 # ℹ 26 more rows</code></pre>
 </div>

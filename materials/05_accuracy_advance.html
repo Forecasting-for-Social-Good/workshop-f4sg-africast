@@ -1534,20 +1534,17 @@ PlotMorph.register("roll", function (svg, data, h) {
 </div>
 
 <img data-src="_figures/05_accuracy_advance/fb-tsresiduals-plot-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="ljung-box-test" class="slide level2">
-<h2>Ljung-Box test</h2>
-<p>Test whether <em>whole set</em> of <span class="math inline">\(r_{k}\)</span> values is significantly different from zero set.</p>
+<section id="ljung-box-test-recap" class="slide level2">
+<h2>Ljung-Box test: recap</h2>
+<p>Recall from the regression session: test whether the first <span class="math inline">\(\ell\)</span> autocorrelations <span class="math inline">\(r_k\)</span> of the residuals are jointly zero.</p>
 <div class="block">
 <div class="center-text">
-<p><span class="math inline">\(\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2\)</span> <span class="math inline">\(\qquad\)</span> where <span class="math inline">\(\ell=\)</span> max lag and <span class="math inline">\(T=\)</span> # observations</p>
+<p><span class="math inline">\(\displaystyle Q = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2\)</span></p>
 </div>
 </div>
 <ul>
-<li>If each <span class="math inline">\(r_k\)</span> close to zero, <span class="math inline">\(Q\)</span> will be <strong>small</strong>.</li>
-<li>If some <span class="math inline">\(r_k\)</span> values large (<span class="math inline">\(+\)</span> or <span class="math inline">\(-\)</span>), <span class="math inline">\(Q\)</span> will be <strong>large</strong>.</li>
-<li>Suggested lags: <span class="math inline">\(\ell=10\)</span> for non-seasonal data, <span class="math inline">\(\ell=2m\)</span> for seasonal data (but at most <span class="math inline">\(T/5\)</span>).</li>
-<li>If data are WN and <span class="math inline">\(T\)</span> large, <span class="math inline">\(Q \sim \chi^2\)</span> with <span class="math inline">\(\ell\)</span> degrees of freedom.</li>
-<li>For residuals of a model with <span class="math inline">\(K\)</span> estimated parameters, use <span class="math inline">\(\ell - K\)</span> degrees of freedom (<code>dof</code> argument).</li>
+<li>Small <span class="math inline">\(Q\)</span> (large <span class="math inline">\(p\)</span>-value): consistent with white noise.</li>
+<li><span class="math inline">\(\ell=10\)</span> for non-seasonal data, <span class="math inline">\(\ell=2m\)</span> for seasonal data (at most <span class="math inline">\(T/5\)</span>); <code>dof</code> <span class="math inline">\(= K\)</span> estimated parameters.</li>
 </ul>
 </section>
 <section id="ljung-box-test-of-the-naïve-residuals" class="slide level2 code-small">

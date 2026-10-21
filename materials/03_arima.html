@@ -268,6 +268,9 @@
 </div>
 </div>
 <div id="stationary-goog" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;stationary-goog&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;No&quot;],&quot;prompt&quot;:&quot;Is the Google closing stock price stationary?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Is the Google closing stock price stationary?</p>
+</div>
 <ul>
 <li>Yes</li>
 <li>No</li>
@@ -286,6 +289,9 @@
 </div>
 </div>
 <div id="stationary-goog-diff" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[0],&quot;id&quot;:&quot;stationary-goog-diff&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;No&quot;],&quot;prompt&quot;:&quot;Is the daily change in Google closing stock price stationary?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Is the daily change in Google closing stock price stationary?</p>
+</div>
 <ul>
 <li>Yes</li>
 <li>No</li>
@@ -305,6 +311,9 @@
 </div>
 </div>
 <div id="random-walk-stationary" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;random-walk-stationary&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;No&quot;],&quot;prompt&quot;:&quot;Is a random walk stationary?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Is a random walk stationary?</p>
+</div>
 <ul>
 <li>Yes</li>
 <li>No</li>
@@ -478,6 +487,18 @@ AIC=1401   AICc=1402   BIC=1405</code></pre>
 <p>With <span class="math inline">\(d=2\)</span> the MA(1) model is for the second differences <span class="math inline">\(y_t - 2y_{t-1} + y_{t-2}\)</span>, so <span class="math display">\[y_t = 2y_{t-1} - y_{t-2} - 0.661 \varepsilon_{t-1} + \varepsilon_t, \qquad \varepsilon_t \sim \text{NID}(0, 4.06\times10^9)\]</span></p>
 </div>
 </section>
+<section id="understanding-arima-models" class="slide level2">
+<h2>Understanding ARIMA models</h2>
+<p><span class="math inline">\(c\)</span> is the constant in the ARMA model for the <span class="math inline">\(d\)</span>-times differenced series.</p>
+<ul>
+<li>If <span class="math inline">\(c=0\)</span> and <span class="math inline">\(d=0\)</span>, the long-term forecasts will go to zero.</li>
+<li>If <span class="math inline">\(c=0\)</span> and <span class="math inline">\(d=1\)</span>, the long-term forecasts will go to a non-zero constant.</li>
+<li>If <span class="math inline">\(c=0\)</span> and <span class="math inline">\(d=2\)</span>, the long-term forecasts will follow a straight line.</li>
+<li>If <span class="math inline">\(c\ne0\)</span> and <span class="math inline">\(d=0\)</span>, the long-term forecasts will go to the mean of the data.</li>
+<li>If <span class="math inline">\(c\ne0\)</span> and <span class="math inline">\(d=1\)</span>, the long-term forecasts will follow a straight line.</li>
+<li>If <span class="math inline">\(c\ne0\)</span> and <span class="math inline">\(d=2\)</span>, the long-term forecasts will follow a quadratic trend.</li>
+</ul>
+</section>
 <section id="example-national-populations-2" class="slide level2">
 <h2>Example: National populations</h2>
 <div id="population-forecast-shape" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;population-forecast-shape&quot;,&quot;options&quot;:[&quot;Flat line&quot;,&quot;Straight line&quot;,&quot;Quadratic curve&quot;,&quot;Decay to zero&quot;],&quot;prompt&quot;:&quot;Australia’s population model is ARIMA(0,2,1) with no constant. What shape will its long-term forecasts take?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
@@ -491,18 +512,6 @@ AIC=1401   AICc=1402   BIC=1405</code></pre>
 <li>Decay to zero</li>
 </ul>
 </div>
-</section>
-<section id="understanding-arima-models" class="slide level2">
-<h2>Understanding ARIMA models</h2>
-<p><span class="math inline">\(c\)</span> is the constant in the ARMA model for the <span class="math inline">\(d\)</span>-times differenced series.</p>
-<ul>
-<li>If <span class="math inline">\(c=0\)</span> and <span class="math inline">\(d=0\)</span>, the long-term forecasts will go to zero.</li>
-<li>If <span class="math inline">\(c=0\)</span> and <span class="math inline">\(d=1\)</span>, the long-term forecasts will go to a non-zero constant.</li>
-<li>If <span class="math inline">\(c=0\)</span> and <span class="math inline">\(d=2\)</span>, the long-term forecasts will follow a straight line.</li>
-<li>If <span class="math inline">\(c\ne0\)</span> and <span class="math inline">\(d=0\)</span>, the long-term forecasts will go to the mean of the data.</li>
-<li>If <span class="math inline">\(c\ne0\)</span> and <span class="math inline">\(d=1\)</span>, the long-term forecasts will follow a straight line.</li>
-<li>If <span class="math inline">\(c\ne0\)</span> and <span class="math inline">\(d=2\)</span>, the long-term forecasts will follow a quadratic trend.</li>
-</ul>
 </section>
 <section id="understanding-arima-models-1" class="slide level2">
 <h2>Understanding ARIMA models</h2>
@@ -546,6 +555,9 @@ AIC=1401   AICc=1402   BIC=1405</code></pre>
 <p><span class="math display">\[\text{AICc} = -2 \log(L) + 2(p+q+k+1)\left[1 + \frac{(p+q+k+2)}{T-p-q-k-2}\right]\]</span> where <span class="math inline">\(L\)</span> is the maximised likelihood fitted to the <em>differenced</em> data, <span class="math inline">\(k=1\)</span> if <span class="math inline">\(c\neq 0\)</span> and <span class="math inline">\(k=0\)</span> otherwise.</p>
 </div>
 <div id="aicc-different-d" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;aicc-different-d&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;No&quot;],&quot;prompt&quot;:&quot;Can you choose between ARIMA(2,1,0) and ARIMA(1,0,1) by comparing their AICc?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Can you choose between ARIMA(2,1,0) and ARIMA(1,0,1) by comparing their AICc?</p>
+</div>
 <ul>
 <li>Yes</li>
 <li>No</li>
@@ -560,6 +572,9 @@ AIC=1401   AICc=1402   BIC=1405</code></pre>
 <li><span class="alert">Repeat step 2 until no lower AICc can be found.</span></li>
 </ol>
 <div id="stepwise-optimal" class="lq-question lq-poll" data-lq="{&quot;correct&quot;:[1],&quot;id&quot;:&quot;stepwise-optimal&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;No&quot;],&quot;prompt&quot;:&quot;Is this search guaranteed to find the model with the lowest AICc?&quot;,&quot;results&quot;:&quot;live&quot;,&quot;type&quot;:&quot;poll&quot;}">
+<div class="lq-text">
+<p>Is this search guaranteed to find the model with the lowest AICc?</p>
+</div>
 <ul>
 <li>Yes</li>
 <li>No</li>
@@ -804,7 +819,7 @@ AIC=-489   AICc=-487   BIC=-456</code></pre>
 <img data-src="_figures/03_arima/h02resid-1.png" style="width:100.0%" class="r-stretch"></section>
 <section id="corticosteroid-drug-sales-residuals-1" class="slide level2">
 <h2>Corticosteroid drug sales: residuals</h2>
-<p>Ljung-Box tests, with <code>dof</code> set to the number of estimated coefficients.</p>
+<p>Ljung-Box tests (from the regression session), with <code>dof</code> set to the number of estimated coefficients.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
 <span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(fit_h02) <span class="sc">|&gt;</span> <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">36</span>, <span class="at">dof =</span> <span class="dv">3</span>),</span>
@@ -831,65 +846,8 @@ AIC=-489   AICc=-487   BIC=-456</code></pre>
 <span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"$AUD million"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
+
 <img data-src="_figures/03_arima/h02f-1.png" style="width:100.0%" class="r-stretch"></section></section>
-<section>
-<section id="forecast-ensembles" class="title-slide slide level1 center">
-<h1>Forecast ensembles</h1>
-
-</section>
-<section id="forecast-ensembles-1" class="slide level2 code-small">
-<h2>Forecast ensembles</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(Quarter) <span class="sc">&lt;=</span> <span class="dv">2014</span>)</span>
-<span id="cb21-3"><a href="" aria-hidden="true" tabindex="-1"></a>fit_tourism <span class="ot">&lt;-</span> train <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
-<span id="cb21-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ets =</span> <span class="fu">ETS</span>(Trips),</span>
-<span id="cb21-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">arima =</span> <span class="fu">ARIMA</span>(Trips),</span>
-<span id="cb21-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">snaive =</span> <span class="fu">SNAIVE</span>(Trips)</span>
-<span id="cb21-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb21-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mixed =</span> (ets <span class="sc">+</span> arima <span class="sc">+</span> snaive) <span class="sc">/</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ul>
-<li>Fits three models to each of the 304 tourism series (this takes a while).</li>
-<li>Ensemble forecast <code>mixed</code> is a simple average of the three fitted models.</li>
-<li><code>forecast()</code> will produce distributional forecasts taking into account the correlations between the forecast errors of the component models.</li>
-</ul>
-</section>
-<section id="forecast-ensembles-2" class="slide level2">
-<h2>Forecast ensembles</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit_tourism <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>)</span>
-<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>, Purpose <span class="sc">==</span> <span class="st">"Holiday"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(tourism <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">year</span>(Quarter) <span class="sc">&gt;=</span> <span class="dv">2010</span>), <span class="at">level =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="_figures/03_arima/trainfc-1.png" style="width:100.0%" class="r-stretch"></section>
-<section id="forecast-ensembles-3" class="slide level2">
-<h2>Forecast ensembles</h2>
-<p>Accuracy on the 2015–2017 test set, averaged across all series.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(tourism) <span class="sc">|&gt;</span></span>
-<span id="cb23-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(.model) <span class="sc">|&gt;</span></span>
-<span id="cb23-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">RMSE =</span> <span class="fu">mean</span>(RMSE), <span class="at">MASE =</span> <span class="fu">mean</span>(MASE)) <span class="sc">|&gt;</span></span>
-<span id="cb23-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(RMSE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 3
-  .model  RMSE  MASE
-  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 mixed   19.8 0.997
-2 ets     20.2 1.00 
-3 snaive  21.5 1.17 
-4 arima   21.9 1.06 </code></pre>
-</div>
-</div>
-<div class="fragment">
-<p>Averaging lets errors from different models partially cancel, and reduces the risk of picking the wrong model.</p>
-</div>
-
-</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
