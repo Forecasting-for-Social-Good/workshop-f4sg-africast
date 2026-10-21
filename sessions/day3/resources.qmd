@@ -9,7 +9,7 @@ order: 4
 
 ## Recording
 
-The recording for this session will be added here after the workshop.
+<iframe width="800" height="450" src="https://www.youtube.com/embed/tlJIKLZ1cqw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ::: {.callout-note icon="false" collapse="true"}
 ## Recordings from previous years
