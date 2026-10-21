@@ -623,11 +623,21 @@
 <li>Lower is better; for a point forecast it reduces to the MAE.</li>
 </ul>
 </section>
-<section id="crps-the-gap-between-forecast-and-outcome" class="slide level2">
-<h2>CRPS: the gap between forecast and outcome</h2>
+<section id="crps-expected-error-less-spread" class="slide level2">
+<h2>CRPS: expected error less spread</h2>
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/dist/plot.umd.min.js"></script>
 <script src="crps-slider.js"></script>
+<div class="crps-slider" data-score="density" data-prevent-swipe=""></div>
+<div class="crps-notes">
+<ul>
+<li>Equivalently, CRPS <span class="math inline">\(= \text{E}|X - y| - \tfrac{1}{2}\text{E}|X - X'|\)</span>, where <span class="math inline">\(X, X'\)</span> are independent draws from <span class="math inline">\(G\)</span>.</li>
+<li>Expected distance from <span class="math inline">\(y\)</span>, less half the forecast’s spread.</li>
+</ul>
+</div>
+</section>
+<section id="crps-the-gap-between-forecast-and-outcome" class="slide level2">
+<h2>CRPS: the gap between forecast and outcome</h2>
 <div class="crps-slider" data-prevent-swipe=""></div>
 <div class="crps-notes">
 <ul>
