@@ -1,159 +1,195 @@
-library(fpp3) # for forecast and tsibble
-library(ggdist)# for visualising distributions
-library(distributional)# for working with distributions
-
-#---------------use one model----------
-
-# Select beer production data from 2000 to 2009
-aus_beer <- aus_production |> select(Beer) |>
-  filter_index("2000 Q1" ~ "2009 Q1")
-
-# Fit a seasonal naive model to the data up to 2009 Q1
-fit <- aus_beer |> filter_index(. ~ "2009 Q1") |>
-  model(snaive = SNAIVE(Beer))
-# Generate forecasts for the next 5 quarters
-fcst <- fit |> forecast(h = 5)
-# Get fitted values from the model
-fitted_ets <- fit |> augment()
-
-# Plot the forecast distribution along with fitted values and actual data
-# Plot the forecast distribution along with fitted values and actual data for multiple models
-ggplot(data = fcst, mapping = aes(x = Quarter, ydist = Beer))+ # Plot for multiple models
-  ggdist::stat_halfeye(alpha = .4)+# Plot the forecast distribution
-  geom_line(aes(y=.mean, colour ="Point Forecast"))+# Plot the point forecast line
-  geom_line(aes(y = .fitted, colour ="Fitted"), data = filter_index(fitted_ets, "2005 Q1" ~ .))+# Plot the fitted values line
-  geom_point(aes(y = .fitted, colour ="Fitted"), data = filter_index(fitted_ets, "2005 Q1" ~ .))+# Plot the fitted values points
-  geom_line(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+# Plot the actual data line
-  geom_point(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+# Plot the actual data points
-  scale_color_manual(name=NULL,
-                     breaks=c('Fitted', 'Data',"Point Forecast"),
-                     values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))# Customise colours
-
-  #---------------use multiple models------------------------
-# Fit multiple models to the data up to 2009 Q1
-fit <- aus_beer |> filter_index(. ~ "2009 Q1") |>
-  model(snaive = SNAIVE(Beer),
-        naive = NAIVE(Beer),
-        average = MEAN(Beer),
-        drift = RW(Beer ~ drift()))
-# Generate forecasts for the next 5 quarters
-fcst <- fit |> forecast(h = 5)
-# Get fitted values from the model
-fitted_ets <- fit |> augment()
-
-# Plot the forecast distribution along with fitted values and actual data for multiple models
-ggplot(data = fcst, mapping = aes(x = Quarter, ydist = Beer))+ # Plot for multiple models
-  ggdist::stat_halfeye(alpha = .4)+# Plot the forecast distribution
-  geom_line(aes(y=.mean, colour ="Point Forecast"))+# Plot the point forecast line
-  geom_line(aes(y = .fitted, colour ="Fitted"), data = filter_index(fitted_ets, "2005 Q1" ~ .))+# Plot the fitted values line
-  geom_point(aes(y = .fitted, colour ="Fitted"), data = filter_index(fitted_ets, "2005 Q1" ~ .))+# Plot the fitted values points
-  geom_line(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+# Plot the actual data line
-  geom_point(aes(y = Beer, colour ="Data"),data = filter_index(aus_beer, "2005 Q1" ~ .))+# Plot the actual data points
-  scale_color_manual(name=NULL,
-                     breaks=c('Fitted', 'Data',"Point Forecast"),
-                     values=c('Fitted'='#E69F00', 'Data'='#0072B2',"Point Forecast"="#000000"))+# Customise colours
-  facet_wrap(~.model, ncol = 1) # Facet the plot by model
+# ==============================================================================
+# Day 3 demo: regression models for forecasting
+# ==============================================================================
+# How to run this script:
+#   - Ctrl + Enter runs the current line (or the selected code) in the console.
+#   - Run the sections in order: later sections reuse objects created earlier.
+#
+# Contents:
+#   1. Setup and exploring the data
+#   2. Multiple linear regression
+#   3. Comparing regression models
+#   4. Trend and seasonality with TSLM
+#   5. Transformations (log)
+#   6. Forecasting with future predictors
+#   7. Scenario forecasting
+#   8. Next dataset: souvenirs
+# ==============================================================================
 
 
-# Extract prediction interval
-fcst |> hilo() |> unpack_hilo() |> View()
-# Extract 95% prediction interval
-fcst |> hilo() |> unpack_hilo("95%") |> View()
-# Extract 50% and 95% prediction intervals
-fcst |> hilo(c(50,95)) |> unpack_hilo(c("95%", "50%")) |> View()
-# Calculate quantiles from the forecast distribution
-fcst |> mutate(q10 = quantile(Beer, 0.10),
-               q50 = quantile(Beer, 0.50),
-               q90 = quantile(Beer, 0.90))
-# Extract variance and standard deviation from the forecast distribution
-fcst |> mutate(
-  var  = distributional::variance(Beer),
-  sd   = sqrt(var)
-)
+# 1. Setup and exploring the data ----------------------------------------------
 
-# ---------- Try Bootstrapping -----------
+# fpp3 loads the tidy forecasting packages (tsibble, feasts, fable, dplyr,
+# ggplot2, ...) and the example datasets used below.
+library(fpp3)
 
-# Fit a seasonal naive model to the data up to 2009 Q1
-fit1 <- aus_beer |> filter_index(. ~ "2009 Q1") |>
-  model(snaive = SNAIVE(Beer))
+# `?` opens the help page of a dataset or function.
+# us_change contains quarterly percentage changes in US consumption, income,
+# production, savings and unemployment.
+?us_change
+us_change
 
-# Fit a seasonal naive model to the data up to 2009 Q1
-sim <- fit1 |> generate(h = 5, times = 5, bootstrap = TRUE)
-sim
-
-# Plot the simulated paths along with actual data
-aus_beer |>
-  filter_index("2005 Q1" ~ .) |>
-  ggplot(aes(x = Quarter)) +
-  geom_line(aes(y = Beer)) +
-  geom_line(aes(y = .sim,
-                colour = as.factor(.rep)),
-            data = sim) +
-  geom_point(aes(y = .sim,
-                 colour = as.factor(.rep)),
-             data = sim) +
-  labs(title = "Beer production", y = "Beer") +
-  guides(colour = "none")
+# Time plot of Consumption and Income. pivot_longer() stacks the two columns
+# into one `Measure` column (with the values in `Change`) so that autoplot()
+# draws them as two lines on the same plot.
+us_change |>
+  pivot_longer(c(Consumption, Income), names_to = "Measure", values_to = "Change") |>
+  autoplot(Change) +
+  labs(x = "Year", y = "% change")
 
 
-# Generate bootstrap forecasts for the next 5 quarters
-fc <- fit1 |> forecast(h = 5, bootstrap = TRUE)
-# Plot the bootstrap forecast distribution along with actual data
-autoplot(fc, aus_beer) +
-  labs(title="Beer production", y="Beer" )
+# 2. Multiple linear regression ------------------------------------------------
 
-# Plot the bootstrap forecast paths along with actual data
-fc |> hilo() |> unpack_hilo("95%") |> View()
-# Calculate quantiles from the bootstrap forecast distribution
-fc |> mutate(q10 = quantile(Beer, 0.10),
-             q50 = quantile(Beer, 0.50),
-             q90 = quantile(Beer, 0.90))
+# model() fits one or more models to the data, and returns a "mable" (model
+# table) with one column per model.
+# TSLM() fits a time series linear model. The formula `Consumption ~ ...`
+# says to predict Consumption using Income, Production, Unemployment and Savings.
+fit_full <- us_change |>
+  model(lm = TSLM(Consumption ~ Income + Production + Unemployment + Savings))
+
+# Printing a mable shows the model type for each fitted model.
+fit_full
+
+# gg_tsresiduals() checks the residuals (what the model couldn't explain):
+# a time plot, an ACF and a histogram. Good residuals look like white noise.
+gg_tsresiduals(fit_full)
+
+# The same ACF of the residuals, drawn manually. residuals() returns the
+# residuals as a tsibble (in the `.resid` column), and `level = 99` widens the
+# significance bounds to 99%.
+residuals(fit_full) |>
+  ACF(.resid) |>
+  autoplot(level = 99)
+
+# glance() summarises how well each model fits in a single row, using measures
+# like adjusted R^2 (adj_r_squared) and AICc.
+glance(fit_full)
 
 
-### SESSION 2 START
+# 3. Comparing regression models -----------------------------------------------
 
-fit_cons <- us_change %>%
-  model(lm = TSLM(Consumption ~ Income))
-report(fit_cons)
-
-
-
-
-
-# Is if Income were to increase by 1%, we expect (on average) that Consumption
-# would also increase by 0.27%.
-
-# Is if Income were to increase by 2%, we expect (on average) that Consumption
-# would also increase by 0.54%.
-
-fit <- aus_beer |>
+# model() can fit several models at once, by naming each one. Here we compare:
+#   - slr:     simple linear regression, using only Income,
+#   - full:    all four predictors,
+#   - no_prod: all predictors except Production.
+fit_compare <- us_change |>
   model(
-    snaive = SNAIVE(Beer),
-    mlr = TSLM(Beer ~ trend() + season())
+    slr = TSLM(Consumption ~ Income),
+    full = TSLM(Consumption ~ Income + Production + Unemployment + Savings),
+    no_prod = TSLM(Consumption ~ Income + Unemployment + Savings)
+  )
+fit_compare
+
+# glance() gives one row per model. A higher adj_r_squared and a lower AICc
+# (or CV) indicates a better model.
+glance(fit_compare)
+
+# select() keeps one model (a column of the mable), and forecast() predicts it.
+# This fails without future values for the predictors, see section 6!
+fit_compare |>
+  select(full) |>
+  forecast()
+
+
+# 4. Trend and seasonality with TSLM -------------------------------------------
+
+# aus_production is quarterly Australian production. Cement shows a trend,
+# seasonality, and variation that grows with the level of the series.
+aus_production |>
+  autoplot(Cement)
+
+# trend() and season() are special terms that TSLM() creates for us: a linear
+# time trend, and seasonal dummy variables (one per quarter).
+# This needs no future predictors, since they are made from the time index.
+fit <- aus_production |>
+  model(
+    TSLM(Cement ~ trend() + season())
   )
 
-fit
-aus_beer |>
-  autoplot(Beer)
-
+# `h` is the forecast horizon. A string such as "10 years" is converted into
+# the right number of observations (here 40 quarters).
+# Passing the original data to autoplot() draws it alongside the forecasts.
 fit |>
-  forecast(h = "2 years") |>
-  autoplot(aus_beer)
+  forecast(h = "10 years") |>
+  autoplot(aus_production)
+
+# The residuals show leftover patterns, and their spread grows over time.
+gg_tsresiduals(fit)
 
 
+# 5. Transformations (log) -----------------------------------------------------
 
-fit_cons <- us_change %>%
-  model(lm = TSLM(Consumption ~ Income))
-fit_cons |>
-  forecast(h = "2 years")
+# A log transformation stabilises variation that grows with the level.
+# Compare this plot to the time plot of Cement above.
+aus_production |>
+  autoplot(log(Cement))
 
-the_future_changes <- new_data(us_change, n = 16) |>
-  mutate(Income = c(2, 1, 0, 3, -10, -20, rnorm(10)))
+# Transformations can be written directly in the model formula.
+# Forecasts are automatically back-transformed to the original scale.
+fit <- aus_production |>
+  model(
+    TSLM(log(Cement) ~ trend() + season())
+  )
 
-fit_cons |>
-  forecast(the_future_changes) |>
+# Forecasting far into the future: the intervals widen, and the log model
+# grows exponentially rather than linearly.
+fit |>
+  forecast(h = "50 years") |>
+  autoplot(aus_production)
+
+# The residuals now have a more consistent spread.
+gg_tsresiduals(fit)
+
+
+# 6. Forecasting with future predictors ----------------------------------------
+
+# A model with predictors needs values of those predictors in the future.
+# tail() shows the last rows of the data, i.e. where the forecasts begin.
+us_change |> tail()
+
+# new_data() creates a tsibble of the next 4 quarters, to which we add an
+# assumed value for each predictor (here: income grows 1%, savings 0.5%, and
+# no change in unemployment or production).
+future_a <- new_data(us_change, 4) |>
+  mutate(Income = 1, Savings = 0.5, Unemployment = 0, Production = 0)
+
+# `new_data` supplies the predictor values for the forecast.
+fit_full |>
+  forecast(new_data = future_a) |>
   autoplot(us_change)
 
-ansett |>
-  filter(Airports == "MEL-SYD") |>
-  autoplot(Passengers)
+
+# 7. Scenario forecasting ------------------------------------------------------
+
+# scenarios() bundles several named future paths together, so that we can
+# forecast each one. `names_to` is the name of the column that identifies them.
+# Increase: income and savings rise. Decrease: income and savings fall.
+future_scenarios <- scenarios(
+  Increase = new_data(us_change, 4) |>
+    mutate(Income = 1, Savings = 0.5, Unemployment = 0, Production = 0),
+  Decrease = new_data(us_change, 4) |>
+    mutate(Income = -1, Savings = -0.5, Unemployment = 0, Production = 0),
+  names_to = "Scenario"
+)
+future_scenarios <- scenarios(
+  Increase = new_data(us_change, 4) |>
+    mutate(Income = 1, Savings = 0.5, Unemployment = 0, Production = 0),
+  Decrease = new_data(us_change, 4) |>
+    mutate(Income = -1, Savings = -0.5, Unemployment = 0, Production = 0),
+  names_to = "Scenario"
+)
+
+# Forecast every scenario at once, giving one set of forecasts for each.
+fc_scenarios <- forecast(fit_full, new_data = future_scenarios)
+
+# autolayer() adds the scenario forecasts on top of the time plot of the data.
+us_change |> autoplot(Consumption) +
+  autolayer(fc_scenarios)
+
+
+# 8. Next dataset: souvenirs ---------------------------------------------------
+
+# souvenirs is monthly sales at a souvenir shop in Queensland. It has strong
+# seasonality and a trend, which we will model next.
+souvenirs |>
+  autoplot(Sales)
