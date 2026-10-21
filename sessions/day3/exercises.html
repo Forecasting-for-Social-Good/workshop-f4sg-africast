@@ -390,19 +390,18 @@ Tip
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 10 x 5 [1Y]
 # Key:     Country, .model [1]
-   Country        .model                    Year
-   &lt;fct&gt;          &lt;chr&gt;                    &lt;dbl&gt;
- 1 United Kingdom RW(Population ~ drift())  2018
- 2 United Kingdom RW(Population ~ drift())  2019
- 3 United Kingdom RW(Population ~ drift())  2020
- 4 United Kingdom RW(Population ~ drift())  2021
- 5 United Kingdom RW(Population ~ drift())  2022
- 6 United Kingdom RW(Population ~ drift())  2023
- 7 United Kingdom RW(Population ~ drift())  2024
- 8 United Kingdom RW(Population ~ drift())  2025
- 9 United Kingdom RW(Population ~ drift())  2026
-10 United Kingdom RW(Population ~ drift())  2027
-# ℹ 2 more variables: Population &lt;dist&gt;, .mean &lt;dbl&gt;</code></pre>
+   Country        .model                    Year          Population     .mean
+   &lt;fct&gt;          &lt;chr&gt;                    &lt;dbl&gt;              &lt;dist&gt;     &lt;dbl&gt;
+ 1 United Kingdom RW(Population ~ drift())  2018 N(6.6e+07, 2.7e+10) 66261260.
+ 2 United Kingdom RW(Population ~ drift())  2019 N(6.7e+07, 5.5e+10) 66500247.
+ 3 United Kingdom RW(Population ~ drift())  2020 N(6.7e+07, 8.4e+10) 66739235.
+ 4 United Kingdom RW(Population ~ drift())  2021 N(6.7e+07, 1.1e+11) 66978222.
+ 5 United Kingdom RW(Population ~ drift())  2022 N(6.7e+07, 1.4e+11) 67217209.
+ 6 United Kingdom RW(Population ~ drift())  2023 N(6.7e+07, 1.8e+11) 67456196.
+ 7 United Kingdom RW(Population ~ drift())  2024 N(6.8e+07, 2.1e+11) 67695184.
+ 8 United Kingdom RW(Population ~ drift())  2025 N(6.8e+07, 2.4e+11) 67934171.
+ 9 United Kingdom RW(Population ~ drift())  2026 N(6.8e+07, 2.8e+11) 68173158.
+10 United Kingdom RW(Population ~ drift())  2027 N(6.8e+07, 3.1e+11) 68412145.</code></pre>
 </div>
 </div>
 <p>Here we have a <code>fable</code> - a forecasting table. It looks like a tsibble, but the response variable <code>Population</code> contains entire distributions of possible future values at each step in the future. We can look at these forecasts using the <code>autoplot()</code> function.</p>

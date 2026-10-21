@@ -334,7 +334,7 @@
 <section id="training-and-test-sets" class="slide level2">
 <h2>Training and test sets</h2>
 
-<img data-src="_figures/04_accuracy_basic/traintest-1.png" width="864" class="r-stretch"></section></section>
+<img data-src="_figures/04_accuracy_basic/traintest-1.png" style="width:100.0%" class="r-stretch"></section></section>
 <section>
 <section id="evaluating-point-forecast-accuracy" class="title-slide slide level1 center">
 <h1>Evaluating point forecast accuracy</h1>
@@ -375,7 +375,7 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="_figures/04_accuracy_basic/beer-fc-1-1.png" width="864"></p>
+<p><img data-src="_figures/04_accuracy_basic/beer-fc-1-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -654,6 +654,63 @@
 <li>Percentile score: quantile score averaged over <span class="math inline">\(p = 0.01, 0.02, \dots, 0.99\)</span>.</li>
 <li>Seasonal naïve has the better distributional forecasts on both measures.</li>
 </ul>
+</div>
+</section></section>
+<section>
+<section id="forecast-ensembles" class="title-slide slide level1 center">
+<h1>Forecast ensembles</h1>
+
+</section>
+<section id="forecast-ensembles-1" class="slide level2 code-small">
+<h2>Forecast ensembles</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(Quarter) <span class="sc">&lt;=</span> <span class="dv">2014</span>)</span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>fit_tourism <span class="ot">&lt;-</span> train <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ets =</span> <span class="fu">ETS</span>(Trips),</span>
+<span id="cb10-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">arima =</span> <span class="fu">ARIMA</span>(Trips),</span>
+<span id="cb10-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">snaive =</span> <span class="fu">SNAIVE</span>(Trips)</span>
+<span id="cb10-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb10-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mixed =</span> (ets <span class="sc">+</span> arima <span class="sc">+</span> snaive) <span class="sc">/</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>Fits three models to each of the 304 tourism series (this takes a while).</li>
+<li>Ensemble forecast <code>mixed</code> is a simple average of the three fitted models.</li>
+<li><code>forecast()</code> will produce distributional forecasts taking into account the correlations between the forecast errors of the component models.</li>
+</ul>
+</section>
+<section id="forecast-ensembles-2" class="slide level2">
+<h2>Forecast ensembles</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit_tourism <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>)</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>, Purpose <span class="sc">==</span> <span class="st">"Holiday"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(tourism <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">year</span>(Quarter) <span class="sc">&gt;=</span> <span class="dv">2010</span>), <span class="at">level =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="_figures/04_accuracy_basic/trainfc-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="forecast-ensembles-3" class="slide level2">
+<h2>Forecast ensembles</h2>
+<p>Accuracy on the 2015–2017 test set, averaged across all series.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(tourism) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(.model) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">RMSE =</span> <span class="fu">mean</span>(RMSE), <span class="at">MASE =</span> <span class="fu">mean</span>(MASE)) <span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(RMSE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  .model  RMSE  MASE
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 mixed   19.8 0.997
+2 ets     20.2 1.00 
+3 snaive  21.5 1.17 
+4 arima   21.9 1.06 </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Averaging lets errors from different models partially cancel, and reduces the risk of picking the wrong model.</p>
 </div>
 
 </section></section>
