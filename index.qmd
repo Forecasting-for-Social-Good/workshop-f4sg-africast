@@ -31,7 +31,7 @@ Held online, 19–23 October 2026 · Recordings now available
 ::: {.column-page}
 # Thank you
 
-AFRICAST 2026 has concluded. Thank you to everyone who joined us over the week, and to the many people who made it happen: the [educators](about.qmd#educators), the [mentors](about.qmd#mentors-for-the-cohort-2026) who supported learners through the exercises, the [planning team](about.qmd#planning-team) and our [coordinator](about.qmd#coordinator) Henry Kissinger Ochieng, and the [organisations](#supported-by) that supported the training.
+AFRICAST 2026 has concluded. Thank you to everyone who joined us over the week, and to the many people who made it happen: the [educators](about.qmd#educators), the [mentors](about.qmd#mentors-for-the-cohort-2026) who supported learners through the exercises, our [coordinator](about.qmd#coordinator) Henry Kissinger Ochieng, and the [organisations](#supported-by) that supported the training.
 
 Recordings of every day are available in the [AFRICAST 2026 YouTube playlist](https://www.youtube.com/playlist?list=PLQX3SAD5afD8). You can also open the **Recording & code** link for each day in the [sessions](#sessions) grid to watch that day's sessions and get the demo code. All slides and exercises remain available, so you can keep working through the material at your own pace.
 :::
@@ -120,7 +120,7 @@ Healthcare forecaster
 :::
 :::
 
-[Read full bios, the planning team and mentors →](about.qmd#educators)
+[Read full bios and meet the mentors →](about.qmd#educators)
 :::
 
 ::: {.column-page}

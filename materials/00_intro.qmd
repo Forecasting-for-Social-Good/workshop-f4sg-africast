@@ -94,33 +94,14 @@ PhD researcher, Data Lab for Social Good, Cardiff University. Probabilistic fore
 **Coordinator**
 
 * Henry Kissinger Ochieng
-
-**Planning team**
-
-* Mkajuma Charity
-* Kennedy Mung'are
-* José Thiéry Hagbe
 :::
 
 ::: {.column width="55%"}
 **Mentors**
 
-::: columns
-::: {.column width="50%"}
-* Samson Oluwafemi
-* Oluchukwu Aghadi
-* Lumumba Victor
-* Adamu SAIDU Saleh
-* Akoeugnigan Idelphonse SODE
-:::
-
-::: {.column width="50%"}
-* AKOUNDA Badjibassa
-* Caroline Mugo
-* Winnie Chacha
-* Matabel Odin
-:::
-:::
+* Caroline Mugo – JKUAT
+* Matabel Odin – Namibia University of Science and Technology
+* Winnie Chacha – JKUAT
 :::
 :::
 

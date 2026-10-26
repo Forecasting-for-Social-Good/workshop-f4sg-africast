@@ -69,27 +69,13 @@ In addition to his PhD work, he is passionate about mathematical modelling and u
 <a href="https://www.linkedin.com/in/aslanmu"><img border="0" alt="LinkedIn" src="images/social-linkedin.svg" width="35" height="35"></a>&ensp;&emsp;
 </div>
 
-## Planning team
-
-The workshop is organised behind the scenes by a dedicated planning team, who volunteer their time to coordinate logistics and ensure the workshop runs smoothly. The team includes:
-
-- Mkajuma Charity
-- Kennedy Mung'are
-- José Thiéry Hagbe
-
 ## Mentors for the cohort 2026
 
 A committed team generously dedicates their time and expertise to offer valuable support to learners throughout the duration of the workshop to help learners with the exercises. The team includes:
 
-- Samson Oluwafemi
-- Oluchukwu Aghadi
-- Lumumba Victor
-- Adamu SAIDU Saleh
-- Akoeugnigan Idelphonse SODE
-- AKOUNDA Badjibassa
-- Caroline Mugo
-- Winnie Chacha
-- Matabel Odin
+- Caroline Mugo – JKUAT
+- Matabel Odin – Namibia University of Science and Technology
+- Winnie Chacha – JKUAT
 
 ## Coordinator
 
