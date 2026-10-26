@@ -277,14 +277,14 @@
     "href": "index.html",
     "title": "Tidy time series & forecasting in R",
     "section": "",
-    "text": "AFRICAST 2026 · Forecasting for Social Good\n\n\n19–23 October 2026 · Online training course\n\n\n\nGet set up Download slides"
+    "text": "AFRICAST 2026 · Forecasting for Social Good\n\n\nHeld online, 19–23 October 2026 · Recordings now available\n\n\n\nWatch the recordings Download slides"
   },
   {
     "objectID": "index.html#about-africast",
     "href": "index.html#about-africast",
     "title": "Tidy time series & forecasting in R",
     "section": "About AFRICAST",
-    "text": "About AFRICAST\nAFRICAST is part of the Forecasting for Social Good (F4SG) initiative, building forecasting skills among researchers in Low- and Middle-Income Countries so that forecasts can inform planning and resource allocation. No prior experience with time series is needed.\nDuring the training, you’ll learn to:\n\nPrepare time series data for analysis and exploration.\nExtract and compute useful features from time series data and visualise them effectively.\nIdentify appropriate forecasting algorithms and select the best approach for the data at hand.\n\nRead more about the workshop"
+    "text": "About AFRICAST\nAFRICAST is part of the Forecasting for Social Good (F4SG) initiative, building forecasting skills among researchers in Low- and Middle-Income Countries so that forecasts can inform planning and resource allocation. No prior experience with time series is needed.\nThe training covers how to:\n\nPrepare time series data for analysis and exploration.\nExtract and compute useful features from time series data and visualise them effectively.\nIdentify appropriate forecasting algorithms and select the best approach for the data at hand.\n\nRead more about the workshop"
   },
   {
     "objectID": "schedule.html",
