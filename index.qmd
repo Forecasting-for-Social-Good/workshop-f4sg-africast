@@ -18,14 +18,22 @@ listing:
 
 # Tidy time series & forecasting in R {.unnumbered .unlisted}
 
-19–23 October 2026 · Online training course
+Held online, 19–23 October 2026 · Recordings now available
 :::
 
 ::: {.home-hero-actions}
-[Get set up](#before-you-start){.btn .btn-hero}
+[Watch the recordings](https://www.youtube.com/playlist?list=PLQX3SAD5afD8){.btn .btn-hero}
 [Download slides](slides.zip){.btn .btn-hero-outline}
 :::
 :::
+:::
+
+::: {.column-page}
+# Thank you
+
+AFRICAST 2026 has concluded. Thank you to everyone who joined us over the week, and to the many people who made it happen: the [educators](about.qmd#educators), the [mentors](about.qmd#mentors-for-the-cohort-2026) who supported learners through the exercises, the [planning team](about.qmd#planning-team) and our [coordinator](about.qmd#coordinator) Henry Kissinger Ochieng, and the [organisations](#supported-by) that supported the training.
+
+Recordings of every day are available in the [AFRICAST 2026 YouTube playlist](https://www.youtube.com/playlist?list=PLQX3SAD5afD8). You can also open the **Recording & code** link for each day in the [sessions](#sessions) grid to watch that day's sessions and get the demo code. All slides and exercises remain available, so you can keep working through the material at your own pace.
 :::
 
 ::: {.home-about .column-page}
@@ -38,7 +46,7 @@ listing:
 
 AFRICAST is part of the [Forecasting for Social Good (F4SG)](https://www.f4sg.org/) initiative, building forecasting skills among researchers in Low- and Middle-Income Countries so that forecasts can inform planning and resource allocation. No prior experience with time series is needed.
 
-During the training, you'll learn to:
+The training covers how to:
 
 1. Prepare time series data for analysis and exploration.
 2. Extract and compute useful features from time series data and visualise them effectively.
@@ -51,7 +59,7 @@ During the training, you'll learn to:
 ::: {.column-page}
 # Sessions
 
-Each day has two 90-minute live sessions, then exercises with mentors in the afternoon.
+Each day had two 90-minute live sessions, then exercises with mentors in the afternoon. Every day's recording and demo code are linked under **Recording & code**.
 
 ::: {#sessions}
 :::
@@ -118,7 +126,7 @@ Healthcare forecaster
 ::: {.column-page}
 # Before you start
 
-You should be comfortable writing R code with tidyverse packages such as dplyr and ggplot2 (if not, work through <https://startr.numbat.space/> first). Some familiarity with the mean, variance, quantiles, the normal distribution and regression will help, but isn't required. Please have everything below ready on your own laptop before the workshop.
+You should be comfortable writing R code with tidyverse packages such as dplyr and ggplot2 (if not, work through <https://startr.numbat.space/> first). Some familiarity with the mean, variance, quantiles, the normal distribution and regression will help, but isn't required. To follow along with the recordings and exercises, set up the following on your own computer.
 
 ::: {.setup-steps}
 ::: {.setup-step}
